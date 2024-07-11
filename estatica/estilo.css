@@ -1,0 +1,139 @@
+#divPrincipal {
+   
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; 
+    margin: 0;
+}h1{
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    margin: 0;
+}
+.label {
+    display: inline-block;
+     /* Añadir padding opcionalmente para un mejor ajuste visual */
+     padding: 2px 5px;
+     /* Opcional: añadir un borde para ver claramente el tamaño del label */
+     border: 1px solid #000;
+     width: auto; /* Anula la regla width: 200px; */
+}
+#divCabecera {
+    /*position: fixed;*/
+    text-align: center;
+    background-color:antiquewhite;
+    width: 75%;
+    margin: 1%;
+    /*z-index: 1000;*/ 
+   /* box-shadow: 0 0 0 10px rgb(0, 255, 191);*/ 
+}
+#divLogo{
+    width: 20%;
+}
+.boton{
+    background-color: cornflowerblue;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 2px;
+}
+.boton:hover{
+    background-color: darkblue;
+}
+#divSecundario{
+      /*position: fixed;*/
+      text-align: center;
+     /* background-color:antiquewhite;*/
+      width: 75%;
+      margin: 1%;
+      /*z-index: 1000;*/ 
+      /*box-shadow: 0 0 0 10px rgb(0, 255, 191);*/ 
+}
+#divLateral{
+    width: 20%;
+    background-color: darkslategrey;
+    text-align: center;
+    height: 400px; /* Añadir esta línea para un alto fijo */
+}
+#divProfecional{
+    border-radius: 10px; /* Establece los bordes redondeados */
+    border: 2px solid black; /* Establece el borde de color negro */
+    width: 40%; /* Establece el ancho al 45% del contenedor */
+    display: inline-block; /* Para colocarlos uno al lado del otro */
+    vertical-align: top; /* Alinea los elementos superiormente */
+}
+#divReceta{
+    border-radius: 10px; /* Establece los bordes redondeados */
+    border: 2px solid black; /* Establece el borde de color negro */
+}
+#divPaciente{
+    border-radius: 10px; /* Establece los bordes redondeados */
+    border: 2px solid black; /* Establece el borde de color negro */
+    width: 55%; /* Establece el ancho al 45% del contenedor */
+    display: inline-block; /* Para colocarlos uno al lado del otro */
+    vertical-align: top; /* Alinea los elementos superiormente */
+}
+#diagnostico {
+    width: 95%;
+    height: 100%;
+    resize: none; /* Evita que el usuario pueda cambiar el tamaño manualmente */
+    
+  }
+  #divDiagnostico{
+    border-radius: 10px; /* Establece los bordes redondeados */
+    border: 2px solid black; /* Establece el borde de color negro */
+  }
+  form label {
+    display: inline-block;
+    width: 200px; /* Ancho deseado para las etiquetas */
+    text-align: right; /* Alinea el texto de las etiquetas a la derecha */
+    margin-right: 5px; /* Espacio entre las etiquetas y los campos de entrada */
+    padding: 0.50rem 0; /* 0.75rem arriba y abajo, 0 en los lados */
+}
+.ocultar{
+    display: none;
+}
+.div{
+border: 1px solid black;
+}
+.form{
+    background-color:antiquewhite;
+    border-radius: 5px;
+}
+/* Estilos para la alerta */
+#divAlerta {
+    position: fixed; /* Para que se sobreponga a otros elementos */
+    top: 12%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrar horizontal y verticalmente */
+    width: 60vw; /* 60% del ancho de la ventana */
+    background-color: #FF69B4; /* Fondo rosa */
+    /*border: 5px solid red; /* Bordes rojos */
+    /*padding: 20px;*/
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra para dar efecto de sobreposición */
+    z-index: 9999; /* Para asegurar que esté al frente */
+  }
+  #divExito{
+    position: fixed; /* Para que se sobreponga a otros elementos */
+    top: 12%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centrar horizontal y verticalmente */
+    width: 60vw; /* 60% del ancho de la ventana */
+    background-color: #90EE90; /* Fondo verde claro */
+    
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Sombra para dar efecto de sobreposición */
+    z-index: 9999; /* Para asegurar que esté al frente */
+  }
+  
+  /* Estilo para el mensaje dentro de la alerta */
+  #divAlerta p {
+    color: white;
+    font-size: 1.5em;
+    margin: 0;
+  }
+  
+
+

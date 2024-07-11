@@ -1,0 +1,70 @@
+html(lang="es")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="shortcut icon", href="./icono.png", type="image/x-icon")
+        link(rel="stylesheet", href="estilo.css")
+        //script(src="domRecetas.js", defer)
+        title Integrador Laboratorio-2
+    body
+      #divPrincipal
+          
+          #divCabecera
+              h1= encabezado
+          #divLogo
+            img(src="./icons8-medicina-100.png", alt="Logo")
+          #divLateral
+              button(type="button") Adorno 
+              br
+              button(type="button") Adorno 
+              br
+              button(type="button") Adorno 
+              br
+              button(type="button") Adorno      
+          #divSecundario
+              script.
+                function mostrarFormulario(idF) {
+                  let elementos = document.querySelectorAll('.ocultar');
+                  elementos.forEach(function(elemento) {
+                    elemento.style.display = 'none';
+                  });
+                  let form = document.getElementById(idF);
+                  if (form) {
+                    form.style.display = "block";
+                  }
+                }
+
+              button.boton(type="button", onclick="mostrarFormulario('formularioProfecional')") Realizar receta
+              button.boton(type="button", onclick="mostrarFormulario('formularioAdministrativo')") Acceder a medicamentos 
+              button.boton(type="button", onclick="mostrarFormulario('formularioAdministrativoR')") Acceder a Profesionales
+
+              form#formularioProfecional.ocultar(action="/verificarProfecional", method="POST")
+                label(for="idUsuario") Usuario:
+                input(type="text", id="idUsuario", name="idUsuario")
+                br
+                label(for="idClave") Clave:
+                input(type="password", id="idClave", name="idClave")
+                br
+                input(type="submit", value="Ingresar")
+
+              form#formularioAdministrativo.ocultar(action="/verificarAdministrativo", method="POST")
+                label(for="usuarioAdmin") Usuario:
+                input(type="text", id="usuarioAdmin", name="usuarioAdmin")
+                br
+                label(for="idAdministrativo") Clave:
+                input(type="password", id="idAdministrativo", name="idAdministrativo")
+                br
+                input(type="submit", value="Ingresar")
+
+              form#formularioAdministrativoR.ocultar(action="/verificarAdministrativoR", method="POST")
+                label(for="usuarioAdminR") Usuario:
+                input(type="text", id="usuarioAdminR", name="usuarioAdminR")
+                br
+                label(for="idAdministrativoR") Clave:
+                input(type="password", id="idAdministrativoR", name="idAdministrativoR")
+                br
+                input.boton(type="submit", value="Ingresar") 
+
+              if alerta 
+                script.
+                  alert("Su código de acceso o usuario es incorrecto");
