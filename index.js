@@ -32,11 +32,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.text());
 // Configurar Express para servir archivos estáticos desde la carpeta 'public'
 app.use(serveStatic(path.join(__dirname, '..','estatica')));
+// Configuración del directorio de archivos estáticos
+app.use(express.static(path.join(__dirname, 'estatica')));
 
 app.use(express.urlencoded({ extended: true }))
 // Configurar Express para usar Pug como motor de plantillas y establecer la carpeta de vistas
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, '..','vistas'));
+app.set('views', path.join(__dirname, 'vistas'));
 app.use(express.json());
 // Definir una ruta para renderizar una vista Pug
 //app.use('/', ruta);
@@ -44,12 +47,14 @@ let encabezado;
 let mensajeExito;
 let estadoSuces;
 // Definir tus rutas aquí
-
-app.get('/', (req, res) => {
+app.use('/', ruta);
+app.use('/verificarLogin',ruta);
+/*app.get('/', (req, res) => {
     encabezado="Bienvenido al Ministerio de Salud";
      res.render('vistaPrincipal',{encabezado,mensajeExito,estadoSuces});
     //res.send('hola mundo');
-   });
+   });*/
+
   // Iniciar el servidor
   app.listen(port, () => {
     console.log(`Servidor Express escuchando en el puerto ${port}`);

@@ -10,6 +10,9 @@ ruta.get('/', (req, res) => {
      res.render('vistaPrincipal',{encabezado,mensajeExito,estadoSuces});
     //res.send('hola mundo');
    });
+ruta.post('/verificarLogin',(req,res) =>{
+   res.send(req.body)
+  });
    
    
    
