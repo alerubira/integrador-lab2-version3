@@ -33,10 +33,10 @@ html(lang="es")
 
               form#formularioLogin(action="/verificarLogin", method="POST", autocomplete="off")
                 label(for="usuario") Usuario:
-                input.limpiar(type="text", id="usuario",data-name="usuario",placeholder="usuario",autocomplete="off")
+                input.limpiar(type="text", id="usuario",name="usuario",placeholder="usuario",autocomplete="off")
                 br
                 label(for="clave1") Clave:
-                input.limpiar(type="password", id="clave1", data-name="clave1",placeholder="clave",autocomplete="off")
+                input.limpiar(type="password", id="clave1", name="clave1",placeholder="clave",autocomplete="off")
                 br
                 input.boton(type="submit", value="Ingresar")
         

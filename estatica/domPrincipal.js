@@ -16,3 +16,4 @@ formLogin.addEventListener('submit',async function(event) {
 });
 
 limpiarCampos(limpiar);
+setTimeout(() => limpiarCampos(limpiar), 1000);

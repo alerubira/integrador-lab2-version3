@@ -13,4 +13,5 @@ async function verificarHash(plainPassword, hashedPassword) {
     const match = await compare(plainPassword, hashedPassword);
     return match; // Devuelve true si la contraseña coincide, de lo contrario false
 }
+
 export{crearHash,verificarHash};

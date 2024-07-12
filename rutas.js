@@ -1,4 +1,5 @@
 import express from 'express';
+import { manejador } from './controlador/manejadorDeRutas';
 const ruta = express.Router();
 let encabezado;
 let mensajeExito;
@@ -11,7 +12,7 @@ ruta.get('/', (req, res) => {
     //res.send('hola mundo');
    });
 ruta.post('/verificarLogin',(req,res) =>{
-   res.send(req.body)
+   manejador(req,res,'verificarLogin');
   });
    
    
