@@ -1,8 +1,11 @@
-let ocultar=document.getElementsByClassName('ocultar');
-let limpiar=document.getElementsByClassName('limpiar');
+
+ let ocultar=document.getElementsByClassName('ocultar');
+let limpiar=document.querySelectorAll('.limpiar');
 let divAlerta=document.getElementById('divAlerta');
 let divExito=document.getElementById('divExito');
 let pagina;
+limpiarCampos(limpiar);
+
  function Focultar(){
             
         for (let elemento of ocultar) {
@@ -99,5 +102,7 @@ function contienePalabra(array,propiedad,palabra) {
     console.log(palabra);
     return array.some(objeto => objeto.propiedad === palabra);
   }
+limpiarCampos(limpiar);
+
 //export{Focultar};
 

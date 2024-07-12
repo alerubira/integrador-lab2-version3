@@ -31,15 +31,15 @@ html(lang="es")
               button.boton.ocultar(type="button", onclick="mostrarFormulario('formularioAdministrativo')") Acceder a medicamentos 
               button.boton.ocultar(type="button", onclick="mostrarFormulario('formularioAdministrativoR')") Acceder a Profesionales
 
-              form#formularioLogin(action="/verificarLogin", method="POST")
+              form#formularioLogin(action="/verificarLogin", method="POST", autocomplete="off")
                 label(for="usuario") Usuario:
-                input.limpiar(type="text", id="usuario", name="usuario")
+                input.limpiar(type="text", id="usuario",data-name="usuario",placeholder="usuario",autocomplete="off")
                 br
-                label(for="clave") Clave:
-                input.limpiar(type="password", id="clave", name="clave")
+                label(for="clave1") Clave:
+                input.limpiar(type="password", id="clave1", data-name="clave1",placeholder="clave",autocomplete="off")
                 br
-                input(type="submit", value="Ingresar")
-
+                input.boton(type="submit", value="Ingresar")
+        
               
 
              

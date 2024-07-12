@@ -1,8 +1,10 @@
-let formLogin=document.getElementById('formularioLogin');
+
+ let formLogin=document.getElementById('formularioLogin');
 let inputUsuario=document.getElementById('usuario');
-let inputClave=document.getElementById('clave');
+let inputClave=document.getElementById('clave1');
 pagina="Principal";
-limpiarCampos(limpiar);
+//limpiarCampos(limpiar);
+
 formLogin.addEventListener('submit',async function(event) {
     let claveValue=inputClave.value ;
     let usuarioValue=inputUsuario.value ;
@@ -10,4 +12,7 @@ formLogin.addEventListener('submit',async function(event) {
     let cla=/^(?=(?:.*[A-Z]){1,})(?=(?:.*[a-zA-Z]){3,})(?=(?:.*\d){3,}).*$/;
     validar(claveValue.length<1||!cla.test(claveValue),pagina,'La clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
 
+
 });
+
+limpiarCampos(limpiar);
