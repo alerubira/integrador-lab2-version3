@@ -1,5 +1,5 @@
 import express from 'express';
-import { manejador } from './controlador/manejadorDeRutas';
+import { manejador } from './controlador/manejadorDeRutas.js';
 const ruta = express.Router();
 let encabezado;
 let mensajeExito;
@@ -55,4 +55,4 @@ ruta.post('/verificarLogin',(req,res) =>{
 
 
 // Exportar el router
-export {ruta};
+export {ruta,encabezado};

@@ -8,40 +8,42 @@ html(lang="es")
         script(src="domPrincipal.js", defer)
         title Integrador Laboratorio-2
     body
-      #divPrincipal
-          
-          #divCabecera
-              h1= encabezado
-          #divLogo
-            img(src="./icons8-medicina-100.png", alt="Logo")
-          #divLateral
-              button(type="button") Adorno 
-              br
-              button(type="button") Adorno 
-              br
-              button(type="button") Adorno 
-              br
-              button(type="button") Adorno 
-          #divAlerta
-          #divExito         
-          #divSecundario
-              
+        #divPrincipal
+                            
+                #divCabecera
+                    h1= encabezado
+                #divLogo
+                    img(src="./icons8-medicina-100.png", alt="Logo")
+                #divLateral
+                    button(type="button") Adorno 
+                    br
+                    button(type="button") Adorno 
+                    br
+                    button(type="button") Adorno 
+                    br
+                    button(type="button") Adorno 
+                #divAlerta
+                #divExito         
+                #divSecundario
+                    
 
-              button.boton.ocultar(type="button", onclick="mostrarFormulario('formularioProfecional')") Realizar receta
-              button.boton.ocultar(type="button", onclick="mostrarFormulario('formularioAdministrativo')") Acceder a medicamentos 
-              button.boton.ocultar(type="button", onclick="mostrarFormulario('formularioAdministrativoR')") Acceder a Profesionales
+                    button.boton.ocultar(type="button", onclick="mostrarFormulario('formularioProfecional')") Realizar receta
+                    button.boton.ocultar(type="button", onclick="mostrarFormulario('formularioAdministrativo')") Acceder a medicamentos 
+                    button.boton.ocultar(type="button", onclick="mostrarFormulario('formularioAdministrativoR')") Acceder a Profesionales
 
-              form#formularioLogin(action="/verificarLogin", method="POST", autocomplete="off")
-                label(for="usuario") Usuario:
-                input.limpiar(type="text", id="usuario",name="usuario",placeholder="usuario",autocomplete="off")
-                br
-                label(for="clave1") Clave:
-                input.limpiar(type="password", id="clave1", name="clave1",placeholder="clave",autocomplete="off")
-                br
-                input.boton(type="submit", value="Ingresar")
-        
-              
+                    form#formularioLogin(action="/verificarLogin", method="POST", autocomplete="off")
+                        label(for="usuario") Usuario:
+                        input.limpiar(type="text", id="usuario",name="usuario",placeholder="usuario",autocomplete="off")
+                        br
+                        label(for="clave1") Clave:
+                        input.limpiar(type="password", id="clave1", name="clave1",placeholder="clave",autocomplete="off")
+                        br
+                        input.boton(type="submit", value="Ingresar")
+                
+        if errLogin === false 
+                    script.
+                        alert('Algo esta mal con el login')  
 
-             
+            
 
              

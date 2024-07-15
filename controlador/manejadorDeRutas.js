@@ -6,9 +6,10 @@
 //import { profecionesTodas,especialidadesTodas } from '../modelo/medicoData.js';
 //import { verificarMedico } from './procesarDatos.js';
 
-import { verificar } from "./verificaryup";
-
+import { verificar } from "./verificaryup.js";
+import { encabezado } from "../rutas.js";
 //import { agregarMedico } from '../modelo/medicoData.js';
+
 async function manejador(req,res,objeto){
   try {
     
@@ -16,8 +17,15 @@ async function manejador(req,res,objeto){
     let objet = req.body; 
     switch (objeto) {
       case 'verificarLogin':
+        let errLogin;
          aux=await verificar(objet,'Login');
-         res.send(aux);
+         if(aux.errors){
+          errLogin=false;
+          res.render('vistaPrincipal',{encabezado,errLogin});
+         }else{
+          res.send(aux);
+         }
+        
         break;
       case 'Medico':
          aux= await verificarMedico(objet);
