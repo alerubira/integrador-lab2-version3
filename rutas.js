@@ -8,7 +8,8 @@ let estadoSuces;
 
 ruta.get('/', (req, res) => {
     encabezado="Bienvenido al Ministerio de Salud";
-     res.render('vistaPrincipal',{encabezado,mensajeExito,estadoSuces});
+    let errLogin;
+     res.render('vistaPrincipal',{encabezado,errLogin:true});
     //res.send('hola mundo');
    });
 ruta.post('/verificarLogin',(req,res) =>{

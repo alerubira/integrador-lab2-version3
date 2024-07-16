@@ -39,10 +39,9 @@ html(lang="es")
                         input.limpiar(type="password", id="clave1", name="clave1",placeholder="clave",autocomplete="off")
                         br
                         input.boton(type="submit", value="Ingresar")
-                
-        if errLogin === false 
-                    script.
-                        alert('Algo esta mal con el login')  
+               
+        p#errLogin.ocultar= errLogin
+           
 
             
 

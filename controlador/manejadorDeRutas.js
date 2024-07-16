@@ -20,8 +20,7 @@ async function manejador(req,res,objeto){
         let errLogin;
          aux=await verificar(objet,'Login');
          if(aux.errors){
-          errLogin=false;
-          res.render('vistaPrincipal',{encabezado,errLogin});
+          res.render('vistaPrincipal',{encabezado,errLogin:false});
          }else{
           res.send(aux);
          }

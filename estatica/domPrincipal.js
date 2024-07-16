@@ -2,8 +2,15 @@
  let formLogin=document.getElementById('formularioLogin');
 let inputUsuario=document.getElementById('usuario');
 let inputClave=document.getElementById('clave1');
+let errLogin=document.getElementById('errLogin');
+let errLoginValue=errLogin.textContent;
 pagina="Principal";
 //limpiarCampos(limpiar);
+console.log(errLoginValue);
+ if(errLoginValue==='false'){
+        alerta(pagina,'Algo esta mal con el login');
+    }
+
 
 formLogin.addEventListener('submit',async function(event) {
     let claveValue=inputClave.value ;

@@ -35,7 +35,7 @@ function alerta(pagina,mensage){
     p=document.createElement('p');
     p.textContent=`${mensage}`;
     divAlerta.appendChild(p);
-    // Ejecutar la función eliminarHijos después de 5 segundos (5000 milisegundos)
+    // Ejecutar la función eliminarHijos después de 6 segundos (6000 milisegundos)
     setTimeout(() => eliminarHijos(divAlerta), 6000);
 }
 function exito(pagina,mensage){
