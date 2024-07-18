@@ -1,4 +1,4 @@
-import { pool } from "./conexxionBD.js";
+import { pool , consulta1} from "./conexxionBD.js";
 import { Login } from './clasesEntidad.js';
 let logins=[];
 //console.log("login");
@@ -21,7 +21,7 @@ let logins=[];
     }
 });*/
 // Definición de una IIFE para obtener los logins utilizando el pool
-(async function obtenerLogins() {
+/*(async function obtenerLogins() {
     let connection;
     try {
         // Obtener una conexión del pool
@@ -49,8 +49,13 @@ let logins=[];
     }
 })().catch(error => {
     console.error('Error al ejecutar la función obtenerLogins:', error);
-});
-async function crearLogin(usuario,clave,nivel){
+});*/
+async function buscarLoginPorUsuario(usuario){
+let query=  'SELECT * FROM `login` WHERE usuario_login = ?';
+  let result=await consulta1(query,usuario);
+  return result;
+}
+async function crearLogin(usuario,clave,nivel,instancia){
     
 }
-export{logins};
+export{logins,buscarLoginPorUsuario};

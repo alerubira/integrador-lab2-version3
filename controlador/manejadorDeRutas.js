@@ -8,21 +8,39 @@
 
 import { verificar } from "./verificaryup.js";
 import { encabezado } from "../rutas.js";
+import { buscarLoginPorUsuario } from "../modelo/loginData.js";
+import { verificarHash } from "../modelo/loginn.js";
 //import { agregarMedico } from '../modelo/medicoData.js';
 
 async function manejador(req,res,objeto){
   try {
-    
+    let boolean;
+    let login;
     let aux;
     let objet = req.body; 
     switch (objeto) {
       case 'verificarLogin':
+        //ordenar,modificar vista(dejar solo login),crear vista(para los distintos accesesos),generar token
         let errLogin;
          aux=await verificar(objet,'Login');
          if(aux.errors){
           res.render('vistaPrincipal',{encabezado,errLogin:false});
          }else{
-          res.send(aux);
+         login=await buscarLoginPorUsuario(aux.usuario);
+         
+         if(login.length<1){
+          res.render('vistaPrincipal',{encabezado,errLogin:false});
+         }else{
+          boolean=await verificarHash(aux.clave1,login[0].clave_login);
+          if(boolean) {
+            res.render('vistaPrincipal',{encabezado,errLogin:true})
+           }else{
+            res.render('vistaPrincipal',{encabezado,errLogin:false})
+           }
+         }
+         
+         
+        
          }
         
         break;

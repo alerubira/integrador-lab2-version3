@@ -9,8 +9,9 @@ async function crearHash(hashear) {
 }
 
 // Función para verificar una contraseña
-async function verificarHash(plainPassword, hashedPassword) {
-    const match = await compare(plainPassword, hashedPassword);
+async function verificarHash(password, hashedPassword) {
+    console.log(password,'  ',hashedPassword);
+    const match = await compare(password, hashedPassword);
     return match; // Devuelve true si la contraseña coincide, de lo contrario false
 }
 

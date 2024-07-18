@@ -55,7 +55,7 @@ const loginY= yup.object().shape({
     usuario: yup.string()
         .max(6, 'El usuario debe tener como máximo 6 caracteres')
         .required('El usuario es obligatorio'),
-    clave: yup.string()
+    clave1: yup.string()
         .matches(/^(?=.*[A-Z])(?=.*[a-zA-Z]{2})(?=.*\d{3}).*$/, 'La clave debe tener al menos una mayúscula, tres letras y tres números')
         .min(6, 'La clave debe tener como mínimo 6 caracteres')
         .max(6, 'La clave debe tener como máximo 6 caracteres')
