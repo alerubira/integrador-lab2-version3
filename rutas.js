@@ -16,7 +16,10 @@ ruta.post('/verificarLogin',(req,res) =>{
    manejador(req,res,'verificarLogin');
   });
    
-   
+ruta.get('/acceso',(req,res)=>{
+  encabezado="Vienvenido a Accesos";
+res.render('vistaAcceso',{encabezado});
+});
    
    /*app.get('/medicos',(req,res)=>{
      encabezado="Planilla para procesar medicos"

@@ -20,7 +20,7 @@ async function manejador(req,res,objeto){
     let objet = req.body; 
     switch (objeto) {
       case 'verificarLogin':
-        //ordenar,modificar vista(dejar solo login),crear vista(para los distintos accesesos),generar token
+        //ordenar,generar token
         let errLogin;
          aux=await verificar(objet,'Login');
          if(aux.errors){
@@ -33,7 +33,7 @@ async function manejador(req,res,objeto){
          }else{
           boolean=await verificarHash(aux.clave1,login[0].clave_login);
           if(boolean) {
-            res.render('vistaPrincipal',{encabezado,errLogin:true})
+            res.redirect('/acceso');
            }else{
             res.render('vistaPrincipal',{encabezado,errLogin:false})
            }

@@ -43,12 +43,11 @@ app.set('views', path.join(__dirname, 'vistas'));
 app.use(express.json());
 // Definir una ruta para renderizar una vista Pug
 //app.use('/', ruta);
-let encabezado;
-let mensajeExito;
-let estadoSuces;
+
 // Definir tus rutas aquí
 app.use('/', ruta);
 app.use('/verificarLogin',ruta);
+app.use('/accaso',ruta);
 /*app.get('/', (req, res) => {
     encabezado="Bienvenido al Ministerio de Salud";
      res.render('vistaPrincipal',{encabezado,mensajeExito,estadoSuces});
