@@ -1,38 +1,12 @@
-extendes layaut
-                    
+extends layout
+block content                    
 
                     
-                    button.boton(type="button", onclick="mostrarFormulario('formularioAdministrativo')") Acceder a medicamentos 
-                    button.boton(type="button", onclick="mostrarFormulario('formularioAdministrativoR')") Acceder a Profesionales
+            button.boton(type="button", onclick="mostrarFormulario('formularioAdministrativo')") Acceder a medicamentos 
+            button.boton(type="button", onclick="mostrarFormulario('formularioAdministrativoR')") Acceder a Profesionales
 
-                    
-               
-        p#errLogin.ocultar= errLogin
-        form#formularioLogin(action="/verificarLogin", method="POST", autocomplete="off")
-        label(for="usuario") Usuario:
-        input.limpiar(type="text", id="usuario",name="usuario",placeholder="usuario",autocomplete="off")
-        br
-        label(for="clave1") Clave:
-        input.limpiar(type="password", id="clave1", name="clave1",placeholder="clave",autocomplete="off")
-        br
-        input.boton(type="submit", value="Ingresar")
+            
+        
+                p#errLogin.ocultar= errLogin
 
-    p#errLogin.ocultar= errLogin
-     #divPrincipal
-                            
-            #divCabecera
-                h1= encabezado
-            #divLogo
-                img(src="./icons8-medicina-100.png", alt="Logo")
-            #divLateral
-                button(type="button") Adorno 
-                br
-                button(type="button") Adorno 
-                br
-                button(type="button") Adorno 
-                br
-                button(type="button") Adorno 
-            #divAlerta
-            #divExito         
-            #divSecundario
            

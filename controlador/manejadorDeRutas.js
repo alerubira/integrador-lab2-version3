@@ -24,24 +24,20 @@ async function manejador(req,res,objeto){
         let errLogin;
          aux=await verificar(objet,'Login');
          if(aux.errors){
-          res.render('vistaPrincipal',{encabezado,errLogin:false});
-         }else{
+          return  res.render('vistaPrincipal',{encabezado,errLogin:false});
+         }
          login=await buscarLoginPorUsuario(aux.usuario);
          
          if(login.length<1){
-          res.render('vistaPrincipal',{encabezado,errLogin:false});
-         }else{
+          return res.render('vistaPrincipal',{encabezado,errLogin:false});
+         }
           boolean=await verificarHash(aux.clave1,login[0].clave_login);
           if(boolean) {
             res.redirect('/acceso');
            }else{
             res.render('vistaPrincipal',{encabezado,errLogin:false})
            }
-         }
          
-         
-        
-         }
         
         break;
       case 'Medico':

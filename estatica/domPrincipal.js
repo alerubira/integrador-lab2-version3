@@ -4,6 +4,7 @@ let inputUsuario=document.getElementById('usuario');
 let inputClave=document.getElementById('clave1');
 let errLogin=document.getElementById('errLogin');
 let errLoginValue=errLogin.textContent;
+let formModificarLogin=document.getElementById('formularioModificarLogin');
 pagina="Principal";
 //limpiarCampos(limpiar);
 console.log(errLoginValue);
@@ -11,7 +12,10 @@ console.log(errLoginValue);
         alerta(pagina,'Algo esta mal con el login');
     }
 
+function mostrar(){
+    formModificarLogin.style.display = 'block';
 
+}
 formLogin.addEventListener('submit',async function(event) {
     let claveValue=inputClave.value ;
     let usuarioValue=inputUsuario.value ;
