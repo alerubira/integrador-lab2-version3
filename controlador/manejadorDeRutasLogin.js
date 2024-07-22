@@ -9,22 +9,23 @@
 import { verificar } from "./verificaryup.js";
 import { encabezado } from "../rutas.js";
 import { buscarLoginPorUsuario } from "../modelo/loginData.js";
-import { verificarHash,crearHash,Login } from "../modelo/loginn.js";
+import { verificarHash,crearHash,Login,usuarioClave } from "../modelo/loginn.js";
 //import { agregarMedico } from '../modelo/medicoData.js';
 let errLogin;
 let objetAux={};
 let objet={};
+
 async function manejadorLogin(req,res,objeto){
   try {
     let boolean;
     let login;
     let aux;
-     objet = req.body; 
+    let usCl=new usuarioClave(req.body);
     switch (objeto) {
       case 'verificarLogin':
         //ordenar,generar token
         
-         aux=await verificar(objet,'Login');
+         aux=await verificar(asCl,'Login');
          if(aux.errors){
           return  res.render('vistaPrincipal',{encabezado,errLogin:false});
          }
@@ -43,27 +44,33 @@ async function manejadorLogin(req,res,objeto){
         
         break;
       case 'modificarLogin':
-        let a=objet.usuario2;
-        let b=objet.clave2;
-        objetAux={a,b};
-        aux=await verificar(objetAux,'Login');
+        objet=req.body;
+        let usCl=new usuarioClave(objet.usuario2,objet.clave2);
+        aux=await verificar(usCl,'usuarioClave');
          if(aux.errors){
           return  res.render('vistaPrincipal',{encabezado,errLogin:false});
          }
          if(objet.clave3!==objet.clave4){
           return res.render('vistaPrincipal',{encabezado,errLogin:false});
          }
+         usCl=new usuarioClave(objet.usuario2,objet.clave3);
+         aux=await verificar(usCl,'usuarioClave');
+         if(aux.errors){
+          return  res.render('vistaPrincipal',{encabezado,errLogin:false});
+         }
          login=await buscarLoginPorUsuario(aux.usuario);
          
          if(login.length<1){
           return res.render('vistaPrincipal',{encabezado,errLogin:false});
          }
-         boolean=await verificarHash(aux.clave1,login[0].clave_login);
+         
+        boolean=await verificarHash(objet.clave2,login[0].clave_login);
           if(boolean) {
-            a=objet.usuario2;
-            b=crearHash(objet.clave3);
-            //generar un objeto Login , realizar udate
-            let l=new Login(login.id_login,login.id_medico,login.usuario_login,b,login.tipo_autorizacion,login.instancia+1);
+           
+           let b=await crearHash(objet.clave3);
+            //generar un objeto Login 
+            let l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,b,login[0].tipo_autorizacion,login[0].instancia+1);
+            //hacer update,confirmar con tipo de autorizacion,res diret pagina principal,hacer usuario unico
             res.send(l);
            }else{
             res.render('vistaPrincipal',{encabezado,errLogin:false})

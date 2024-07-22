@@ -50,12 +50,12 @@ nivelAutorizacion: yup.string()
      .required('El nivel de autorizacion es obligatorio obligatorio'),
 
 });
-const loginY= yup.object().shape({
+const usuarioClaveY= yup.object().shape({
     
     usuario: yup.string()
         .max(6, 'El usuario debe tener como máximo 6 caracteres')
         .required('El usuario es obligatorio'),
-    clave1: yup.string()
+    clave: yup.string()
         .matches(/^(?=.*[A-Z])(?=.*[a-zA-Z]{2})(?=.*\d{3}).*$/, 'La clave debe tener al menos una mayúscula, tres letras y tres números')
         .min(6, 'La clave debe tener como mínimo 6 caracteres')
         .max(6, 'La clave debe tener como máximo 6 caracteres')
@@ -67,11 +67,11 @@ const loginY= yup.object().shape({
 //console.log(profecionales);
 async function verificar(objeto,nombre){
     let aux;
-        
+        //console.log(objeto);
             
            switch (nombre) {
-             case 'Login':
-                aux=await verificarY(objeto,loginY);
+             case 'usuarioClave':
+                aux=await verificarY(objeto,usuarioClaveY);
                 return aux;
                break;
              case 'especialidad':
