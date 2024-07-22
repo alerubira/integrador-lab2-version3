@@ -4,6 +4,7 @@ let limpiar=document.querySelectorAll('.limpiar');
 let divAlerta=document.getElementById('divAlerta');
 let divExito=document.getElementById('divExito');
 let pagina;
+let cla=/^(?=(?:.*[A-Z]){1,})(?=(?:.*[a-zA-Z]){3,})(?=(?:.*\d){3,}).*$/;
 limpiarCampos(limpiar);
 
  function Focultar(){

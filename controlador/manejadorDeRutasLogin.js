@@ -9,19 +9,21 @@
 import { verificar } from "./verificaryup.js";
 import { encabezado } from "../rutas.js";
 import { buscarLoginPorUsuario } from "../modelo/loginData.js";
-import { verificarHash } from "../modelo/loginn.js";
+import { verificarHash,crearHash,Login } from "../modelo/loginn.js";
 //import { agregarMedico } from '../modelo/medicoData.js';
-
-async function manejador(req,res,objeto){
+let errLogin;
+let objetAux={};
+let objet={};
+async function manejadorLogin(req,res,objeto){
   try {
     let boolean;
     let login;
     let aux;
-    let objet = req.body; 
+     objet = req.body; 
     switch (objeto) {
       case 'verificarLogin':
         //ordenar,generar token
-        let errLogin;
+        
          aux=await verificar(objet,'Login');
          if(aux.errors){
           return  res.render('vistaPrincipal',{encabezado,errLogin:false});
@@ -40,6 +42,35 @@ async function manejador(req,res,objeto){
          
         
         break;
+      case 'modificarLogin':
+        let a=objet.usuario2;
+        let b=objet.clave2;
+        objetAux={a,b};
+        aux=await verificar(objetAux,'Login');
+         if(aux.errors){
+          return  res.render('vistaPrincipal',{encabezado,errLogin:false});
+         }
+         if(objet.clave3!==objet.clave4){
+          return res.render('vistaPrincipal',{encabezado,errLogin:false});
+         }
+         login=await buscarLoginPorUsuario(aux.usuario);
+         
+         if(login.length<1){
+          return res.render('vistaPrincipal',{encabezado,errLogin:false});
+         }
+         boolean=await verificarHash(aux.clave1,login[0].clave_login);
+          if(boolean) {
+            a=objet.usuario2;
+            b=crearHash(objet.clave3);
+            //generar un objeto Login , realizar udate
+            let l=new Login(login.id_login,login.id_medico,login.usuario_login,b,login.tipo_autorizacion,login.instancia+1);
+            res.send(l);
+           }else{
+            res.render('vistaPrincipal',{encabezado,errLogin:false})
+           }
+         
+         
+        break;  
       case 'Medico':
          aux= await verificarMedico(objet);
           if(!aux.err){
@@ -61,7 +92,7 @@ async function manejador(req,res,objeto){
 }
 }
 
-export{manejador};
+export{manejadorLogin };
  
 /*function verificarProfecional(res,req,logins,encabezado){
   let loginEncontrado = logins.find(login => 

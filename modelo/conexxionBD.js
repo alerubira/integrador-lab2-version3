@@ -46,7 +46,7 @@ const pool = mysql.createPool({
     connectionLimit: 10,
     queueLimit: 0
 });
-async function consulta1(query, params) {
+async function consulta1(query, ...params) {
     let connection;
     try {
         connection = await pool.getConnection();

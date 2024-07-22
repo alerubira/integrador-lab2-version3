@@ -12,18 +12,18 @@ block content
             br
             input.boton(type="submit", value="Ingresar")
         button.boton(onclick="mostrar()") Modificar Clave
-        form#formularioModificarLogin.ocultar(action="/ModificarLogin", method="POST", autocomplete="off")
+        form#formularioModificarLogin.ocultar(action="/modificarLogin", method="POST", autocomplete="off")
             label(for="usuario2") Usuario:
             input.limpiar(type="text", id="usuario2",name="usuario2",placeholder="usuario",autocomplete="off")
             br
             label(for="clave2") Clave:
             input.limpiar(type="password", id="clave2", name="clave2",placeholder="clave",autocomplete="off")
             br
-            label(for="clave4") Clave Nueva:
-            input.limpiar(type="password", id="clave4",name="clave4",placeholder="clave nueva",autocomplete="off")
-            br
             label(for="clave3") Clave Nueva:
-            input.limpiar(type="password", id="clave3", name="clave3",placeholder="repita clave",autocomplete="off")
+            input.limpiar(type="password", id="clave3",name="clave3",placeholder="clave nueva",autocomplete="off")
+            br
+            label(for="clave4") Clave Nueva:
+            input.limpiar(type="password", id="clave4", name="clave4",placeholder="repita clave",autocomplete="off")
             br
             input.boton(type="submit", value="Enviar")
         p#errLogin.ocultar= errLogin                                                                                                                                      

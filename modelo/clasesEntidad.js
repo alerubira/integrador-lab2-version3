@@ -61,14 +61,6 @@ class Persona {
         this.prestaciones=prestaciones;
     }
   }
-  class Login{
-    constructor(idLogin,idMedico,usuarioLogin,claveLogin,tipoAutorizacion,instancia){
-      this.idLogin=idLogin;
-      this.idMedico=idMedico;
-      this.usuarioLogin=usuarioLogin;
-      this.claveLogin=claveLogin;
-      this.tipoAutorizacion=tipoAutorizacion;
-      this.instancia=instancia;
-    }
-  }
-  export{Login,Medico,Paciente};
+ 
+  
+  export{Medico,Paciente};

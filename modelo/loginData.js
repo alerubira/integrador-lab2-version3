@@ -1,5 +1,5 @@
 import { pool , consulta1} from "./conexxionBD.js";
-import { Login } from './clasesEntidad.js';
+import { Login } from "./loginn.js";
 let logins=[];
 //console.log("login");
 /*connection.connect(function(err) {
@@ -50,6 +50,7 @@ let logins=[];
 })().catch(error => {
     console.error('Error al ejecutar la función obtenerLogins:', error);
 });*/
+
 async function buscarLoginPorUsuario(usuario){
 let query=  'SELECT * FROM `login` WHERE usuario_login = ?';
   let result=await consulta1(query,usuario);
@@ -58,4 +59,7 @@ let query=  'SELECT * FROM `login` WHERE usuario_login = ?';
 async function crearLogin(usuario,clave,nivel,instancia){
     
 }
-export{logins,buscarLoginPorUsuario};
+async function modificarLogin(loginModificado){
+
+}
+export{logins,buscarLoginPorUsuario,modificarLogin};

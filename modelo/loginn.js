@@ -1,4 +1,14 @@
 import { genSalt, hash as _hash, compare } from 'bcrypt';
+class Login {
+    constructor(idLogin,idMedico,usuario, clave,tipoAutorizacion,instancia) {
+        this.idLogin=idLogin;
+        this.idMedico=idMedico;
+        this.usuario = usuario;
+        this.clave = clave;
+        this.tipoAutorizacion=tipoAutorizacion;
+        this.instancia=instancia;
+    }
+}
 
 // Función para hashear una contraseña
 async function crearHash(hashear) {
@@ -15,4 +25,4 @@ async function verificarHash(password, hashedPassword) {
     return match; // Devuelve true si la contraseña coincide, de lo contrario false
 }
 
-export{crearHash,verificarHash};
+export{crearHash,verificarHash,Login};

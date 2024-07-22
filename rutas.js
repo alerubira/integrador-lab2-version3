@@ -1,5 +1,5 @@
 import express from 'express';
-import { manejador } from './controlador/manejadorDeRutas.js';
+import { manejadorLogin } from './controlador/manejadorDeRutasLogin.js';
 const ruta = express.Router();
 let encabezado;
 let mensajeExito;
@@ -13,14 +13,16 @@ ruta.get('/', (req, res) => {
     //res.send('hola mundo');
    });
 ruta.post('/verificarLogin',(req,res) =>{
-   manejador(req,res,'verificarLogin');
+   manejadorLogin(req,res,'verificarLogin');
   });
    
 ruta.get('/acceso',(req,res)=>{
   encabezado="Vienvenido a Accesos";
 res.render('vistaAcceso',{encabezado});
 });
-   
+ruta.post('/modificarLogin',(req,res)=>{
+manejadorLogin(req,res,'modificarLogin');
+})   
    /*app.get('/medicos',(req,res)=>{
      encabezado="Planilla para procesar medicos"
      res.render('medicos',{encabezado,mensajeExito,estadoSuces});
