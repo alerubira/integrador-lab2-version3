@@ -20,23 +20,33 @@ async function manejadorLogin(req,res,objeto){
     let boolean;
     let login;
     let aux;
-    let usCl=new usuarioClave(req.body);
+    let body=req.body;
+    let usCl;
     switch (objeto) {
       case 'verificarLogin':
         //ordenar,generar token
-        
-         aux=await verificar(asCl,'Login');
+          usCl=new usuarioClave(body.usuario,body.clave1);
+         aux=await verificar(usCl,'usuarioClave');
          if(aux.errors){
           return  res.render('vistaPrincipal',{encabezado,errLogin:false});
          }
          login=await buscarLoginPorUsuario(aux.usuario);
-         
+         let l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,login[0].clave_login,login[0].tipo_autorizacion,login[0].instancia,login[0].palabra_clave);
+         //console.log(l);
          if(login.length<1){
           return res.render('vistaPrincipal',{encabezado,errLogin:false});
          }
-          boolean=await verificarHash(aux.clave1,login[0].clave_login);
+          boolean=await verificarHash(usCl.clave,l.clave);
           if(boolean) {
-            res.redirect('/acceso');
+              if(l.instancia===1){
+                return res.render('vistaPrincipal',{encabezado,instancia:true})
+              }
+              if(l.tipoAutorizacion===3){
+               return res.redirect('/acceso');
+              }
+              if(l.tipoAutorizacion===2){
+                return res.redirect('/prescripcion');//hacer endpoin
+              }
            }else{
             res.render('vistaPrincipal',{encabezado,errLogin:false})
            }
@@ -45,7 +55,7 @@ async function manejadorLogin(req,res,objeto){
         break;
       case 'modificarLogin':
         objet=req.body;
-        let usCl=new usuarioClave(objet.usuario2,objet.clave2);
+         usCl=new usuarioClave(objet.usuario2,objet.clave2);
         aux=await verificar(usCl,'usuarioClave');
          if(aux.errors){
           return  res.render('vistaPrincipal',{encabezado,errLogin:false});
@@ -69,7 +79,7 @@ async function manejadorLogin(req,res,objeto){
            
            let b=await crearHash(objet.clave3);
             //generar un objeto Login 
-            let l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,b,login[0].tipo_autorizacion,login[0].instancia+1);
+            let l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,b,login[0].tipo_autorizacion,login[0].instancia+1,login[0].palabra_clave);
             //hacer update,confirmar con tipo de autorizacion,res diret pagina principal,hacer usuario unico
             res.send(l);
            }else{

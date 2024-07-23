@@ -3,7 +3,9 @@
 let inputUsuario=document.getElementById('usuario');
 let inputClave=document.getElementById('clave1');
 let errLogin=document.getElementById('errLogin');
+let instancia=document.getElementById('instancia');
 let errLoginValue=errLogin.textContent;
+let instanciaValue=instancia.textContent;
 let formModificarLogin=document.getElementById('formularioModificarLogin');
 let inputUsuari2=document.getElementById('usuario2');
 let inputClave2=document.getElementById('clave2');
@@ -11,11 +13,14 @@ let inpuClave3=document.getElementById('clave3');
 let inputClave4=document.getElementById('clave4');
 pagina="Principal";
 //limpiarCampos(limpiar);
-console.log(errLoginValue);
+console.log(instanciaValue);
  if(errLoginValue==='false'){
         alerta(pagina,'Algo esta mal con el login');
     }
-
+ if(instanciaValue==='true'){
+    alerta(pagina,'Para continuar,deve modificar su clave');
+    mostrar();
+ }
 function mostrar(){
     formModificarLogin.style.display = 'block';
 

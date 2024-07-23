@@ -6,12 +6,13 @@ class usuarioClave{
     }
 }
 class Login extends usuarioClave{
-    constructor(idLogin,idMedico,usuario, clave,tipoAutorizacion,instancia) {
+    constructor(idLogin,idMedico,usuario, clave,tipoAutorizacion,instancia,palabraClave) {
         super(usuario,clave);
         this.idLogin=idLogin;
         this.idMedico=idMedico;
         this.tipoAutorizacion=tipoAutorizacion;
         this.instancia=instancia;
+        this.palabraClave=palabraClave;
     }
 }
 
