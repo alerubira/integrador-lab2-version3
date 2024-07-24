@@ -4,16 +4,22 @@ let inputUsuario=document.getElementById('usuario');
 let inputClave=document.getElementById('clave1');
 let errLogin=document.getElementById('errLogin');
 let instancia=document.getElementById('instancia');
+let exito=document.getElementById('exito');
+let exitoValue=exito.textContent;
 let errLoginValue=errLogin.textContent;
 let instanciaValue=instancia.textContent;
 let formModificarLogin=document.getElementById('formularioModificarLogin');
+let formRecuperarLogin=document.getElementById('formularioRecuperarLogin');
 let inputUsuari2=document.getElementById('usuario2');
 let inputClave2=document.getElementById('clave2');
 let inpuClave3=document.getElementById('clave3');
 let inputClave4=document.getElementById('clave4');
 pagina="Principal";
 //limpiarCampos(limpiar);
-console.log(instanciaValue);
+//console.log(instanciaValue);
+if(exitoValue==='true'){
+    cartelExito(pagina,'La modificacion de la clave fue realizada con exito')
+}
  if(errLoginValue==='false'){
         alerta(pagina,'Algo esta mal con el login');
     }
@@ -22,8 +28,15 @@ console.log(instanciaValue);
     mostrar();
  }
 function mostrar(){
+    limpiarCampos(limpiar);
+    fOcultar();
     formModificarLogin.style.display = 'block';
 
+}
+function mostrar1(){
+    limpiarCampos(limpiar);
+fOcultar();    
+formRecuperarLogin.style.display='block';
 }
 formLogin.addEventListener('submit',async function(event) {
     let claveValue=inputClave.value ;

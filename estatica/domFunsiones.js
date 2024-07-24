@@ -7,7 +7,7 @@ let pagina;
 let cla=/^(?=(?:.*[A-Z]){1,})(?=(?:.*[a-zA-Z]){3,})(?=(?:.*\d){3,}).*$/;
 limpiarCampos(limpiar);
 
- function Focultar(){
+ function fOcultar(){
             
         for (let elemento of ocultar) {
             elemento.style.display = 'none';
@@ -39,7 +39,7 @@ function alerta(pagina,mensage){
     // Ejecutar la función eliminarHijos después de 6 segundos (6000 milisegundos)
     setTimeout(() => eliminarHijos(divAlerta), 6000);
 }
-function exito(pagina,mensage){
+function cartelExito(pagina,mensage){
     // Limpiar cualquier contenido anterior antes de añadir nuevos elementos
     divExito.innerHTML = '';
     //console.log(pagina);

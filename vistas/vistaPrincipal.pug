@@ -26,8 +26,19 @@ block content
             input.limpiar(type="password", id="clave4", name="clave4",placeholder="repita clave",autocomplete="off")
             br
             input.boton(type="submit", value="Enviar")
+            
+        button.boton(onclick="mostrar1()") Recuperar Clave
+        form#formularioRecuperarLogin.ocultar(action="/recuperarLogin", method="POST", autocomplete="off")
+            label(for="usuario5") Usuario:
+            input.limpiar(type="text", id="usuario5",name="usuario5",placeholder="usuario",autocomplete="off")
+            br
+            label(for="PalabraClave") Palabre Clave:
+            input.limpiar(type="text", id="palabraClave", name="PalabreClave",placeholder="palabre clave",autocomplete="off")
+            br
+            input.boton(type="submit", value="Recuperar")    
         p#errLogin.ocultar= errLogin                                                                                                                                      
-        p#instancia.ocultar= instancia                                                                                                                            
+        p#instancia.ocultar= instancia
+        p#exito.ocultar= exito                                                                                                                            
                                                                                                                                     
                                                                                                                                     
                                                                                                                                     

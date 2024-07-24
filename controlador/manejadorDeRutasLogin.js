@@ -8,7 +8,7 @@
 
 import { verificar } from "./verificaryup.js";
 import { encabezado } from "../rutas.js";
-import { buscarLoginPorUsuario } from "../modelo/loginData.js";
+import { buscarLoginPorUsuario, modificarLogin } from "../modelo/loginData.js";
 import { verificarHash,crearHash,Login,usuarioClave } from "../modelo/loginn.js";
 //import { agregarMedico } from '../modelo/medicoData.js';
 let errLogin;
@@ -80,13 +80,19 @@ async function manejadorLogin(req,res,objeto){
            let b=await crearHash(objet.clave3);
             //generar un objeto Login 
             let l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,b,login[0].tipo_autorizacion,login[0].instancia+1,login[0].palabra_clave);
-            //hacer update,confirmar con tipo de autorizacion,res diret pagina principal,hacer usuario unico
-            res.send(l);
+            //res.send(l);
+            let result=await modificarLogin(l);
+            if(result.affectedRows===1){
+              return res.render('vistaPrincipal',{encabezado,exito:true})
+            }
            }else{
-            res.render('vistaPrincipal',{encabezado,errLogin:false})
+           return res.render('vistaPrincipal',{encabezado,errLogin:false})
            }
          
          
+        break;  
+      case 'recuperarLogin':
+        //recuperar con el usuario y la palabre clave
         break;  
       case 'Medico':
          aux= await verificarMedico(objet);
