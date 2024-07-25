@@ -23,8 +23,8 @@ res.render('vistaAcceso',{encabezado});
 ruta.post('/modificarLogin',(req,res)=>{
 manejadorLogin(req,res,'modificarLogin');
 }) ;
-ruta.post('/recupararLogin',(req,res)=>{
-manejadorLogin(req,res,'recuperarLogin')
+ruta.post('/recuperarLogin',(req,res)=>{
+manejadorLogin(req,res,'recuperarLogin');
 })  ;
    /*app.get('/medicos',(req,res)=>{
      encabezado="Planilla para procesar medicos"

@@ -22,16 +22,17 @@ async function manejadorLogin(req,res,objeto){
     let aux;
     let body=req.body;
     let usCl;
+    let l;
     switch (objeto) {
       case 'verificarLogin':
-        //ordenar,generar token
+        //generar token
           usCl=new usuarioClave(body.usuario,body.clave1);
          aux=await verificar(usCl,'usuarioClave');
          if(aux.errors){
           return  res.render('vistaPrincipal',{encabezado,errLogin:false});
          }
          login=await buscarLoginPorUsuario(aux.usuario);
-         let l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,login[0].clave_login,login[0].tipo_autorizacion,login[0].instancia,login[0].palabra_clave);
+          l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,login[0].clave_login,login[0].tipo_autorizacion,login[0].instancia,login[0].palabra_clave);
          //console.log(l);
          if(login.length<1){
           return res.render('vistaPrincipal',{encabezado,errLogin:false});
@@ -79,7 +80,7 @@ async function manejadorLogin(req,res,objeto){
            
            let b=await crearHash(objet.clave3);
             //generar un objeto Login 
-            let l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,b,login[0].tipo_autorizacion,login[0].instancia+1,login[0].palabra_clave);
+             l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,b,login[0].tipo_autorizacion,login[0].instancia+1,login[0].palabra_clave);
             //res.send(l);
             let result=await modificarLogin(l);
             if(result.affectedRows===1){
@@ -92,7 +93,23 @@ async function manejadorLogin(req,res,objeto){
          
         break;  
       case 'recuperarLogin':
-        //recuperar con el usuario y la palabre clave
+        aux=await verificar(body,'usuarioPalabra');
+        console.log(aux);
+        if(aux.errors){
+          return  res.render('vistaPrincipal',{encabezado,errLogin:false});
+         }
+        
+        login=await buscarLoginPorUsuario(body.usuario5);
+        if(login.length===1){
+          l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,login[0].clave_login,login[0].tipo_autorizacion,login[0].instancia+1,login[0].palabra_clave);
+       }else{
+        return res.render('vistaPrincipal',{encabezado,errLogin:false});
+       }
+         if(l.palabraClave===body.palabraClave){
+          return res.send(l);
+         }else{
+          return res.render('vistaPrincipal',{encabezado,errLogin:false});
+         }
         break;  
       case 'Medico':
          aux= await verificarMedico(objet);

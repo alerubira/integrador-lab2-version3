@@ -14,6 +14,8 @@ let inputUsuari2=document.getElementById('usuario2');
 let inputClave2=document.getElementById('clave2');
 let inpuClave3=document.getElementById('clave3');
 let inputClave4=document.getElementById('clave4');
+let inputUsuario5=document.getElementById('usuario5');
+let inputPalabraClave=document.getElementById('palabraClave');
 pagina="Principal";
 //limpiarCampos(limpiar);
 //console.log(instanciaValue);
@@ -38,6 +40,12 @@ function mostrar1(){
 fOcultar();    
 formRecuperarLogin.style.display='block';
 }
+formRecuperarLogin.addEventListener('submit',async function(event){
+let usuario5Value=inputUsuario5.value;
+let palabraClaveValue=inputPalabraClave.value;
+validar(usuario5Value.length<1||usuario5Value.length>6,pagina,'El usuario es obligatorio y no debe superar los 6 caracteres',event);
+validar(palabraClaveValue.length<1||palabraClaveValue.length>35,pagina,'La palabra clave es obligatorio y no debe superar los 35 caracteres',event);
+});
 formLogin.addEventListener('submit',async function(event) {
     let claveValue=inputClave.value ;
     let usuarioValue=inputUsuario.value ;

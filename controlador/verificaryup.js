@@ -62,6 +62,14 @@ const usuarioClaveY= yup.object().shape({
         .required('La clave es obligatoria'),
     
     });
+ const usuarioPalabraY= yup.object().shape({
+    usuario5: yup.string()
+        .max(6, 'El usuario debe tener como máximo 6 caracteres')
+        .required('El usuario es obligatorio'),
+    palabraClave: yup.string()
+        .max(35, 'Lapalabra clave debe tener como máximo 35 caracteres')
+        .required('La palabra clave es obligatorio'),    
+ })   
 
 //console.log(medicamentos);
 //console.log(profecionales);
@@ -74,6 +82,10 @@ async function verificar(objeto,nombre){
                 aux=await verificarY(objeto,usuarioClaveY);
                 return aux;
                break;
+             case 'usuarioPalabra':
+                aux=await verificar(objeto,usuarioPalabraY);
+                return aux;
+                break;  
              case 'especialidad':
                 aux=await especialidadesTodas(caracteres);
                break;
@@ -92,7 +104,7 @@ async function verificar(objeto,nombre){
         return validData;
     })
     .catch(err => {
-        console.error("Errores de validación:", err.errors);
+        console.error("Errores de validación en yup:", err.errors);
         return err;
     });
   }     
