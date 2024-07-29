@@ -11,6 +11,8 @@ import { encabezado } from "../rutas.js";
 import { buscarLoginPorUsuario, modificarLogin } from "../modelo/loginData.js";
 import { verificarHash,crearHash,Login,usuarioClave } from "../modelo/loginn.js";
 //import { agregarMedico } from '../modelo/medicoData.js';
+import jwt from 'jsonwebtoken';
+import { jwtSecret } from '../config.js';
 let errLogin;
 let objetAux={};
 let objet={};
@@ -40,11 +42,31 @@ async function manejadorLogin(req,res,objeto){
           boolean=await verificarHash(usCl.clave,l.clave);
           if(boolean) {
               if(l.instancia===1){
-                return res.render('vistaPrincipal',{encabezado,instancia:true})
+                  // Datos que quieres almacenar en el token
+                    const payload = {
+                      username: l.usuario
+                    };
+
+                    // Genera el token
+                    const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
+
+                    // Devuelve el token al cliente
+                  return  res.json({ token: token });
+               // return res.render('vistaPrincipal',{encabezado,instancia:true})
               }
               if(l.tipoAutorizacion===3){
                 //generar token
-               return res.redirect('/acceso');
+                 // Datos que quieres almacenar en el token
+                 const payload = {
+                  username: l.usuario
+                };
+
+                // Genera el token
+                const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
+
+                // Devuelve el token al cliente
+              return  res.json({ token: token });
+               //return res.redirect('/acceso');
               }
               if(l.tipoAutorizacion===2){
                 return res.redirect('/prescripcion');//hacer endpoin,generear token
@@ -136,8 +158,25 @@ async function manejadorLogin(req,res,objeto){
     res.status(500).send('Error interno del servidor');
 }
 }
+// Middleware para verificar el token
+const verifyToken = (req, res, next) => {
+  const token = req.headers['authorization'];
 
-export{manejadorLogin };
+  if (!token) {
+    return res.status(403).json({ message: 'Token no proporcionado' });
+  }
+
+  jwt.verify(token, jwtSecret, (err, decoded) => {
+    if (err) {
+      return res.status(401).json({ message: 'Token inválido' });
+    }
+
+    req.user = decoded;
+    next();
+  });
+};
+
+export{manejadorLogin ,verifyToken};
  
 /*function verificarProfecional(res,req,logins,encabezado){
   let loginEncontrado = logins.find(login => 

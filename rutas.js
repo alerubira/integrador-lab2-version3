@@ -1,5 +1,6 @@
 import express from 'express';
 import { manejadorLogin } from './controlador/manejadorDeRutasLogin.js';
+import { verifyToken } from './controlador/manejadorDeRutasLogin.js';
 const ruta = express.Router();
 let encabezado;
 let mensajeExito;
@@ -15,7 +16,10 @@ ruta.get('/', (req, res) => {
 ruta.post('/verificarLogin',(req,res) =>{
    manejadorLogin(req,res,'verificarLogin');
   });
-   
+// Ruta protegida
+ruta.get('/protected', verifyToken, (req, res) => {
+  res.json({ message: 'Acceso autorizado', user: req.user });
+});   
 ruta.get('/acceso',(req,res)=>{
   encabezado="Vienvenido a Accesos";
 res.render('vistaAcceso',{encabezado});

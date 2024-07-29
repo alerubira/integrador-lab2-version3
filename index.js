@@ -47,7 +47,8 @@ app.use(express.json());
 // Definir tus rutas aquí
 app.use('/', ruta);
 app.use('/verificarLogin',ruta);
-app.use('/accaso',ruta);
+app.use('/protected',ruta);
+app.use('/acceso',ruta);
 app.use('/modificarLogin',ruta);
 app.use('/recuperarLogin',ruta);
 /*app.get('/', (req, res) => {
