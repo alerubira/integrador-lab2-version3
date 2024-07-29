@@ -16,6 +16,8 @@ let inpuClave3=document.getElementById('clave3');
 let inputClave4=document.getElementById('clave4');
 let inputUsuario5=document.getElementById('usuario5');
 let inputPalabraClave=document.getElementById('palabraClave');
+let inputClave6=document.getElementById('clave6');
+let inputClave7=document.getElementById('clave7');
 pagina="Principal";
 //limpiarCampos(limpiar);
 //console.log(instanciaValue);
@@ -43,8 +45,13 @@ formRecuperarLogin.style.display='block';
 formRecuperarLogin.addEventListener('submit',async function(event){
 let usuario5Value=inputUsuario5.value;
 let palabraClaveValue=inputPalabraClave.value;
+let clave6Value=inputClave6.value;
+let clave7Value=inputClave7.value;
 validar(usuario5Value.length<1||usuario5Value.length>6,pagina,'El usuario es obligatorio y no debe superar los 6 caracteres',event);
 validar(palabraClaveValue.length<1||palabraClaveValue.length>35,pagina,'La palabra clave es obligatorio y no debe superar los 35 caracteres',event);
+validar(clave6Value.length<1||!cla.test(clave6Value),pagina,'La clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
+validar(clave7Value.length<1||!cla.test(clave7Value),pagina,'La nueva clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
+validar(clave6Value!==clave7Value,pagina,'La confirmacion de la clave no es igual a la clave nueva',event);
 });
 formLogin.addEventListener('submit',async function(event) {
     let claveValue=inputClave.value ;

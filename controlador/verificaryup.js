@@ -68,7 +68,12 @@ const usuarioClaveY= yup.object().shape({
         .required('El usuario es obligatorio'),
     palabraClave: yup.string()
         .max(35, 'Lapalabra clave debe tener como máximo 35 caracteres')
-        .required('La palabra clave es obligatorio'),    
+        .required('La palabra clave es obligatorio'),
+    clave6: yup.string()
+        .matches(/^(?=.*[A-Z])(?=.*[a-zA-Z]{2})(?=.*\d{3}).*$/, 'La clave debe tener al menos una mayúscula, tres letras y tres números')
+        .min(6, 'La clave debe tener como mínimo 6 caracteres')
+        .max(6, 'La clave debe tener como máximo 6 caracteres')
+        .required('La clave es obligatoria'),        
  })   
 
 //console.log(medicamentos);
@@ -83,7 +88,7 @@ async function verificar(objeto,nombre){
                 return aux;
                break;
              case 'usuarioPalabra':
-                aux=await verificar(objeto,usuarioPalabraY);
+                aux=await verificarY(objeto,usuarioPalabraY);
                 return aux;
                 break;  
              case 'especialidad':

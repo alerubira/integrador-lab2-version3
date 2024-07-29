@@ -27,13 +27,20 @@ block content
             br
             input.boton(type="submit", value="Enviar")
             
-        button.boton(onclick="mostrar1()") Recuperar Clave
+        button.boton(onclick="mostrar1()") Olvidaste tu Clave?
         form#formularioRecuperarLogin.ocultar(action="/recuperarLogin", method="POST", autocomplete="off")
+            p Para generar una clave nueva deve usar su usuario y Palabra Clave
             label(for="usuario5") Usuario:
             input.limpiar(type="text", id="usuario5",name="usuario5",placeholder="usuario",autocomplete="off")
             br
             label(for="palabraClave") Palabre Clave:
             input.limpiar(type="text", id="palabraClave", name="palabraClave",placeholder="palabra clave",autocomplete="off")
+            br
+            label(for="clave6") Clave Nueva:
+            input.limpiar(type="password", id="clave6",name="clave6",placeholder="clave nueva",autocomplete="off")
+            br
+            label(for="clave7") Clave Nueva:
+            input.limpiar(type="password", id="clave7",placeholder="repita clave",autocomplete="off")
             br
             input.boton(type="submit", value="Recuperar")    
         p#errLogin.ocultar= errLogin                                                                                                                                      

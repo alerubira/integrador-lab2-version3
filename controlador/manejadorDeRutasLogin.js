@@ -25,7 +25,7 @@ async function manejadorLogin(req,res,objeto){
     let l;
     switch (objeto) {
       case 'verificarLogin':
-        //generar token
+        
           usCl=new usuarioClave(body.usuario,body.clave1);
          aux=await verificar(usCl,'usuarioClave');
          if(aux.errors){
@@ -43,10 +43,11 @@ async function manejadorLogin(req,res,objeto){
                 return res.render('vistaPrincipal',{encabezado,instancia:true})
               }
               if(l.tipoAutorizacion===3){
+                //generar token
                return res.redirect('/acceso');
               }
               if(l.tipoAutorizacion===2){
-                return res.redirect('/prescripcion');//hacer endpoin
+                return res.redirect('/prescripcion');//hacer endpoin,generear token
               }
            }else{
             res.render('vistaPrincipal',{encabezado,errLogin:false})
@@ -94,7 +95,6 @@ async function manejadorLogin(req,res,objeto){
         break;  
       case 'recuperarLogin':
         aux=await verificar(body,'usuarioPalabra');
-        console.log(aux);
         if(aux.errors){
           return  res.render('vistaPrincipal',{encabezado,errLogin:false});
          }
@@ -106,7 +106,12 @@ async function manejadorLogin(req,res,objeto){
         return res.render('vistaPrincipal',{encabezado,errLogin:false});
        }
          if(l.palabraClave===body.palabraClave){
-          return res.send(l);
+          let c=await crearHash(body.clave6);
+          let l1=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,c,login[0].tipo_autorizacion,login[0].instancia+1,login[0].palabra_clave);
+          let result1=await modificarLogin(l1);
+          if(result1.affectedRows===1){
+            return res.render('vistaPrincipal',{encabezado,exito:true})
+          }
          }else{
           return res.render('vistaPrincipal',{encabezado,errLogin:false});
          }
