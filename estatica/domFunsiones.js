@@ -56,6 +56,9 @@ function validar(codicion,pagina,mensage,event){
     if (codicion) {
          alerta(pagina,mensage);
          event.preventDefault(); // Previene el envío del formulario
+         return false;
+        }else{
+            return true;
         }}
  async function fech(input, endpoint) {
             try {

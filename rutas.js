@@ -14,6 +14,7 @@ ruta.get('/', (req, res) => {
     //res.send('hola mundo');
    });
 ruta.post('/verificarLogin',(req,res) =>{
+  
    manejadorLogin(req,res,'verificarLogin');
   });
 // Ruta protegida

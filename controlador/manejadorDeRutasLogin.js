@@ -27,8 +27,7 @@ async function manejadorLogin(req,res,objeto){
     let l;
     switch (objeto) {
       case 'verificarLogin':
-        
-          usCl=new usuarioClave(body.usuario,body.clave1);
+          usCl=new usuarioClave(body.usuario,body.clave1);  
          aux=await verificar(usCl,'usuarioClave');
          if(aux.errors){
           return  res.render('vistaPrincipal',{encabezado,errLogin:false});
@@ -161,11 +160,11 @@ async function manejadorLogin(req,res,objeto){
 // Middleware para verificar el token
 const verifyToken = (req, res, next) => {
   const token = req.headers['authorization'];
-
+console.log(token);
   if (!token) {
     return res.status(403).json({ message: 'Token no proporcionado' });
   }
-
+console.log(jwtSecret);
   jwt.verify(token, jwtSecret, (err, decoded) => {
     if (err) {
       return res.status(401).json({ message: 'Token inválido' });

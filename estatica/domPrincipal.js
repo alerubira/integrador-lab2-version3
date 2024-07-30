@@ -54,12 +54,48 @@ validar(clave7Value.length<1||!cla.test(clave7Value),pagina,'La nueva clave debe
 validar(clave6Value!==clave7Value,pagina,'La confirmacion de la clave no es igual a la clave nueva',event);
 });
 formLogin.addEventListener('submit',async function(event) {
+    event.preventDefault();
     let claveValue=inputClave.value ;
     let usuarioValue=inputUsuario.value ;
-    validar(usuarioValue.length<1||usuarioValue.length>6,pagina,'El usuario es obligatorio y no debe superar los 6 caracteres',event);
-    
-    validar(claveValue.length<1||!cla.test(claveValue),pagina,'La clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
+    let a=validar(usuarioValue.length<1||usuarioValue.length>6,pagina,'El usuario es obligatorio y no debe superar los 6 caracteres',event);
+    let b= validar(claveValue.length<1||!cla.test(claveValue),pagina,'La clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
+    if(a&&b){
+        const response = await fetch('/verificarLogin', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({usuario: usuarioValue,clave1: claveValue })
+          });
+        
+          const data = await response.json();
+        
+          if (response.ok) {
+            // Almacenar el token en localStorage
+            localStorage.setItem('token', data.token);
+        
+            // Redirigir al endpoint protegido o realizar otra acción
+            accederEndpointProtegido(data.token);
+          } else {
+            console.error('Error en el login:', data.message);
+          }
+    }
 });
+function accederEndpointProtegido(token) {
+    fetch('/protected', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Datos del endpoint protegido:', data);
+    })
+    .catch(error => {
+      console.error('Error al acceder al endpoint protegido:', error);
+    });
+  }
 formModificarLogin.addEventListener('submit',async function(event){
 let usuario2Value=inputUsuari2.value;
 let clave2Value=inputClave2.value;
