@@ -73,24 +73,50 @@ formLogin.addEventListener('submit',async function(event) {
           if (response.ok) {
             // Almacenar el token en localStorage
             localStorage.setItem('token', data.token);
-        
-            // Redirigir al endpoint protegido o realizar otra acción
-            accederEndpointProtegido(data.token);
+            localStorage.setItem('tipoAutorizacion', data.tipoAutorizacion);
+
+            // Redirigir o realizar acciones basadas en el tipo de autorización
+            if (data.tipoAutorizacion === 3) {
+                 accederEndpointProtegido(data.token);
+                }
           } else {
             console.error('Error en el login:', data.message);
           }
     }
 });
-function accederEndpointProtegido(token) {
-    fetch('/protected', {
+/*function accederEndpointProtegido(token) {
+    fetch('/acceso', {
       method: 'GET',
       headers: {
-        'Authorization': `Bearer ${token}`
+        'Authorization': token 
       }
     })
     .then(response => response.json())
     .then(data => {
       console.log('Datos del endpoint protegido:', data);
+    })
+    .catch(error => {
+      console.error('Error al acceder al endpoint protegido:', error);
+    });
+  }*/
+  function accederEndpointProtegido(token) {
+    console.log('en acceder endpoin protegido');
+    console.log(token);
+    fetch('/acceso', {
+      method: 'GET',
+      headers: {
+         'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(response => {
+      if (response.ok) {
+        // Redirigir el navegador a la página de acceso
+        window.location.href = '/acceso';
+      } else {
+        return response.json().then(data => {
+          console.error('Error al acceder al endpoint protegido :', data);
+        });
+      }
     })
     .catch(error => {
       console.error('Error al acceder al endpoint protegido:', error);

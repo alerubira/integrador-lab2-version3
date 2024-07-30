@@ -21,9 +21,17 @@ ruta.post('/verificarLogin',(req,res) =>{
 ruta.get('/protected', verifyToken, (req, res) => {
   res.json({ message: 'Acceso autorizado', user: req.user });
 });   
-ruta.get('/acceso',(req,res)=>{
+/*ruta.get('/acceso',(req,res)=>{
   encabezado="Vienvenido a Accesos";
 res.render('vistaAcceso',{encabezado});
+});*/
+ruta.get('/acceso', verifyToken, (req, res) => {
+  if (req.user.tipoAutorizacion === 3) {
+    const encabezado = "Bienvenido a Accesos";
+    res.render('vistaAcceso', { encabezado });
+  } else {
+    res.status(403).json({ message: 'Acceso denegado' });
+  }
 });
 ruta.post('/modificarLogin',(req,res)=>{
 manejadorLogin(req,res,'modificarLogin');

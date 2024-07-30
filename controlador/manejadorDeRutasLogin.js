@@ -41,32 +41,26 @@ async function manejadorLogin(req,res,objeto){
           boolean=await verificarHash(usCl.clave,l.clave);
           if(boolean) {
               if(l.instancia===1){
-                  // Datos que quieres almacenar en el token
-                    const payload = {
-                      username: l.usuario
-                    };
-
-                    // Genera el token
-                    const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
-
-                    // Devuelve el token al cliente
-                  return  res.json({ token: token });
-               // return res.render('vistaPrincipal',{encabezado,instancia:true})
+                  
+                return res.render('vistaPrincipal',{encabezado,instancia:true})
               }
               if(l.tipoAutorizacion===3){
                 //generar token
                  // Datos que quieres almacenar en el token
                  const payload = {
-                  username: l.usuario
+                  username: l.usuario,
+                  tipoAutorizacion: l.tipoAutorizacion // Agregar tipo de autorización al payload
                 };
 
                 // Genera el token
                 const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
 
+
                 // Devuelve el token al cliente
-              return  res.json({ token: token });
+              return  res.json({ token: token ,
+                tipoAutorizacion: l.tipoAutorizacion // Agregar tipo de autorización al payload});
                //return res.redirect('/acceso');
-              }
+              })}
               if(l.tipoAutorizacion===2){
                 return res.redirect('/prescripcion');//hacer endpoin,generear token
               }
@@ -159,12 +153,13 @@ async function manejadorLogin(req,res,objeto){
 }
 // Middleware para verificar el token
 const verifyToken = (req, res, next) => {
-  const token = req.headers['authorization'];
-console.log(token);
+  const authHeader = req.headers['authorization'];
+  
+  const token = authHeader && authHeader.split(' ')[1]; // Extraer el token después de "Bearer"
   if (!token) {
     return res.status(403).json({ message: 'Token no proporcionado' });
   }
-console.log(jwtSecret);
+
   jwt.verify(token, jwtSecret, (err, decoded) => {
     if (err) {
       return res.status(401).json({ message: 'Token inválido' });
