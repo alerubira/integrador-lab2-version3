@@ -77,7 +77,8 @@ formLogin.addEventListener('submit',async function(event) {
             
             // Redirigir o realizar acciones basadas en el tipo de autorización
             if (data.tipoAutorizacion === 3) {
-                 accederEndpointProtegido();
+                 //accederEndpointProtegido();
+                 cargarContenidoAcceso();
                   // Redirigir al usuario a la página de acceso
                  // window.location.href = '/acceso';
                 }
@@ -86,6 +87,41 @@ formLogin.addEventListener('submit',async function(event) {
           }
     }
 });
+// Función para cargar el contenido de la página de acceso
+function cargarContenidoAcceso() {
+  const token = localStorage.getItem('token');
+  fetch('/acceso', {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.text();
+    } else {
+      return response.json().then(data => {
+        throw new Error(data.message);
+      });
+    }
+  })
+  .then(html => {
+    //document.body.innerHTML = html;
+    document.documentElement.innerHTML = html;
+    const script1 = document.createElement('script');
+            script1.src = 'domAcceso1.js';
+            script1.textContent = script1.textContent;
+            document.head.appendChild(script1);
+  })
+  .catch(error => {
+    console.error('Error al acceder al endpoint protegido:', error);
+  });
+}
+
+// Llama a la función para acceder al endpoint protegido si estamos en la página de acceso
+if (window.location.pathname === '/acceso') {
+  cargarContenidoAcceso();
+}
 /*function accederEndpointProtegido(token) {
     fetch('/acceso', {
       method: 'GET',

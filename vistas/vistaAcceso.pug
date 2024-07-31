@@ -1,11 +1,11 @@
 extends layout
 block script1 
-    script(src="domAcceso1.js")
+    script(src="domAcceso1.js",defer)       
 block content                    
 
-                    
-            button.boton(type="button", onclick="mostrarFormulario('formularioAdministrativo')") Acceder a medicamentos 
-            button.boton(type="button", onclick="mostrarFormulario('formularioAdministrativoR')") Acceder a Profesionales
+            p#p hola        
+            button.boton(type="button", onclick="redireccionar()") Acceder a medicamentos 
+            button.boton(type="button", onclick="redireccionar()") Acceder a Profesionales
 
             
         

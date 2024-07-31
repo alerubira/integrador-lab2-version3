@@ -23,4 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error('Token no encontrado');
     }
   });
+  function redireccionar(){
+    console.log('hola');
+  }
+  
+  console.log('hola');
   
