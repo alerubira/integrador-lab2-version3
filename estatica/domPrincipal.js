@@ -74,10 +74,12 @@ formLogin.addEventListener('submit',async function(event) {
             // Almacenar el token en localStorage
             localStorage.setItem('token', data.token);
             localStorage.setItem('tipoAutorizacion', data.tipoAutorizacion);
-
+            
             // Redirigir o realizar acciones basadas en el tipo de autorización
             if (data.tipoAutorizacion === 3) {
-                 accederEndpointProtegido(data.token);
+                 accederEndpointProtegido();
+                  // Redirigir al usuario a la página de acceso
+                 // window.location.href = '/acceso';
                 }
           } else {
             console.error('Error en el login:', data.message);
@@ -99,9 +101,8 @@ formLogin.addEventListener('submit',async function(event) {
       console.error('Error al acceder al endpoint protegido:', error);
     });
   }*/
-  function accederEndpointProtegido(token) {
-    console.log('en acceder endpoin protegido');
-    console.log(token);
+  function accederEndpointProtegido() {
+    const token = localStorage.getItem('token');
     fetch('/acceso', {
       method: 'GET',
       headers: {
@@ -110,8 +111,10 @@ formLogin.addEventListener('submit',async function(event) {
     })
     .then(response => {
       if (response.ok) {
+        console.log(response.ok);
         // Redirigir el navegador a la página de acceso
-        window.location.href = '/acceso';
+       //window.location.href = '/acceso';
+       //href = '/acceso';
       } else {
         return response.json().then(data => {
           console.error('Error al acceder al endpoint protegido :', data);
@@ -122,6 +125,9 @@ formLogin.addEventListener('submit',async function(event) {
       console.error('Error al acceder al endpoint protegido:', error);
     });
   }
+ /* if (window.location.pathname === '/acceso') {
+    accederEndpointProtegido();
+  }*/
 formModificarLogin.addEventListener('submit',async function(event){
 let usuario2Value=inputUsuari2.value;
 let clave2Value=inputClave2.value;

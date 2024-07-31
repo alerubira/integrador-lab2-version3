@@ -26,8 +26,9 @@ ruta.get('/protected', verifyToken, (req, res) => {
 res.render('vistaAcceso',{encabezado});
 });*/
 ruta.get('/acceso', verifyToken, (req, res) => {
+  
   if (req.user.tipoAutorizacion === 3) {
-    const encabezado = "Bienvenido a Accesos";
+     encabezado = "Bienvenido a Accesos";
     res.render('vistaAcceso', { encabezado });
   } else {
     res.status(403).json({ message: 'Acceso denegado' });

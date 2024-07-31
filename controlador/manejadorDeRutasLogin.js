@@ -154,7 +154,6 @@ async function manejadorLogin(req,res,objeto){
 // Middleware para verificar el token
 const verifyToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
-  
   const token = authHeader && authHeader.split(' ')[1]; // Extraer el token después de "Bearer"
   if (!token) {
     return res.status(403).json({ message: 'Token no proporcionado' });
