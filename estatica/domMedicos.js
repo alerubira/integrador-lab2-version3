@@ -1,3 +1,7 @@
+
+     
+ 
+  console.log('dom medicos'); 
 pagina="Medico";
 //const Focultar = require('./domFunsiones.js');
 let formularioProfecionalCrear=document.getElementById('formularioProfecionalCrear');
@@ -132,4 +136,3 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
      validar(nivelValue!=1&&nivelValue!=2&&nivelValue!=3 ,pagina,'El nivel seleccionado no es valido',event)
 
    });
-   

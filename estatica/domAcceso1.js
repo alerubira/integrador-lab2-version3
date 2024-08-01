@@ -71,14 +71,15 @@ function cargarContenidoAcceso() {
     }
   })
   .then(html => {
-    //document.body.innerHTML = html;
+    document.body.innerHTML = html;
     document.documentElement.innerHTML = html;
     const script1 = document.createElement('script');
             script1.src = 'domAcceso1.js';
-            script1.textContent = script1.textContent;
+            script1.textContent=script1.textContent;
             document.head.appendChild(script1);
     const script2=document.createElement('script');
             script2.src='domFunsiones.js';
+            script2.textContent=script2.textContent;
             document.head.appendChild(script2);
   })
   .catch(error => {
