@@ -51,6 +51,7 @@ app.use('/protected',ruta);
 app.use('/acceso',ruta);
 app.use('/modificarLogin',ruta);
 app.use('/recuperarLogin',ruta);
+app.use('/medicos',ruta);
 /*app.get('/', (req, res) => {
     encabezado="Bienvenido al Ministerio de Salud";
      res.render('vistaPrincipal',{encabezado,mensajeExito,estadoSuces});
