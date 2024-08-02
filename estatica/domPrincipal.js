@@ -78,7 +78,7 @@ formLogin.addEventListener('submit',async function(event) {
             // Redirigir o realizar acciones basadas en el tipo de autorización
             if (data.tipoAutorizacion === 3) {
                  //accederEndpointProtegido();
-                 cargarContenidoAcceso();
+                 accederEndpointProtegido();
                   // Redirigir al usuario a la página de acceso
                  // window.location.href = '/acceso';
                 }
@@ -105,14 +105,14 @@ function cargarContenidoAcceso() {
       });
     }
   })
-  .then(html => {
+  /*.then(html => {
     //document.body.innerHTML = html;
     document.documentElement.innerHTML = html;
     const script1 = document.createElement('script');
             script1.src = 'domAcceso1.js';
             script1.textContent = script1.textContent;
             document.head.appendChild(script1);
-  })
+  })*/
   .catch(error => {
     console.error('Error al acceder al endpoint protegido:', error);
   });
@@ -149,8 +149,15 @@ if (window.location.pathname === '/acceso') {
       if (response.ok) {
         console.log(response.ok);
         // Redirigir el navegador a la página de acceso
-       //window.location.href = '/acceso';
-       //href = '/acceso';
+      // window.location.href = '/acceso';
+      // Ir a la página siguiente en el historial del navegador (si hay una)
+      history.forward();
+
+       // Espera 5 segundos (5000 milisegundos) y luego redirige a '/acceso'
+         /* setTimeout(function() {
+            window.location.href = '/acceso';
+          }, 5000);*/
+
       } else {
         return response.json().then(data => {
           console.error('Error al acceder al endpoint protegido :', data);
