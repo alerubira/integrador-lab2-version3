@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+/*document.addEventListener('DOMContentLoaded', () => {
     const token = localStorage.getItem('token');
     if (token) {
       fetch('/acceso', {
@@ -12,6 +12,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (data.message === 'Acceso autorizado') {
           // Lógica para mostrar la página de acceso
           console.log('Acceso autorizado:', data);
+          // Agregar una nueva entrada al historial sin recargar la página
+           // history.pushState({key: 'valor1'}, 'acceso', '/acceso');
         } else {
           console.error('Error al acceder al endpoint protegido:', data);
         }
@@ -22,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
     } else {
       console.error('Token no encontrado');
     }
-  });
+  });*/
   function redireccionarMedicos(){
     const token = localStorage.getItem('token');
   fetch('/medicos', {
@@ -33,27 +35,28 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   .then(response => {
     if (response.ok) {
-      return response.text();
+      //return response.text();
+      history.forward();
     } else {
       return response.json().then(data => {
         throw new Error(data.message);
       });
     }
   })
-  .then(html => {
+  /*.then(html => {
     //document.body.innerHTML = html;
     document.documentElement.innerHTML = html;
     const script1 = document.createElement('script');
             script1.src = 'domMedicos.js';
             script1.textContent = script1.textContent;
             document.head.appendChild(script1);
-  })
+  })*/
   .catch(error => {
     console.error('Error al acceder al endpoint protegido Medicos:', error);
   });
   }
   // Función para cargar el contenido de la página de acceso
-function cargarContenidoAcceso() {
+/*function cargarContenidoAcceso() {
   const token = localStorage.getItem('token');
   fetch('/acceso', {
     method: 'GET',
@@ -90,7 +93,7 @@ function cargarContenidoAcceso() {
 // Llama a la función para acceder al endpoint protegido si estamos en la página de acceso
 if (window.location.pathname === '/acceso') {
   cargarContenidoAcceso();
-}
+}*/
 function redireccionarMedicamentos(){
   console.log('medicamntos en construccion');
 }

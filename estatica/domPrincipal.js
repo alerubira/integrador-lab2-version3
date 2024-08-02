@@ -77,6 +77,10 @@ formLogin.addEventListener('submit',async function(event) {
             
             // Redirigir o realizar acciones basadas en el tipo de autorización
             if (data.tipoAutorizacion === 3) {
+              // Agregar una nueva entrada al historial sin recargar la página
+            /* history.pushState({key: 'valor1'}, 'acceso', '/acceso');
+    // Ir a la página anterior en el historial del navegador
+             history.back();*/
                  //accederEndpointProtegido();
                  accederEndpointProtegido();
                   // Redirigir al usuario a la página de acceso
@@ -88,7 +92,7 @@ formLogin.addEventListener('submit',async function(event) {
     }
 });
 // Función para cargar el contenido de la página de acceso
-function cargarContenidoAcceso() {
+/*function cargarContenidoAcceso() {
   const token = localStorage.getItem('token');
   fetch('/acceso', {
     method: 'GET',
@@ -113,15 +117,15 @@ function cargarContenidoAcceso() {
             script1.textContent = script1.textContent;
             document.head.appendChild(script1);
   })*/
-  .catch(error => {
+  /*.catch(error => {
     console.error('Error al acceder al endpoint protegido:', error);
   });
-}
+}*/
 
 // Llama a la función para acceder al endpoint protegido si estamos en la página de acceso
-if (window.location.pathname === '/acceso') {
+/*if (window.location.pathname === '/acceso') {
   cargarContenidoAcceso();
-}
+}*/
 /*function accederEndpointProtegido(token) {
     fetch('/acceso', {
       method: 'GET',
@@ -138,6 +142,9 @@ if (window.location.pathname === '/acceso') {
     });
   }*/
   function accederEndpointProtegido() {
+    //window.location.href = '/acceso';
+    // Ir a la página anterior en el historial del navegador
+    //history.back();
     const token = localStorage.getItem('token');
     fetch('/acceso', {
       method: 'GET',
@@ -151,6 +158,8 @@ if (window.location.pathname === '/acceso') {
         // Redirigir el navegador a la página de acceso
       // window.location.href = '/acceso';
       // Ir a la página siguiente en el historial del navegador (si hay una)
+      // Agregar una nueva entrada al historial sin recargar la página
+           // history.pushState({key: 'valor1'}, 'acceso', '/acceso');
       history.forward();
 
        // Espera 5 segundos (5000 milisegundos) y luego redirige a '/acceso'
