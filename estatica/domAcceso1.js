@@ -27,8 +27,18 @@
   });*/
   function redireccionarMedicos(){
     console.log('derireccionar medicos');
+   // console.log(localStorage);
     const token = localStorage.getItem('token');
-  fetch('/medicos', {
+    const tipoAutorizacion=localStorage.getItem('tipoAutorizacion');
+    //console.log(token);
+    if (tipoAutorizacion === '3') {
+     console.log('dentro del if');
+        //const token = data.token;
+         window.location.href = `/medicos?token=${token}`;
+       
+        }
+  }
+  /*fetch('/medicos', {
     method: 'GET',
     headers: {
       'Authorization': `Bearer ${token}`
@@ -52,7 +62,7 @@
             script1.textContent = script1.textContent;
             document.head.appendChild(script1);
   })*/
-  .catch(error => {
+  /*.catch(error => {
     console.error('Error al acceder al endpoint protegido Medicos:', error);
   });
   }

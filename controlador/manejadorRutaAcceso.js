@@ -1,6 +1,6 @@
 import { encabezado } from "../rutas.js";
-//import { verifyToken } from "./manejadorDeRutasLogin.js";
-async function manejadorAcceso(req,res){
+import { verifyToken } from "./manejadorDeRutasLogin.js";
+ function manejadorAcceso(req,res){
     try {
       /*if (req.user.tipoAutorizacion === 3) {
        
@@ -19,7 +19,7 @@ async function manejadorAcceso(req,res){
            }
       
            if (decoded.tipoAutorizacion === 3) {
-                encabezado = "Bienvenido a Accesos";
+              let  encabezado = "Bienvenido a Accesos";
                res.render('vistaAcceso', { encabezado });
            } else {
                res.status(403).json({ message: 'Acceso denegado' });

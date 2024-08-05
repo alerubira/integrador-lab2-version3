@@ -9,12 +9,23 @@ function manejadorMedicos(req,res,objeto){
 
         case 'ingresar':
           
-        if (req.user.tipoAutorizacion === 3) {
-         
-            res.render('vistaMedicos', { encabezado });
-          } else {
-            res.status(403).json({ message: 'Acceso denegado' });
-          }
+        const token = req.query.token;
+        if (!token) {
+            return res.status(403).json({ message: 'Token no proporcionado' });
+        }
+       
+        verifyToken(token, (err, decoded) => {
+            if (err) {
+                return res.status(403).json({ message: 'Token no válido' });
+            }
+       
+            if (decoded.tipoAutorizacion === 3) {
+               //let  encabezado = "Bienvenido a Accesos";
+                res.render('vistaMedicos', { encabezado });
+            } else {
+                res.status(403).json({ message: 'Acceso denegado' });
+            }
+        });
           
           break;
 }

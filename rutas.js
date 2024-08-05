@@ -1,6 +1,6 @@
 import express from 'express';
 import { manejadorLogin } from './controlador/manejadorDeRutasLogin.js';
-import { verifyToken } from './controlador/manejadorDeRutasLogin.js';
+//import { verifyToken } from './controlador/manejadorDeRutasLogin.js';
 import { manejadorAcceso } from './controlador/manejadorRutaAcceso.js';
 import { manejadorMedicos } from './controlador/manejadorRutaMedicos.js';
 
@@ -35,33 +35,18 @@ res.render('vistaAcceso',{encabezado});
 });*/
 ruta.get('/acceso',  (req, res) => {
   //encabezado = "Bienvenido a Accesos";
- // manejadorAcceso(req,res);
- const token = req.query.token;
- if (!token) {
-     return res.status(403).json({ message: 'Token no proporcionado' });
- }
-
- verifyToken(token, (err, decoded) => {
-     if (err) {
-         return res.status(403).json({ message: 'Token no válido' });
-     }
-
-     if (decoded.tipoAutorizacion === 3) {
-          encabezado = "Bienvenido a Accesos";
-         res.render('vistaAcceso', { encabezado });
-     } else {
-         res.status(403).json({ message: 'Acceso denegado' });
-     }
- });
-  
+  manejadorAcceso(req,res);
+ 
+ 
 });
 
-/*ruta.get('/medicos',verifyToken,(req,res)=>{
+
+ruta.get('/medicos',(req,res)=>{
     encabezado="Planilla para procesar medicos"
-     //res.render('medicos',{encabezado,mensajeExito,estadoSuces});*/
-     /*manejadorMedicos(req,res,'ingresar');
+     //res.render('medicos',{encabezado,mensajeExito,estadoSuces});
+     manejadorMedicos(req,res,'ingresar');
     
-   });*/
+   });
    
  
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
