@@ -152,7 +152,7 @@ async function manejadorLogin(req,res,objeto){
 }
 }
 // Middleware para verificar el token
-const verifyToken = (req, res, next) => {
+/*const verifyToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1]; // Extraer el token después de "Bearer"
   if (!token) {
@@ -166,6 +166,19 @@ const verifyToken = (req, res, next) => {
 
     req.user = decoded;
     next();
+  });
+};*/
+const verifyToken = (token, callback) => {
+  if (!token) {
+    return callback({ status: 403, message: 'Token no proporcionado' });
+  }
+
+  jwt.verify(token, jwtSecret, (err, decoded) => {
+    if (err) {
+      return callback({ status: 401, message: 'Token inválido' });
+    }
+
+    callback(null, decoded);
   });
 };
 

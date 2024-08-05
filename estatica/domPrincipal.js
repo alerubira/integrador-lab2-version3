@@ -82,7 +82,10 @@ formLogin.addEventListener('submit',async function(event) {
     // Ir a la página anterior en el historial del navegador
              history.back();*/
                  //accederEndpointProtegido();
-                 accederEndpointProtegido();
+                  // Obtener el token del objeto data
+                const token = data.token;
+                 window.location.href = `/acceso?token=${token}`;
+                 //accederEndpointProtegido();
                   // Redirigir al usuario a la página de acceso
                  // window.location.href = '/acceso';
                 }
@@ -155,12 +158,14 @@ formLogin.addEventListener('submit',async function(event) {
     .then(response => {
       if (response.ok) {
         console.log(response.ok);
+         // Si la respuesta es correcta, redirigir a la página de acceso con el token
+         window.location.href = `/acceso?token=${token}`;
         // Redirigir el navegador a la página de acceso
       // window.location.href = '/acceso';
       // Ir a la página siguiente en el historial del navegador (si hay una)
       // Agregar una nueva entrada al historial sin recargar la página
            // history.pushState({key: 'valor1'}, 'acceso', '/acceso');
-      history.forward();
+      //history.forward();
 
        // Espera 5 segundos (5000 milisegundos) y luego redirige a '/acceso'
          /* setTimeout(function() {

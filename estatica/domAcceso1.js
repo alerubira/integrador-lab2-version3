@@ -26,6 +26,7 @@
     }
   });*/
   function redireccionarMedicos(){
+    console.log('derireccionar medicos');
     const token = localStorage.getItem('token');
   fetch('/medicos', {
     method: 'GET',

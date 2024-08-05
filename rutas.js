@@ -26,25 +26,42 @@ ruta.post('/recuperarLogin',(req,res)=>{
     manejadorLogin(req,res,'recuperarLogin');
     })  ;
 // Ruta protegida
-ruta.get('/protected', verifyToken, (req, res) => {
+/*ruta.get('/protected', verifyToken, (req, res) => {
   res.json({ message: 'Acceso autorizado', user: req.user });
-});   
+});*/   
 /*ruta.get('/acceso',(req,res)=>{
   encabezado="Vienvenido a Accesos";
 res.render('vistaAcceso',{encabezado});
 });*/
-ruta.get('/acceso', verifyToken, (req, res) => {
-  encabezado = "Bienvenido a Accesos";
-  manejadorAcceso(req,res);
+ruta.get('/acceso',  (req, res) => {
+  //encabezado = "Bienvenido a Accesos";
+ // manejadorAcceso(req,res);
+ const token = req.query.token;
+ if (!token) {
+     return res.status(403).json({ message: 'Token no proporcionado' });
+ }
+
+ verifyToken(token, (err, decoded) => {
+     if (err) {
+         return res.status(403).json({ message: 'Token no válido' });
+     }
+
+     if (decoded.tipoAutorizacion === 3) {
+          encabezado = "Bienvenido a Accesos";
+         res.render('vistaAcceso', { encabezado });
+     } else {
+         res.status(403).json({ message: 'Acceso denegado' });
+     }
+ });
   
 });
 
-ruta.get('/medicos',verifyToken,(req,res)=>{
+/*ruta.get('/medicos',verifyToken,(req,res)=>{
     encabezado="Planilla para procesar medicos"
      //res.render('medicos',{encabezado,mensajeExito,estadoSuces});*/
-     manejadorMedicos(req,res,'ingresar');
+     /*manejadorMedicos(req,res,'ingresar');
     
-   });
+   });*/
    
  
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
