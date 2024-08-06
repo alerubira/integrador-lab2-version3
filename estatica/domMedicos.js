@@ -20,6 +20,7 @@ let inputMatricula=document.getElementById('matriculaProfecional');
 let inputClave=document.getElementById('claveProvisoria');
 let inputUsuario=document.getElementById('usuarioProvisorio');
 let inputNivel=document.getElementById('nivelAutorizacion');
+let inputPalabraClave=document.getElementById('palabraClave');
 let profeciones;
 let especialidades;
 /*// Limpia el almacenamiento local
@@ -63,7 +64,7 @@ console.log(especialidades);
      
      //console.log(limpiar);
      let selectedValue = this.value;
-     Focultar();
+     fOcultar();
      // Realiza una acción en base a la selección
      switch(selectedValue) {
           case 'crearMedico':
@@ -106,6 +107,7 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
      let claveValue=inputClave.value ;
      let usuarioValue=inputUsuario.value ;
      let nivelValue=inputNivel.value ;
+     let palabraClaveValue=inputPalabraClave.value;
       //console.log(profecionValue);
       //console.log(especialidadValue);
      // Validar que el campo tenga entre 7 y 8 dígitos
@@ -134,5 +136,5 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
      let cla=/^(?=(?:.*[A-Z]){1,})(?=(?:.*[a-zA-Z]){3,})(?=(?:.*\d){3,}).*$/;
      validar(claveValue.length<1||!cla.test(claveValue),pagina,'La clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
      validar(nivelValue!=1&&nivelValue!=2&&nivelValue!=3 ,pagina,'El nivel seleccionado no es valido',event)
-
+     validar(palabraClaveValue.length<1||palabraClaveValue.length>35,pagina,'La palabra clave es obligatoria y no debe superar los 35 caracteres',event);
    });

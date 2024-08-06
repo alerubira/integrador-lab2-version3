@@ -47,6 +47,16 @@ ruta.get('/medicos',(req,res)=>{
      manejadorMedicos(req,res,'ingresar');
     
    });
+ruta.post('/profeciones',async(req,res)=>{
+    manejadorMedicos(req,res,"profecion");
+    });
+ruta.post('/especialidades',async(req,res)=>{
+    manejadorMedicos(req,res,"especialidad");
+    });  
+ruta.post('/crearMedico',async(req,res) =>{
+    manejadorMedicos(req,res,'crearMedico')
+     
+      });    
    
  
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
