@@ -115,14 +115,14 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
      validar(nombreValue.length<1||nombreValue.length>28||!/^[a-zA-Z]+$/.test(nombreValue),pagina,"El nombre es obligatorio,debe contener menos de 30 letras unicamente",event)
      validar(apellidoValue.length<1||apellidoValue.length>28||!/^[a-zA-Z]+$/.test(apellidoValue),pagina,"El apellido es obligatorio,debe contener menos de 30 letras unicamente",event)
     // let condicion= profeciones.some(objeto => objeto.nombre_profecion === profecionValue);
-     let objetoEncontrado = profeciones.find(objeto => objeto.nombre_profecion === profecionValue);
+     let objetoEncontrado = await profeciones.find(objeto => objeto.nombre_profecion === profecionValue);
      validar(!objetoEncontrado,pagina,'La profecion no corresponde',event);
      if(objetoEncontrado){
           idProfecion.value=await objetoEncontrado.id_profecion;
      }
     
      //condicion=especialidades.some(objeto=>objeto.nombre_especialidad===especialidadValue);
-      objetoEncontrado = especialidades.find(objet => objet.nombre_especialidad === especialidadValue);
+      objetoEncontrado =await especialidades.find(objet => objet.nombre_especialidad === especialidadValue);
 
      validar(!objetoEncontrado,pagina,'La especialidad no corresponde',event);
      if(objetoEncontrado){

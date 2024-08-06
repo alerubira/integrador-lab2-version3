@@ -47,10 +47,12 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 async function consulta1(query, ...params) {
+    
     let connection;
     try {
         connection = await pool.getConnection();
         const [results] = await connection.query(query, params);
+        
         return results;
     } catch (error) {
         console.error('Error en la consulta:', error);

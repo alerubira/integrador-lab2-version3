@@ -1,4 +1,4 @@
-console.log('dom funsiones');
+//console.log('dom funsiones');
  let ocultar=document.getElementsByClassName('ocultar');
 let limpiar=document.querySelectorAll('.limpiar');
 let divAlerta=document.getElementById('divAlerta');

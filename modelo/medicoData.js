@@ -54,6 +54,7 @@ function buscarMID(id, callback) {
 }*/
 async function profecionesTodas(caracter){
     let query='SELECT * FROM `profecion` WHERE 1;';
+    
     return await consulta1(query,caracter);
 }
 async function especialidadesTodas(caracter){
@@ -156,7 +157,7 @@ async function especialidadesTodas(caracter){
 
 async function crearMedico(Medico) {
     let claveH = await crearHash(Medico.claveProvisoria);
-    let usuarioH = await crearHash(Medico.usuarioProvisorio);
+    //let usuarioH = await crearHash(Medico.usuarioProvisorio);
 
     let connection;
     try {
@@ -178,8 +179,8 @@ async function crearMedico(Medico) {
         const id_medico = medicoResult.insertId;
 
         const [loginResult] = await connection.execute(
-            'INSERT INTO `login`(`id_medico`, `usuario_login`, `clave_login`, `tipo_autorizacion`, `instancia`) VALUES (?,?,?,?,?)',
-            [id_medico, usuarioH, claveH, Medico.nivelAutorizacion, 1]
+            'INSERT INTO `login`(`id_medico`, `usuario_login`, `clave_login`, `tipo_autorizacion`, `instancia`,`palabra_clave`) VALUES (?,?,?,?,?,?)',
+            [id_medico, Medico.usuarioProvisorio, claveH, Medico.nivelAutorizacion, 1,Medico.palabraClave]
         );
 
         await connection.commit();

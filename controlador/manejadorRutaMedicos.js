@@ -1,8 +1,10 @@
 import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { encabezado } from "../rutas.js";
-import { profecionesTodas,especialidadesTodas } from "../modelo/medicoData.js";
+import { profecionesTodas,especialidadesTodas,crearMedico } from "../modelo/medicoData.js";
+import { verificar } from "./verificaryup.js";
 
 let estadoSuces;
+let mensajeExito;
 async function manejadorMedicos(req,res,objeto){
     try {
         
@@ -35,17 +37,23 @@ async function manejadorMedicos(req,res,objeto){
           
           break;
      case 'profecion':
+          
             aux= await profecionesTodas(caracteres);
+            res.send(aux);
         break;
       case 'especialidad':
          aux=await especialidadesTodas(caracteres);
+         res.send(aux);
             break;
      case 'crearMedico':
+       // console.log(objet);
         aux= await verificar(objet,'medico');
-          if(!aux.err){
-          let suces=await crearMedico(objet);
-          estadoSuces=sucess.success;
-            res.redirect('/medicos');
+        
+          if(!aux.errors){
+         /* let suces=await crearMedico(objet);
+          estadoSuces=suces.success;
+            res.redirect('/medicos');*/
+            console.log('crear medico');
         }
 
           

@@ -48,7 +48,9 @@ claveProvisoria: yup.string()
 nivelAutorizacion: yup.string()
      .oneOf(['1', '2', '3'], 'El nivel debe ser 1, 2 o 3')
      .required('El nivel de autorizacion es obligatorio obligatorio'),
-
+palabraClave: yup.string()
+     .max(35,'La palabra clave no deve superar los 35 caracteres')
+     .required('La palabra clave es obligatoria')
 });
 const usuarioClaveY= yup.object().shape({
     
@@ -91,8 +93,9 @@ async function verificar(objeto,nombre){
                 aux=await verificarY(objeto,usuarioPalabraY);
                 return aux;
                 break;  
-             case 'especialidad':
-                aux=await especialidadesTodas(caracteres);
+             case 'medico':
+                aux=await verificarY(objeto,MedicoY);
+                return aux;
                break;
              default:
 
