@@ -27,10 +27,10 @@ if(exitoValue==='true'){
  if(errLoginValue==='false'){
         alerta(pagina,'Algo esta mal con el login');
     }
- if(instanciaValue==='true'){
+ /*if(instanciaValue==='true'){
     alerta(pagina,'Para continuar,deve modificar su clave');
     mostrar();
- }
+ }*/
 function mostrar(){
     limpiarCampos(limpiar);
     fOcultar();
@@ -71,24 +71,24 @@ formLogin.addEventListener('submit',async function(event) {
           const data = await response.json();
         
           if (response.ok) {
-            // Almacenar el token en localStorage
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('tipoAutorizacion', data.tipoAutorizacion);
-            
-            // Redirigir o realizar acciones basadas en el tipo de autorización
-            if (data.tipoAutorizacion === 3) {
-              // Agregar una nueva entrada al historial sin recargar la página
-            /* history.pushState({key: 'valor1'}, 'acceso', '/acceso');
-    // Ir a la página anterior en el historial del navegador
-             history.back();*/
-                 //accederEndpointProtegido();
-                  // Obtener el token del objeto data
-                const token = data.token;
-                 window.location.href = `/acceso?token=${token}`;
-                 //accederEndpointProtegido();
-                  // Redirigir al usuario a la página de acceso
-                 // window.location.href = '/acceso';
-                }
+                        if (data.codigoPersonalizado === 801) {
+                          
+                          alerta(pagina,'Para continuar,deve modificar su clave');
+                          mostrar();
+                          
+                        }else{
+                        // Almacenar el token en localStorage
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('tipoAutorizacion', data.tipoAutorizacion);
+                        
+                            // Redirigir o realizar acciones basadas en el tipo de autorización
+                            if (data.tipoAutorizacion === 3) {
+                              
+                                const token = data.token;
+                                window.location.href = `/acceso?token=${token}`;
+                                
+                                }
+                              }    
           } else {
             console.error('Error en el login:', data.message);
           }

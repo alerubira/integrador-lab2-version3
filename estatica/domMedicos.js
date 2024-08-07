@@ -96,6 +96,7 @@ for(let e of especialidades){
 });
 formularioProfecionalCrear.addEventListener('submit',async function(event) {
     // event.preventDefault(); // Previene el envío del formulario
+    //modificar hacer solicitud fech post con login,capturar la respuesta
      let dniValue = dniProfecional.value;
      let nombreValue=nombreProfecional.value;
      let apellidoValue=apellidoProfecional.value;

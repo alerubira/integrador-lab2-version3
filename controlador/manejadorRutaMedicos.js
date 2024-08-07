@@ -53,7 +53,7 @@ async function manejadorMedicos(req,res,objeto){
           if(!aux.errors){
           let suces=await crearMedico(objet);
           estadoSuces=suces.success;
-            res.redirect('/medicos');
+            //modificar la devolucion
             
         }
 

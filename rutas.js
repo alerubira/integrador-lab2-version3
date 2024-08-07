@@ -56,7 +56,7 @@ ruta.get('/especialidades',verificarToken,async(req,res)=>{
     manejadorMedicos(req,res,"especialidad");
     });  
 ruta.post('/crearMedico',async(req,res) =>{
-  
+  //agregar verificar token
     manejadorMedicos(req,res,'crearMedico')
      
       });    

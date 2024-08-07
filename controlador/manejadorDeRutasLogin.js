@@ -23,12 +23,14 @@ async function manejadorLogin(req,res,objeto){
     let login;
     let aux;
     let body=req.body;
+  
     let usCl;
     let l;
     switch (objeto) {
       case 'verificarLogin':
           usCl=new usuarioClave(body.usuario,body.clave1);  
          aux=await verificar(usCl,'usuarioClave');
+         
          if(aux.errors){
           return  res.render('vistaPrincipal',{encabezado,errLogin:false});
          }
@@ -41,29 +43,27 @@ async function manejadorLogin(req,res,objeto){
           boolean=await verificarHash(usCl.clave,l.clave);
           if(boolean) {
               if(l.instancia===1){
-                  
-                return res.render('vistaPrincipal',{encabezado,instancia:true})
+                return res.status(200).json({
+            
+                  message: 'Login nuevo , modificar login',
+                  codigoPersonalizado: 801
+                }); 
+               // return res.render('vistaPrincipal',{encabezado,instancia:true})
               }
-              if(l.tipoAutorizacion===3){
+              if(l.tipoAutorizacion===3||l.tipoAutorizacion===2){
                 //generar token
                  // Datos que quieres almacenar en el token
                  const payload = {
                   username: l.usuario,
                   tipoAutorizacion: l.tipoAutorizacion // Agregar tipo de autorización al payload
-                };
-
-                // Genera el token
+                };// Genera el token
                 const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
-
-
                 // Devuelve el token al cliente
               return  res.json({ token: token ,
                 tipoAutorizacion: l.tipoAutorizacion // Agregar tipo de autorización al payload});
                //return res.redirect('/acceso');
               })}
-              if(l.tipoAutorizacion===2){
-                return res.redirect('/prescripcion');//hacer endpoin,generear token
-              }
+              
            }else{
             res.render('vistaPrincipal',{encabezado,errLogin:false})
            }
