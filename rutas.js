@@ -1,6 +1,6 @@
 import express from 'express';
 import { manejadorLogin } from './controlador/manejadorDeRutasLogin.js';
-//import { verifyToken } from './controlador/manejadorDeRutasLogin.js';
+import { verificarToken } from './controlador/manejadorDeRutasLogin.js';
 import { manejadorAcceso } from './controlador/manejadorRutaAcceso.js';
 import { manejadorMedicos } from './controlador/manejadorRutaMedicos.js';
 
@@ -47,11 +47,11 @@ ruta.get('/medicos',(req,res)=>{
      manejadorMedicos(req,res,'ingresar');
     
    });
-ruta.post('/profeciones',async(req,res)=>{
+ruta.get('/profeciones',verificarToken,async(req,res)=>{
     manejadorMedicos(req,res,"profecion");
     
     });
-ruta.post('/especialidades',async(req,res)=>{
+ruta.get('/especialidades',verificarToken,async(req,res)=>{
   
     manejadorMedicos(req,res,"especialidad");
     });  

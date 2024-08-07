@@ -9,8 +9,8 @@ async function manejadorMedicos(req,res,objeto){
     try {
         
         let aux;
-        let caracteres = req.body;  
-        let objet = req.body; 
+       // let caracteres = req.body;  
+        
     switch (objeto) {
 
         case 'ingresar':
@@ -37,23 +37,24 @@ async function manejadorMedicos(req,res,objeto){
           
           break;
      case 'profecion':
-          
-            aux= await profecionesTodas(caracteres);
+            
+            aux= await profecionesTodas();
             res.send(aux);
         break;
       case 'especialidad':
-         aux=await especialidadesTodas(caracteres);
+         aux=await especialidadesTodas();
          res.send(aux);
             break;
      case 'crearMedico':
        // console.log(objet);
+       let objet = req.body;
         aux= await verificar(objet,'medico');
         
           if(!aux.errors){
-         /* let suces=await crearMedico(objet);
+          let suces=await crearMedico(objet);
           estadoSuces=suces.success;
-            res.redirect('/medicos');*/
-            console.log('crear medico');
+            res.redirect('/medicos');
+            
         }
 
           

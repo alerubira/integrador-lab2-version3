@@ -37,8 +37,8 @@ localStorage.clear();
 sessionStorage.clear();*/
 
      
-profeciones=await fech("*","/profeciones");
-console.log(profeciones);
+profeciones=await fechProtegido("/profeciones");
+//console.log(profeciones);
 profecionDL.innerHTML = ''; // Limpiar opciones existentes
 
 for(let p of profeciones){
@@ -48,7 +48,7 @@ for(let p of profeciones){
      op.value=p.nombre_profecion;
      profecionDL.appendChild(op);
 }
-especialidades=await fech("*","/especialidades");
+especialidades=await fechProtegido("/especialidades");
 especialidadDL.innerHTML = ''; // Limpiar opciones existentes
 for(let e of especialidades){
      let op2=document.createElement('option');
@@ -56,7 +56,7 @@ for(let e of especialidades){
      op2.value=e.nombre_especialidad;
      especialidadDL.appendChild(op2);
 }
-console.log(especialidades);
+//console.log(especialidades);
 })();
 
  document.getElementById('crudMedico').addEventListener('change', function() {

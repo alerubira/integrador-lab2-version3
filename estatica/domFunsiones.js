@@ -107,6 +107,34 @@ function contienePalabra(array,propiedad,palabra) {
     return array.some(objeto => objeto.propiedad === palabra);
   }
 limpiarCampos(limpiar);
-
+function volver(){
+    history.back();
+}
+async function fechProtegido(ruta) {
+    const token = localStorage.getItem('token');
+    
+    try {
+      const response = await fetch(ruta, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      });
+      
+      if (response.ok) {
+        const responseBody = await response.json();
+       // console.log(responseBody);
+        return responseBody;
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+    } catch (error) {
+      console.error('Error al acceder al endpoint protegido:', error);
+    }
+  }
+  
+  
+  
 //export{Focultar};
 

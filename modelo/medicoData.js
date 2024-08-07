@@ -52,14 +52,14 @@ function buscarMID(id, callback) {
         }
     });
 }*/
-async function profecionesTodas(caracter){
+async function profecionesTodas(){
     let query='SELECT * FROM `profecion` WHERE 1;';
     
-    return await consulta1(query,caracter);
+    return await consulta1(query);
 }
-async function especialidadesTodas(caracter){
+async function especialidadesTodas(){
     let query='SELECT * FROM `especialida` WHERE 1;';
-    return await consulta1(query,caracter);
+    return await consulta1(query);
 }
 /*async function crearMedico(Medico) {
     let claveH= await crearHash(Medico.claveProvisoria);

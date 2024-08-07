@@ -152,7 +152,7 @@ async function manejadorLogin(req,res,objeto){
 }
 }
 // Middleware para verificar el token
-/*const verifyToken = (req, res, next) => {
+const verificarToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1]; // Extraer el token después de "Bearer"
   if (!token) {
@@ -167,7 +167,7 @@ async function manejadorLogin(req,res,objeto){
     req.user = decoded;
     next();
   });
-};*/
+};
 const verifyToken = (token, callback) => {
   if (!token) {
     return callback({ status: 403, message: 'Token no proporcionado' });
@@ -182,7 +182,7 @@ const verifyToken = (token, callback) => {
   });
 };
 
-export{manejadorLogin ,verifyToken};
+export{manejadorLogin ,verifyToken,verificarToken};
  
 /*function verificarProfecional(res,req,logins,encabezado){
   let loginEncontrado = logins.find(login => 

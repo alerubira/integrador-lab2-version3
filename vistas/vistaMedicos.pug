@@ -46,16 +46,17 @@ block content
                         label(for="claveProvisoria") Clave provisoria 
                         input.limpiar(type="text",id="claveProvisoria",name="claveProvisoria",placeHolder="3letras(minimo 1 may)3numeros")
                         br
+                        label(for="palabraClave") Palabra Clave 
+                        input.limpiar(type="text",id="palabraClave",name="palabraClave",placeHolder="maximo 35 caracteres") 
+                        br 
                         label(for="nivelAutorizacion") Nivel de Autorizacion:
                         input.limpiar(type="number", id="nivelAutorizacion", name="nivelAutorizacion",list="dlNivel", autocomplete="off")
                         datalist#dlNivel 
-                        option(value="1")
-                        option(value="2")
-                        option(value="3")   
+                            option(value="1") 
+                            option(value="2") 
+                            option(value="3")  
                         br
-                        label(for="palabraClave") Palabra Clave 
-                        input.limpiar(type="text",id="palabraClave",name="palabraClave",placeHolder="maximo 35 caracteres") 
-                        br            
+                                   
                         input.boton(type="submit", value="Enviar")
             #divBuscarMedico.ocultar
             #divModificarMedico.ocultar
