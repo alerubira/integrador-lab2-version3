@@ -48,14 +48,19 @@ async function manejadorMedicos(req,res,objeto){
      case 'crearMedico':
        // console.log(objet);
        let objet = req.body;
+       console.log(objet);
         aux= await verificar(objet,'medico');
         
-          if(!aux.errors){
-          let suces=await crearMedico(objet);
-          estadoSuces=suces.success;
-            //modificar la devolucion
+          if(aux.errors){
+            return res.status(500).send(aux.errors);
+          }else{let suces=await crearMedico(objet);
+            estadoSuces=suces.success;
+            return res.send(estadoSuces);
+              //modificar la devolucion
+              }
+          
             
-        }
+        
 
           
          
@@ -63,7 +68,7 @@ async function manejadorMedicos(req,res,objeto){
     }
 }catch (error) {
     console.error(`Error al Procesar el ${objeto} a Medicos`, error);
-    res.status(500).send(`Error interno del servidor al procesar el ${objeto} a Medicos`);
+    return res.status(500).send(`Error interno del servidor al procesar el ${objeto} a Medicos`);
 }
     }
     

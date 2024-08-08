@@ -16,18 +16,18 @@ idProfecion:yup.string()
      .matches(/^\d+$/, 'El idProfecion debe ser un número')
      .max(30, 'El idProfecion debe tener como máximo 30 caracteres')
      .required('El idProfecion es obligatorio'),
-profecionProfecional: yup.string()
+/*profecionProfecional: yup.string()
     .matches(/^[a-zA-Z]+$/, 'La profesión solo debe contener letras')
     .max(30, 'La profesión debe tener como máximo 30 caracteres')
-    .required('La profesión es obligatoria'), 
+    .required('La profesión es obligatoria'), */
  idEspecialidad:yup.string()
     .matches(/^\d+$/, 'El idEspecialidad debe ser un número')
     .max(30, 'El idEspecialidad debe tener como máximo 30 caracteres')
     .required('El idEspecialidad es obligatorio'),   
-especialidadProfecional: yup.string()
+/*especialidadProfecional: yup.string()
     .matches(/^[a-zA-Z]+$/, 'La especialidad solo debe contener letras')
     .max(30, 'La especialidad debe tener como máximo 30 caracteres')
-    .required('La especialidad es obligatoria'),
+    .required('La especialidad es obligatoria'),*/
 domicilioProfecional: yup.string()
     .max(30, 'El domicilio debe tener como máximo 30 caracteres')
     .required('El domicilio es obligatorio'),
