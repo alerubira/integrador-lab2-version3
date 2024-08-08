@@ -54,12 +54,15 @@ ruta.get('/profeciones',verificarToken,async(req,res)=>{
 ruta.get('/especialidades',verificarToken,async(req,res)=>{
   
     manejadorMedicos(req,res,"especialidad");
-    });  
+    }); 
+ruta.get('/traertodosMedicos',verificarToken,async(req,res)=>{
+  manejadorMedicos(req,res,'traerTodosMedicos');
+}) 
 ruta.post('/crearMedico',verificarToken,async(req,res) =>{
-  //agregar verificar token
+  
     manejadorMedicos(req,res,'crearMedico')
      
-      });    
+   });    
    
  
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{

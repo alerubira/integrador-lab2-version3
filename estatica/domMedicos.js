@@ -89,6 +89,7 @@ for(let e of especialidades){
           case 'buscarMedico':
               // Focultar();
                // Acción para buscar un médico existente
+               //consulta fech get con endpoint protegidopara(/traertodosMedicos) 
                console.log('Buscar un Médico existente');
                break;
           default:
@@ -175,6 +176,8 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
         const responseBody = await response.json();
         cartelExito(pagina,'El medico fue crgado con exito');
         console.log(responseBody);
+        limpiarCampos(limpiar);
+        fOcultar();
        // return responseBody;
       } else {
         const errorData = await response.json();
@@ -182,8 +185,8 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
         alerta(pagina,`Hubo un inconveniente al cargar el medico: ${errorData.message}`);
       }
     } catch (error) {
-     alerta(pagina,`Error al acceder para crear Medico: ${error}`);
-      console.error('Error al acceder al endpoint protegido:', error);
+     alerta(pagina,`Error al acceder para crear Medico: ${error.message}`);
+      console.error('Error al acceder al endpoint protegido:', error.message);
     }
      }
 });

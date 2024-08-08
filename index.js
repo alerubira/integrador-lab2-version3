@@ -55,6 +55,7 @@ app.use('/medicos',ruta);
 app.use('/profeciones',ruta);
 app.use('/especialidades',ruta);
 app.use('/crearMedico',ruta);
+app.use('/traertodosMedicos',ruta);
 /*app.get('/', (req, res) => {
     encabezado="Bienvenido al Ministerio de Salud";
      res.render('vistaPrincipal',{encabezado,mensajeExito,estadoSuces});
