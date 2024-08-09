@@ -126,11 +126,16 @@ async function fechProtegido(ruta) {
        // console.log(responseBody);
         return responseBody;
       } else {
-        const errorData = await response.json();
-        throw new Error(errorData.message);
+        let error = await response.json();
+        console.log(error);
+        alerta(pagina,`Hubo un inconveniente al buscar medicos: ${error.message}`);
+        //return error;
+        throw new Error(error.message);
       }
     } catch (error) {
       console.error('Error al acceder al endpoint protegido:', error);
+      alerta(pagina,`Error al acceder para crear Medico: ${error.message}`);
+      return error;
     }
   }
   

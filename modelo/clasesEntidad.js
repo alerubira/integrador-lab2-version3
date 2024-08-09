@@ -1,5 +1,6 @@
 class Persona {
-    constructor(idPersona,nombre, apellido, dni) {
+    constructor(idPersona,nombre, apellido, dni,estadoPersona) {
+      this.estadoPersona=estadoPersona;
       this.idPersona=idPersona;
       this.nombre = nombre;
       this.apellido = apellido;
@@ -10,8 +11,8 @@ class Persona {
     
   }
   class Medico extends Persona {
-    constructor(idMedico,idPersona,nombre, apellido, dni, domicilio,idProfecion, profesion,idEspecialidad, especialidad, matriculaProfesional) {
-      superidPersona,(nombre, apellido, dni);
+    constructor(idMedico,idPersona,nombre, apellido, dni,estadoPersona, domicilio,idProfecion, profesion,idEspecialidad, especialidad, matriculaProfesional) {
+      superidPersona,(idPersona,nombre, apellido, dni,estadoPersona);
       this.idMedico=idMedico;
       this.domicilio = domicilio;
       this.idProfecion=idProfecion;

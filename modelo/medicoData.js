@@ -62,7 +62,7 @@ async function especialidadesTodas(){
     return await consulta1(query);
 }
 async function medicosTodos(){
-    let query='SELECT p.id_persona,p.nombre,p.apellido,p.dni_persona,p.estado_persona,m.id_medico,m.domicilio,m.id_profecion,m.id_especialidad,m.matricula_profecional,m.id_refeps,pr.nombre_profecion,e.nombre_especialidad FROM `persona` p JOIN `medico` m on m.id_persona = p.id_persona JOIN `profecion` pr on m.id_profecion=pr.id_profecion JOIN `especialida` e on m.id_especialidad=e.id_especialidad WHERE 1'
+    let query='SELECT p.id_personas,p.nombre,p.apellido,p.dni_persona,p.estado_persona,m.id_medico,m.domicilio,m.id_profecion,m.id_especialidad,m.matricula_profecional,m.id_refeps,pr.nombre_profecion,e.nombre_especialidad FROM `persona` p JOIN `medico` m on m.id_persona = p.id_persona JOIN `profecion` pr on m.id_profecion=pr.id_profecion JOIN `especialida` e on m.id_especialidad=e.id_especialidad WHERE 1'
 
  return await consulta1(query);
 }
@@ -207,4 +207,4 @@ async function crearMedico(Medico) {
 
 
 
-export{crearMedico,buscarMID,profecionales,profecionesTodas,especialidadesTodas};
+export{crearMedico,buscarMID,profecionales,profecionesTodas,especialidadesTodas,medicosTodos};

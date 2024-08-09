@@ -61,7 +61,7 @@ for(let e of especialidades){
 //console.log(especialidades);
 })();
 
- document.getElementById('crudMedico').addEventListener('change', function() {
+ document.getElementById('crudMedico').addEventListener('change',async function() {
      limpiarCampos(limpiar);
      
      //console.log(limpiar);
@@ -87,10 +87,13 @@ for(let e of especialidades){
                console.log('Dar de baja a un Médico');
                break;
           case 'buscarMedico':
-              // Focultar();
-               // Acción para buscar un médico existente
-               //consulta fech get con endpoint protegidopara(/traertodosMedicos) 
-               console.log('Buscar un Médico existente');
+              fOcultar();
+              let medicos=await fechProtegido('/traertodosMedicos');
+              console.log(medicos.error);
+               if(medicos.error){
+                    console.log(' if medico error');
+               }
+               
                break;
           default:
                console.log('Selección no válida');

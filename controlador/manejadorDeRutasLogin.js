@@ -57,7 +57,7 @@ async function manejadorLogin(req,res,objeto){
                   username: l.usuario,
                   tipoAutorizacion: l.tipoAutorizacion // Agregar tipo de autorización al payload
                 };// Genera el token
-                const token = jwt.sign(payload, jwtSecret, { expiresIn: '1h' });
+                const token = jwt.sign(payload, jwtSecret, { expiresIn: '3h' });
                 // Devuelve el token al cliente
               return  res.json({ token: token ,
                 tipoAutorizacion: l.tipoAutorizacion // Agregar tipo de autorización al payload});
@@ -131,16 +131,7 @@ async function manejadorLogin(req,res,objeto){
           return res.render('vistaPrincipal',{encabezado,errLogin:false});
          }
         break;  
-      case 'Medico':
-         aux= await verificarMedico(objet);
-          if(!aux.err){
-          aux=await crearMedico(objet);
-          return aux;
-         }
-        break;
-      case 'especialidad':
-         aux=await especialidadesTodas(caracteres);
-        break;
+      
       default:
         break;
 }

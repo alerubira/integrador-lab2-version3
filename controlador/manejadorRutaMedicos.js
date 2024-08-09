@@ -1,6 +1,6 @@
 import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { encabezado } from "../rutas.js";
-import { profecionesTodas,especialidadesTodas,crearMedico } from "../modelo/medicoData.js";
+import { profecionesTodas,especialidadesTodas,crearMedico ,medicosTodos} from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 
 let estadoSuces;
@@ -65,12 +65,20 @@ async function manejadorMedicos(req,res,objeto){
           
             break;
        case 'traerTodosMedicos':
-        
+        aux=await medicosTodos();
+       // console.log(`aux.error : ${aux.Error}`);
+        if(aux.error){
+            return res.status(500).send(aux.error);
+        }else{
+            console.log(aux);
+           return res.send(aux);
+        }
+       
         break           
     }
 }catch (error) {
     console.error(`Error al Procesar el ${objeto} a Medicos`, error);
-    return res.status(500).send(`Error interno del servidor al procesar el ${objeto} a Medicos`);
+    return res.status(500).send(error);
 }
     }
     
