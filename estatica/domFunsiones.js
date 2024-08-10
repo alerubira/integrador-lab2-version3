@@ -13,6 +13,10 @@ limpiarCampos(limpiar);
             elemento.style.display = 'none';
                 }
         }
+ function mostrar(elemento){
+    fOcultar();
+    elemento.style.display = 'block';
+ }       
 function limpiarCampos(list){
     //console.log(list);
     for (let li of list){
@@ -123,19 +127,17 @@ async function fechProtegido(ruta) {
       
       if (response.ok) {
         const responseBody = await response.json();
-       // console.log(responseBody);
-        return responseBody;
+        return { data: responseBody, error: null };
       } else {
         let error = await response.json();
         console.log(error);
-        alerta(pagina,`Hubo un inconveniente al buscar medicos: ${error.message}`);
-        //return error;
-        throw new Error(error.message);
+       
+        return { data: null, error: new Error(error.message) };
       }
     } catch (error) {
       console.error('Error al acceder al endpoint protegido:', error);
-      alerta(pagina,`Error al acceder para crear Medico: ${error.message}`);
-      return error;
+      alerta(pagina,`Error al acceder al servidor: ${error.message}`);
+      return { data: null, error: error };
     }
   }
   

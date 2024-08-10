@@ -21,6 +21,7 @@ let inputClave=document.getElementById('claveProvisoria');
 let inputUsuario=document.getElementById('usuarioProvisorio');
 let inputNivel=document.getElementById('nivelAutorizacion');
 let inputPalabraClave=document.getElementById('palabraClave');
+let divBuscarMedico=document.getElementById('divBuscarMedico');
 let profeciones;
 let especialidades;
 let bandera;
@@ -40,24 +41,32 @@ sessionStorage.clear();*/
 
      
 profeciones=await fechProtegido("/profeciones");
-//console.log(profeciones);
 profecionDL.innerHTML = ''; // Limpiar opciones existentes
+if(profeciones.error){
+     alerta(pagina,'Hubo un inconveniente al buscar profeciones');
+}else{
+     for(let p of profeciones.data){
+          //console.log("--");
+          let op=document.createElement('option');
+          op.textContent=p.nombre_profecion;
+          op.value=p.nombre_profecion;
+          profecionDL.appendChild(op);
+         }
 
-for(let p of profeciones){
-     //console.log("--");
-     let op=document.createElement('option');
-     op.textContent=p.nombre_profecion;
-     op.value=p.nombre_profecion;
-     profecionDL.appendChild(op);
 }
 especialidades=await fechProtegido("/especialidades");
 especialidadDL.innerHTML = ''; // Limpiar opciones existentes
-for(let e of especialidades){
-     let op2=document.createElement('option');
-     op2.textContent=e.nombre_especialidad;
-     op2.value=e.nombre_especialidad;
-     especialidadDL.appendChild(op2);
+if(especialidades.error){
+     alerta(pagina,'Hubo un inconveniente al buscar profeciones');
+}else{
+     for(let e of especialidades.data){
+          let op2=document.createElement('option');
+          op2.textContent=e.nombre_especialidad;
+          op2.value=e.nombre_especialidad;
+          especialidadDL.appendChild(op2);
+     }
 }
+
 //console.log(especialidades);
 })();
 
@@ -74,7 +83,8 @@ for(let e of especialidades){
                
                // Acción para inscribir un médico
                let divCMedico = document.getElementById('divCrearMedico');
-               divCMedico.style.display = 'block';
+               mostrar(divCMedico);
+          
                break;
           case 'modificarMedico':
                     //Focultar();
@@ -89,9 +99,13 @@ for(let e of especialidades){
           case 'buscarMedico':
               fOcultar();
               let medicos=await fechProtegido('/traertodosMedicos');
-              console.log(medicos.error);
+              
                if(medicos.error){
-                    console.log(' if medico error');
+                    alerta(pagina,`Hubo un inconveniente al buscar medicos: ${medicos.error.message}`);
+                    console.log(medicos.error.message);
+               }else{
+               console.log(medicos.data);
+                mostrar(divBuscarMedico);
                }
                
                break;

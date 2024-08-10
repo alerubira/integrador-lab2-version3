@@ -2,7 +2,7 @@ import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { encabezado } from "../rutas.js";
 import { profecionesTodas,especialidadesTodas,crearMedico ,medicosTodos} from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
-
+import { Medico } from "../modelo/clasesEntidad.js";
 let estadoSuces;
 let mensajeExito;
 async function manejadorMedicos(req,res,objeto){
@@ -70,8 +70,15 @@ async function manejadorMedicos(req,res,objeto){
         if(aux.error){
             return res.status(500).send(aux.error);
         }else{
-            console.log(aux);
-           return res.send(aux);
+            //console.log(aux);
+            let medicos=[];
+            let medico;
+            for(let m of aux){
+            
+               medico= new Medico(m.id_medico,m.id_persona,m.nombre,m.apellido,m.dni_persona,m.estado_persona,m.domicilio,m.id_profecion,m.nombre_profecion,m.id_especialidad,m.nombre_especialidad,m.matricula_profecional,m.id_refeps);
+               medicos.push(medico);
+            }
+           return res.send(medicos);
         }
        
         break           
