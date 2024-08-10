@@ -22,10 +22,13 @@ let inputUsuario=document.getElementById('usuarioProvisorio');
 let inputNivel=document.getElementById('nivelAutorizacion');
 let inputPalabraClave=document.getElementById('palabraClave');
 let divBuscarMedico=document.getElementById('divBuscarMedico');
+let divModificarMedico=document.getElementById('divModificarMedico');
+let cuerpo=document.getElementById('cuerpo');
 let profeciones;
 let especialidades;
 let bandera;
 let banderaAux;
+let medicos=[];
 /*// Limpia el almacenamiento local
 localStorage.clear();
 
@@ -86,19 +89,11 @@ if(especialidades.error){
                mostrar(divCMedico);
           
                break;
-          case 'modificarMedico':
-                    //Focultar();
-               // Acción para modificar datos de un médico
-               console.log('Modificar datos de Médico');
-               break;
-          case 'bajaMedico':
-              // Focultar();
-               // Acción para dar de baja a un médico
-               console.log('Dar de baja a un Médico');
-               break;
+          
           case 'buscarMedico':
               fOcultar();
-              let medicos=await fechProtegido('/traertodosMedicos');
+              
+               medicos=await fechProtegido('/traertodosMedicos');
               
                if(medicos.error){
                     alerta(pagina,`Hubo un inconveniente al buscar medicos: ${medicos.error.message}`);
@@ -106,14 +101,58 @@ if(especialidades.error){
                }else{
                console.log(medicos.data);
                 mostrar(divBuscarMedico);
+                for(let m of medicos.data){
+                    let tr=document.createElement('tr');
+                    cuerpo.appendChild(tr);
+                    agregarTdCuerpo(m.idPersona,cuerpo);
+                    agregarTdCuerpo(m.idMedico,cuerpo);
+                    agregarTdCuerpo(m.dni,cuerpo);
+                    agregarTdCuerpo(m.apellido,cuerpo);
+                    agregarTdCuerpo(m.nombre,cuerpo);
+                    agregarTdCuerpo(m.idProfecion,cuerpo);
+                    agregarTdCuerpo(m.profesion,cuerpo);
+                    agregarTdCuerpo(m.idEspecialidad,cuerpo);
+                    agregarTdCuerpo(m.especialidad,cuerpo);
+                    agregarTdCuerpo(m.domicilio,cuerpo);
+                    agregarTdCuerpo(m.matriculaProfesional,cuerpo);
+                    agregarTdCuerpo(m.idRefeps,cuerpo);
+                    if(m.estadoPersona){
+                         agregarTdCuerpo('Activo',cuerpo);
+                    }else{
+                         agregarTdCuerpo('Inactivo',cuerpo);
+                    }
+                    let btn=document.createElement('button');
+                              btn.textContent = 'Seleccionar';
+                              btn.className = 'boton';
+                              // Asignar la acción al botón
+                              btn.addEventListener('click', seleccionarMedico);
+                             // Añadir el botón a la celda
+                             let td=document.createElement('td');
+                             td.appendChild(btn);
+                             cuerpo.appendChild(td);
+                              
+                              
+                     }
+                 
+
                }
                
                break;
           default:
                console.log('Selección no válida');
+               alerta(pagina,('Seleccion no valida'));
      }
      
 });
+function seleccionarMedico(){
+fOcultar();
+mostrar(divModificarMedico);
+}
+function agregarTdCuerpo(elemento,cuerpo){
+     let td=document.createElement('td');
+     td.textContent=elemento;
+     cuerpo.appendChild(td);
+}
 formularioProfecionalCrear.addEventListener('submit',async function(event) {
      event.preventDefault(); // Previene el envío del formulario
      bandera=true;
