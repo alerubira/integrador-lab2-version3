@@ -1,5 +1,6 @@
 //console.log('dom funsiones');
  let ocultar=document.getElementsByClassName('ocultar');
+ let ocultar2=document.getElementsByClassName('ocultar2');
 let limpiar=document.querySelectorAll('.limpiar');
 let divAlerta=document.getElementById('divAlerta');
 let divExito=document.getElementById('divExito');
@@ -13,8 +14,13 @@ limpiarCampos(limpiar);
             elemento.style.display = 'none';
                 }
         }
+ function fOcultar2(){
+    for (let elemento of ocultar2) {
+        elemento.style.display = 'none';
+            }
+ }       
  function mostrar(elemento){
-    fOcultar();
+    //fOcultar();
     elemento.style.display = 'block';
  }       
 function limpiarCampos(list){

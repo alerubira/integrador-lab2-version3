@@ -94,6 +94,9 @@
 .ocultar{
     display: none;
 }
+ .ocultar2{
+  display: none;
+ }
 .div{
 border: 1px solid black;
 }

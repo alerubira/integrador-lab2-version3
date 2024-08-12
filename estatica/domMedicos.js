@@ -24,11 +24,14 @@ let inputPalabraClave=document.getElementById('palabraClave');
 let divBuscarMedico=document.getElementById('divBuscarMedico');
 let divModificarMedico=document.getElementById('divModificarMedico');
 let cuerpo=document.getElementById('cuerpo');
+let divNuevoDomicilio=document.getElementById('divNuevoDomicilio');
 let profeciones;
 let especialidades;
 let bandera;
 let banderaAux;
 let medicos=[];
+let medico = [];
+let pMedico=document.getElementById('pMedico');
 /*// Limpia el almacenamiento local
 localStorage.clear();
 
@@ -104,22 +107,22 @@ if(especialidades.error){
                 for(let m of medicos.data){
                     let tr=document.createElement('tr');
                     cuerpo.appendChild(tr);
-                    agregarTdCuerpo(m.idPersona,cuerpo);
-                    agregarTdCuerpo(m.idMedico,cuerpo);
-                    agregarTdCuerpo(m.dni,cuerpo);
-                    agregarTdCuerpo(m.apellido,cuerpo);
-                    agregarTdCuerpo(m.nombre,cuerpo);
-                    agregarTdCuerpo(m.idProfecion,cuerpo);
-                    agregarTdCuerpo(m.profesion,cuerpo);
-                    agregarTdCuerpo(m.idEspecialidad,cuerpo);
-                    agregarTdCuerpo(m.especialidad,cuerpo);
-                    agregarTdCuerpo(m.domicilio,cuerpo);
-                    agregarTdCuerpo(m.matriculaProfesional,cuerpo);
-                    agregarTdCuerpo(m.idRefeps,cuerpo);
+                    agregarTdCuerpo(m.idPersona,tr);
+                    agregarTdCuerpo(m.idMedico,tr);
+                    agregarTdCuerpo(m.dni,tr);
+                    agregarTdCuerpo(m.apellido,tr);
+                    agregarTdCuerpo(m.nombre,tr);
+                    agregarTdCuerpo(m.idProfecion,tr);
+                    agregarTdCuerpo(m.profesion,tr);
+                    agregarTdCuerpo(m.idEspecialidad,tr);
+                    agregarTdCuerpo(m.especialidad,tr);
+                    agregarTdCuerpo(m.domicilio,tr);
+                    agregarTdCuerpo(m.matriculaProfesional,tr);
+                    agregarTdCuerpo(m.idRefeps,tr);
                     if(m.estadoPersona){
-                         agregarTdCuerpo('Activo',cuerpo);
+                         agregarTdCuerpo('Activo',tr);
                     }else{
-                         agregarTdCuerpo('Inactivo',cuerpo);
+                         agregarTdCuerpo('Inactivo',tr);
                     }
                     let btn=document.createElement('button');
                               btn.textContent = 'Seleccionar';
@@ -129,25 +132,62 @@ if(especialidades.error){
                              // Añadir el botón a la celda
                              let td=document.createElement('td');
                              td.appendChild(btn);
-                             cuerpo.appendChild(td);
+                             tr.appendChild(td);
                               
-                              
-                     }
-                 
-
-               }
-               
-               break;
+                               }
+                  }
+                break;
           default:
                console.log('Selección no válida');
                alerta(pagina,('Seleccion no valida'));
      }
      
 });
-function seleccionarMedico(){
+function seleccionarMedico(event){
 fOcultar();
 mostrar(divModificarMedico);
+ // Obtener el botón que se hizo clic
+ let btn = event.target;
+
+ // Encontrar la fila (<tr>) que contiene el botón
+ let fila = btn.closest('tr');
+
+ // Obtener todas las celdas (<td>) dentro de esa fila
+ let celdas = fila.getElementsByTagName('td');
+
+ // Recorrer las celdas y obtener los valores
+ 
+ for (let i = 0; i < celdas.length; i++) {
+     medico.push(celdas[i].textContent);
+ }
+ //pMedico.textContent="";
+pMedico.textContent=medico;
+ // Hacer algo con los valores, por ejemplo, mostrarlos en consola
+ //console.log(valores);
 }
+document.getElementById('modificarMedico').addEventListener('change',async function() {
+     limpiarCampos(limpiar);
+     
+     //console.log(limpiar);
+     let selectedValue = this.value;
+     fOcultar2();
+     // Realiza una acción en base a la selección
+     switch(selectedValue) {
+          case 'estadoMedico':
+          
+          
+               break;
+          case 'direccionMedico':
+               pMedico.textContent=medico;
+               mostrar(divNuevoDomicilio);
+               break
+          case 'especialidadMedico':
+               break; 
+               default:
+                    console.log('Selección no válida');
+                    alerta(pagina,('Seleccion no valida'));         
+     }       
+     })            
 function agregarTdCuerpo(elemento,cuerpo){
      let td=document.createElement('td');
      td.textContent=elemento;
