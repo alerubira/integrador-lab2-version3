@@ -70,6 +70,14 @@ function validar(codicion,pagina,mensage,event){
         }else{
             return true;
         }}
+function llenarDl(dl,array){
+    for(let e of array){
+        let op2=document.createElement('option');
+        op2.textContent=e.nombre_especialidad;
+        op2.value=e.nombre_especialidad;
+        dl.appendChild(op2);
+   }
+}        
  async function fech(input, endpoint) {
             try {
                 console.log(`input en fech: ${input}`);

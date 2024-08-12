@@ -25,6 +25,10 @@ let divBuscarMedico=document.getElementById('divBuscarMedico');
 let divModificarMedico=document.getElementById('divModificarMedico');
 let cuerpo=document.getElementById('cuerpo');
 let divNuevoDomicilio=document.getElementById('divNuevoDomicilio');
+let divNuevaEspecialidad=document.getElementById('divNuevaEspecialidad');
+let especialidadNuevas=document.getElementById('especialidadNuevas');
+let divEstado=document.getElementById('divEstado');
+let botonEstado=document.getElementById('botonEstado');
 let profeciones;
 let especialidades;
 let bandera;
@@ -65,12 +69,8 @@ especialidadDL.innerHTML = ''; // Limpiar opciones existentes
 if(especialidades.error){
      alerta(pagina,'Hubo un inconveniente al buscar profeciones');
 }else{
-     for(let e of especialidades.data){
-          let op2=document.createElement('option');
-          op2.textContent=e.nombre_especialidad;
-          op2.value=e.nombre_especialidad;
-          especialidadDL.appendChild(op2);
-     }
+     llenarDl(especialidadDL ,especialidades.data)
+     
 }
 
 //console.log(especialidades);
@@ -156,7 +156,7 @@ mostrar(divModificarMedico);
  let celdas = fila.getElementsByTagName('td');
 
  // Recorrer las celdas y obtener los valores
- 
+ medico=[];
  for (let i = 0; i < celdas.length; i++) {
      medico.push(celdas[i].textContent);
  }
@@ -174,24 +174,36 @@ document.getElementById('modificarMedico').addEventListener('change',async funct
      // Realiza una acción en base a la selección
      switch(selectedValue) {
           case 'estadoMedico':
-          
+               pMedico.textContent=medico;
+               //agregar placeholder al botonEstado,previa verificacion del estado,volver al inicio los select
+               mostrar(divEstado);
           
                break;
           case 'direccionMedico':
+               
                pMedico.textContent=medico;
                mostrar(divNuevoDomicilio);
                break
           case 'especialidadMedico':
+               llenarDl(especialidadNuevas,especialidades.data);
+               pMedico.textContent=medico;
+               mostrar(divNuevaEspecialidad);
                break; 
                default:
                     console.log('Selección no válida');
                     alerta(pagina,('Seleccion no valida'));         
      }       
-     })            
+     })    
+function cambiarEstado(){
+
+}             
 function agregarTdCuerpo(elemento,cuerpo){
      let td=document.createElement('td');
      td.textContent=elemento;
      cuerpo.appendChild(td);
+}
+function modificarEspecilaidad(){
+
 }
 formularioProfecionalCrear.addEventListener('submit',async function(event) {
      event.preventDefault(); // Previene el envío del formulario

@@ -80,13 +80,22 @@ block content
                 p#pMedico.limpiar
                 select(id="modificarMedico", name="modificarMedico")
                             option(value="vacio") Elija una opcion
-                            option(value="estdoMedico") Modificar Estdo Medico
+                            option(value="estadoMedico") Modificar Estdo Medico
                             option(value="direccionMedico") Modificar direccion Medico 
                             option(value='especialidadMedico') Modificar la Especialidad
                 #divNuevoDomicilio.ocultar2            
                         label(for="nuevoDomicilio") Nuevo Domicilio 
                         input.limpiar(type="text",id="nuevoDomicilio",name="nuevoDomicilio",placeHolder="Nuevo Domicilio") 
-                        button.boton(type="button",onclick='modificarDireccion()') Modificar 
+                        br
+                        button.boton(type="button",onclick='modificarDireccion()') Modificar
+                #divNuevaEspecialidad.ocultar2 
+                        label(for="nuevaEspecialidad") Nuevo Especialida 
+                        input.limpiar(type="text",id="nuevaEspecialida",name="nuevaEspecialidad",placeHolder="Nueva Especialidad",list="especialidadNuevas")
+                        datalist#especialidadNuevas
+                        br 
+                        button.boton(type="button",onclick='modificarEspecialidad()') Modificar
+                #divEstado.ocultar2 
+                        button#botonEstado.boton(type="button",onclick='cambiarEstado()')
 block boton1 
         button.boton(type="button",onclick='volver()') volver                
 
