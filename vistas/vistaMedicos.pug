@@ -4,7 +4,7 @@ block script1
           
 block content   
             select(id="crudMedico", name="crudMedico")
-                        option(value="vacio") Elija una opcion
+                        option(value="") Elija una opcion
                         option(value="crearMedico") Inscribir Medico
                         option(value="buscarMedico") Ver todos los medicos
                     
@@ -77,9 +77,25 @@ block content
                         tbody#cuerpo  
                                
             #divModificarMedico.ocultar
-                p#pMedico.limpiar
+                table#tblMedico
+                        thead#cabecera2
+                            tr
+                                th Id persona
+                                th Id Medico
+                                th Dni
+                                th Apellido 
+                                th Nombre 
+                                th Id Profecion
+                                th Profecion 
+                                th Id Especialidad
+                                th Especialidad 
+                                th Domicilio 
+                                th Matricula 
+                                th Id REFEPS
+                                th Estado Actual
+                        tbody#cuerpo2  
                 select(id="modificarMedico", name="modificarMedico")
-                            option(value="vacio") Elija una opcion
+                            option(value="") Elija una opcion
                             option(value="estadoMedico") Modificar Estdo Medico
                             option(value="direccionMedico") Modificar direccion Medico 
                             option(value='especialidadMedico') Modificar la Especialidad

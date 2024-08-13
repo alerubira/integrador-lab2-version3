@@ -108,6 +108,9 @@ if (window.location.pathname === '/acceso') {
 function redireccionarMedicamentos(){
   console.log('medicamntos en construccion');
 }
+function redireccionarPrestaciones(){
+  console.log('prestaciones en construccion');
+}
   
   
   
