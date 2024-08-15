@@ -1,10 +1,11 @@
 import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { encabezado } from "../rutas.js";
-import { profecionesTodas,especialidadesTodas,crearMedico ,medicosTodos} from "../modelo/medicoData.js";
+import { profecionesTodas,especialidadesTodas,crearMedico ,medicosTodos,cambiarEstado,cambiarEspecialidad} from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 import { Medico } from "../modelo/clasesEntidad.js";
 let estadoSuces;
 let mensajeExito;
+let objet;
 async function manejadorMedicos(req,res,objeto){
     try {
         
@@ -47,7 +48,7 @@ async function manejadorMedicos(req,res,objeto){
             break;
      case 'crearMedico':
        // console.log(objet);
-       let objet = req.body;
+        objet = req.body;
        //console.log(objet);
         aux= await verificar(objet,'medico');
         
@@ -81,7 +82,17 @@ async function manejadorMedicos(req,res,objeto){
            return res.send(medicos);
         }
        
-        break           
+        break  
+    case 'cambiarEstado':
+         objet=req.body;
+        aux=await cambiarEstado(objet.idPersona,objet.estadoPersona) ;
+        return res.send(aux);
+        break 
+    case 'cambiarEspecialidad':
+        objet=req.body;
+        aux=await cambiarEspecialidad(objet.idMedico,objet.idEspecialidad);
+        return res.send(aux); 
+        break               
     }
 }catch (error) {
     console.error(`Error al Procesar el ${objeto} a Medicos`, error);

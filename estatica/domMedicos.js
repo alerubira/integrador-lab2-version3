@@ -27,7 +27,7 @@ let cuerpo=document.getElementById('cuerpo');
 let divNuevoDomicilio=document.getElementById('divNuevoDomicilio');
 let divNuevaEspecialidad=document.getElementById('divNuevaEspecialidad');
 let especialidadNuevas=document.getElementById('especialidadNuevas');
-let divEstado=document.getElementById('divEstado');
+let inputNuevaEspecialidad=document.getElementById('nuevaEspecialidad');
 let botonEstado=document.getElementById('botonEstado');
 let cuerpo2=document.getElementById('cuerpo2');
 let profeciones;
@@ -70,7 +70,7 @@ especialidadDL.innerHTML = ''; // Limpiar opciones existentes
 if(especialidades.error){
      alerta(pagina,'Hubo un inconveniente al buscar profeciones');
 }else{
-     llenarDl(especialidadDL ,especialidades.data)
+     llenarDl(especialidadDL ,especialidades.data);
      
 }
 
@@ -221,14 +221,30 @@ document.getElementById('modificarMedico').addEventListener('change',async funct
      })    
 function cambiarEstado(){
 //construir endpoin,hacer modificacion
-}             
-function agregarTdCuerpo(elemento,cuerpo){
-     let td=document.createElement('td');
-     td.textContent=elemento;
-     cuerpo.appendChild(td);
+let p={};
+p.idPersona=medico.idPersona;
+if(medico.estadoPersona===1){
+     p.estadoPersona=false;
+}else{
+     p.estadoPersona=true;
 }
+fechProtegidoPost('/cambiarEstado',p);
+}             
+
 function modificarEspecilaidad(){
 //verificar que este dentro de especialidades,hacer endpoin,hacer modificacion
+llenarDl(especialidadNuevas ,especialidades.data);
+let nuevaEspecialidadValue=inputNuevaEspecialidad.value;
+if(estaEnArray(especialidades.data,nuevaEspecialidadValue)){
+let m={};
+//buscar y asignar el id de la especialidad seleccionada para modificar
+m.idMedico=medico.idMedico;
+//m.especialidad=medico.especialidad;
+fechProtegidoPost('/cambiarEspecialidad',m);
+}else{
+     alerta(pagina,'La especialidad seleccionada no es valida');
+}
+
 }
 function modificarDireccion(){
      //verificar en el cliente y servidor cantidad de caracteres,hacer endpoin,hacer modificacion

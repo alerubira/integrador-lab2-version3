@@ -66,6 +66,13 @@ async function medicosTodos(){
 
  return await consulta1(query);
 }
+async function cambiarEstado(idPersona,estadoPersona){
+let query='UPDATE `persona` SET `estado_persona`=? WHERE id_persona=?'
+return await(consulta1(query,estadoPersona,idPersona));
+}
+async function cambiarEspecialidad(idMedico,idEspecialidad){
+    //hacer el upDate
+}
 /*async function crearMedico(Medico) {
     let claveH= await crearHash(Medico.claveProvisoria);
     let usuarioH=await crearHash(Medico.usuarioProvisorio);
@@ -207,4 +214,4 @@ async function crearMedico(Medico) {
 
 
 
-export{crearMedico,buscarMID,profecionales,profecionesTodas,especialidadesTodas,medicosTodos};
+export{crearMedico,buscarMID,profecionales,profecionesTodas,especialidadesTodas,medicosTodos,cambiarEstado,cambiarEspecialidad};

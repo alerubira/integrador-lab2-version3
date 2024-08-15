@@ -62,8 +62,14 @@ ruta.post('/crearMedico',verificarToken,async(req,res) =>{
   
     manejadorMedicos(req,res,'crearMedico')
      
-   });    
-   
+   });  
+ruta.post('/cambiarEstado',verificarToken,async(req,res)=>{
+  
+  manejadorMedicos(req,res,'cambiarEstado');
+})     
+ruta.post('/cambiarEspecialidad',verificarToken,async(req,res=>{
+  manejadorMedicos(req,res,'cambiarEspecialidad');
+}))   
  
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
    // Obtener el ID del Profesional enviado desde el formulario

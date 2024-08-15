@@ -80,11 +80,14 @@ function llenarDl(dl,array){
 }        
  async function fech(input, endpoint) {
             try {
-                console.log(`input en fech: ${input}`);
+                const token = localStorage.getItem('token');
+                
                 const response = await fetch(endpoint, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'text/plain'
+                        
+
                     },
                     
                         body: input
@@ -124,10 +127,50 @@ function contienePalabra(array,propiedad,palabra) {
     console.log(palabra);
     return array.some(objeto => objeto.propiedad === palabra);
   }
+ function estaEnArray(array,elemento){
+    return array.some(objeto=>objeto===elemento);
+ } 
 limpiarCampos(limpiar);
 function volver(){
     history.back();
 }
+function agregarTdCuerpo(elemento,cuerpo){
+    let td=document.createElement('td');
+    td.textContent=elemento;
+    cuerpo.appendChild(td);
+}
+async function fechProtegidoPost(endpoin,objeto){
+    const token = localStorage.getItem('token');
+    
+    try {
+      const response = await fetch(endpoin, {
+        method: 'post',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json' // Este encabezado es necesario para enviar JSON
+        },
+        body:JSON.stringify(objeto)
+        
+      });
+      
+      if (response.ok) {
+        const responseBody = await response.json();
+        cartelExito(pagina,`La tarea fue realizada con exito: ${responseBody.info}`);
+        console.log(responseBody);
+        limpiarCampos(limpiar);
+        fOcultar();
+       // return responseBody;
+      } else {
+        const errorData = await response.json();
+        console.log(errorData.message);
+        alerta(pagina,`Hubo un inconveniente al realizar la tarea: ${errorData.message}`);
+      }
+    } catch (error) {
+     alerta(pagina,`Error al acceder al servidor: ${error.message}`);
+      console.error('Error al acceder al endpoint protegido:', error.message);
+    }
+     }
+
 async function fechProtegido(ruta) {
     const token = localStorage.getItem('token');
     
