@@ -71,7 +71,13 @@ let query='UPDATE `persona` SET `estado_persona`=? WHERE id_persona=?'
 return await(consulta1(query,estadoPersona,idPersona));
 }
 async function cambiarEspecialidad(idMedico,idEspecialidad){
+    let query='UPDATE `medico` SET `id_especialidad`=? WHERE id_medico=?';
+ return await(consulta1(query,idEspecialidad,idMedico));   
     //hacer el upDate
+}
+async function cambiarDireccion(idMedico,domicilio){
+let query='UPDATE `medico` SET `domicilio`=? WHERE id_medico=?';
+return await(consulta1(query,domicilio,idMedico));
 }
 /*async function crearMedico(Medico) {
     let claveH= await crearHash(Medico.claveProvisoria);
@@ -214,4 +220,4 @@ async function crearMedico(Medico) {
 
 
 
-export{crearMedico,buscarMID,profecionales,profecionesTodas,especialidadesTodas,medicosTodos,cambiarEstado,cambiarEspecialidad};
+export{crearMedico,buscarMID,profecionales,profecionesTodas,especialidadesTodas,medicosTodos,cambiarEstado,cambiarEspecialidad,cambiarDireccion};

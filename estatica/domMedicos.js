@@ -28,6 +28,7 @@ let divNuevoDomicilio=document.getElementById('divNuevoDomicilio');
 let divNuevaEspecialidad=document.getElementById('divNuevaEspecialidad');
 let especialidadNuevas=document.getElementById('especialidadNuevas');
 let inputNuevaEspecialidad=document.getElementById('nuevaEspecialidad');
+let inputNuevoDomicilio=document.getElementById('nuevoDomicilio');
 let botonEstado=document.getElementById('botonEstado');
 let cuerpo2=document.getElementById('cuerpo2');
 let profeciones;
@@ -209,6 +210,7 @@ document.getElementById('modificarMedico').addEventListener('change',async funct
                mostrar(divNuevoDomicilio);
                break
           case 'especialidadMedico':
+               eliminarHijos(especialidadNuevas);
                llenarDl(especialidadNuevas,especialidades.data);
                //pMedico.textContent=medico;
                mostrar(divNuevaEspecialidad);
@@ -230,16 +232,21 @@ if(medico.estadoPersona===1){
 }
 fechProtegidoPost('/cambiarEstado',p);
 }             
-
-function modificarEspecilaidad(){
+               
+async function modificarEspecialidad(){
 //verificar que este dentro de especialidades,hacer endpoin,hacer modificacion
-llenarDl(especialidadNuevas ,especialidades.data);
+//eliminarHijos(especialidadNuevas);
+//llenarDl(especialidadNuevas ,especialidades.data);
 let nuevaEspecialidadValue=inputNuevaEspecialidad.value;
-if(estaEnArray(especialidades.data,nuevaEspecialidadValue)){
+//let esta=await estaEnArray(especialidades.data,nuevaEspecialidadValue);
+let es=await especialidades.data.find(no=>no.nombre_especialidad===nuevaEspecialidadValue);
+if(es){
 let m={};
 //buscar y asignar el id de la especialidad seleccionada para modificar
 m.idMedico=medico.idMedico;
 //m.especialidad=medico.especialidad;
+
+m.idEspecialidad=es.id_especialidad;
 fechProtegidoPost('/cambiarEspecialidad',m);
 }else{
      alerta(pagina,'La especialidad seleccionada no es valida');
@@ -247,7 +254,14 @@ fechProtegidoPost('/cambiarEspecialidad',m);
 
 }
 function modificarDireccion(){
-     //verificar en el cliente y servidor cantidad de caracteres,hacer endpoin,hacer modificacion
+let nuevoDomicilioValue=inputNuevoDomicilio.value;
+let domiciliValido=  validar(nuevoDomicilioValue.length<1||nuevoDomicilioValue.length>30,pagina,'El domicilio es obligatorio y no debe exeder los 25 caracteres',event);
+if(domiciliValido){
+let md={};
+md.idMedico=medico.idMedico;
+md.domicilio=nuevoDomicilioValue;
+fechProtegidoPost('/cambiarDireccion',md);
+}   
 }
 
 formularioProfecionalCrear.addEventListener('submit',async function(event) {
@@ -276,7 +290,7 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
     banderaAux= validar(apellidoValue.length<1||apellidoValue.length>28||!/^[a-zA-Z]+$/.test(apellidoValue),pagina,"El apellido es obligatorio,debe contener menos de 30 letras unicamente",event)
     if(!banderaAux){bandera=false};
     // let condicion= profeciones.some(objeto => objeto.nombre_profecion === profecionValue);
-     let objetoEncontrado = await profeciones.find(objeto => objeto.nombre_profecion === profecionValue);
+     let objetoEncontrado = await profeciones.data.find(objeto => objeto.nombre_profecion === profecionValue);
      banderaAux= validar(!objetoEncontrado,pagina,'La profecion no corresponde',event);
      if(!banderaAux){bandera=false};
      if(objetoEncontrado){
@@ -284,7 +298,7 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
      }
     
      //condicion=especialidades.some(objeto=>objeto.nombre_especialidad===especialidadValue);
-      objetoEncontrado =await especialidades.find(objet => objet.nombre_especialidad === especialidadValue);
+      objetoEncontrado =await especialidades.data.find(objet => objet.nombre_especialidad === especialidadValue);
 
       banderaAux=  validar(!objetoEncontrado,pagina,'La especialidad no corresponde',event);
       if(!banderaAux){bandera=false};
@@ -343,3 +357,4 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
     }
      }
 });
+//reorganizar los js para medicos,dividir en 2,probar bien todo el sistema

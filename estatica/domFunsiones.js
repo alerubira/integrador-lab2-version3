@@ -127,9 +127,11 @@ function contienePalabra(array,propiedad,palabra) {
     console.log(palabra);
     return array.some(objeto => objeto.propiedad === palabra);
   }
- function estaEnArray(array,elemento){
-    return array.some(objeto=>objeto===elemento);
- } 
+ /*async function estaEnArray(array,elemento){
+  console.log(array);
+  console.log(elemento);
+    return await array.some(objeto=>objeto===elemento);
+ } */
 limpiarCampos(limpiar);
 function volver(){
     history.back();

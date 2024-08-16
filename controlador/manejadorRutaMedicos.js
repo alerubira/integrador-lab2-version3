@@ -1,6 +1,6 @@
 import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { encabezado } from "../rutas.js";
-import { profecionesTodas,especialidadesTodas,crearMedico ,medicosTodos,cambiarEstado,cambiarEspecialidad} from "../modelo/medicoData.js";
+import { profecionesTodas,especialidadesTodas,crearMedico ,medicosTodos,cambiarEstado,cambiarEspecialidad,cambiarDireccion} from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 import { Medico } from "../modelo/clasesEntidad.js";
 let estadoSuces;
@@ -92,7 +92,12 @@ async function manejadorMedicos(req,res,objeto){
         objet=req.body;
         aux=await cambiarEspecialidad(objet.idMedico,objet.idEspecialidad);
         return res.send(aux); 
-        break               
+        break 
+    case 'cambiarDireccion':
+        objet=req.body;
+        aux=await cambiarDireccion(objet.idMedico,objet.domicilio);
+        return res.send(aux);
+        break;                  
     }
 }catch (error) {
     console.error(`Error al Procesar el ${objeto} a Medicos`, error);

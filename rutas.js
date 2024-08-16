@@ -67,10 +67,12 @@ ruta.post('/cambiarEstado',verificarToken,async(req,res)=>{
   
   manejadorMedicos(req,res,'cambiarEstado');
 })     
-ruta.post('/cambiarEspecialidad',verificarToken,async(req,res=>{
+ruta.post('/cambiarEspecialidad',verificarToken,async(req,res)=>{
   manejadorMedicos(req,res,'cambiarEspecialidad');
-}))   
- 
+}); 
+ruta.post('/cambiarDireccion',verificarToken,async(req,res)=>{
+manejadorMedicos(req,res,'cambiarDireccion');
+});
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
    // Obtener el ID del Profesional enviado desde el formulario
  const idProfecional = req.body.idAdministrativoR;
