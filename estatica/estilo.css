@@ -56,6 +56,11 @@
     text-align: center;
     height: 400px; /* Añadir esta línea para un alto fijo */
 }
+.crear{
+  width: 60%;
+  margin: 0 auto; /* Centra el elemento horizontalmente */
+  text-align: center;
+}
 #divProfecional{
     border-radius: 10px; /* Establece los bordes redondeados */
     border: 2px solid black; /* Establece el borde de color negro */

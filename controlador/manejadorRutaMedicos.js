@@ -1,6 +1,6 @@
 import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { encabezado } from "../rutas.js";
-import { profecionesTodas,especialidadesTodas,crearMedico ,medicosTodos,cambiarEstado,cambiarEspecialidad,cambiarDireccion} from "../modelo/medicoData.js";
+import { medicoDatatodos,medicoDataModificar,crearMedico } from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 import { Medico } from "../modelo/clasesEntidad.js";
 let estadoSuces;
@@ -39,11 +39,11 @@ async function manejadorMedicos(req,res,objeto){
           break;
      case 'profecion':
             
-            aux= await profecionesTodas();
+            aux= await medicoDatatodos('profeciones');
             res.send(aux);
         break;
       case 'especialidad':
-         aux=await especialidadesTodas();
+         aux=await medicoDatatodos('especialidades');
          res.send(aux);
             break;
      case 'crearMedico':
@@ -66,7 +66,7 @@ async function manejadorMedicos(req,res,objeto){
           
             break;
        case 'traerTodosMedicos':
-        aux=await medicosTodos();
+        aux=await medicoDatatodos('medicos');
        // console.log(`aux.error : ${aux.Error}`);
         if(aux.error){
             return res.status(500).send(aux.error);
@@ -85,18 +85,26 @@ async function manejadorMedicos(req,res,objeto){
         break  
     case 'cambiarEstado':
          objet=req.body;
-        aux=await cambiarEstado(objet.idPersona,objet.estadoPersona) ;
+        //hacer verificacion del lado del servidos con la base de datos,si existe el id y el estado
+        aux=await medicoDataModificar('estado',objet.idPersona,objet.estadoPersona) ;
         return res.send(aux);
         break 
     case 'cambiarEspecialidad':
+        //hacer verifivacion en servidor si esta el id medico y id especialidad
         objet=req.body;
-        aux=await cambiarEspecialidad(objet.idMedico,objet.idEspecialidad);
+        aux=await medicoDataModificar('especialidad',objet.idMedico,objet.idEspecialidad);
         return res.send(aux); 
         break 
     case 'cambiarDireccion':
         objet=req.body;
-        aux=await cambiarDireccion(objet.idMedico,objet.domicilio);
+        let dom={domicilioProfecional:objet.domicilioProfecional};
+        aux=await verificar(dom,'domicilio');
+        if(aux.errors){
+            return res.status(500).send(aux.errors);
+          }else{
+        aux=await medicoDataModificar('domicilio',objet.idMedico,objet.domicilioProfecional);
         return res.send(aux);
+          }
         break;                  
     }
 }catch (error) {

@@ -1,5 +1,9 @@
 import * as yup from 'yup';  // Importa todas las exportaciones de yup
-
+const domicilioY=yup.object().shape({
+domicilioProfecional:yup.string()
+     .required('El domocilio es obligatorio')
+     .max(30,'El domocilio no debe superar los 30 caracteres')
+})
 const MedicoY = yup.object().shape({
 dniProfecional: yup.string()
     .matches(/^\d{7,8}$/, 'El DNI debe ser un número de 7 u 8 caracteres')
@@ -97,6 +101,10 @@ async function verificar(objeto,nombre){
                 aux=await verificarY(objeto,MedicoY);
                 return aux;
                break;
+              case 'domicilio':
+                aux=await verificarY(objeto,domicilioY);
+                return aux;
+                break 
              default:
 
                break;

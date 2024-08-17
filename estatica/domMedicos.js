@@ -38,27 +38,14 @@ let banderaAux;
 let medicos=[];
 let medico;
 let pMedico=document.getElementById('pMedico');
-/*// Limpia el almacenamiento local
-localStorage.clear();
 
-// Limpia el almacenamiento de la sesión
-sessionStorage.clear();*/
-
-(async function(){
- /*    // Limpia el almacenamiento local
-localStorage.clear();
-
-// Limpia el almacenamiento de la sesión
-sessionStorage.clear();*/
-
-     
+(async function(){    
 profeciones=await fechProtegido("/profeciones");
-profecionDL.innerHTML = ''; // Limpiar opciones existentes
+profecionDL.innerHTML = ''; 
 if(profeciones.error){
      alerta(pagina,'Hubo un inconveniente al buscar profeciones');
 }else{
      for(let p of profeciones.data){
-          //console.log("--");
           let op=document.createElement('option');
           op.textContent=p.nombre_profecion;
           op.value=p.nombre_profecion;
@@ -67,40 +54,31 @@ if(profeciones.error){
 
 }
 especialidades=await fechProtegido("/especialidades");
-especialidadDL.innerHTML = ''; // Limpiar opciones existentes
+especialidadDL.innerHTML = ''; 
 if(especialidades.error){
      alerta(pagina,'Hubo un inconveniente al buscar profeciones');
 }else{
      llenarDl(especialidadDL ,especialidades.data);
-     
-}
-
-//console.log(especialidades);
+     }
 })();
 
  document.getElementById('crudMedico').addEventListener('change',async function() {
      limpiarCampos(limpiar);
      fOcultar2();
-     //console.log(limpiar);
      let selectedValue = this.value;
      fOcultar();
-     // Realiza una acción en base a la selección
      switch(selectedValue) {
           case 'crearMedico':
                console.log(selectedValue);
-               
-               // Acción para inscribir un médico
                let divCMedico = document.getElementById('divCrearMedico');
                mostrar(divCMedico);
-          
                break;
           
           case 'buscarMedico':
               fOcultar();
               eliminarHijos(cuerpo);
                medicos=await fechProtegido('/traertodosMedicos');
-              
-               if(medicos.error){
+              if(medicos.error){
                     alerta(pagina,`Hubo un inconveniente al buscar medicos: ${medicos.error.message}`);
                     console.log(medicos.error.message);
                }else{
@@ -129,14 +107,11 @@ if(especialidades.error){
                     let btn=document.createElement('button');
                               btn.textContent = 'Seleccionar';
                               btn.className = 'boton';
-                              // Asignar la acción al botón
                               btn.addEventListener('click', seleccionarMedico);
-                             // Añadir el botón a la celda
                              let td=document.createElement('td');
                              td.appendChild(btn);
                              tr.appendChild(td);
-                              
-                               }
+                              }
                   }
                 break;
           default:
@@ -145,74 +120,26 @@ if(especialidades.error){
      }
      document.getElementById("crudMedico").selectedIndex = 0;
 });
-async function seleccionarMedico(event){
-fOcultar();
-mostrar(divModificarMedico);
- // Obtener el botón que se hizo clic
- let btn = event.target;
 
- // Encontrar la fila (<tr>) que contiene el botón
- let fila = btn.closest('tr');
-
- // Obtener todas las celdas (<td>) dentro de esa fila
- let celdas = fila.getElementsByTagName('td');
-medico={};
- // Recorrer las celdas y obtener los valores
- 
- medico=await medicos.data.find(med=>med.idMedico===parseInt(celdas[1].textContent));
- console.log(medico);
- eliminarHijos(cuerpo2);
- let tr2=document.createElement('tr');
-                    cuerpo2.appendChild(tr2);
-                    agregarTdCuerpo(medico.idPersona,tr2);
-                    agregarTdCuerpo(medico.idMedico,tr2);
-                    agregarTdCuerpo(medico.dni,tr2);
-                    agregarTdCuerpo(medico.apellido,tr2);
-                    agregarTdCuerpo(medico.nombre,tr2);
-                    agregarTdCuerpo(medico.idProfecion,tr2);
-                    agregarTdCuerpo(medico.profesion,tr2);
-                    agregarTdCuerpo(medico.idEspecialidad,tr2);
-                    agregarTdCuerpo(medico.especialidad,tr2);
-                    agregarTdCuerpo(medico.domicilio,tr2);
-                    agregarTdCuerpo(medico.matriculaProfesional,tr2);
-                    agregarTdCuerpo(medico.idRefeps,tr2);
-                    if(medico.estadoPersona===1){
-                         agregarTdCuerpo('Activo',tr2);
-                    }else{
-                         agregarTdCuerpo('Inactivo',tr2);
-                    }
-
-}
 document.getElementById('modificarMedico').addEventListener('change',async function() {
      limpiarCampos(limpiar);
-     
-     //console.log(limpiar);
      let selectedValue = this.value;
      fOcultar2();
-     // Realiza una acción en base a la selección
      switch(selectedValue) {
           case 'estadoMedico':
-               //console.log(medico);
                if(medico.estadoPersona===1){
                     botonEstado.innerText="Inhabilitar";
                }else{
                     botonEstado.innerText="Abilitar";
                }
-               
-               //pMedico.textContent=medico;
-               //agregar placeholder al botonEstado,previa verificacion del estado,volver al inicio los select
                mostrar(divEstado);
-          
-               break;
+              break;
           case 'direccionMedico':
-               
-              // pMedico.textContent=medico;
                mostrar(divNuevoDomicilio);
                break
           case 'especialidadMedico':
                eliminarHijos(especialidadNuevas);
                llenarDl(especialidadNuevas,especialidades.data);
-               //pMedico.textContent=medico;
                mostrar(divNuevaEspecialidad);
                break; 
                default:
@@ -221,53 +148,11 @@ document.getElementById('modificarMedico').addEventListener('change',async funct
      } 
      document.getElementById("modificarMedico").selectedIndex = 0;      
      })    
-function cambiarEstado(){
-//construir endpoin,hacer modificacion
-let p={};
-p.idPersona=medico.idPersona;
-if(medico.estadoPersona===1){
-     p.estadoPersona=false;
-}else{
-     p.estadoPersona=true;
-}
-fechProtegidoPost('/cambiarEstado',p);
-}             
-               
-async function modificarEspecialidad(){
-//verificar que este dentro de especialidades,hacer endpoin,hacer modificacion
-//eliminarHijos(especialidadNuevas);
-//llenarDl(especialidadNuevas ,especialidades.data);
-let nuevaEspecialidadValue=inputNuevaEspecialidad.value;
-//let esta=await estaEnArray(especialidades.data,nuevaEspecialidadValue);
-let es=await especialidades.data.find(no=>no.nombre_especialidad===nuevaEspecialidadValue);
-if(es){
-let m={};
-//buscar y asignar el id de la especialidad seleccionada para modificar
-m.idMedico=medico.idMedico;
-//m.especialidad=medico.especialidad;
 
-m.idEspecialidad=es.id_especialidad;
-fechProtegidoPost('/cambiarEspecialidad',m);
-}else{
-     alerta(pagina,'La especialidad seleccionada no es valida');
-}
-
-}
-function modificarDireccion(){
-let nuevoDomicilioValue=inputNuevoDomicilio.value;
-let domiciliValido=  validar(nuevoDomicilioValue.length<1||nuevoDomicilioValue.length>30,pagina,'El domicilio es obligatorio y no debe exeder los 25 caracteres',event);
-if(domiciliValido){
-let md={};
-md.idMedico=medico.idMedico;
-md.domicilio=nuevoDomicilioValue;
-fechProtegidoPost('/cambiarDireccion',md);
-}   
-}
 
 formularioProfecionalCrear.addEventListener('submit',async function(event) {
-     event.preventDefault(); // Previene el envío del formulario
+     event.preventDefault(); 
      bandera=true;
-    //modificar hacer solicitud fech post con login,capturar la respuesta
      let dniValue = dniProfecional.value;
      let nombreValue=nombreProfecional.value;
      let apellidoValue=apellidoProfecional.value;
@@ -280,24 +165,18 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
      let usuarioValue=inputUsuario.value ;
      let nivelValue=inputNivel.value ;
      let palabraClaveValue=inputPalabraClave.value;
-      //console.log(profecionValue);
-      //console.log(especialidadValue);
-     // Validar que el campo tenga entre 7 y 8 dígitos
     banderaAux= validar(dniValue.length < 7 || dniValue.length > 8 || !/^\d+$/.test(dniValue),pagina,"El dni solo acepta 7 u 8 numeros",event)
     if(!banderaAux){bandera=false};
     banderaAux= validar(nombreValue.length<1||nombreValue.length>28||!/^[a-zA-Z]+$/.test(nombreValue),pagina,"El nombre es obligatorio,debe contener menos de 30 letras unicamente",event)
     if(!banderaAux){bandera=false};
     banderaAux= validar(apellidoValue.length<1||apellidoValue.length>28||!/^[a-zA-Z]+$/.test(apellidoValue),pagina,"El apellido es obligatorio,debe contener menos de 30 letras unicamente",event)
     if(!banderaAux){bandera=false};
-    // let condicion= profeciones.some(objeto => objeto.nombre_profecion === profecionValue);
      let objetoEncontrado = await profeciones.data.find(objeto => objeto.nombre_profecion === profecionValue);
      banderaAux= validar(!objetoEncontrado,pagina,'La profecion no corresponde',event);
      if(!banderaAux){bandera=false};
      if(objetoEncontrado){
           idProfecion.value=await objetoEncontrado.id_profecion;
      }
-    
-     //condicion=especialidades.some(objeto=>objeto.nombre_especialidad===especialidadValue);
       objetoEncontrado =await especialidades.data.find(objet => objet.nombre_especialidad === especialidadValue);
 
       banderaAux=  validar(!objetoEncontrado,pagina,'La especialidad no corresponde',event);
@@ -314,7 +193,6 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
      if(!banderaAux){bandera=false}; 
      banderaAux= validar(usuarioValue.length<1||usuarioValue.length>6,pagina,'El usuario es obligatorio y no debe superar los 6 caracteres',event);
      if(!banderaAux){bandera=false};
-     //let cla=/^(?=(?:.*[A-Z]){1,})(?=(?:.*[a-zA-Z]){3,})(?=(?:.*\d){3,}).*$/;
      banderaAux= validar(claveValue.length<1||!cla.test(claveValue),pagina,'La clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
      if(!banderaAux){bandera=false}; 
      banderaAux= validar(nivelValue!=1&&nivelValue!=2&&nivelValue!=3 ,pagina,'El nivel seleccionado no es valido',event)
@@ -322,7 +200,13 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
      banderaAux= validar(palabraClaveValue.length<1||palabraClaveValue.length>35,pagina,'La palabra clave es obligatoria y no debe superar los 35 caracteres',event);
      if(!banderaAux){bandera=false};
      if(bandera){
-          const token = localStorage.getItem('token');
+         let profecionalCreado={dniProfecional:dniValue,nombreProfecional:nombreValue,apellidoProfecional:apellidoValue
+          ,idProfecion:idProfecion.value,idEspecialidad:idEspecialidad.value,domicilioProfecional:domicilioValue
+          ,refepsProfecional:refepsValue,matriculaProfecional:matriculaValue,usuarioProvisorio:usuarioValue
+          ,claveProvisoria:claveValue,palabraClave:palabraClaveValue,nivelAutorizacion:nivelValue
+        };
+        fechProtegidoPost('/crearMedico',profecionalCreado);
+          /*const token = localStorage.getItem('token');
     
     try {
       const response = await fetch('/crearMedico', {
@@ -345,7 +229,6 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
         console.log(responseBody);
         limpiarCampos(limpiar);
         fOcultar();
-       // return responseBody;
       } else {
         const errorData = await response.json();
         console.log(errorData.message);
@@ -354,7 +237,6 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
     } catch (error) {
      alerta(pagina,`Error al acceder para crear Medico: ${error.message}`);
       console.error('Error al acceder al endpoint protegido:', error.message);
-    }
+    }*/
      }
 });
-//reorganizar los js para medicos,dividir en 2,probar bien todo el sistema

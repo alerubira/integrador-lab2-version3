@@ -3,6 +3,50 @@ import { Medico } from './clasesEntidad.js';
 import { consulta1 ,pool} from "./conexxionBD.js";
 import { crearHash } from "./loginn.js";
 let profecionales;
+let query;
+async function medicoDataModificar(modificar,id,modificante){
+   try{
+    switch(modificar){
+        case 'estado':
+             query='UPDATE `persona` SET `estado_persona`=? WHERE id_persona=?'
+             return await(consulta1(query,modificante,id));
+             break
+        case 'domicilio':
+            query='UPDATE `medico` SET `domicilio`=? WHERE id_medico=?';
+            return await(consulta1(query,modificante,id));
+            break
+        case 'especialidad':
+             query='UPDATE `medico` SET `id_especialidad`=? WHERE id_medico=?';
+            return await(consulta1(query,modificante,id));
+            break; 
+    }
+
+   }catch(error){
+    console.error(`Error al modificar  ${modificar} `, error);
+    return error;
+   }
+}
+async function medicoDatatodos(traer){
+try{
+    switch(traer){
+     case 'profeciones':
+         query='SELECT * FROM `profecion` WHERE 1;';
+        return await consulta1(query);
+        break
+     case 'especialidades':
+        query='SELECT * FROM `especialida` WHERE 1;';
+        return await consulta1(query);
+        break
+     case 'medicos':
+         query='SELECT p.id_persona,p.nombre,p.apellido,p.dni_persona,p.estado_persona,m.id_medico,m.domicilio,m.id_profecion,m.id_especialidad,m.matricula_profecional,m.id_refeps,pr.nombre_profecion,e.nombre_especialidad FROM `persona` p JOIN `medico` m on m.id_persona = p.id_persona JOIN `profecion` pr on m.id_profecion=pr.id_profecion JOIN `especialida` e on m.id_especialidad=e.id_especialidad WHERE 1'
+        return await consulta1(query);
+        break 
+      }
+}catch(error){
+    console.error(`Error al buscar  ${traer} `, error);
+    return error;
+}
+}
 function buscarMID(id, callback) {
     connection.connect(function(err) {
         if (err) {
@@ -28,31 +72,8 @@ function buscarMID(id, callback) {
         }
     });
 }
-/*function agregarMedico(medico,callback){
-    const sql = "INSERT INTO `profecional` (`idrefeps`, `nombre`, `apellido`, `documento`, `profecion`, `especialidad`, `domicilio`, `matriculaprofecioinal`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    const valores = [medico.refepsProfecional,medico.nombreProfecional,medico.apellidoProfecional,medico.dniProfecional,medico.profecionProfecional,medico.especialidadProfecional,  medico.domicilioProfecional,medico.matriculaProfecional];
-    connection.connect(function(err) {
-        if (err) {
-            callback (err);
-        } else {
-            connection.query(sql,valores, function(err, result) {
-                if (err) {
-                    callback (err);
-                } else {
-                   // console.log(result);
-                   // callback(result);
-                   if (result.affectedRows > 0) {
-                    callback(null,"Inserción exitosa en la base de datos.");
-                    // callback(result);
-                } else {
-                    callback(null,"No se insertaron filas en la base de datos.");
-                }
-                }
-            });
-        }
-    });
-}*/
-async function profecionesTodas(){
+
+/*async function profecionesTodas(){
     let query='SELECT * FROM `profecion` WHERE 1;';
     
     return await consulta1(query);
@@ -65,8 +86,8 @@ async function medicosTodos(){
     let query='SELECT p.id_persona,p.nombre,p.apellido,p.dni_persona,p.estado_persona,m.id_medico,m.domicilio,m.id_profecion,m.id_especialidad,m.matricula_profecional,m.id_refeps,pr.nombre_profecion,e.nombre_especialidad FROM `persona` p JOIN `medico` m on m.id_persona = p.id_persona JOIN `profecion` pr on m.id_profecion=pr.id_profecion JOIN `especialida` e on m.id_especialidad=e.id_especialidad WHERE 1'
 
  return await consulta1(query);
-}
-async function cambiarEstado(idPersona,estadoPersona){
+}*/
+/*async function cambiarEstado(idPersona,estadoPersona){
 let query='UPDATE `persona` SET `estado_persona`=? WHERE id_persona=?'
 return await(consulta1(query,estadoPersona,idPersona));
 }
@@ -78,98 +99,6 @@ async function cambiarEspecialidad(idMedico,idEspecialidad){
 async function cambiarDireccion(idMedico,domicilio){
 let query='UPDATE `medico` SET `domicilio`=? WHERE id_medico=?';
 return await(consulta1(query,domicilio,idMedico));
-}
-/*async function crearMedico(Medico) {
-    let claveH= await crearHash(Medico.claveProvisoria);
-    let usuarioH=await crearHash(Medico.usuarioProvisorio);
-    return new Promise((resolve, reject) => {
-        connection.beginTransaction((err) => {
-            if (err) {
-                return connection.rollback(() => {
-                    reject(err);
-                });
-            }
-//console.log(`paciente antes de entrar a la query ${paciente.nombre}`);
-            connection.query(
-                'INSERT INTO `persona`(`nombre`, `apellido`, `dni_persona`, `estado_persona`) VALUES (?,?,?,?)',
-                [Medico.nombreProfecional,Medico.apellidoProfecional,Medico.dniProfecional, true],
-                (error, results) => {
-                    if (error) {
-                        return connection.rollback(() => {
-                            reject(error);
-                        });
-                    }
-
-                    if (results.affectedRows !== 1) {
-                        return connection.rollback(() => {
-                            reject(new Error('Error al insertar en la tabla persona persona'));
-                        });
-                    }
-
-                    const id_persona = results.insertId;
-
-                    connection.query(
-                        'INSERT INTO `medico`(`id_persona`, `domicilio`, `id_profecion`,`id_especialidad`,`matricula_profecional`,`id_refeps`) VALUES (?,?,?,?,?,?)',
-                        [id_persona, Medico.domicilioProfecional, Medico.idProfecion,Medico.idEspecialidad,Medico.matriculaProfecional,Medico.refepsProfecional],
-                        (error, results) => {
-                            if (error) {
-                                return connection.rollback(() => {
-                                    reject(error);
-                                });
-                            }
-
-                            if (results.affectedRows !== 1) {
-                                return connection.rollback(() => {
-                                    reject(new Error('Error al insertar en la tabla medico'));
-                                });
-                            }
-
-                            const id_medico = results.insertId;
-                            
-                            connection.query(
-                               
-                                'INSERT INTO `login`(`id_medico`, `usuario_login`,`clave_login`,`tipo_autorizacion`,`instancia`) VALUES (?,?,?,?,?)',
-                                [id_medico, usuarioH,claveH,Medico.nivelAutorizacion,1],
-                                (error, results) => {
-                                    if (error) {
-                                        return connection.rollback(() => {
-                                            reject(error);
-                                        });
-                                    }
-
-                                    if (results.affectedRows !== 1) {
-                                        return connection.rollback(() => {
-                                            reject(new Error('Error al insertr en la tabla login'));
-                                        });
-                                    }
-
-                                    connection.commit((err) => {
-                                        if (err) {
-                                            return connection.rollback(() => {
-                                                reject(err);
-                                            });
-                                        }
-                                        resolve({ success: true });
-                                    });
-                                }
-                            );
-                        }
-                    );
-                }
-            );
-        });
-    })
-    .catch((error) => {
-        console.error('Error en la transaccion:', error);
-        return { success: false, message: 'Error en la transaccion', error };
-    })
-    .finally(() => {
-        connection.end((err) => {
-            if (err) {
-                console.error('Error al cerrar la conexión:', err);
-            }
-        });
-    });
 }*/
 
 
@@ -220,4 +149,4 @@ async function crearMedico(Medico) {
 
 
 
-export{crearMedico,buscarMID,profecionales,profecionesTodas,especialidadesTodas,medicosTodos,cambiarEstado,cambiarEspecialidad,cambiarDireccion};
+export{medicoDatatodos,medicoDataModificar,crearMedico,buscarMID,profecionales};
