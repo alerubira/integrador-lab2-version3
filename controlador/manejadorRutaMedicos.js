@@ -3,6 +3,7 @@ import { encabezado } from "../rutas.js";
 import { medicoDatatodos,medicoDataModificar,crearMedico } from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 import { Medico } from "../modelo/clasesEntidad.js";
+import { existeId } from "../modelo/conexxionBD.js";
 let estadoSuces;
 let mensajeExito;
 let objet;
@@ -87,12 +88,20 @@ async function manejadorMedicos(req,res,objeto){
          objet=req.body;
         //hacer verificacion del lado del servidos con la base de datos,si existe el id y el estado
         aux=await medicoDataModificar('estado',objet.idPersona,objet.estadoPersona) ;
+        //verificar la respuesta
         return res.send(aux);
         break 
     case 'cambiarEspecialidad':
         //hacer verifivacion en servidor si esta el id medico y id especialidad
         objet=req.body;
+        console.log(objet);
+       // let e=await existeId(objet.idMedico,'medico','id_medico');
+       existeId(objet.idMedico, 'medico', 'id_medico').then((existe) => {
+        console.log('¿El ID existe?:', existe); // true o false
+    });
+        
         aux=await medicoDataModificar('especialidad',objet.idMedico,objet.idEspecialidad);
+        //verificar la respuesta
         return res.send(aux); 
         break 
     case 'cambiarDireccion':
