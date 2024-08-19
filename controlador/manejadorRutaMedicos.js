@@ -7,6 +7,7 @@ import { existeId } from "../modelo/conexxionBD.js";
 let estadoSuces;
 let mensajeExito;
 let objet;
+let e1,e2,errorMessage;
 async function manejadorMedicos(req,res,objeto){
     try {
         
@@ -92,17 +93,18 @@ async function manejadorMedicos(req,res,objeto){
         return res.send(aux);
         break 
     case 'cambiarEspecialidad':
-        //hacer verifivacion en servidor si esta el id medico y id especialidad
         objet=req.body;
-        console.log(objet);
-       // let e=await existeId(objet.idMedico,'medico','id_medico');
-       existeId(objet.idMedico, 'medico', 'id_medico').then((existe) => {
-        console.log('¿El ID existe?:', existe); // true o false
-    });
-        
-        aux=await medicoDataModificar('especialidad',objet.idMedico,objet.idEspecialidad);
-        //verificar la respuesta
-        return res.send(aux); 
+        //console.log(objet);
+         e1=await existeId(objet.idMedico,'medico','id_medico');
+         e2=await existeId(objet.idEspecialidad,'especialida','id_especialidad');
+         if(e1&&e2){
+            aux=await medicoDataModificar('especialidad',objet.idMedico,objet.idEspecialidad);
+            return res.send(aux); 
+         }else{
+            errorMessage='Los datos enviados no existen en la base de datos';
+            return res.status(400).send({message:errorMessage});
+         }
+       
         break 
     case 'cambiarDireccion':
         objet=req.body;

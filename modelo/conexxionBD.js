@@ -72,10 +72,16 @@ try {
     await consulta1('CALL VerificarID(?, ?, ?, @existe)', id ,tabla ,columna);
     
     // Obtiene el valor del parámetro de salida
-    const [[{ existe }]] = await consulta1('SELECT @existe AS existe');
+    const result = await consulta1('SELECT @existe AS existe');
+     // Verifica que el resultado esté en el formato esperado
+     if (result && result.length > 0) {
+        const existe = result[0].existe;
+        return existe === 1;
+    } else {
+        return false;
+    }
     
-    // Retorna true si existe es 1, de lo contrario false
-    return existe === 1;
+
 } catch (err) {
     console.error('Error al ejecutar el procedimiento almacenado,existe id :', err.message);
     return false;
