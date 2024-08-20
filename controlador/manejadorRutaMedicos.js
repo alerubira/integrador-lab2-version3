@@ -3,7 +3,7 @@ import { encabezado } from "../rutas.js";
 import { medicoDatatodos,medicoDataModificar,crearMedico } from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 import { Medico } from "../modelo/clasesEntidad.js";
-import { existeId } from "../modelo/conexxionBD.js";
+import {  existeBd } from "../modelo/conexxionBD.js";
 let estadoSuces;
 let mensajeExito;
 let objet;
@@ -78,7 +78,7 @@ async function manejadorMedicos(req,res,objeto){
             let medico;
             for(let m of aux){
             
-               medico= new Medico(m.id_medico,m.id_persona,m.nombre,m.apellido,m.dni_persona,m.estado_persona,m.domicilio,m.id_profecion,m.nombre_profecion,m.id_especialidad,m.nombre_especialidad,m.matricula_profecional,m.id_refeps);
+               medico= new Medico(m.id_medico,m.id_persona,m.nombre,m.apellido,m.dni_persona,m.domicilio,m.id_profecion,m.nombre_profecion,m.id_especialidad,m.nombre_especialidad,m.matricula_profecional,m.id_refeps,m.estado_medico);
                medicos.push(medico);
             }
            return res.send(medicos);
@@ -87,21 +87,21 @@ async function manejadorMedicos(req,res,objeto){
         break  
     case 'cambiarEstado':
          objet=req.body;
-        //hacer verificacion del lado del servidos con la base de datos,si existe el id y el estado
-        aux=await medicoDataModificar('estado',objet.idPersona,objet.estadoPersona) ;
+         e1=await existeBd(objet.idMedico,'medico','id_medico');
+        aux=await medicoDataModificar('estado',objet.idPersona,objet.estadoMedico) ;
         //verificar la respuesta
         return res.send(aux);
         break 
     case 'cambiarEspecialidad':
         objet=req.body;
         //console.log(objet);
-         e1=await existeId(objet.idMedico,'medico','id_medico');
-         e2=await existeId(objet.idEspecialidad,'especialida','id_especialidad');
+         e1=await existeBd(objet.idMedico,'medico','id_medico');
+         e2=await existeBd(objet.idEspecialidad,'especialida','id_especialidad');
          if(e1&&e2){
             aux=await medicoDataModificar('especialidad',objet.idMedico,objet.idEspecialidad);
             return res.send(aux); 
          }else{
-            errorMessage='Los datos enviados no existen en la base de datos';
+            errorMessage='El Medico o la Especialidad no existen en la base de datos';
             return res.status(400).send({message:errorMessage});
          }
        
@@ -113,8 +113,15 @@ async function manejadorMedicos(req,res,objeto){
         if(aux.errors){
             return res.status(500).send(aux.errors);
           }else{
-        aux=await medicoDataModificar('domicilio',objet.idMedico,objet.domicilioProfecional);
-        return res.send(aux);
+            e1=await existeBd(objet.idMedico,'medico','id_medico');
+            if(e1){
+                aux=await medicoDataModificar('domicilio',objet.idMedico,objet.domicilioProfecional);
+                return res.send(aux);
+            }else{
+                errorMessage='El Medico  no existe en la base de datos';
+                return res.status(400).send({message:errorMessage});
+            }
+       
           }
         break;                  
     }

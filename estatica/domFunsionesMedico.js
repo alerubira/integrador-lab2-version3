@@ -2,10 +2,10 @@ function cambiarEstado(){
     //construir endpoin,hacer modificacion
     let p={};
     p.idPersona=medico.idPersona;
-    if(medico.estadoPersona===1){
-         p.estadoPersona=false;
+    if(medico.estadoMedico===1){
+         p.estadoMedico=false;
     }else{
-         p.estadoPersona=true;
+         p.estadoMedico=true;
     }
     fechProtegidoPost('/cambiarEstado',p);
     }             
@@ -65,7 +65,7 @@ function cambiarEstado(){
                             agregarTdCuerpo(medico.domicilio,tr2);
                             agregarTdCuerpo(medico.matriculaProfesional,tr2);
                             agregarTdCuerpo(medico.idRefeps,tr2);
-                            if(medico.estadoPersona===1){
+                            if(medico.estadoMedico===1){
                                  agregarTdCuerpo('Activo',tr2);
                             }else{
                                  agregarTdCuerpo('Inactivo',tr2);

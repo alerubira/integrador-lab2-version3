@@ -99,7 +99,7 @@ if(especialidades.error){
                     agregarTdCuerpo(m.domicilio,tr);
                     agregarTdCuerpo(m.matriculaProfesional,tr);
                     agregarTdCuerpo(m.idRefeps,tr);
-                    if(m.estadoPersona===1){
+                    if(m.estadoMedico===1){
                          agregarTdCuerpo('Activo',tr);
                     }else{
                          agregarTdCuerpo('Inactivo',tr);
@@ -127,10 +127,10 @@ document.getElementById('modificarMedico').addEventListener('change',async funct
      fOcultar2();
      switch(selectedValue) {
           case 'estadoMedico':
-               if(medico.estadoPersona===1){
+               if(medico.estadoMedico===1){
                     botonEstado.innerText="Inhabilitar";
                }else{
-                    botonEstado.innerText="Abilitar";
+                    botonEstado.innerText="Habilitar";
                }
                mostrar(divEstado);
               break;

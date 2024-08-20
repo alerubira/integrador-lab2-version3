@@ -63,13 +63,13 @@ async function consulta1(query, ...params) {
         }
     }
 }
-async function existeId(id,tabla,columna){
+async function existeBd(id,tabla,columna){
     /*let query='CALL VerificarID(?, ?,?,@existe)';
 let existe=await consulta1(query,id,tabla,columna);
 return existe ;*/
 try {
     // Ejecuta el procedimiento almacenado
-    await consulta1('CALL VerificarID(?, ?, ?, @existe)', id ,tabla ,columna);
+    await consulta1('CALL VerificarEstaBd(?, ?, ?, @existe)', id ,tabla ,columna);
     
     // Obtiene el valor del parámetro de salida
     const result = await consulta1('SELECT @existe AS existe');
@@ -88,7 +88,7 @@ try {
 }
 }
 
-export {pool,consulta1,existeId} ;
+export {pool,consulta1,existeBd} ;
 
 
 
