@@ -3,7 +3,7 @@ import { manejadorLogin } from './controlador/manejadorDeRutasLogin.js';
 import { verificarToken } from './controlador/manejadorDeRutasLogin.js';
 import { manejadorAcceso } from './controlador/manejadorRutaAcceso.js';
 import { manejadorMedicos } from './controlador/manejadorRutaMedicos.js';
-
+import { manejadorPrestaciones } from './controlador/manejadorRutaPrestaciones.js';
 const ruta = express.Router();
 let encabezado;
 let mensajeExito;
@@ -73,6 +73,10 @@ ruta.post('/cambiarEspecialidad',verificarToken,async(req,res)=>{
 ruta.post('/cambiarDireccion',verificarToken,async(req,res)=>{
 manejadorMedicos(req,res,'cambiarDireccion');
 });
+ruta.get('/prestaciones',(req,res)=>{
+  encabezado='Vienvenido a Prestaciones';
+  manejadorPrestaciones(req,res,'ingresar');
+})
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
    // Obtener el ID del Profesional enviado desde el formulario
  const idProfecional = req.body.idAdministrativoR;

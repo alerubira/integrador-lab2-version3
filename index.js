@@ -59,6 +59,7 @@ app.use('/traertodosMedicos',ruta);
 app.use('/cambiarEstado',ruta);
 app.use('/cambiarEspecialidad',ruta);
 app.use('/cambiarDireccion',ruta);
+app.use('/prestaciones',ruta);
 /*app.get('/', (req, res) => {
     encabezado="Bienvenido al Ministerio de Salud";
      res.render('vistaPrincipal',{encabezado,mensajeExito,estadoSuces});

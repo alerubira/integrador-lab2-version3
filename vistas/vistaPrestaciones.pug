@@ -1,0 +1,122 @@
+extends layout
+block script1 
+    script(src="domPrestaciones.js", defer)
+block script2
+    script(src='domFunsionesPrestaciones.js',defer)           
+block content   
+            select(id="crudPrestaciones", name="crudPrestaciones")
+                        option(value="") Elija una opcion
+                        option(value="crearPrestacion") Inscribir Prestacion
+                        option(value="buscarPrestaciones") Ver todos las Prestaciones
+                    
+            #divCrearPrestacion.ocultar.crear 
+                    form#formularioProfecionalCrear.form(action="/crearMedico", method="POST")
+                        label(for="dniProfecional") DNI del Profecional:
+                        input#dniProfecional.limpiar(name="dniProfecional",type="number")    
+                        br
+                        label(for="nombreProfecionl") Nombre del profecional 
+                        input.limpiar(type="text", id="nombreProfecional" ,name="nombreProfecional")
+                        br
+                        label(for="apellidoProfecional") Apellido  del Profecional:
+                        input.limpiar(type="text", id="apellidoProfecional", name="apellidoProfecional")
+                        br
+                        label(for="profecionProfecional") Profecion del profecional 
+                        input.limpiar.ocultar(type="number",id="idProfecion",name="idProfecion",autocomplete="off")
+                        input.limpiar(type="text", id="profecionProfecional" ,name="profecionProfecional",list="profecion2", autocomplete="off")
+                        datalist#profecion2
+                        br
+                        label(for="especialidadProfecional") Especialidad del Profecional:
+                        input.limpiar.ocultar(type="number",id="idEspecialidad",name="idEspecialidad",autocomplete="off")
+                        input.limpiar(type="text", id="especialidadProfecional", name="especialidadProfecional",list="especialidad", autocomplete="off")
+                        datalist#especialidad
+                        br
+                        label(for="domicilioProfecionl") Domicilio del profecional 
+                        input.limpiar(type="text", id="domicilioProfecional" ,name="domicilioProfecional")
+                        br  
+                        label(for="refepsProfecional") Identificacion REFEPS:
+                        input.limpiar(type="number", id="refepsProfecional", name="refepsProfecional")
+                        br
+                        label(for="matriculaProfecionl") Matricula del profecional 
+                        input.limpiar(type="number", id="matriculaProfecional" ,name="matriculaProfecional")
+                        br 
+                        label(for="usuarioProvisorio") Usuario Provisorio 
+                        input.limpiar(type="text",id="usuarioProvisorio",name="usuarioProvisorio",placeHolder="maximo 6 caracteres") 
+                        br  
+                        label(for="claveProvisoria") Clave provisoria 
+                        input.limpiar(type="text",id="claveProvisoria",name="claveProvisoria",placeHolder="3letras(minimo 1 may)3numeros")
+                        br
+                        label(for="palabraClave") Palabra Clave 
+                        input.limpiar(type="text",id="palabraClave",name="palabraClave",placeHolder="maximo 35 caracteres") 
+                        br 
+                        label(for="nivelAutorizacion") Nivel de Autorizacion:
+                        input.limpiar(type="number", id="nivelAutorizacion", name="nivelAutorizacion",list="dlNivel", autocomplete="off")
+                        datalist#dlNivel 
+                            option(value="1") 
+                            option(value="2") 
+                            option(value="3")  
+                        br
+                                   
+                        input.boton(type="submit", value="Enviar")
+            #divBuscarPrestacion.ocultar
+                    table#todosMedicos
+                        thead#cabecera
+                            tr
+                                th Id persona
+                                th Id Medico
+                                th Dni
+                                th Apellido 
+                                th Nombre 
+                                th Id Profecion
+                                th Profecion 
+                                th Id Especialidad
+                                th Especialidad 
+                                th Domicilio 
+                                th Matricula 
+                                th Id REFEPS
+                                th Estado Actual
+                                th Seleccionar
+                        tbody#cuerpo  
+                               
+            #divModificarPrestacion.ocultar
+                table#tblMedico
+                        thead#cabecera2
+                            tr
+                                th Id persona
+                                th Id Medico
+                                th Dni
+                                th Apellido 
+                                th Nombre 
+                                th Id Profecion
+                                th Profecion 
+                                th Id Especialidad
+                                th Especialidad 
+                                th Domicilio 
+                                th Matricula 
+                                th Id REFEPS
+                                th Estado Actual
+                        tbody#cuerpo2  
+                select(id="modificarPrestacion", name="modificarPrestacion")
+                            option(value="") Elija una opcion
+                            option(value="estadoMedico") Modificar Estdo Medico
+                            option(value="direccionMedico") Modificar direccion Medico 
+                            option(value='especialidadMedico') Modificar la Especialidad
+                #divNuevoDomicilio.ocultar2            
+                        label(for="nuevoDomicilio") Nuevo Domicilio 
+                        input.limpiar(type="text",id="nuevoDomicilio",name="nuevoDomicilio",placeHolder="Nuevo Domicilio") 
+                        br
+                        button.boton(type="button",onclick='modificarDireccion()') Modificar
+                #divNuevaEspecialidad.ocultar2 
+                        label(for="nuevaEspecialidad") Nueva Especialida 
+                        input.limpiar(type="text",id="nuevaEspecialidad",name="nuevaEspecialidad",placeHolder="Nueva Especialidad",list="especialidadNuevas")
+                        datalist#especialidadNuevas
+                        br 
+                        button.boton(type="button",onclick='modificarEspecialidad()') Modificar
+                #divEstado.ocultar2 
+                        button#botonEstado.boton(type="button",onclick='cambiarEstado()')
+block boton1 
+        button.boton(type="button",onclick='volver()') volver                
+
+
+                   
+                    
+                        

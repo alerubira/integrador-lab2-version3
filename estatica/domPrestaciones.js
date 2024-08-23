@@ -1,5 +1,4 @@
-
-pagina="Medico";
+pagina="Prestaciones";
 //const Focultar = require('./domFunsiones.js');
 let formularioProfecionalCrear=document.getElementById('formularioProfecionalCrear');
 let dniProfecional=document.getElementById('dniProfecional');
@@ -18,8 +17,8 @@ let inputClave=document.getElementById('claveProvisoria');
 let inputUsuario=document.getElementById('usuarioProvisorio');
 let inputNivel=document.getElementById('nivelAutorizacion');
 let inputPalabraClave=document.getElementById('palabraClave');
-let divBuscarMedico=document.getElementById('divBuscarMedico');
-let divModificarMedico=document.getElementById('divModificarMedico');
+let divBuscarPrestacion=document.getElementById('divBuscarPrestacion');
+let divModificarPestacion=document.getElementById('divModificarPrestacion');
 let cuerpo=document.getElementById('cuerpo');
 let divNuevoDomicilio=document.getElementById('divNuevoDomicilio');
 let divNuevaEspecialidad=document.getElementById('divNuevaEspecialidad');
@@ -32,11 +31,11 @@ let profeciones;
 let especialidades;
 let bandera;
 let banderaAux;
-let medicos=[];
-let medico;
+let prestaciones=[];
+let prestacion;
 let pMedico=document.getElementById('pMedico');
 
-(async function(){    
+/*(async function(){    
 profeciones=await fechProtegido("/profeciones");
 profecionDL.innerHTML = ''; 
 if(profeciones.error){
@@ -57,31 +56,31 @@ if(especialidades.error){
 }else{
      llenarDl(especialidadDL ,especialidades.data);
      }
-})();
+})();*/
 
- document.getElementById('crudMedico').addEventListener('change',async function() {
+ document.getElementById('crudPrestaciones').addEventListener('change',async function() {
      limpiarCampos(limpiar);
      fOcultar2();
      let selectedValue = this.value;
      fOcultar();
      switch(selectedValue) {
-          case 'crearMedico':
+          case 'crearPrestacion':
                console.log(selectedValue);
-               let divCMedico = document.getElementById('divCrearMedico');
-               mostrar(divCMedico);
+               let divCPrestacion = document.getElementById('divCrearPrestacion');
+               mostrar(divCPrestacion);
                break;
           
-          case 'buscarMedico':
+          case 'buscarPrestaciones':
               fOcultar();
               eliminarHijos(cuerpo);
-               medicos=await fechProtegido('/traertodosMedicos');
-              if(medicos.error){
-                    alerta(pagina,`Hubo un inconveniente al buscar medicos: ${medicos.error.message}`);
-                    console.log(medicos.error.message);
+               prestaciones=await fechProtegido('/traertodosMedicos');
+              if(prestaciones.error){
+                    alerta(pagina,`Hubo un inconveniente al buscar medicos: ${prestaciones.error.message}`);
+                    console.log(prestaciones.error.message);
                }else{
-               console.log(medicos.data);
-                mostrar(divBuscarMedico);
-                for(let m of medicos.data){
+               console.log(prestaciones.data);
+                mostrar(divBuscarPrestacion);
+                for(let m of prestaciones.data){
                     let tr=document.createElement('tr');
                     cuerpo.appendChild(tr);
                     agregarTdCuerpo(m.idPersona,tr);
@@ -118,13 +117,13 @@ if(especialidades.error){
      document.getElementById("crudMedico").selectedIndex = 0;
 });
 
-document.getElementById('modificarMedico').addEventListener('change',async function() {
+document.getElementById('modificarPrestacion').addEventListener('change',async function() {
      limpiarCampos(limpiar);
      let selectedValue = this.value;
      fOcultar2();
      switch(selectedValue) {
           case 'estadoMedico':
-               if(medico.estadoMedico===1){
+               if(prestacion.estadoMedico===1){
                     botonEstado.innerText="Inhabilitar";
                }else{
                     botonEstado.innerText="Habilitar";

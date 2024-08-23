@@ -109,8 +109,19 @@ function redireccionarMedicamentos(){
   console.log('medicamntos en construccion');
 }
 function redireccionarPrestaciones(){
-  console.log('prestaciones en construccion');
-}
+  console.log('derireccionar prestaciones');
+  // console.log(localStorage);
+   const token = localStorage.getItem('token');
+   const tipoAutorizacion=localStorage.getItem('tipoAutorizacion');
+   //console.log(token);
+   if (tipoAutorizacion === '3') {
+    console.log('dentro del if');
+       //const token = data.token;
+        window.location.href = `/prestaciones?token=${token}`;
+      
+       }
+ }
+
   
   
   
