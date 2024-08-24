@@ -77,6 +77,19 @@ ruta.get('/prestaciones',(req,res)=>{
   encabezado='Vienvenido a Prestaciones';
   manejadorPrestaciones(req,res,'ingresar');
 })
+ruta.get('/examen',verificarToken,async(req,res)=>{
+  
+  manejadorPrestaciones(req,res,"examen");
+  });
+  ruta.get('/procedimiento',verificarToken,async(req,res)=>{
+  
+    manejadorPrestaciones(req,res,"procedimiento");
+    });
+    ruta.post('/crearPrestacion',verificarToken,async(req,res) =>{
+  res.send(req.body);
+     // manejadorMedicos(req,res,'crearMedico')
+       
+     }); 
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
    // Obtener el ID del Profesional enviado desde el formulario
  const idProfecional = req.body.idAdministrativoR;

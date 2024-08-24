@@ -10,52 +10,22 @@ block content
                         option(value="buscarPrestaciones") Ver todos las Prestaciones
                     
             #divCrearPrestacion.ocultar.crear 
-                    form#formularioProfecionalCrear.form(action="/crearMedico", method="POST")
-                        label(for="dniProfecional") DNI del Profecional:
-                        input#dniProfecional.limpiar(name="dniProfecional",type="number")    
+                    form#formularioPrestacionCrear.form(action="/crearMedico", method="POST")
+                        
+                        label(for="nombrePractica") Nombre de la Practica 
+                        input.limpiar(type="text", id="nombrePractica" ,name="nombrePractica")
                         br
-                        label(for="nombreProfecionl") Nombre del profecional 
-                        input.limpiar(type="text", id="nombreProfecional" ,name="nombreProfecional")
+                        
+                        label(for="examenPrestacion") Nombre del Examen 
+                        input.limpiar.ocultar(type="number",id="idExamen",name="idExamen",autocomplete="off")
+                        input.limpiar(type="text", id="examenPrestacion" ,name="examenPrestacion",list="dlExamen", autocomplete="off")
+                        datalist#dlExamen
                         br
-                        label(for="apellidoProfecional") Apellido  del Profecional:
-                        input.limpiar(type="text", id="apellidoProfecional", name="apellidoProfecional")
+                        label(for="procedimientoPrestacion") Nombre del Procedimiento
+                        input.limpiar.ocultar(type="number",id="idProcedimiento",name="idProcedimiento",autocomplete="off")
+                        input.limpiar(type="text", id="procedimientoPrestacion", name="procedimientoPrestacion",list="dlProcedimiento", autocomplete="off")
+                        datalist#dlProcedimiento
                         br
-                        label(for="profecionProfecional") Profecion del profecional 
-                        input.limpiar.ocultar(type="number",id="idProfecion",name="idProfecion",autocomplete="off")
-                        input.limpiar(type="text", id="profecionProfecional" ,name="profecionProfecional",list="profecion2", autocomplete="off")
-                        datalist#profecion2
-                        br
-                        label(for="especialidadProfecional") Especialidad del Profecional:
-                        input.limpiar.ocultar(type="number",id="idEspecialidad",name="idEspecialidad",autocomplete="off")
-                        input.limpiar(type="text", id="especialidadProfecional", name="especialidadProfecional",list="especialidad", autocomplete="off")
-                        datalist#especialidad
-                        br
-                        label(for="domicilioProfecionl") Domicilio del profecional 
-                        input.limpiar(type="text", id="domicilioProfecional" ,name="domicilioProfecional")
-                        br  
-                        label(for="refepsProfecional") Identificacion REFEPS:
-                        input.limpiar(type="number", id="refepsProfecional", name="refepsProfecional")
-                        br
-                        label(for="matriculaProfecionl") Matricula del profecional 
-                        input.limpiar(type="number", id="matriculaProfecional" ,name="matriculaProfecional")
-                        br 
-                        label(for="usuarioProvisorio") Usuario Provisorio 
-                        input.limpiar(type="text",id="usuarioProvisorio",name="usuarioProvisorio",placeHolder="maximo 6 caracteres") 
-                        br  
-                        label(for="claveProvisoria") Clave provisoria 
-                        input.limpiar(type="text",id="claveProvisoria",name="claveProvisoria",placeHolder="3letras(minimo 1 may)3numeros")
-                        br
-                        label(for="palabraClave") Palabra Clave 
-                        input.limpiar(type="text",id="palabraClave",name="palabraClave",placeHolder="maximo 35 caracteres") 
-                        br 
-                        label(for="nivelAutorizacion") Nivel de Autorizacion:
-                        input.limpiar(type="number", id="nivelAutorizacion", name="nivelAutorizacion",list="dlNivel", autocomplete="off")
-                        datalist#dlNivel 
-                            option(value="1") 
-                            option(value="2") 
-                            option(value="3")  
-                        br
-                                   
                         input.boton(type="submit", value="Enviar")
             #divBuscarPrestacion.ocultar
                     table#todosMedicos
@@ -100,14 +70,14 @@ block content
                             option(value="estadoMedico") Modificar Estdo Medico
                             option(value="direccionMedico") Modificar direccion Medico 
                             option(value='especialidadMedico') Modificar la Especialidad
-                #divNuevoDomicilio.ocultar2            
-                        label(for="nuevoDomicilio") Nuevo Domicilio 
-                        input.limpiar(type="text",id="nuevoDomicilio",name="nuevoDomicilio",placeHolder="Nuevo Domicilio") 
+                #divNuevoExamen.ocultar2            
+                        label(for="nuevoExamen") Nuevo Domicilio 
+                        input.limpiar(type="text",id="nuevoExamen",name="nuevoExamen",placeHolder="Nuevo Examen") 
                         br
                         button.boton(type="button",onclick='modificarDireccion()') Modificar
-                #divNuevaEspecialidad.ocultar2 
-                        label(for="nuevaEspecialidad") Nueva Especialida 
-                        input.limpiar(type="text",id="nuevaEspecialidad",name="nuevaEspecialidad",placeHolder="Nueva Especialidad",list="especialidadNuevas")
+                #divNuevoProcedimiento.ocultar2 
+                        label(for="nuevoProcedimiento") Nueva Especialida 
+                        input.limpiar(type="text",id="nuevoProcedimiento",name="nuevoProcedimiento",placeHolder="Nueva Procedimiento",list="especialidadNuevas")
                         datalist#especialidadNuevas
                         br 
                         button.boton(type="button",onclick='modificarEspecialidad()') Modificar

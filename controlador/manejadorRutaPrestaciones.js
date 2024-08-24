@@ -1,5 +1,6 @@
 import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { encabezado } from "../rutas.js";
+import { prestacionDatatodos } from "../modelo/prestacionData.js";
 //import { medicoDatatodos,medicoDataModificar,crearMedico } from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 //import { Medico } from "../modelo/clasesEntidad.js";
@@ -39,13 +40,13 @@ async function manejadorPrestaciones(req,res,objeto){
         });
           
           break;
-     case 'profecion':
+     case 'examen':
             
-            aux= await medicoDatatodos('profeciones');
+            aux= await prestacionDatatodos('examenes');
             res.send(aux);
         break;
-      case 'especialidad':
-         aux=await medicoDatatodos('especialidades');
+      case 'procedimiento':
+         aux=await prestacionDatatodos('procedimientos');
          res.send(aux);
             break;
      case 'crearMedico':
