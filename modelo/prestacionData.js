@@ -30,6 +30,10 @@ async function medicoDataModificar(modificar,id,modificante){
 async function prestacionDatatodos(traer){
 try{
     switch(traer){
+     case 'practicas':
+        query='SELECT * FROM `practica` WHERE 1;';
+        return await consulta1(query);
+        break;   
      case 'examenes':
          query='SELECT * FROM `examen` WHERE 1;';
         return await consulta1(query);

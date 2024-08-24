@@ -42,12 +42,13 @@ profecionDL.innerHTML = '';
 if(profeciones.error){
      alerta(pagina,'Hubo un inconveniente al buscar profeciones');
 }else{
-     for(let p of profeciones.data){
+     /*for(let p of profeciones.data){
           let op=document.createElement('option');
           op.textContent=p.nombre_profecion;
           op.value=p.nombre_profecion;
           profecionDL.appendChild(op);
-         }
+         }*/
+        llenarDl(profecionDL,profeciones.data,'nombre_profecion');
 
 }
 especialidades=await fechProtegido("/especialidades");
@@ -55,7 +56,7 @@ especialidadDL.innerHTML = '';
 if(especialidades.error){
      alerta(pagina,'Hubo un inconveniente al buscar profeciones');
 }else{
-     llenarDl(especialidadDL ,especialidades.data);
+     llenarDl(especialidadDL ,especialidades.data,'nombre_especialidad');
      }
 })();
 

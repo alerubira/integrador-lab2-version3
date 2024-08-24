@@ -77,6 +77,9 @@ ruta.get('/prestaciones',(req,res)=>{
   encabezado='Vienvenido a Prestaciones';
   manejadorPrestaciones(req,res,'ingresar');
 })
+ruta.get('/practica',verificarToken,async(req,res)=>{
+  manejadorPrestaciones(req,res,"practica");
+})
 ruta.get('/examen',verificarToken,async(req,res)=>{
   
   manejadorPrestaciones(req,res,"examen");

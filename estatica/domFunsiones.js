@@ -70,11 +70,11 @@ function validar(codicion,pagina,mensage,event){
         }else{
             return true;
         }}
-function llenarDl(dl,array){
+function llenarDl(dl,array,atributo){
     for(let e of array){
         let op2=document.createElement('option');
-        op2.textContent=e.nombre_especialidad;
-        op2.value=e.nombre_especialidad;
+        op2.textContent=e[atributo];
+        op2.value=e[atributo];
         dl.appendChild(op2);
    }
 }        

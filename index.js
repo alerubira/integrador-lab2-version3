@@ -59,6 +59,7 @@ app.use('/traertodosMedicos',ruta);
 app.use('/cambiarEstado',ruta);
 app.use('/cambiarEspecialidad',ruta);
 app.use('/cambiarDireccion',ruta);
+app.use('/practica',ruta);
 app.use('/prestaciones',ruta);
 app.use('/examen',ruta);
 app.use('/procedimiento',ruta);

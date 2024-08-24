@@ -40,8 +40,12 @@ async function manejadorPrestaciones(req,res,objeto){
         });
           
           break;
+     case 'practica':
+        //verificar parctica procedimient y examen em el servidor,que esten en la base de datos
+           aux = await prestacionDatatodos('practicas');
+           res.send(aux);
+        break;     
      case 'examen':
-            
             aux= await prestacionDatatodos('examenes');
             res.send(aux);
         break;

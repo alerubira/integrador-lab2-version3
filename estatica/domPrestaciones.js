@@ -2,8 +2,10 @@ pagina="Prestaciones";
 //const Focultar = require('./domFunsiones.js');
 let formularioPrestacionCrear=document.getElementById('formularioPrestacionCrear');
 let nombrePractica=document.getElementById('nombrePractica');
+let dlPractica=document.getElementById('dlPractica');
 let dlExamen=document.getElementById('dlExamen');
 let dlProcedimiento=document.getElementById('dlProcedimiento');
+let idPractica=document.getElementById('idPractica');
 let idExamen=document.getElementById('idExamen');
 let idProcedimiento=document.getElementById('idProcedimiento');
 let inputexamen=document.getElementById('examenPrestacion');
@@ -18,6 +20,7 @@ let inputNuevaEspecialidad=document.getElementById('nuevaEspecialidad');
 let inputNuevoDomicilio=document.getElementById('nuevoDomicilio');
 let botonEstado=document.getElementById('botonEstado');
 let cuerpo2=document.getElementById('cuerpo2');
+let practicas;
 let examenes;
 let procedimientos;
 let bandera;
@@ -26,19 +29,29 @@ let prestaciones=[];
 let prestacion;
 let pMedico=document.getElementById('pMedico');
 
-(async function(){    
+(async function(){  
+practicas=await fechProtegido('/practica'); 
+dlPractica.innerHTML='';
+console.log(practicas.data);
+if(practicas.error){
+     alerta(pagina,'Hubo un inconveniente al buscar Practicas');
+} else{
+     llenarDl(dlPractica,practicas.data,'nombre_practica');
+}   
 examenes=await fechProtegido("/examen");
 dlExamen.innerHTML = '';
 console.log(examenes.data); 
 if(examenes.error){
      alerta(pagina,'Hubo un inconveniente al buscar examenes');
 }else{
-     for(let e of examenes.data){
+    /* for(let e of examenes.data){
           let op=document.createElement('option');
           op.textContent=e.nombre_examen;
           op.value=e.nombre_examen;
           dlExamen.appendChild(op);
-         }
+         }*/
+        
+        llenarDl(dlExamen,examenes.data,'nombre_examen');
 
 }
 procedimientos=await fechProtegido("/procedimiento");
@@ -47,12 +60,13 @@ console.log(procedimientos.data);
 if(procedimientos.error){
      alerta(pagina,'Hubo un inconveniente al buscar procedimientos');
 }else{
-     for(let p of procedimientos.data){
+    /* for(let p of procedimientos.data){
           let op1=document.createElement('option');
           op1.textContent=p.nombre_procedimiento;
           op1.value=p.nombre_procedimiento;
           dlProcedimiento.appendChild(op1);
-     }
+     }*/
+    llenarDl(dlProcedimiento,procedimientos.data,'nombre_procedimiento')
      }
 })();
 
@@ -150,27 +164,30 @@ formularioPrestacionCrear.addEventListener('submit',async function(event) {
      let nombreValue=nombrePractica.value;
      let examenValue=inputexamen.value;
      let procedimientoValue=inputProcedimiento.value;
-     
+     //verificar practica
     banderaAux= validar(nombreValue.length<1||nombreValue.length>28||!/^[a-zA-Z]+$/.test(nombreValue),pagina,"El nombre es obligatorio,debe contener menos de 30 letras unicamente",event)
     if(!banderaAux){bandera=false};
      let objetoEncontrado = await examenes.data.find(objeto => objeto.nombre_examen === examenValue);
      banderaAux= validar(!objetoEncontrado,pagina,'El examen no corresponde',event);
      if(!banderaAux){bandera=false};
      if(objetoEncontrado){
-          idExamen.value=await objetoEncontrado.id_examen;
+          //console.log(objetoEncontrado.id_examen);
+          idExamen.value= objetoEncontrado.id_examen;
+          //console.log(idExamen.value);
      }
       objetoEncontrado =await procedimientos.data.find(objet => objet.nombre_procedimiento === procedimientoValue);
 
       banderaAux=  validar(!objetoEncontrado,pagina,'El procedimiento no corresponde',event);
       if(!banderaAux){bandera=false};
       if(objetoEncontrado){
-          idProcedimiento.value=await objetoEncontrado.id_procedimiento;
+          idProcedimiento.value= objetoEncontrado.id_procedimiento;
      }
      
      
      if(bandera){
-         let prestacionCreado={nombrePractica:nombreValue,idExamen:idExamen.Value,idProcedimiento:idProcedimiento.value};
-        fechProtegidoPost('/crearPrestacion',prestacionCreado);
+         let prestacionCreado={nombrePractica:nombreValue,idProcedimiento:idProcedimiento.value,idExamen:idExamen.value};
+       
+         fechProtegidoPost('/crearPrestacion',prestacionCreado);
           /*const token = localStorage.getItem('token');
     
     try {

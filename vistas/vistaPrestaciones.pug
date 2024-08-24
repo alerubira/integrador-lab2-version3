@@ -13,18 +13,19 @@ block content
                     form#formularioPrestacionCrear.form(action="/crearMedico", method="POST")
                         
                         label(for="nombrePractica") Nombre de la Practica 
-                        input.limpiar(type="text", id="nombrePractica" ,name="nombrePractica")
-                        br
-                        
-                        label(for="examenPrestacion") Nombre del Examen 
-                        input.limpiar.ocultar(type="number",id="idExamen",name="idExamen",autocomplete="off")
-                        input.limpiar(type="text", id="examenPrestacion" ,name="examenPrestacion",list="dlExamen", autocomplete="off")
-                        datalist#dlExamen
+                        input.limpiar.ocultar(type="number",id="idPractica",autocomplete="off")
+                        input.limpiar(type="text", id="nombrePractica" ,name="nombrePractica",autocomplete="off",list="dlPractica")
+                        datalist#dlPractica
                         br
                         label(for="procedimientoPrestacion") Nombre del Procedimiento
                         input.limpiar.ocultar(type="number",id="idProcedimiento",name="idProcedimiento",autocomplete="off")
                         input.limpiar(type="text", id="procedimientoPrestacion", name="procedimientoPrestacion",list="dlProcedimiento", autocomplete="off")
                         datalist#dlProcedimiento
+                        br
+                        label(for="examenPrestacion") Nombre del Examen 
+                        input.limpiar.ocultar(type="number",id="idExamen",name="idExamen",autocomplete="off")
+                        input.limpiar(type="text", id="examenPrestacion" ,name="examenPrestacion",list="dlExamen", autocomplete="off")
+                        datalist#dlExamen
                         br
                         input.boton(type="submit", value="Enviar")
             #divBuscarPrestacion.ocultar
