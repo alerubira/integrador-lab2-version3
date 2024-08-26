@@ -42,8 +42,9 @@ try{
         query='SELECT * FROM `procedimiento` WHERE 1;';
         return await consulta1(query);
         break
-     case 'medicos':
-         query='SELECT p.id_persona,p.nombre,p.apellido,p.dni_persona,m.estado_medico,m.id_medico,m.domicilio,m.id_profecion,m.id_especialidad,m.matricula_profecional,m.id_refeps,pr.nombre_profecion,e.nombre_especialidad FROM `persona` p JOIN `medico` m on m.id_persona = p.id_persona JOIN `profecion` pr on m.id_profecion=pr.id_profecion JOIN `especialida` e on m.id_especialidad=e.id_especialidad WHERE 1'
+     case 'prestaciones':
+        //realizar la query para buscar
+         query=''
         return await consulta1(query);
         break 
       }
@@ -108,28 +109,25 @@ return await(consulta1(query,domicilio,idMedico));
 
 
 async function crearPrestacion(Prestacion) {
-    
+    let query='INSERT INTO `prestacion`(`id_practica`, `id_procedimiento`, `id_examen`) values(?,?,?)'
+    let respuesta=await consulta1(query,Prestacion.idPractica,Prestacion.idPractica,Prestacion.idExamen);
+    //console.log(respuesta);
+   return respuesta;
+
     //let usuarioH = await crearHash(Medico.usuarioProvisorio);
 
-    let connection;
+  /*  let connection;
     try {
         connection = await pool.getConnection();
         await connection.beginTransaction();
-        let p=await existeBd(Medico.dniProfecional,'persona','dni_persona');
-        let id_persona;
-        if(p){
-            let resultado=await  buscarIdPorDni(Medico.dniProfecional);
-            if(!resultado.error){
-                id_persona=resultado[0].id_persona;
-            }
-        }else{
+        
             const [personaResult] = await connection.execute(
                 'INSERT INTO `persona`(`nombre`, `apellido`, `dni_persona`) VALUES (?,?,?)',
                 [Medico.nombreProfecional, Medico.apellidoProfecional, Medico.dniProfecional]
             );
     
              id_persona = personaResult.insertId;
-        }
+        
         
         const [medicoResult] = await connection.execute(
             'INSERT INTO `medico`(`id_persona`, `domicilio`, `id_profecion`, `id_especialidad`, `matricula_profecional`, `id_refeps`,estado_medico) VALUES (?,?,?,?,?,?,?)',
@@ -155,7 +153,7 @@ async function crearPrestacion(Prestacion) {
         if (connection) {
             connection.release(); // Devolvemos la conexión al pool
         }
-    }
+    }*/
 }
 
 

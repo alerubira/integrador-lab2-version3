@@ -64,6 +64,7 @@ app.use('/prestaciones',ruta);
 app.use('/examen',ruta);
 app.use('/procedimiento',ruta);
 app.use('/crearPrestacion',ruta);
+app.use('/traerTodasPrestaciones',ruta);
 /*app.get('/', (req, res) => {
     encabezado="Bienvenido al Ministerio de Salud";
      res.render('vistaPrincipal',{encabezado,mensajeExito,estadoSuces});

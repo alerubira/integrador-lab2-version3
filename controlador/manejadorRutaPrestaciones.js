@@ -1,6 +1,6 @@
 import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { encabezado } from "../rutas.js";
-import { prestacionDatatodos } from "../modelo/prestacionData.js";
+import { prestacionDatatodos,crearPrestacion } from "../modelo/prestacionData.js";
 //import { medicoDatatodos,medicoDataModificar,crearMedico } from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 //import { Medico } from "../modelo/clasesEntidad.js";
@@ -53,23 +53,30 @@ async function manejadorPrestaciones(req,res,objeto){
          aux=await prestacionDatatodos('procedimientos');
          res.send(aux);
             break;
-     case 'crearMedico':
-       // console.log(objet);
+     case 'todasPrestaciones':
+        aux=await prestacionDatatodos('prestaciones');
+        res.send(aux);
+        break       
+     case 'crearPrestacion':
         objet = req.body;
-       //console.log(objet);
-        aux= await verificar(objet,'medico');
-        
-          if(aux.errors){
-            return res.status(500).send(aux.errors);
-          }else{let suces=await crearMedico(objet);
+        if(!existeBd(objet.idPractica,'practica','id_practica')){
+            return res.status(500).send(error);
+        }
+        if(!existeBd(objet.idProcedimiento,'procedimiento','id_procedimiento')){
+            return res.status(500).send(error);
+        }
+        if(!existeBd(objet.idExamen,'examen','id_examen')){
+            return res.status(500).send(error);
+        }
+          let suces=await crearPrestacion(objet);
+          console.log(suces);
             if(suces.error){
                 //console.log(`suces error : ${suces.error}`);
                 return res.status(500).send(suces.error);
             }else{
-                estadoSuces=suces.success;
-                return res.send(estadoSuces);
+                //let estadoSuces=suces.success;
+                return res.send(suces);
                    }
-            }
           
             break;
        case 'traerTodosMedicos':
@@ -131,7 +138,7 @@ async function manejadorPrestaciones(req,res,objeto){
         break;                  
     }
 }catch (error) {
-    console.error(`Error al Procesar el ${objeto} a Medicos`, error);
+    console.error(`Error al Procesar el ${objeto} a Prestaciones`, error);
     return res.status(500).send(error);
 }
     }

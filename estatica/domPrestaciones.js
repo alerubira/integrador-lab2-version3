@@ -85,7 +85,7 @@ if(procedimientos.error){
           case 'buscarPrestaciones':
               fOcultar();
               eliminarHijos(cuerpo);
-               prestaciones=await fechProtegido('/traertodosMedicos');
+               prestaciones=await fechProtegido('/traertodasPrestaciones');
               if(prestaciones.error){
                     alerta(pagina,`Hubo un inconveniente al buscar medicos: ${prestaciones.error.message}`);
                     console.log(prestaciones.error.message);
@@ -164,10 +164,15 @@ formularioPrestacionCrear.addEventListener('submit',async function(event) {
      let nombreValue=nombrePractica.value;
      let examenValue=inputexamen.value;
      let procedimientoValue=inputProcedimiento.value;
-     //verificar practica
-    banderaAux= validar(nombreValue.length<1||nombreValue.length>28||!/^[a-zA-Z]+$/.test(nombreValue),pagina,"El nombre es obligatorio,debe contener menos de 30 letras unicamente",event)
-    if(!banderaAux){bandera=false};
-     let objetoEncontrado = await examenes.data.find(objeto => objeto.nombre_examen === examenValue);
+     let objetoEncontrado ;
+    //banderaAux= validar(nombreValue.length<1||nombreValue.length>28||!/^[a-zA-Z]+$/.test(nombreValue),pagina,"El nombre es obligatorio,debe contener menos de 30 letras unicamente",event)
+     objetoEncontrado=await practicas.data.find(ob=>ob.nombre_practica===nombreValue);
+     banderaAux=validar(!objetoEncontrado,pagina,'La practica no corresponde',event);
+     if(!banderaAux){bandera=false};
+     if(objetoEncontrado){
+          idPractica.value=objetoEncontrado.id_practica;
+     } 
+      objetoEncontrado = await examenes.data.find(objeto => objeto.nombre_examen === examenValue);
      banderaAux= validar(!objetoEncontrado,pagina,'El examen no corresponde',event);
      if(!banderaAux){bandera=false};
      if(objetoEncontrado){
@@ -185,7 +190,7 @@ formularioPrestacionCrear.addEventListener('submit',async function(event) {
      
      
      if(bandera){
-         let prestacionCreado={nombrePractica:nombreValue,idProcedimiento:idProcedimiento.value,idExamen:idExamen.value};
+         let prestacionCreado={idPractica:idPractica.value,idProcedimiento:idProcedimiento.value,idExamen:idExamen.value};
        
          fechProtegidoPost('/crearPrestacion',prestacionCreado);
           /*const token = localStorage.getItem('token');
