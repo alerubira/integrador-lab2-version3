@@ -1,8 +1,9 @@
+
 function cambiarEstado(){
     //construir endpoin,hacer modificacion
     let p={};
-    p.idPersona=medico.idPersona;
-    if(medico.estadoMedico===1){
+    p.idPersona=prestacion.idPersona;
+    if(prestacion.estadoMedico===1){
          p.estadoMedico=false;
     }else{
          p.estadoMedico=true;
@@ -16,7 +17,7 @@ function cambiarEstado(){
     let es=await especialidades.data.find(no=>no.nombre_especialidad===nuevaEspecialidadValue);
     if(es){
     let m={};
-    m.idMedico=medico.idMedico;
+    m.idMedico=prestacion.idMedico;
     m.idEspecialidad=es.id_especialidad;
     fechProtegidoPost('/cambiarEspecialidad',m);
     }else{
@@ -29,12 +30,12 @@ function cambiarEstado(){
     let domiciliValido=  validar(nuevoDomicilioValue.length<1||nuevoDomicilioValue.length>30,pagina,'El domicilio es obligatorio y no debe exeder los 25 caracteres',event);
     if(domiciliValido){
     let md={};
-    md.idMedico=medico.idMedico;
+    md.idMedico=prestacion.idMedico;
     md.domicilioProfecional=nuevoDomicilioValue;
     fechProtegidoPost('/cambiarDireccion',md);
     }   
     }
-    async function seleccionarMedico(event){
+    async function seleccionarPrestacion(event){
         fOcultar();
         mostrar(divModificarPestacion);
          // Obtener el botón que se hizo clic
@@ -45,27 +46,22 @@ function cambiarEstado(){
         
          // Obtener todas las celdas (<td>) dentro de esa fila
          let celdas = fila.getElementsByTagName('td');
-        medico={};
+        prestacion={};
          // Recorrer las celdas y obtener los valores
          
-         medico=await medicos.data.find(med=>med.idMedico===parseInt(celdas[1].textContent));
-         console.log(medico);
+         prestacion=await prestaciones.data.find(pre=>pre.id_prestacion===parseInt(celdas[1].textContent));
+         console.log(prestacion);
          eliminarHijos(cuerpo2);
          let tr2=document.createElement('tr');
                             cuerpo2.appendChild(tr2);
-                            agregarTdCuerpo(medico.idPersona,tr2);
-                            agregarTdCuerpo(medico.idMedico,tr2);
-                            agregarTdCuerpo(medico.dni,tr2);
-                            agregarTdCuerpo(medico.apellido,tr2);
-                            agregarTdCuerpo(medico.nombre,tr2);
-                            agregarTdCuerpo(medico.idProfecion,tr2);
-                            agregarTdCuerpo(medico.profesion,tr2);
-                            agregarTdCuerpo(medico.idEspecialidad,tr2);
-                            agregarTdCuerpo(medico.especialidad,tr2);
-                            agregarTdCuerpo(medico.domicilio,tr2);
-                            agregarTdCuerpo(medico.matriculaProfesional,tr2);
-                            agregarTdCuerpo(medico.idRefeps,tr2);
-                            if(medico.estadoMedico===1){
+                            agregarTdCuerpo(prestacion.id_prestacion,tr2);
+                            agregarTdCuerpo(prestacion.id_practica,tr2);
+                            agregarTdCuerpo(prestacion.nombre_practica,tr2);
+                            agregarTdCuerpo(prestacion.id_procedimiento,tr2);
+                            agregarTdCuerpo(prestacion.nombre_procedimiento,tr2);
+                            agregarTdCuerpo(prestacion.id_examen,tr2);
+                            agregarTdCuerpo(prestacion.nombre_examen,tr2);
+                            if(prestacion.estado_procedimiento===1){
                                  agregarTdCuerpo('Activo',tr2);
                             }else{
                                  agregarTdCuerpo('Inactivo',tr2);

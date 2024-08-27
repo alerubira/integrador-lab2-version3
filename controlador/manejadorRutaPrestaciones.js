@@ -55,6 +55,7 @@ async function manejadorPrestaciones(req,res,objeto){
             break;
      case 'todasPrestaciones':
         aux=await prestacionDatatodos('prestaciones');
+       // console.log(aux);
         res.send(aux);
         break       
      case 'crearPrestacion':

@@ -85,29 +85,24 @@ if(procedimientos.error){
           case 'buscarPrestaciones':
               fOcultar();
               eliminarHijos(cuerpo);
-               prestaciones=await fechProtegido('/traertodasPrestaciones');
+               prestaciones=await fechProtegido('/traerTodasPrestaciones');
               if(prestaciones.error){
-                    alerta(pagina,`Hubo un inconveniente al buscar medicos: ${prestaciones.error.message}`);
+                    alerta(pagina,`Hubo un inconveniente al buscar prestaciones: ${prestaciones.error.message}`);
                     console.log(prestaciones.error.message);
                }else{
                console.log(prestaciones.data);
                 mostrar(divBuscarPrestacion);
-                for(let m of prestaciones.data){
+                for(let p of prestaciones.data){
                     let tr=document.createElement('tr');
                     cuerpo.appendChild(tr);
-                    agregarTdCuerpo(m.idPersona,tr);
-                    agregarTdCuerpo(m.idMedico,tr);
-                    agregarTdCuerpo(m.dni,tr);
-                    agregarTdCuerpo(m.apellido,tr);
-                    agregarTdCuerpo(m.nombre,tr);
-                    agregarTdCuerpo(m.idProfecion,tr);
-                    agregarTdCuerpo(m.profesion,tr);
-                    agregarTdCuerpo(m.idEspecialidad,tr);
-                    agregarTdCuerpo(m.especialidad,tr);
-                    agregarTdCuerpo(m.domicilio,tr);
-                    agregarTdCuerpo(m.matriculaProfesional,tr);
-                    agregarTdCuerpo(m.idRefeps,tr);
-                    if(m.estadoMedico===1){
+                    agregarTdCuerpo(p.id_prestacion,tr);
+                    agregarTdCuerpo(p.id_practica,tr);
+                    agregarTdCuerpo(p.nombre_practica,tr);
+                    agregarTdCuerpo(p.id_procedimiento,tr);
+                    agregarTdCuerpo(p.nombre_procedimiento,tr);
+                    agregarTdCuerpo(p.id_examen,tr);
+                    agregarTdCuerpo(p.nombre_examen,tr);
+                    if(p.estado_prestacion===1){
                          agregarTdCuerpo('Activo',tr);
                     }else{
                          agregarTdCuerpo('Inactivo',tr);
@@ -115,7 +110,7 @@ if(procedimientos.error){
                     let btn=document.createElement('button');
                               btn.textContent = 'Seleccionar';
                               btn.className = 'boton';
-                              btn.addEventListener('click', seleccionarMedico);
+                              btn.addEventListener('click', seleccionarPrestacion);
                              let td=document.createElement('td');
                              td.appendChild(btn);
                              tr.appendChild(td);

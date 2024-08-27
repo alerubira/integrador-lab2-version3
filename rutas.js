@@ -88,7 +88,7 @@ ruta.get('/examen',verificarToken,async(req,res)=>{
   
     manejadorPrestaciones(req,res,"procedimiento");
     });
- ruta.get('/taerTodasPrestaciones',verificarToken,async(req,res)=>{
+ ruta.get('/traerTodasPrestaciones',verificarToken,async(req,res)=>{
   manejadorPrestaciones(req,res,'todasPrestaciones');
  })   
     ruta.post('/crearPrestacion',verificarToken,async(req,res) =>{
