@@ -5,11 +5,11 @@ import { consulta1 ,existeBd,pool} from "./conexxionBD.js";
 import { buscarIdPorDni } from './PersonaData.js';
 let profecionales;
 let query;
-async function medicoDataModificar(modificar,id,modificante){
+async function prestacionDataModificar(modificar,id,modificante){
    try{
     switch(modificar){
         case 'estado':
-             query='UPDATE `medico` SET `estado_medico`=? WHERE id_persona=?'
+             query='UPDATE `prestacion` SET `estado_prestacion`=? WHERE id_Prestacion=?'
              return await(consulta1(query,modificante,id));
              break
         case 'domicilio':
@@ -159,4 +159,4 @@ async function crearPrestacion(Prestacion) {
 
 
 
-export{prestacionDatatodos,medicoDataModificar,crearPrestacion,buscarMID};
+export{prestacionDatatodos,prestacionDataModificar,crearPrestacion,buscarMID};

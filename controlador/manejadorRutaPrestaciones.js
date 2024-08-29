@@ -1,6 +1,6 @@
 import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { encabezado } from "../rutas.js";
-import { prestacionDatatodos,crearPrestacion } from "../modelo/prestacionData.js";
+import { prestacionDatatodos,crearPrestacion,prestacionDataModificar } from "../modelo/prestacionData.js";
 //import { medicoDatatodos,medicoDataModificar,crearMedico } from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 //import { Medico } from "../modelo/clasesEntidad.js";
@@ -80,30 +80,19 @@ async function manejadorPrestaciones(req,res,objeto){
                    }
           
             break;
-       case 'traerTodosMedicos':
-        aux=await medicoDatatodos('medicos');
-       // console.log(`aux.error : ${aux.Error}`);
-        if(aux.error){
-            return res.status(500).send(aux.error);
-        }else{
-            //console.log(aux);
-            let medicos=[];
-            let medico;
-            for(let m of aux){
-            
-               medico= new Medico(m.id_medico,m.id_persona,m.nombre,m.apellido,m.dni_persona,m.domicilio,m.id_profecion,m.nombre_profecion,m.id_especialidad,m.nombre_especialidad,m.matricula_profecional,m.id_refeps,m.estado_medico);
-               medicos.push(medico);
-            }
-           return res.send(medicos);
-        }
-       
-        break  
-    case 'cambiarEstado':
+      
+    case 'modificarEsatdo':
          objet=req.body;
-         e1=await existeBd(objet.idMedico,'medico','id_medico');
-        aux=await medicoDataModificar('estado',objet.idPersona,objet.estadoMedico) ;
-        //verificar la respuesta
-        return res.send(aux);
+         //console.log(objet);
+         e1=await existeBd(objet.idPrestacion,'prestacion','id_prestacion');
+         if(e1){
+            aux=await prestacionDataModificar('estado',objet.idPrestacion,objet.estadoPrestacion) ;
+            return res.send(aux);
+         }else{
+            errorMessage='La Prestacion no existe en la base de datos';
+            return res.status(400).send({message:errorMessage});
+         }
+        
         break 
     case 'cambiarEspecialidad':
         objet=req.body;

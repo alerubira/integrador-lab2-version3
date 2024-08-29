@@ -39,43 +39,39 @@ block content
                                 th Nombre Procedimiento
                                 th Id Examen
                                 th Nombre Examen
-                               
+                                th Estado 
+                                th Seleccionar
                         tbody#cuerpo  
                                
             #divModificarPrestacion.ocultar
                 table#tblMedico
                         thead#cabecera2
                             tr
-                                th Id persona
-                                th Id Medico
-                                th Dni
-                                th Apellido 
-                                th Nombre 
-                                th Id Profecion
-                                th Profecion 
-                                th Id Especialidad
-                                th Especialidad 
-                                th Domicilio 
-                                th Matricula 
-                                th Id REFEPS
-                                th Estado Actual
+                                th Id Prestacion
+                                th Id Practica
+                                th Nombre Practica
+                                th id Procedimiento
+                                th Nombre Procedimiento
+                                th Id Examen
+                                th Nombre Examen
+                                th Estado 
                         tbody#cuerpo2  
                 select(id="modificarPrestacion", name="modificarPrestacion")
                             option(value="") Elija una opcion
-                            option(value="estadoMedico") Modificar Estdo Medico
-                            option(value="direccionMedico") Modificar direccion Medico 
-                            option(value='especialidadMedico') Modificar la Especialidad
+                            option(value="estadoPrestacion") Modificar Estdo 
+                            option(value="procedimientoPrestacion") Modificar Procedimiento 
+                            option(value='examenPrestacion') Modificar Examen
                 #divNuevoExamen.ocultar2            
                         label(for="nuevoExamen") Nuevo Domicilio 
                         input.limpiar(type="text",id="nuevoExamen",name="nuevoExamen",placeHolder="Nuevo Examen") 
                         br
                         button.boton(type="button",onclick='modificarDireccion()') Modificar
                 #divNuevoProcedimiento.ocultar2 
-                        label(for="nuevoProcedimiento") Nueva Especialida 
-                        input.limpiar(type="text",id="nuevoProcedimiento",name="nuevoProcedimiento",placeHolder="Nueva Procedimiento",list="especialidadNuevas")
-                        datalist#especialidadNuevas
+                        label(for="nuevoProcedimiento") Nueva Procedimiento
+                        input.limpiar(type="text",id="nuevoProcedimiento",name="nuevoProcedimiento",placeHolder="Nueva Procedimiento",list="dlProcedimientosNuevos")
+                        datalist#dlProcedimientosNuevos
                         br 
-                        button.boton(type="button",onclick='modificarEspecialidad()') Modificar
+                        button.boton(type="button",onclick='modificarProcedimiento()') Modificar
                 #divEstado.ocultar2 
                         button#botonEstado.boton(type="button",onclick='cambiarEstado()')
 block boton1 

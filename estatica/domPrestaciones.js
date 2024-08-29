@@ -5,6 +5,7 @@ let nombrePractica=document.getElementById('nombrePractica');
 let dlPractica=document.getElementById('dlPractica');
 let dlExamen=document.getElementById('dlExamen');
 let dlProcedimiento=document.getElementById('dlProcedimiento');
+let dlProcedimientosNuevos=document.getElementById('dlProcedimientosNuevos');
 let idPractica=document.getElementById('idPractica');
 let idExamen=document.getElementById('idExamen');
 let idProcedimiento=document.getElementById('idProcedimiento');
@@ -14,9 +15,10 @@ let divBuscarPrestacion=document.getElementById('divBuscarPrestacion');
 let divModificarPestacion=document.getElementById('divModificarPrestacion');
 let cuerpo=document.getElementById('cuerpo');
 let divNuevoExamen=document.getElementById('divNuevoExamen');
-let divNuevoProcedimiento=document.getElementById('divNuevaEspecialidad');
+let divNuevoProcedimiento=document.getElementById('divNuevoProcedimiento');
+let divCPrestacion = document.getElementById('divCrearPrestacion');
 let especialidadNuevas=document.getElementById('especialidadNuevas');
-let inputNuevaEspecialidad=document.getElementById('nuevaEspecialidad');
+let inputNuevoProcedimiento=document.getElementById('nuevoProcedimiento');
 let inputNuevoDomicilio=document.getElementById('nuevoDomicilio');
 let botonEstado=document.getElementById('botonEstado');
 let cuerpo2=document.getElementById('cuerpo2');
@@ -29,7 +31,7 @@ let prestaciones=[];
 let prestacion;
 let pMedico=document.getElementById('pMedico');
 
-(async function(){  
+/*(async function(){  
 practicas=await fechProtegido('/practica'); 
 dlPractica.innerHTML='';
 console.log(practicas.data);
@@ -44,12 +46,7 @@ console.log(examenes.data);
 if(examenes.error){
      alerta(pagina,'Hubo un inconveniente al buscar examenes');
 }else{
-    /* for(let e of examenes.data){
-          let op=document.createElement('option');
-          op.textContent=e.nombre_examen;
-          op.value=e.nombre_examen;
-          dlExamen.appendChild(op);
-         }*/
+    
         
         llenarDl(dlExamen,examenes.data,'nombre_examen');
 
@@ -60,15 +57,10 @@ console.log(procedimientos.data);
 if(procedimientos.error){
      alerta(pagina,'Hubo un inconveniente al buscar procedimientos');
 }else{
-    /* for(let p of procedimientos.data){
-          let op1=document.createElement('option');
-          op1.textContent=p.nombre_procedimiento;
-          op1.value=p.nombre_procedimiento;
-          dlProcedimiento.appendChild(op1);
-     }*/
+    
     llenarDl(dlProcedimiento,procedimientos.data,'nombre_procedimiento')
      }
-})();
+})();*/
 
  document.getElementById('crudPrestaciones').addEventListener('change',async function() {
      limpiarCampos(limpiar);
@@ -77,8 +69,13 @@ if(procedimientos.error){
      fOcultar();
      switch(selectedValue) {
           case 'crearPrestacion':
-               console.log(selectedValue);
-               let divCPrestacion = document.getElementById('divCrearPrestacion');
+               practicas=await traerPracticas();
+               procedimientos=await traerProcedimentos();
+               examenes=await traerExamenes();
+               llenarDl(dlPractica,practicas.data,'nombre_practica');
+               llenarDl(dlProcedimiento,procedimientos.data,'nombre_procedimiento')
+               llenarDl(dlExamen,examenes.data,'nombre_examen');
+               
                mostrar(divCPrestacion);
                break;
           
@@ -129,18 +126,26 @@ document.getElementById('modificarPrestacion').addEventListener('change',async f
      let selectedValue = this.value;
      fOcultar2();
      switch(selectedValue) {
-          case 'estadoMedico':
-               if(prestacion.estadoMedico===1){
+          case 'estadoPrestacion':
+               limpiarCampos(limpiar);
+               fOcultar2();
+               if(prestacion.estado_prestacion===1){
                     botonEstado.innerText="Inhabilitar";
                }else{
                     botonEstado.innerText="Habilitar";
                }
                mostrar(divEstado);
               break;
-          case 'direccionMedico':
-               mostrar(divNuevoExamen);
+          case 'procedimientoPrestacion':
+               limpiarCampos(limpiar);
+               fOcultar2();
+               procedimientos=await traerProcedimentos();
+               llenarDl(dlProcedimientosNuevos,procedimientos.data,'nombre_procedimiento');
+               mostrar(divNuevoProcedimiento);
                break
-          case 'especialidadMedico':
+          case 'examenPrestacion':
+               limpiarCampos(limpiar);
+               fOcultar2();
                eliminarHijos(especialidadNuevas);
                llenarDl(especialidadNuevas,procedimientos.data);
                mostrar(divNuevoProcedimiento);
@@ -149,7 +154,7 @@ document.getElementById('modificarPrestacion').addEventListener('change',async f
                     console.log('Selección no válida');
                     alerta(pagina,('Seleccion no valida'));         
      } 
-     document.getElementById("modificarMedico").selectedIndex = 0;      
+     document.getElementById("modificarPrestacion").selectedIndex = 0;      
      })    
 
 
