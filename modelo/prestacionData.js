@@ -9,15 +9,15 @@ async function prestacionDataModificar(modificar,id,modificante){
    try{
     switch(modificar){
         case 'estado':
-             query='UPDATE `prestacion` SET `estado_prestacion`=? WHERE id_Prestacion=?'
+             query='UPDATE `prestacion` SET `estado_prestacion`=? WHERE id_prestacion=?'
              return await(consulta1(query,modificante,id));
              break
-        case 'domicilio':
-            query='UPDATE `medico` SET `domicilio`=? WHERE id_medico=?';
+        case 'procedimiento':
+            query='UPDATE `prestacion` SET `id_procedimiento`=? WHERE id_prestacion=?';
             return await(consulta1(query,modificante,id));
             break
-        case 'especialidad':
-             query='UPDATE `medico` SET `id_especialidad`=? WHERE id_medico=?';
+        case 'examen':
+             query='UPDATE `prestacion` SET `id_examen`=? WHERE id_prestacion=?';
             return await(consulta1(query,modificante,id));
             break; 
     }

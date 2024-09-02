@@ -23,7 +23,7 @@ async function traerPracticas(){
      }
 }
 function cambiarEstado(){
-    //construir endpoin,hacer modificacion
+    limpiarCampos(limpiar);
     let p={};
     p.idPrestacion=prestacion.id_prestacion;
     if(prestacion.estado_prestacion===1){
@@ -36,27 +36,27 @@ function cambiarEstado(){
     }             
                    
     async function modificarProcedimiento(){
+   
     let nuevoProcedimientoValue=inputNuevoProcedimiento.value;
-    //buscar en procedimientos si esta,sacr el id procedimiento,generar la prestacion a modificar,enviar al endpoin
     let pro=await procedimientos.data.find(no=>no.nombre_procedimiento===nuevoProcedimientoValue);
     if(pro){
     let p={};
-    p.idProcedimiento=prestacion.idMedico;
-    p.idEspecialidad=pro.id_especialidad;
-    fechProtegidoPost('/cambiarEspecialidad',p);
+    p.idPrestacion=prestacion.id_prestacion;
+    p.idProcedimiento=pro.id_procedimiento;
+    fechProtegidoPost('/modificarProcedimiento',p);
     }else{
-         alerta(pagina,'La especialidad seleccionada no es valida');
+         alerta(pagina,'El procedimiento seleccionada no es valida');
     }
     
     }
-    function modificarDireccion(){
-    let nuevoDomicilioValue=inputNuevoDomicilio.value;
-    let domiciliValido=  validar(nuevoDomicilioValue.length<1||nuevoDomicilioValue.length>30,pagina,'El domicilio es obligatorio y no debe exeder los 25 caracteres',event);
-    if(domiciliValido){
-    let md={};
-    md.idMedico=prestacion.idMedico;
-    md.domicilioProfecional=nuevoDomicilioValue;
-    fechProtegidoPost('/cambiarDireccion',md);
+    async function modificarExamen(){
+    let nuevoExamenValue=inputNuevoExamen.value;
+    let ex=await examenes.data.find(e=>e.nombre_examen===nuevoExamenValue);
+    if(ex){
+    let exa={};
+    exa.idPrestacion=prestacion.id_prestacion;
+    exa.idExamen=ex.id_examen;
+    fechProtegidoPost('/modificarExamen',exa);
     }   
     }
     async function seleccionarPrestacion(event){
@@ -92,4 +92,31 @@ function cambiarEstado(){
                             }
         
         }
+async function agregarPractica(){
+let aPracticaValue=inputAPractica.value;
+let a=validar(aPracticaValue.length<1||aPracticaValue.length>28,pagina,'La practica es obligatoria y no debe superar los 28 caracteres');
+if(a){
+     fechProtegidoPost('/agregarPractica',aPracticaValue);//hacer endpoint
+}
+inputAPractica.value="";
+} 
+async function agregarProcedimiento(){
+     let aProcedimientoValue=inputAProcedimiento.value;
+     let a=validar(aProcedimientoValue.length<1||aProcedimientoValue.length>28,pagina,'El Procedimiento es obligatoria y no debe superar los 28 caracteres');
+     if(a){
+          fechProtegidoPost('/agregarPractica',aProcedimientoValue);//hacer endpoint
+     }
+     inputAProcedimiento.value="";
+     } 
+
+async function agregarExamen(){
+     let aExamenValue=inputAExamen.value;
+     let a=validar(aExamenValue.length<1||aExamenValue.length>28,pagina,'El Examen es obligatoria y no debe superar los 28 caracteres');
+     if(a){
+          fechProtegidoPost('/agregarPractica',aExamenValue);//hacer endpoint
+     }
+     inputAExamen.value="";
+     } 
+
+
         

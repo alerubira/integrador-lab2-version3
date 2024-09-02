@@ -19,9 +19,16 @@ let divNuevoProcedimiento=document.getElementById('divNuevoProcedimiento');
 let divCPrestacion = document.getElementById('divCrearPrestacion');
 let especialidadNuevas=document.getElementById('especialidadNuevas');
 let inputNuevoProcedimiento=document.getElementById('nuevoProcedimiento');
-let inputNuevoDomicilio=document.getElementById('nuevoDomicilio');
+let inputNuevoExamen=document.getElementById('nuevoExamen');
+let dlExamenNuevo=document.getElementById('dlExamenNuevo');
 let botonEstado=document.getElementById('botonEstado');
 let cuerpo2=document.getElementById('cuerpo2');
+let divAPractica=document.getElementById('divAgregarPractica');
+let divAProcedimiento=document.getElementById('divAgregarProcedimiento');
+let divAExamen=document.getElementById('divAgregarExamen');
+let inputAPractica=document.getElementById('agregarPractica');
+let inputAProcedimiento=document.getElementById('agregarProcedimiento');
+let inputAExamen=document.getElementById('agregarExamen');
 let practicas;
 let examenes;
 let procedimientos;
@@ -114,6 +121,18 @@ if(procedimientos.error){
                               }
                   }
                 break;
+          case 'agregarPractica':
+               fOcultar();
+               mostrar(divAPractica);
+               break;
+          case 'agregarProcedimiento':
+               fOcultar();
+               mostrar(divAProcedimiento);
+               break;
+          case 'agregarExamen':
+               fOcultar();
+               mostrar(divAExamen);
+               break;
           default:
                console.log('Selección no válida');
                alerta(pagina,('Seleccion no valida'));
@@ -146,9 +165,11 @@ document.getElementById('modificarPrestacion').addEventListener('change',async f
           case 'examenPrestacion':
                limpiarCampos(limpiar);
                fOcultar2();
-               eliminarHijos(especialidadNuevas);
-               llenarDl(especialidadNuevas,procedimientos.data);
-               mostrar(divNuevoProcedimiento);
+               //eliminarHijos(especialidadNuevas);
+               examenes=await traerExamenes();
+               //console.log(examenes.data);
+               llenarDl(dlExamenNuevo,examenes.data,'nombre_examen');
+               mostrar(divNuevoExamen);
                break; 
                default:
                     console.log('Selección no válida');

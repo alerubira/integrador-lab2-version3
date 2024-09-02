@@ -8,7 +8,21 @@ block content
                         option(value="") Elija una opcion
                         option(value="crearPrestacion") Inscribir Prestacion
                         option(value="buscarPrestaciones") Ver todos las Prestaciones
-                    
+                        option(value="agregarPractica") Agregar Practica 
+                        option(value="agregarProcedimiento") Agregar Procedimiento 
+                        option(value="agregarExamen") Agregar Examen 
+            #divAgregarPractica.ocultar 
+                lavel(for="agregarPractica") Practica Nuenva
+                input.limpiar(type="text",id="agregarPractica",autocomplete="of")
+                button.boton(type="button",onclick='agregarPractica()') Agregar
+            #divAgregarProcedimiento.ocultar 
+                lavel(for="agregarProcedimiento") Procedimiento Nuevo
+                input.limpiar(type="text",id="agregarProcedimiento",autocomplete="of")
+                button.boton(type="button",onclick='agregarProcedimiento()') Agregar
+            #divAgregarExamen.ocultar
+                lavel(for="agregarExamen") Examen nuevo
+                input.limpiar(type="text",id="agregarExamen",autocomplete="of")
+                button.boton(type="button",onclick='agregarExamen()') Agregar            
             #divCrearPrestacion.ocultar.crear 
                     form#formularioPrestacionCrear.form(action="/crearMedico", method="POST")
                         
@@ -63,13 +77,14 @@ block content
                             option(value='examenPrestacion') Modificar Examen
                 #divNuevoExamen.ocultar2            
                         label(for="nuevoExamen") Nuevo Domicilio 
-                        input.limpiar(type="text",id="nuevoExamen",name="nuevoExamen",placeHolder="Nuevo Examen") 
+                        input.limpiar(type="text",id="nuevoExamen",name="nuevoExamen",placeHolder="Nuevo Examen",list="dlExamenNuevo")
+                        datalist#dlExamenNuevo.limpiar 
                         br
-                        button.boton(type="button",onclick='modificarDireccion()') Modificar
+                        button.boton(type="button",onclick='modificarExamen()') Modificar
                 #divNuevoProcedimiento.ocultar2 
                         label(for="nuevoProcedimiento") Nueva Procedimiento
                         input.limpiar(type="text",id="nuevoProcedimiento",name="nuevoProcedimiento",placeHolder="Nueva Procedimiento",list="dlProcedimientosNuevos")
-                        datalist#dlProcedimientosNuevos
+                        datalist#dlProcedimientosNuevos.limpiar
                         br 
                         button.boton(type="button",onclick='modificarProcedimiento()') Modificar
                 #divEstado.ocultar2 

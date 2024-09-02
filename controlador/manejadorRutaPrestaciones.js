@@ -94,42 +94,38 @@ async function manejadorPrestaciones(req,res,objeto){
          }
         
         break 
-    case 'cambiarEspecialidad':
+    case 'cambiarProcedimiemto':
         objet=req.body;
         //console.log(objet);
-         e1=await existeBd(objet.idMedico,'medico','id_medico');
-         e2=await existeBd(objet.idEspecialidad,'especialida','id_especialidad');
+         e1=await existeBd(objet.idPrestacion,'prestacion','id_prestacion');
+         e2=await existeBd(objet.idProcedimiento,'procedimiento','id_procedimiento');
          if(e1&&e2){
-            aux=await medicoDataModificar('especialidad',objet.idMedico,objet.idEspecialidad);
+            aux=await prestacionDataModificar('procedimiento',objet.idPrestacion,objet.idProcedimiento);
             return res.send(aux); 
          }else{
-            errorMessage='El Medico o la Especialidad no existen en la base de datos';
+            errorMessage='La prestacion o el procedimiento no existen en la base de datos';
             return res.status(400).send({message:errorMessage});
          }
        
         break 
-    case 'cambiarDireccion':
+    case 'cambiarExamen':
         objet=req.body;
-        let dom={domicilioProfecional:objet.domicilioProfecional};
-        aux=await verificar(dom,'domicilio');
-        if(aux.errors){
-            return res.status(500).send(aux.errors);
+        e1=await existeBd(objet.idPrestacion,'prestacion','id_prestacion');
+        e2=await existeBd(objet.idExamen,'examen','id_examen');
+        if(e1&&e2){
+            aux=await prestacionDataModificar('examen',objet.idPrestacion,objet.idExamen);
+            return res.send(aux); 
           }else{
-            e1=await existeBd(objet.idMedico,'medico','id_medico');
-            if(e1){
-                aux=await medicoDataModificar('domicilio',objet.idMedico,objet.domicilioProfecional);
-                return res.send(aux);
-            }else{
-                errorMessage='El Medico  no existe en la base de datos';
-                return res.status(400).send({message:errorMessage});
+            errorMessage='La prestacion o el examen no existen en la base de datos';
+            return res.status(400).send({message:errorMessage});
             }
        
-          }
+          
         break;                  
     }
 }catch (error) {
     console.error(`Error al Procesar el ${objeto} a Prestaciones`, error);
-    return res.status(500).send(error);
+    return res.status(500).send(error.message);
 }
     }
     
