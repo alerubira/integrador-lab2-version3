@@ -155,8 +155,30 @@ async function crearPrestacion(Prestacion) {
     }*/
 }
 
+async function prestacionDataAgregar(objet,agregar){
+    try{
+        switch(agregar){
+         case 'practica':
+            query='INSERT INTO `practica`( `nombre_practica`) VALUES (?)';
+            return await consulta1(query,objet);
+            break;   
+         case 'examenen':
+             query='NSERT INTO `examen`( `nombre_examen`) VALUES (?)';
+            return await consulta1(query,objet);
+            break
+         case 'procedimiento':
+            query='INSERT INTO `procedimiento`(`nombre_procedimiento`) VALUES (?)';
+            return await consulta1(query,objet);
+            break
+         
+          }
+    }catch(error){
+        console.error(`Error al agregar  ${agregar} `, error);
+        
+        return error;
+    }
+    }
 
 
 
-
-export{prestacionDatatodos,prestacionDataModificar,crearPrestacion,buscarMID};
+export{prestacionDatatodos,prestacionDataModificar,crearPrestacion,buscarMID,prestacionDataAgregar};

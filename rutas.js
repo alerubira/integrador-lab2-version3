@@ -103,7 +103,16 @@ ruta.get('/examen',verificarToken,async(req,res)=>{
  }) 
  ruta.post('/modificarExamen',verificarToken,async(req,res)=>{
   manejadorPrestaciones(req,res,'cambiarExamen');
- })  
+ })
+ ruta.post('/agregarPractica',verificarToken,async(req,res)=>{
+  manejadorPrestaciones(req,res,'agregarPractica');
+ })
+ ruta.post('/agregarProcedimiento',verificarToken,async (req,res)=>{
+  manejadorPrestaciones(req,res,'agregarProcedimiento');
+ }) 
+ ruta.post('/agregarExamen',verificarToken,async (req,res)=>{
+  manejadorPrestaciones(req,res,'agregarExamen');
+ }) 
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
    // Obtener el ID del Profesional enviado desde el formulario
  const idProfecional = req.body.idAdministrativoR;

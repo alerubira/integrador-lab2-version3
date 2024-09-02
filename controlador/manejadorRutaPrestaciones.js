@@ -1,6 +1,6 @@
 import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { encabezado } from "../rutas.js";
-import { prestacionDatatodos,crearPrestacion,prestacionDataModificar } from "../modelo/prestacionData.js";
+import { prestacionDatatodos,crearPrestacion,prestacionDataModificar,prestacionDataAgregar } from "../modelo/prestacionData.js";
 //import { medicoDatatodos,medicoDataModificar,crearMedico } from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 //import { Medico } from "../modelo/clasesEntidad.js";
@@ -119,9 +119,39 @@ async function manejadorPrestaciones(req,res,objeto){
             errorMessage='La prestacion o el examen no existen en la base de datos';
             return res.status(400).send({message:errorMessage});
             }
-       
-          
-        break;                  
+       break;
+       case 'agregarPractica':
+           objet=req.body;
+           aux=await verificar(objet.nombrePractica,'nombrePractica');
+           console.log(aux.ValidationError);
+           if(aux.ValidationError){
+            return aux.ValidationError;
+           }else{
+            aux=await prestacionDataAgregar(objet.nombrePractica,'practica');
+            return aux;
+           }
+        break;
+       case 'agregarProcedimiento':
+            objet=req.body;
+            aux=await verificar(objet.nombreProcedimiento,'nombreProcedimiento');
+           // console.log(aux);
+            if(aux.err){
+            return aux.err;
+            }else{
+              aux=await prestacionDataAgregar(objet.nombreProcedimiento,'procedimiento');
+              return aux;
+            }
+        break;
+       case 'agregarExamen':
+            objet=req.body;
+            aux=await verificar(objet.nombreExamen,'nombreExamen');
+            if(aux.err){
+            return aux.err;
+            }else{
+                aux=await prestacionDataAgregar(objet.nombreExamen,'examen');
+                return aux;
+            }
+        break;                    
     }
 }catch (error) {
     console.error(`Error al Procesar el ${objeto} a Prestaciones`, error);

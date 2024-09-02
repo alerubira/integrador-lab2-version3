@@ -96,7 +96,9 @@ async function agregarPractica(){
 let aPracticaValue=inputAPractica.value;
 let a=validar(aPracticaValue.length<1||aPracticaValue.length>28,pagina,'La practica es obligatoria y no debe superar los 28 caracteres');
 if(a){
-     fechProtegidoPost('/agregarPractica',aPracticaValue);//hacer endpoint
+     let b={};
+      b.nombrePractica=aPracticaValue;
+     fechProtegidoPost('/agregarPractica',b);//hacer endpoint
 }
 inputAPractica.value="";
 } 
@@ -104,7 +106,9 @@ async function agregarProcedimiento(){
      let aProcedimientoValue=inputAProcedimiento.value;
      let a=validar(aProcedimientoValue.length<1||aProcedimientoValue.length>28,pagina,'El Procedimiento es obligatoria y no debe superar los 28 caracteres');
      if(a){
-          fechProtegidoPost('/agregarPractica',aProcedimientoValue);//hacer endpoint
+          let b={};
+          b.nombreProcedimiento=aProcedimientoValue;
+          fechProtegidoPost('/agregarProcedimiento',b);//hacer endpoint
      }
      inputAProcedimiento.value="";
      } 
@@ -113,7 +117,9 @@ async function agregarExamen(){
      let aExamenValue=inputAExamen.value;
      let a=validar(aExamenValue.length<1||aExamenValue.length>28,pagina,'El Examen es obligatoria y no debe superar los 28 caracteres');
      if(a){
-          fechProtegidoPost('/agregarPractica',aExamenValue);//hacer endpoint
+          let b={};
+          b.nombreExamen=aExamenValue;
+          fechProtegidoPost('/agregarExamen',b);//hacer endpoint
      }
      inputAExamen.value="";
      } 
