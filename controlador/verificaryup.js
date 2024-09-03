@@ -87,12 +87,12 @@ const usuarioClaveY= yup.object().shape({
     .required('El nombre de la practica es obligatorio')
  }) 
  const procedimientoY=yup.object().shape({
-    nombrePractica:yup.string()
+    nombreProcedimiento:yup.string()
     .max(28,'El nombre del procedimiento debe tener como maximo 28 caracteres')
     .required('El nombre del procedimiento es obligatorio')
  }) 
  const examenY=yup.object().shape({
-    nombrePractica:yup.string()
+    nombreExamen:yup.string()
     .max(28,'El nombre del Examen debe tener como maximo 28 caracteres')
     .required('El nombre del Examen es obligatorio')
  })  

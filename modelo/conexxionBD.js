@@ -56,7 +56,8 @@ async function consulta1(query, ...params) {
         return results;
     } catch (error) {
         console.error('Error en la consulta:', error);
-        throw error;
+       // throw error;
+       return error;
     } finally {
         if (connection) {
             connection.release();

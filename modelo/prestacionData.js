@@ -162,7 +162,7 @@ async function prestacionDataAgregar(objet,agregar){
             query='INSERT INTO `practica`( `nombre_practica`) VALUES (?)';
             return await consulta1(query,objet);
             break;   
-         case 'examenen':
+         case 'examen':
              query='NSERT INTO `examen`( `nombre_examen`) VALUES (?)';
             return await consulta1(query,objet);
             break

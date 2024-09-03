@@ -122,39 +122,44 @@ async function manejadorPrestaciones(req,res,objeto){
        break;
        case 'agregarPractica':
            objet=req.body;
-           aux=await verificar(objet.nombrePractica,'nombrePractica');
-           console.log(aux.ValidationError);
-           if(aux.ValidationError){
-            return aux.ValidationError;
+           aux=await verificar(objet,'nombrePractica');
+          // console.log(aux.ValidationError);
+           if(aux.errors){
+            return res.status(500).send(aux.errors);
            }else{
             aux=await prestacionDataAgregar(objet.nombrePractica,'practica');
-            return aux;
+            return res.send(aux);
            }
         break;
        case 'agregarProcedimiento':
             objet=req.body;
-            aux=await verificar(objet.nombreProcedimiento,'nombreProcedimiento');
-           // console.log(aux);
-            if(aux.err){
-            return aux.err;
+            aux=await verificar(objet,'nombreProcedimiento');
+          // console.log(aux.errors);
+            if(aux.errors){
+                return res.status(500).send(aux.errors);
             }else{
               aux=await prestacionDataAgregar(objet.nombreProcedimiento,'procedimiento');
-              return aux;
+              return res.send(aux);
             }
         break;
        case 'agregarExamen':
             objet=req.body;
-            aux=await verificar(objet.nombreExamen,'nombreExamen');
-            if(aux.err){
-            return aux.err;
+            aux=await verificar(objet,'nombreExamen');
+            //console.log(aux);
+            if(aux.errors){
+                return res.status(500).send(aux.errors);
             }else{
                 aux=await prestacionDataAgregar(objet.nombreExamen,'examen');
-                return aux;
-            }
+                return res.send(aux);
+                //capturar el error
+                        
+                }
+                
+
         break;                    
     }
 }catch (error) {
-    console.error(`Error al Procesar el ${objeto} a Prestaciones`, error);
+    console.error(`Error al Procesar el ${objeto} en Prestaciones`, error);
     return res.status(500).send(error.message);
 }
     }
