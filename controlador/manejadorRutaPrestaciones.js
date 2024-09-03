@@ -128,6 +128,10 @@ async function manejadorPrestaciones(req,res,objeto){
             return res.status(500).send(aux.errors);
            }else{
             aux=await prestacionDataAgregar(objet.nombrePractica,'practica');
+            if (aux instanceof Error) {
+                console.error("Error en la consulta sql:", aux.message);
+                return res.status(500).json({ message: aux.message }); // Devuelve un error HTTP 500 al cliente
+     }
             return res.send(aux);
            }
         break;
@@ -139,6 +143,10 @@ async function manejadorPrestaciones(req,res,objeto){
                 return res.status(500).send(aux.errors);
             }else{
               aux=await prestacionDataAgregar(objet.nombreProcedimiento,'procedimiento');
+              if (aux instanceof Error) {
+                console.error("Error en la consulta sql:", aux.message);
+                return res.status(500).json({ message: aux.message }); // Devuelve un error HTTP 500 al cliente
+     }
               return res.send(aux);
             }
         break;
@@ -150,10 +158,12 @@ async function manejadorPrestaciones(req,res,objeto){
                 return res.status(500).send(aux.errors);
             }else{
                 aux=await prestacionDataAgregar(objet.nombreExamen,'examen');
+                 if (aux instanceof Error) {
+                            console.error("Error en la consulta sql:", aux.message);
+                            return res.status(500).json({ message: aux.message }); // Devuelve un error HTTP 500 al cliente
+                 }
                 return res.send(aux);
-                //capturar el error
-                        
-                }
+                 }
                 
 
         break;                    

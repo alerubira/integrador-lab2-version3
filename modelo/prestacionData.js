@@ -108,8 +108,8 @@ return await(consulta1(query,domicilio,idMedico));
 
 
 async function crearPrestacion(Prestacion) {
-    let query='INSERT INTO `prestacion`(`id_practica`, `id_procedimiento`, `id_examen`) values(?,?,?)'
-    let respuesta=await consulta1(query,Prestacion.idPractica,Prestacion.idProcedimiento,Prestacion.idExamen);
+    let query='INSERT INTO `prestacion`(`id_practica`, `id_procedimiento`, `id_examen`,`estado_prestacion`) values(?,?,?,?)'
+    let respuesta=await consulta1(query,Prestacion.idPractica,Prestacion.idProcedimiento,Prestacion.idExamen,true);
     //console.log(respuesta);
    return respuesta;
 
@@ -163,7 +163,7 @@ async function prestacionDataAgregar(objet,agregar){
             return await consulta1(query,objet);
             break;   
          case 'examen':
-             query='NSERT INTO `examen`( `nombre_examen`) VALUES (?)';
+             query='INSERT INTO `examen`( `nombre_examen`) VALUES (?)';
             return await consulta1(query,objet);
             break
          case 'procedimiento':
