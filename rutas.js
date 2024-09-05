@@ -113,6 +113,12 @@ ruta.get('/examen',verificarToken,async(req,res)=>{
  ruta.post('/agregarExamen',verificarToken,async (req,res)=>{
   manejadorPrestaciones(req,res,'agregarExamen');
  }) 
+ ruta.post('/agregarProfecion',verificarToken,async (req,res)=>{
+  manejadorMedicos(req,res,'agregarProfecion');
+ }) 
+ ruta.post('/agregarespecialidad',verificarToken,async (req,res)=>{
+  manejadorMedicos(req,res,'agregarEspecialidad');
+ }) 
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
    // Obtener el ID del Profesional enviado desde el formulario
  const idProfecional = req.body.idAdministrativoR;

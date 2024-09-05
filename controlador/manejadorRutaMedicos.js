@@ -1,6 +1,6 @@
 import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { encabezado } from "../rutas.js";
-import { medicoDatatodos,medicoDataModificar,crearMedico } from "../modelo/medicoData.js";
+import { medicoDatatodos,medicoDataModificar,crearMedico ,medicoDataAgregar} from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 import { Medico } from "../modelo/clasesEntidad.js";
 import {  existeBd } from "../modelo/conexxionBD.js";
@@ -123,12 +123,45 @@ async function manejadorMedicos(req,res,objeto){
             }
        
           }
-        break;                  
+        break;
+        case 'agregarProfecion':
+            objet=req.body;
+            aux=await verificar(objet,'nombreProfecion');
+          // console.log(aux.errors);
+            if(aux.errors){
+                return res.status(500).send(aux.errors);
+            }else{
+              aux=await medicoDataAgregar(objet.nombreProcedimiento,'procedimiento');
+              if (aux instanceof Error) {
+                console.error("Error en la consulta sql:", aux.message);
+                return res.status(500).json({ message: aux.message }); // Devuelve un error HTTP 500 al cliente
+     }
+              return res.send(aux);
+            }
+        break;
+       case 'agregarEspecialidad':
+            objet=req.body;
+            aux=await verificar(objet,'nombreEspecialidad');
+            //console.log(aux);
+            if(aux.errors){
+                return res.status(500).send(aux.errors);
+            }else{
+                aux=await medicoDataAgregar(objet.nombreExamen,'examen');
+                 if (aux instanceof Error) {
+                            console.error("Error en la consulta sql:", aux.message);
+                            return res.status(500).json({ message: aux.message }); // Devuelve un error HTTP 500 al cliente
+                 }
+                return res.send(aux);
+                 }
+                
+
+        break;                    
+                     
     }
 }catch (error) {
-    console.error(`Error al Procesar el ${objeto} a Medicos`, error);
+    console.error(`Error al Procesar el ${objeto} en Medicos`, error);
     return res.status(500).send(error);
 }
-    }
+}
     
 export {manejadorMedicos};

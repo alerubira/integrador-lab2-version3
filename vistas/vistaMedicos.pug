@@ -8,7 +8,16 @@ block content
                         option(value="") Elija una opcion
                         option(value="crearMedico") Inscribir Medico
                         option(value="buscarMedico") Ver todos los medicos
-                    
+                        option(value="agregarProfecion") Agregar Profecion 
+                        option(value="agregarEspecialidad") Agregar Especialidad 
+            #divAgregarProfecion.ocultar 
+                lavel(for="agregarProfecion") Profecion Nuenva
+                input.limpiar(type="text",id="agregarProfecion",autocomplete="of")
+                button.boton(type="button",onclick='agregarProfecion()') Agregar
+            #divAgregarEspecialidad.ocultar 
+                lavel(for="agregarEspecialidad") Especialidad Nuevo
+                input.limpiar(type="text",id="agregarEspecialidad",autocomplete="of")
+                button.boton(type="button",onclick='agregarEspecialidad()') Agregar            
             #divCrearMedico.ocultar.crear 
                     form#formularioProfecionalCrear.form(action="/crearMedico", method="POST")
                         label(for="dniProfecional") DNI del Profecional:

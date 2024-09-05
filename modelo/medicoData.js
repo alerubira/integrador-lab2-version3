@@ -153,9 +153,28 @@ async function crearMedico(Medico) {
         }
     }
 }
+async function medicoDataAgregar(objet,agregar){
+    try{
+        switch(agregar){
+           
+         case 'especialidad':
+             query='INSERT INTO `especialidad`( `nombre_especialidad`) VALUES (?)';
+            return await consulta1(query,objet);
+            break
+         case 'profecion':
+            query='INSERT INTO `profecion`(`nombre_profecion`) VALUES (?)';
+            return await consulta1(query,objet);
+            break
+         
+          }
+    }catch(error){
+        console.error(`Error al agregar  ${agregar} `, error);
+        
+        return error;
+    }
+    }
 
 
 
 
-
-export{medicoDatatodos,medicoDataModificar,crearMedico,buscarMID,profecionales};
+export{medicoDatatodos,medicoDataModificar,crearMedico,buscarMID,profecionales,medicoDataAgregar};

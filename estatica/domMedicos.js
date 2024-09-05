@@ -28,6 +28,10 @@ let inputNuevaEspecialidad=document.getElementById('nuevaEspecialidad');
 let inputNuevoDomicilio=document.getElementById('nuevoDomicilio');
 let botonEstado=document.getElementById('botonEstado');
 let cuerpo2=document.getElementById('cuerpo2');
+let divAProfecion=document.getElementById('divAgregarProfecion');
+let divAEspecialidad=document.getElementById('divAgregarEspecialidad');
+let inputAgregarProfecion=document.getElementById('agregarProfecion');
+let inputAgregarEspecialidad=document.getElementById('agregarEspecialidad');
 let profeciones;
 let especialidades;
 let bandera;
@@ -111,6 +115,15 @@ if(especialidades.error){
                              tr.appendChild(td);
                               }
                   }
+                  break;
+               case 'agregarProfecion':
+                    fOcultar();
+                    mostrar(divAProfecion);
+                    break;
+               case 'agregarEspecialidad':
+                    fOcultar();
+                    mostrar(divAEspecialidad);
+                    break;
                 break;
           default:
                console.log('Selección no válida');
