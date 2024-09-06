@@ -1,40 +1,50 @@
 extends layout
 block script1 
-    script(src="domPrestaciones.js", defer)
+    script(src="domMedicamentos.js", defer)
 block script2
-    script(src='domFunsionesPrestaciones.js',defer)           
+    script(src='domFunsionesMedicamentos.js',defer)           
 block content   
-            select(id="crudPrestaciones", name="crudPrestaciones")
+            select(id="crudMedicamentos", name="crudMedicamentos")
                         option(value="") Elija una opcion
-                        option(value="crearPrestacion") Inscribir Prestacion
-                        option(value="buscarPrestaciones") Ver todos las Prestaciones
-                        option(value="agregarPractica") Agregar Practica 
-                        option(value="agregarProcedimiento") Agregar Procedimiento 
-                        option(value="agregarExamen") Agregar Examen 
-            #divAgregarPractica.ocultar 
-                lavel(for="agregarPractica") Practica Nuenva
-                input.limpiar(type="text",id="agregarPractica",autocomplete="of")
-                button.boton(type="button",onclick='agregarPractica()') Agregar
-            #divAgregarProcedimiento.ocultar 
-                lavel(for="agregarProcedimiento") Procedimiento Nuevo
-                input.limpiar(type="text",id="agregarProcedimiento",autocomplete="of")
-                button.boton(type="button",onclick='agregarProcedimiento()') Agregar
-            #divAgregarExamen.ocultar
-                lavel(for="agregarExamen") Examen nuevo
-                input.limpiar(type="text",id="agregarExamen",autocomplete="of")
-                button.boton(type="button",onclick='agregarExamen()') Agregar            
-            #divCrearPrestacion.ocultar.crear 
-                    form#formularioPrestacionCrear.form(action="/crearMedico", method="POST")
+                        option(value="crearMedicamento") Inscribir Medicamento
+                        option(value="buscarMedicamentos") Ver todos los Medicamentos
+                        option(value="agregarNombreGenerico") Agregar Nombre Generico 
+                        option(value="agregarFamilia") Agregar Familia 
+                        option(value="agregarCategoria") Agregar Categoria
+                        option(value="agregarFormaFarmaceuyica") Agregar Forma Farmaceutica 
+                        option(value="agregarPresentacion") Agregar Presentacion
+            #divAgregarNombreGenerico.ocultar 
+                lavel(for="agregarNombreGenerico") Nombre Generico Nuenva
+                input.limpiar(type="text",id="agregarNombreGenerico",autocomplete="of")
+                button.boton(type="button",onclick='agregarNombreGenerico()') Agregar
+            #divAgregarFamilia.ocultar 
+                lavel(for="agregarFamilia") Familia Nueva
+                input.limpiar(type="text",id="agregarFamilia",autocomplete="of")
+                button.boton(type="button",onclick='agregarFamilia()') Agregar
+            #divAgregarCategoria.ocultar
+                lavel(for="agregarCategoria") Categoria Nueva
+                input.limpiar(type="text",id="agregarCategoria",autocomplete="of")
+                button.boton(type="button",onclick='agregarCategoria()') Agregar 
+            #divAgregarForma.ocultar
+                lavel(for="agregarForma") Forma Farmaceutica Nueva
+                input.limpiar(type="text",id="agregarForma",autocomplete="of")
+                button.boton(type="button",onclick='agregarForma()') Agregar
+            #divAgregarPresentacion.ocultar
+                lavel(for="agregarPresentacion") Presentacion Nueva
+                input.limpiar(type="text",id="agregarPresentacion",autocomplete="of")
+                button.boton(type="button",onclick='agregarPresentacion()') Agregar                   
+            #divCrearMedicamento.ocultar.crear 
+                    form#formularioMedicamentoCrear.form(action="/crearMedico", method="POST")
                         
-                        label(for="nombrePractica") Nombre de la Practica 
-                        input.limpiar.ocultar(type="number",id="idPractica",autocomplete="off")
-                        input.limpiar(type="text", id="nombrePractica" ,name="nombrePractica",autocomplete="off",list="dlPractica")
-                        datalist#dlPractica
+                        label(for="nombreGenerico") Nombre Generico
+                        input.limpiar.ocultar(type="number",id="idNombreGenerico",autocomplete="off")
+                        input.limpiar(type="text", id="nombreGenerico" ,name="nombreGenerico",autocomplete="off",list="dlNombreGenerico")
+                        datalist#dlNombreGenerico
                         br
-                        label(for="procedimientoPrestacion") Nombre del Procedimiento
+                        label(for="familia") Nombre del Procedimiento
                         input.limpiar.ocultar(type="number",id="idProcedimiento",name="idProcedimiento",autocomplete="off")
-                        input.limpiar(type="text", id="procedimientoPrestacion", name="procedimientoPrestacion",list="dlProcedimiento", autocomplete="off")
-                        datalist#dlProcedimiento
+                        input.limpiar(type="text", id="familia", name="familia",list="dlFamilia", autocomplete="off")
+                        datalist#dlFamilia
                         br
                         label(for="examenPrestacion") Nombre del Examen 
                         input.limpiar.ocultar(type="number",id="idExamen",name="idExamen",autocomplete="off")
