@@ -126,12 +126,12 @@ async function manejadorMedicos(req,res,objeto){
         break;
         case 'agregarProfecion':
             objet=req.body;
+            //console.log(objet);
             aux=await verificar(objet,'nombreProfecion');
-          // console.log(aux.errors);
             if(aux.errors){
                 return res.status(500).send(aux.errors);
             }else{
-              aux=await medicoDataAgregar(objet.nombreProcedimiento,'procedimiento');
+            aux=await medicoDataAgregar(objet.nombreProfecion,'profecion');
               if (aux instanceof Error) {
                 console.error("Error en la consulta sql:", aux.message);
                 return res.status(500).json({ message: aux.message }); // Devuelve un error HTTP 500 al cliente
@@ -142,11 +142,10 @@ async function manejadorMedicos(req,res,objeto){
        case 'agregarEspecialidad':
             objet=req.body;
             aux=await verificar(objet,'nombreEspecialidad');
-            //console.log(aux);
             if(aux.errors){
                 return res.status(500).send(aux.errors);
             }else{
-                aux=await medicoDataAgregar(objet.nombreExamen,'examen');
+                aux=await medicoDataAgregar(objet.nombreEspecialidad,'especialidad');
                  if (aux instanceof Error) {
                             console.error("Error en la consulta sql:", aux.message);
                             return res.status(500).json({ message: aux.message }); // Devuelve un error HTTP 500 al cliente

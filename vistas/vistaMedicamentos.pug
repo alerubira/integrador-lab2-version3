@@ -1,0 +1,93 @@
+extends layout
+block script1 
+    script(src="domPrestaciones.js", defer)
+block script2
+    script(src='domFunsionesPrestaciones.js',defer)           
+block content   
+            select(id="crudPrestaciones", name="crudPrestaciones")
+                        option(value="") Elija una opcion
+                        option(value="crearPrestacion") Inscribir Prestacion
+                        option(value="buscarPrestaciones") Ver todos las Prestaciones
+                        option(value="agregarPractica") Agregar Practica 
+                        option(value="agregarProcedimiento") Agregar Procedimiento 
+                        option(value="agregarExamen") Agregar Examen 
+            #divAgregarPractica.ocultar 
+                lavel(for="agregarPractica") Practica Nuenva
+                input.limpiar(type="text",id="agregarPractica",autocomplete="of")
+                button.boton(type="button",onclick='agregarPractica()') Agregar
+            #divAgregarProcedimiento.ocultar 
+                lavel(for="agregarProcedimiento") Procedimiento Nuevo
+                input.limpiar(type="text",id="agregarProcedimiento",autocomplete="of")
+                button.boton(type="button",onclick='agregarProcedimiento()') Agregar
+            #divAgregarExamen.ocultar
+                lavel(for="agregarExamen") Examen nuevo
+                input.limpiar(type="text",id="agregarExamen",autocomplete="of")
+                button.boton(type="button",onclick='agregarExamen()') Agregar            
+            #divCrearPrestacion.ocultar.crear 
+                    form#formularioPrestacionCrear.form(action="/crearMedico", method="POST")
+                        
+                        label(for="nombrePractica") Nombre de la Practica 
+                        input.limpiar.ocultar(type="number",id="idPractica",autocomplete="off")
+                        input.limpiar(type="text", id="nombrePractica" ,name="nombrePractica",autocomplete="off",list="dlPractica")
+                        datalist#dlPractica
+                        br
+                        label(for="procedimientoPrestacion") Nombre del Procedimiento
+                        input.limpiar.ocultar(type="number",id="idProcedimiento",name="idProcedimiento",autocomplete="off")
+                        input.limpiar(type="text", id="procedimientoPrestacion", name="procedimientoPrestacion",list="dlProcedimiento", autocomplete="off")
+                        datalist#dlProcedimiento
+                        br
+                        label(for="examenPrestacion") Nombre del Examen 
+                        input.limpiar.ocultar(type="number",id="idExamen",name="idExamen",autocomplete="off")
+                        input.limpiar(type="text", id="examenPrestacion" ,name="examenPrestacion",list="dlExamen", autocomplete="off")
+                        datalist#dlExamen
+                        br
+                        input.boton(type="submit", value="Enviar")
+            #divBuscarPrestacion.ocultar
+                    table#todosPrestaciones
+                        thead#cabecera
+                            tr
+                                th Id Prestacion
+                                th Id Practica
+                                th Nombre Practica
+                                th id Procedimiento
+                                th Nombre Procedimiento
+                                th Id Examen
+                                th Nombre Examen
+                                th Estado 
+                                th Seleccionar
+                        tbody#cuerpo  
+                               
+            #divModificarPrestacion.ocultar
+                table#tblMedico
+                        thead#cabecera2
+                            tr
+                                th Id Prestacion
+                                th Id Practica
+                                th Nombre Practica
+                                th id Procedimiento
+                                th Nombre Procedimiento
+                                th Id Examen
+                                th Nombre Examen
+                                th Estado 
+                        tbody#cuerpo2  
+                select(id="modificarPrestacion", name="modificarPrestacion")
+                            option(value="") Elija una opcion
+                            option(value="estadoPrestacion") Modificar Estdo 
+                            option(value="procedimientoPrestacion") Modificar Procedimiento 
+                            option(value='examenPrestacion') Modificar Examen
+                #divNuevoExamen.ocultar2            
+                        label(for="nuevoExamen") Nuevo Domicilio 
+                        input.limpiar(type="text",id="nuevoExamen",name="nuevoExamen",placeHolder="Nuevo Examen",list="dlExamenNuevo")
+                        datalist#dlExamenNuevo.limpiar 
+                        br
+                        button.boton(type="button",onclick='modificarExamen()') Modificar
+                #divNuevoProcedimiento.ocultar2 
+                        label(for="nuevoProcedimiento") Nueva Procedimiento
+                        input.limpiar(type="text",id="nuevoProcedimiento",name="nuevoProcedimiento",placeHolder="Nueva Procedimiento",list="dlProcedimientosNuevos")
+                        datalist#dlProcedimientosNuevos.limpiar
+                        br 
+                        button.boton(type="button",onclick='modificarProcedimiento()') Modificar
+                #divEstado.ocultar2 
+                        button#botonEstado.boton(type="button",onclick='cambiarEstado()')
+block boton1 
+        button.boton(type="button",onclick='volver()') volver 

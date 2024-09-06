@@ -74,7 +74,7 @@ function cambiarEstado(){
         }
  async function agregarProfecion(){
           let aProfecionValue=inputAgregarProfecion.value;
-          let a=validar(aProcedimientoValue.length<1||aProfecionValue.length>28,pagina,'El Procedimiento es obligatoria y no debe superar los 28 caracteres');
+          let a=validar(aProfecionValue.length<1||aProfecionValue.length>28,pagina,'El Procedimiento es obligatoria y no debe superar los 28 caracteres');
           if(a){
                let b={};
                b.nombreProfecion=aProfecionValue;
@@ -84,13 +84,33 @@ function cambiarEstado(){
           } 
      
 async function agregarEspecialidad(){
-          let aEspecialidadValue=inputAEspecialidad.value;
+          let aEspecialidadValue=inputAgregarEspecialidad.value;
           let a=validar(aEspecialidadValue.length<1||aEspecialidadValue.length>28,pagina,'El Examen es obligatoria y no debe superar los 28 caracteres');
           if(a){
                let b={};
-               b.nombreExamen=aEspecialidadValue;
+               b.nombreEspecialidad=aEspecialidadValue;
                fechProtegidoPost('/agregarEspecialidad',b);//hacer endpoint
           }
-          inputAEspecialidad.value="";
-          }         
-        
+          inputAgregarEspecialidad.value="";
+          }  
+async function traerProfeciones(){
+     profeciones=await fechProtegido("/profeciones");
+     profecionDL.innerHTML = ''; 
+     if(profeciones.error){
+          alerta(pagina,'Hubo un inconveniente al buscar profeciones');
+     }else{
+         return profeciones;
+            // llenarDl(profecionDL,profeciones.data,'nombre_profecion');
+     
+     }
+}                 
+async function traerEspecialidades(){
+     especialidades=await fechProtegido("/especialidades");
+     especialidadDL.innerHTML = ''; 
+     if(especialidades.error){
+          alerta(pagina,'Hubo un inconveniente al buscar profeciones');
+     }else{
+          return especialidades;
+         // llenarDl(especialidadDL ,especialidades.data,'nombre_especialidad');
+          }
+}        

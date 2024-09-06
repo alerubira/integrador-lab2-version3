@@ -158,7 +158,7 @@ async function medicoDataAgregar(objet,agregar){
         switch(agregar){
            
          case 'especialidad':
-             query='INSERT INTO `especialidad`( `nombre_especialidad`) VALUES (?)';
+             query='INSERT INTO `especialida`( `nombre_especialidad`) VALUES (?)';
             return await consulta1(query,objet);
             break
          case 'profecion':

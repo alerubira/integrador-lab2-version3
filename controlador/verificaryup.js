@@ -97,12 +97,12 @@ const usuarioClaveY= yup.object().shape({
     .required('El nombre del Examen es obligatorio')
  })  
  const profecionY=yup.object().shape({
-    nombreExamen:yup.string()
+    nombreProfecion:yup.string()
     .max(28,'El nombre de la Profecion debe tener como maximo 28 caracteres')
     .required('El nombre de la Profecion es obligatorio')
  })  
  const especialidadY=yup.object().shape({
-    nombreExamen:yup.string()
+    nombreEspecialidad:yup.string()
     .max(28,'El nombre de la Especialidad debe tener como maximo 28 caracteres')
     .required('El nombre de la Especialidad es obligatorio')
  })  

@@ -32,37 +32,13 @@ let divAProfecion=document.getElementById('divAgregarProfecion');
 let divAEspecialidad=document.getElementById('divAgregarEspecialidad');
 let inputAgregarProfecion=document.getElementById('agregarProfecion');
 let inputAgregarEspecialidad=document.getElementById('agregarEspecialidad');
-let profeciones;
-let especialidades;
+let profeciones=[];
+let especialidades=[];
 let bandera;
 let banderaAux;
 let medicos=[];
 let medico;
 let pMedico=document.getElementById('pMedico');
-
-(async function(){    
-profeciones=await fechProtegido("/profeciones");
-profecionDL.innerHTML = ''; 
-if(profeciones.error){
-     alerta(pagina,'Hubo un inconveniente al buscar profeciones');
-}else{
-     /*for(let p of profeciones.data){
-          let op=document.createElement('option');
-          op.textContent=p.nombre_profecion;
-          op.value=p.nombre_profecion;
-          profecionDL.appendChild(op);
-         }*/
-        llenarDl(profecionDL,profeciones.data,'nombre_profecion');
-
-}
-especialidades=await fechProtegido("/especialidades");
-especialidadDL.innerHTML = ''; 
-if(especialidades.error){
-     alerta(pagina,'Hubo un inconveniente al buscar profeciones');
-}else{
-     llenarDl(especialidadDL ,especialidades.data,'nombre_especialidad');
-     }
-})();
 
  document.getElementById('crudMedico').addEventListener('change',async function() {
      limpiarCampos(limpiar);
@@ -73,6 +49,10 @@ if(especialidades.error){
           case 'crearMedico':
                console.log(selectedValue);
                let divCMedico = document.getElementById('divCrearMedico');
+               profeciones=await traerProfeciones();
+               llenarDl(profecionDL,profeciones.data,'nombre_profecion');
+               especialidades=await traerEspecialidades();
+               llenarDl(especialidadDL ,especialidades.data,'nombre_especialidad');
                mostrar(divCMedico);
                break;
           
@@ -150,6 +130,7 @@ document.getElementById('modificarMedico').addEventListener('change',async funct
                break
           case 'especialidadMedico':
                eliminarHijos(especialidadNuevas);
+               especialidades=await traerEspecialidades();
                llenarDl(especialidadNuevas,especialidades.data);
                mostrar(divNuevaEspecialidad);
                break; 
