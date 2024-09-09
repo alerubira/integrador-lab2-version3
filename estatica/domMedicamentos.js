@@ -3,35 +3,47 @@ pagina="Medicamentos";
 let formularioMedicamentoCrear=document.getElementById('formularioMedicamentoCrear');
 let nombreGenerico=document.getElementById('nombreGenerico');
 let dlNombreGenerico=document.getElementById('dlNombreGenerico');
-let dlExamen=document.getElementById('dlExamen');
+let dlCategoria=document.getElementById('dlCategoria');
 let dlFamilia=document.getElementById('dlFamilia');
-let dlProcedimientosNuevos=document.getElementById('dlProcedimientosNuevos');
+let dlNuevaPresentacion=document.getElementById('dlNuevaPresentacion');
 let idPractica=document.getElementById('idPractica');
-let idExamen=document.getElementById('idExamen');
+let idCategoria=document.getElementById('idCategoria');
 let idProcedimiento=document.getElementById('idProcedimiento');
-let inputexamen=document.getElementById('examenPrestacion');
+let inputCategoria=document.getElementById('categoria');
 let inputFamilia=document.getElementById('familia');
-let divBuscarPrestacion=document.getElementById('divBuscarPrestacion');
-let divModificarPestacion=document.getElementById('divModificarPrestacion');
+let inputForma=document.getElementById('forma');
+let inputPresentacion=document.getElementById('presentacion');
+let dlForma=document.getElementById('dlForma');
+let dlPresentacion=document.getElementById('dlPresentacion');
+let divBuscarMedicamentos=document.getElementById('divBuscarMedicamentos');
+let divModificarMedicamento=document.getElementById('divModificarMedicamento');
 let cuerpo=document.getElementById('cuerpo');
-let divNuevoExamen=document.getElementById('divNuevoExamen');
-let divNuevoProcedimiento=document.getElementById('divNuevoProcedimiento');
-let divCPrestacion = document.getElementById('divCrearPrestacion');
+let divNuevaForma=document.getElementById('divNuevaForma');
+let divNuevaPresentacion=document.getElementById('divNuevaPresentacion');
+let divCMedicamento = document.getElementById('divCrearMedicamento');
 let especialidadNuevas=document.getElementById('especialidadNuevas');
-let inputNuevoProcedimiento=document.getElementById('nuevoProcedimiento');
-let inputNuevoExamen=document.getElementById('nuevoExamen');
-let dlExamenNuevo=document.getElementById('dlExamenNuevo');
+let inputNuevaPresentacion=document.getElementById('nuevaPresentacion');
+let inputNuevaForma=document.getElementById('nuevaForma');
+let dlNuevaForma=document.getElementById('dlNuevaForma');
 let botonEstado=document.getElementById('botonEstado');
 let cuerpo2=document.getElementById('cuerpo2');
-let divAPractica=document.getElementById('divAgregarPractica');
-let divAProcedimiento=document.getElementById('divAgregarProcedimiento');
+let divANombreGenerico=document.getElementById('divAgregarNombreGenerico');
+let divAFamilia=document.getElementById('divAgregarFamilia');
 let divAExamen=document.getElementById('divAgregarExamen');
 let inputAPractica=document.getElementById('agregarPractica');
 let inputAProcedimiento=document.getElementById('agregarProcedimiento');
 let inputAExamen=document.getElementById('agregarExamen');
-let practicas;
-let examenes;
+let divNuevaFamilia=document.getElementById('divNuevaFamilia');
+let inputNuevaFamilia=document.getElementById('nuevaFamilia');
+let dlNuevaFamilia=document.getElementById('dlNuevaFamilia');
+let divNuevaCategoria=document.getElementById('divNuevaCategoria');
+let inputNuevaCategoria=document.getElementById('nuevaCategoria');
+let dlNuevaCategoria=document.getElementById('dlNuevaCategoria');
+let formas;
+let presentaciones;
 let procedimientos;
+let familias;
+let categorias;
 let bandera;
 let banderaAux;
 let prestaciones=[];
@@ -75,18 +87,18 @@ if(procedimientos.error){
      let selectedValue = this.value;
      fOcultar();
      switch(selectedValue) {
-          case 'crearPrestacion':
-               practicas=await traerPracticas();
-               procedimientos=await traerProcedimentos();
-               examenes=await traerExamenes();
-               llenarDl(dlNombreGenerico,practicas.data,'nombre_practica');
+          case 'crearMedicamento':
+              /* formas=await traerPracticas();
+               //procedimientos=await traerProcedimentos();
+               presentaciones=await traerExamenes();
+               llenarDl(dlNombreGenerico,formas.data,'nombre_practica');
                llenarDl(dlFamilia,procedimientos.data,'nombre_procedimiento')
-               llenarDl(dlExamen,examenes.data,'nombre_examen');
+               llenarDl(dlCategoria,presentaciones.data,'nombre_examen');*/
                
-               mostrar(divCPrestacion);
+               mostrar(divCMedicamento);
                break;
           
-          case 'buscarPrestaciones':
+          case 'buscarMedicamentos':
               fOcultar();
               eliminarHijos(cuerpo);
                prestaciones=await fechProtegido('/traerTodasPrestaciones');
@@ -95,7 +107,7 @@ if(procedimientos.error){
                     console.log(prestaciones.error.message);
                }else{
                console.log(prestaciones.data);
-                mostrar(divBuscarPrestacion);
+                mostrar(divBuscarMedicamentos);
                 for(let p of prestaciones.data){
                     let tr=document.createElement('tr');
                     cuerpo.appendChild(tr);
@@ -121,31 +133,35 @@ if(procedimientos.error){
                               }
                   }
                 break;
-          case 'agregarPractica':
+          case 'agregarNombreGenerico':
                fOcultar();
-               mostrar(divAPractica);
+               mostrar(divANombreGenerico);
                break;
-          case 'agregarProcedimiento':
+          case 'agregarFamilia':
                fOcultar();
-               mostrar(divAProcedimiento);
+               mostrar(divAFamilia);
                break;
-          case 'agregarExamen':
+          case 'agregarCategoria':
                fOcultar();
                mostrar(divAExamen);
                break;
+          case 'agregarFormaFarmaceutica':
+               break;
+          case 'agregarPresentacion' :
+               break;         
           default:
                console.log('Selección no válida');
                alerta(pagina,('Seleccion no valida'));
      }
-     document.getElementById("crudPrestaciones").selectedIndex = 0;
+     document.getElementById("crudMedicamentos").selectedIndex = 0;
 });
 
-document.getElementById('modificarPrestacion').addEventListener('change',async function() {
+document.getElementById('modificarMedicamento').addEventListener('change',async function() {
      limpiarCampos(limpiar);
      let selectedValue = this.value;
      fOcultar2();
      switch(selectedValue) {
-          case 'estadoPrestacion':
+          case 'estadoMedicamento':
                limpiarCampos(limpiar);
                fOcultar2();
                if(prestacion.estado_prestacion===1){
@@ -155,22 +171,26 @@ document.getElementById('modificarPrestacion').addEventListener('change',async f
                }
                mostrar(divEstado);
               break;
-          case 'procedimientoPrestacion':
+          case 'forma':
                limpiarCampos(limpiar);
                fOcultar2();
                procedimientos=await traerProcedimentos();
-               llenarDl(dlProcedimientosNuevos,procedimientos.data,'nombre_procedimiento');
-               mostrar(divNuevoProcedimiento);
+               llenarDl(dlNuevaPresentacion,procedimientos.data,'nombre_procedimiento');
+               mostrar(divNuevaPresentacion);
                break
-          case 'examenPrestacion':
+          case 'presentacion':
                limpiarCampos(limpiar);
                fOcultar2();
                //eliminarHijos(especialidadNuevas);
-               examenes=await traerExamenes();
+               presentaciones=await traerExamenes();
                //console.log(examenes.data);
-               llenarDl(dlExamenNuevo,examenes.data,'nombre_examen');
-               mostrar(divNuevoExamen);
-               break; 
+               llenarDl(dlNuevaForma,presentaciones.data,'nombre_examen');
+               mostrar(divNuevaForma);
+               break;
+          case 'familia':
+               break;
+          case 'categoria':
+               break;           
                default:
                     console.log('Selección no válida');
                     alerta(pagina,('Seleccion no valida'));         
@@ -183,22 +203,22 @@ formularioMedicamentoCrear.addEventListener('submit',async function(event) {
      event.preventDefault(); 
      bandera=true;
      let nombreValue=nombreGenerico.value;
-     let examenValue=inputexamen.value;
+     let examenValue=inputCategoria.value;
      let procedimientoValue=inputFamilia.value;
      let objetoEncontrado ;
     //banderaAux= validar(nombreValue.length<1||nombreValue.length>28||!/^[a-zA-Z]+$/.test(nombreValue),pagina,"El nombre es obligatorio,debe contener menos de 30 letras unicamente",event)
-     objetoEncontrado=await practicas.data.find(ob=>ob.nombre_practica===nombreValue);
+     objetoEncontrado=await formas.data.find(ob=>ob.nombre_practica===nombreValue);
      banderaAux=validar(!objetoEncontrado,pagina,'La practica no corresponde',event);
      if(!banderaAux){bandera=false};
      if(objetoEncontrado){
           idPractica.value=objetoEncontrado.id_practica;
      } 
-      objetoEncontrado = await examenes.data.find(objeto => objeto.nombre_examen === examenValue);
+      objetoEncontrado = await presentaciones.data.find(objeto => objeto.nombre_examen === examenValue);
      banderaAux= validar(!objetoEncontrado,pagina,'El examen no corresponde',event);
      if(!banderaAux){bandera=false};
      if(objetoEncontrado){
           //console.log(objetoEncontrado.id_examen);
-          idExamen.value= objetoEncontrado.id_examen;
+          idCategoria.value= objetoEncontrado.id_examen;
           //console.log(idExamen.value);
      }
       objetoEncontrado =await procedimientos.data.find(objet => objet.nombre_procedimiento === procedimientoValue);
@@ -211,7 +231,7 @@ formularioMedicamentoCrear.addEventListener('submit',async function(event) {
      
      
      if(bandera){
-         let prestacionCreado={idPractica:idPractica.value,idProcedimiento:idProcedimiento.value,idExamen:idExamen.value};
+         let prestacionCreado={idPractica:idPractica.value,idProcedimiento:idProcedimiento.value,idExamen:idCategoria.value};
        
          fechProtegidoPost('/crearPrestacion',prestacionCreado);
           /*const token = localStorage.getItem('token');

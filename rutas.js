@@ -4,6 +4,7 @@ import { verificarToken } from './controlador/manejadorDeRutasLogin.js';
 import { manejadorAcceso } from './controlador/manejadorRutaAcceso.js';
 import { manejadorMedicos } from './controlador/manejadorRutaMedicos.js';
 import { manejadorPrestaciones } from './controlador/manejadorRutaPrestaciones.js';
+import { manejadorMedicamentos } from './controlador/manejadorRutasMedicamento.js';
 const ruta = express.Router();
 let encabezado;
 let mensajeExito;
@@ -47,6 +48,10 @@ ruta.get('/medicos',(req,res)=>{
      manejadorMedicos(req,res,'ingresar');
     
    });
+ruta.get('/medicamentos',(req,res)=>{
+  encabezado="Planilla para procesar Medicamentos";
+  manejadorMedicamentos(req,res,'ingresar');
+})   
 ruta.get('/profeciones',verificarToken,async(req,res)=>{
     manejadorMedicos(req,res,"profecion");
     

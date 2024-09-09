@@ -52,6 +52,7 @@ app.use('/acceso',ruta);
 app.use('/modificarLogin',ruta);
 app.use('/recuperarLogin',ruta);
 app.use('/medicos',ruta);
+app.use('/medicamentos',ruta);
 app.use('/profeciones',ruta);
 app.use('/especialidades',ruta);
 app.use('/crearMedico',ruta);

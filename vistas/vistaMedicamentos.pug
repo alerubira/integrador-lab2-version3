@@ -11,15 +11,15 @@ block content
                         option(value="agregarNombreGenerico") Agregar Nombre Generico 
                         option(value="agregarFamilia") Agregar Familia 
                         option(value="agregarCategoria") Agregar Categoria
-                        option(value="agregarFormaFarmaceuyica") Agregar Forma Farmaceutica 
+                        option(value="agregarFormaFarmaceutica") Agregar Forma Farmaceutica 
                         option(value="agregarPresentacion") Agregar Presentacion
             #divAgregarNombreGenerico.ocultar 
-                lavel(for="agregarNombreGenerico") Nombre Generico Nuenva
-                input.limpiar(type="text",id="agregarNombreGenerico",autocomplete="of")
+                lavel(for="agregarNombreGenerico") Nombre Generico Nuenvo
+                input.limpiar(type="text",id="agregarNombreGenerico",autocomplete="of",placeHolder="Nombre Generico Nuevo")
                 button.boton(type="button",onclick='agregarNombreGenerico()') Agregar
             #divAgregarFamilia.ocultar 
                 lavel(for="agregarFamilia") Familia Nueva
-                input.limpiar(type="text",id="agregarFamilia",autocomplete="of")
+                input.limpiar(type="text",id="agregarFamilia",autocomplete="of",placeHolder="Nueva Familia")
                 button.boton(type="button",onclick='agregarFamilia()') Agregar
             #divAgregarCategoria.ocultar
                 lavel(for="agregarCategoria") Categoria Nueva
@@ -41,62 +41,94 @@ block content
                         input.limpiar(type="text", id="nombreGenerico" ,name="nombreGenerico",autocomplete="off",list="dlNombreGenerico")
                         datalist#dlNombreGenerico
                         br
-                        label(for="familia") Nombre del Procedimiento
-                        input.limpiar.ocultar(type="number",id="idProcedimiento",name="idProcedimiento",autocomplete="off")
+                        label(for="familia") Nombre de laFamila
+                        input.limpiar.ocultar(type="number",id="idFamilia",name="idFamilia",autocomplete="off")
                         input.limpiar(type="text", id="familia", name="familia",list="dlFamilia", autocomplete="off")
                         datalist#dlFamilia
                         br
-                        label(for="examenPrestacion") Nombre del Examen 
-                        input.limpiar.ocultar(type="number",id="idExamen",name="idExamen",autocomplete="off")
-                        input.limpiar(type="text", id="examenPrestacion" ,name="examenPrestacion",list="dlExamen", autocomplete="off")
-                        datalist#dlExamen
+                        label(for="categoria") Nombre de la Categoria
+                        input.limpiar.ocultar(type="number",id="idCategoria",name="idCategoria",autocomplete="off")
+                        input.limpiar(type="text", id="categoria" ,name="categoria",list="dlCategoria", autocomplete="off")
+                        datalist#dlCategoria
+                        br
+                        label(for="forma") Nombre de la Forma Farmaceutica
+                        input.limpiar.ocultar(type="number",id="idForma",name="idForma",autocomplete="off")
+                        input.limpiar(type="text", id="forma" ,name="forma",list="dlForma", autocomplete="off")
+                        datalist#dlForma
+                        br
+                        label(for="presentacion") Nombre de la presentacion
+                        input.limpiar.ocultar(type="number",id="idPresentacion",name="idPresentacion",autocomplete="off")
+                        input.limpiar(type="text", id="presentacion" ,name="presentacion",list="dlPresentacion", autocomplete="off")
+                        datalist#dlPresentacion
                         br
                         input.boton(type="submit", value="Enviar")
-            #divBuscarPrestacion.ocultar
-                    table#todosPrestaciones
+            #divBuscarMedicamentos.ocultar
+                    table#todosMediicamentos
                         thead#cabecera
                             tr
-                                th Id Prestacion
-                                th Id Practica
-                                th Nombre Practica
-                                th id Procedimiento
-                                th Nombre Procedimiento
-                                th Id Examen
-                                th Nombre Examen
+                                th Id Medicamento
+                                th Id nombre Generico
+                                th Nombre nombre Generico
+                                th id Forma Farmaceuitica
+                                th Nombre Forma Farmaceuitica
+                                th Id Presentacion
+                                th Nombre Presentacion
+                                th Id Familia 
+                                th Nombre Familia 
+                                th Id Categoria 
+                                th Nombre Categoria
                                 th Estado 
                                 th Seleccionar
                         tbody#cuerpo  
                                
-            #divModificarPrestacion.ocultar
-                table#tblMedico
+            #divModificarMedicamento.ocultar
+                table#tblMedicamento
                         thead#cabecera2
                             tr
-                                th Id Prestacion
-                                th Id Practica
-                                th Nombre Practica
-                                th id Procedimiento
-                                th Nombre Procedimiento
-                                th Id Examen
-                                th Nombre Examen
+                                th Id Medicamento
+                                th Id Nombre Generico
+                                th Nombre Nombre Generico
+                                th id Forma Farmaceutica
+                                th Nombre Forma Farmaceutica
+                                th Id Presentacion
+                                th Nombre Presentacion
+                                th Id Familia 
+                                th Nombre Familia 
+                                th Id Categoria 
+                                th Nombre Categoria
                                 th Estado 
                         tbody#cuerpo2  
-                select(id="modificarPrestacion", name="modificarPrestacion")
+                select(id="modificarMedicamento", name="modificarMedicamento")
                             option(value="") Elija una opcion
-                            option(value="estadoPrestacion") Modificar Estdo 
-                            option(value="procedimientoPrestacion") Modificar Procedimiento 
-                            option(value='examenPrestacion') Modificar Examen
-                #divNuevoExamen.ocultar2            
-                        label(for="nuevoExamen") Nuevo Domicilio 
-                        input.limpiar(type="text",id="nuevoExamen",name="nuevoExamen",placeHolder="Nuevo Examen",list="dlExamenNuevo")
-                        datalist#dlExamenNuevo.limpiar 
+                            option(value="estadoMedicamento") Modificar Estdo 
+                            option(value="forma") Modificar Forma 
+                            option(value='presentacion') Modificar Presentacion 
+                            option(value="familia") Modificar Familia 
+                            option(value="categoria") Modificar Categoria
+                #divNuevaForma.ocultar2            
+                        label(for="NuevaForma") Nueva Forma 
+                        input.limpiar(type="text",id="NuevaForma",name="NuevaForma",placeHolder="Nuevo Forma",list="dlNuevaForma")
+                        datalist#dlNuevaForma.limpiar 
                         br
-                        button.boton(type="button",onclick='modificarExamen()') Modificar
-                #divNuevoProcedimiento.ocultar2 
-                        label(for="nuevoProcedimiento") Nueva Procedimiento
-                        input.limpiar(type="text",id="nuevoProcedimiento",name="nuevoProcedimiento",placeHolder="Nueva Procedimiento",list="dlProcedimientosNuevos")
-                        datalist#dlProcedimientosNuevos.limpiar
+                        button.boton(type="button",onclick='modificarForma()') Modificar
+                #divNuevaPresentacion.ocultar2 
+                        label(for="nuevaPresentacion") Nueva Presentacion
+                        input.limpiar(type="text",id="nuevaPresentacion",name="nuevaPresentacion",placeHolder="Nueva Presentacion",list="dlNuevaPresentacion")
+                        datalist#dlNuevaPresentacion.limpiar
                         br 
-                        button.boton(type="button",onclick='modificarProcedimiento()') Modificar
+                        button.boton(type="button",onclick='modificarPresentacion()') Modificar
+                #divNuevaFamilia.ocultar2 
+                        label(for="nuevaFamilia") Nueva Familia
+                        input.limpiar(type="text",id="nuevaFamilia",name="nuevaFamilia",placeHolder="Nueva Familia",list="dlNuevaFamilia")
+                        datalist#dlNuevaFamilia.limpiar
+                        br 
+                        button.boton(type="button",onclick='modificarFamilia()') Modificar
+                #divNuevaCategoria.ocultar2
+                        label(for="nuevaCategoria") Nueva Categoria
+                        input.limpiar(type="text",id="nuevaCategoria",name="nuevaCategoria",placeHolder="Nueva Categoria",list="dlNuevaCategoria")
+                        datalist#dlNuevaCategoria.limpiar
+                        br 
+                        button.boton(type="button",onclick='modificarCategoria()') Modificar        
                 #divEstado.ocultar2 
                         button#botonEstado.boton(type="button",onclick='cambiarEstado()')
 block boton1 

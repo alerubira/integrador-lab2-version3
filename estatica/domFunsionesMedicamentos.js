@@ -7,19 +7,19 @@ async function traerProcedimentos(){
     }
 }
 async function traerExamenes(){
-    examenes=await fechProtegido("/examen");
-    if(examenes.error){
+    presentaciones=await fechProtegido("/examen");
+    if(presentaciones.error){
          alerta(pagina,'Hubo un inconveniente al buscar examenes');
     }else{
-         return examenes;
+         return presentaciones;
     }
 }
 async function traerPracticas(){
-    practicas=await fechProtegido('/practica'); 
-    if(practicas.error){
+    formas=await fechProtegido('/practica'); 
+    if(formas.error){
          alerta(pagina,'Hubo un inconveniente al buscar Practicas');
     }else{
-         return practicas;
+         return formas;
     }
 }
 function cambiarEstado(){
@@ -35,9 +35,9 @@ function cambiarEstado(){
    fechProtegidoPost('/cambiarEstadoPrestacion',p);
    }             
                   
-   async function modificarProcedimiento(){
+   async function modificarPresentacion(){
   
-   let nuevoProcedimientoValue=inputNuevoProcedimiento.value;
+   let nuevoProcedimientoValue=inputNuevaPresentacion.value;
    let pro=await procedimientos.data.find(no=>no.nombre_procedimiento===nuevoProcedimientoValue);
    if(pro){
    let p={};
@@ -49,9 +49,9 @@ function cambiarEstado(){
    }
    
    }
-   async function modificarExamen(){
-   let nuevoExamenValue=inputNuevoExamen.value;
-   let ex=await examenes.data.find(e=>e.nombre_examen===nuevoExamenValue);
+   async function modificarForma(){
+   let nuevoExamenValue=inputNuevaForma.value;
+   let ex=await presentaciones.data.find(e=>e.nombre_examen===nuevoExamenValue);
    if(ex){
    let exa={};
    exa.idPrestacion=prestacion.id_prestacion;
@@ -59,9 +59,15 @@ function cambiarEstado(){
    fechProtegidoPost('/modificarExamen',exa);
    }   
    }
+   async function modificarFamilia(){
+
+   }
+   async function modificarCategoria(){
+
+   }
    async function seleccionarPrestacion(event){
        fOcultar();
-       mostrar(divModificarPestacion);
+       mostrar(divModificarMedicamento);
         // Obtener el botón que se hizo clic
         let btn = event.target;
        

@@ -107,6 +107,16 @@ if (window.location.pathname === '/acceso') {
 }*/
 function redireccionarMedicamentos(){
   console.log('medicamntos en construccion');
+  const token = localStorage.getItem('token');
+  const tipoAutorizacion=localStorage.getItem('tipoAutorizacion');
+  //console.log(token);
+  if (tipoAutorizacion === '3') {
+   console.log('dentro del if');
+      //const token = data.token;
+       window.location.href = `/medicamentos?token=${token}`;
+     
+      }
+
 }
 function redireccionarPrestaciones(){
   console.log('derireccionar prestaciones');
