@@ -1,6 +1,6 @@
 import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { encabezado } from "../rutas.js";
-
+import { medicamentoDatatodos,medicamentoDataModificar } from "../modelo/medicamentoData.js";
 //import { medicoDatatodos,medicoDataModificar,crearMedico } from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 //import { Medico } from "../modelo/clasesEntidad.js";
@@ -40,24 +40,29 @@ async function manejadorMedicamentos(req,res,objeto){
         });
           
           break;
-     case 'practica':
+     case 'nombresGenericos':
         //verificar parctica procedimient y examen em el servidor,que esten en la base de datos
-           aux = await prestacionDatatodos('practicas');
+           aux = await medicamentoDatatodos('nombresGenericos');
            res.send(aux);
         break;     
-     case 'examen':
-            aux= await prestacionDatatodos('examenes');
+     case 'formas':
+            aux= await medicamentoDatatodos('formas');
             res.send(aux);
         break;
-      case 'procedimiento':
-         aux=await prestacionDatatodos('procedimientos');
+      case 'presentaciones':
+         aux=await medicamentoDatatodos('presentaciones');
          res.send(aux);
             break;
-     case 'todasPrestaciones':
-        aux=await prestacionDatatodos('prestaciones');
+     case 'familias':
+        aux=await medicamentoDatatodos('familias');
        // console.log(aux);
         res.send(aux);
-        break       
+        break  
+     case 'categorias':
+        aux=await medicamentoDatatodos('categorias');
+        // console.log(aux);
+         res.send(aux);  
+         break;      
      case 'crearPrestacion':
         objet = req.body;
         if(!existeBd(objet.idPractica,'practica','id_practica')){
@@ -169,7 +174,7 @@ async function manejadorMedicamentos(req,res,objeto){
         break;                    
     }
 }catch (error) {
-    console.error(`Error al Procesar el ${objeto} en Prestaciones`, error);
+    console.error(`Error al Procesar el ${objeto} en Medicamentos`, error);
     return res.status(500).send(error.message);
 }
     }

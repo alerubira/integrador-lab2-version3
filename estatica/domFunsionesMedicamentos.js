@@ -1,32 +1,56 @@
-async function traerProcedimentos(){
-    procedimientos=await fechProtegido("/procedimiento");
-    if(procedimientos.error){
+async function traerMedicamentos(){
+    familias=await fechProtegido("/procedimiento");
+    if(familias.error){
          alerta(pagina,'Hubo un inconveniente al buscar procedimientos');
     }else{
-         return procedimientos;
+         return familias;
     }
 }
-async function traerExamenes(){
-    presentaciones=await fechProtegido("/examen");
+async function traerNombresGenericos(){
+     nombresGenericos=await fechProtegido("/nombresGenericos");
+     if(nombresGenericos.error){
+          alerta(pagina,'Hubo un inconveniente al buscar nombres genericos');
+     }else{
+          return nombresGenericos;
+     }
+}
+async function traerPresentaciones(){
+    presentaciones=await fechProtegido("/presentaciones");
     if(presentaciones.error){
-         alerta(pagina,'Hubo un inconveniente al buscar examenes');
+         alerta(pagina,'Hubo un inconveniente al buscar presentaciones');
     }else{
          return presentaciones;
     }
 }
-async function traerPracticas(){
-    formas=await fechProtegido('/practica'); 
+async function traerFormas(){
+    formas=await fechProtegido('/formas'); 
     if(formas.error){
-         alerta(pagina,'Hubo un inconveniente al buscar Practicas');
+         alerta(pagina,'Hubo un inconveniente al buscar formas farmaceuticas');
     }else{
          return formas;
     }
 }
+async function traerCategorias(){
+     categorias=await fechProtegido("/categorias");
+     if(categorias.error){
+          alerta(pagina,'Hubo un inconveniente al buscar categorias');
+     }else{
+          return categorias;
+     }
+}
+async function traerFamilias(){
+     familias=await fechProtegido("/familias");
+     if(familias.error){
+          alerta(pagina,'Hubo un inconveniente al buscar examenes');
+     }else{
+          return familias;
+     }
+}
 function cambiarEstado(){
    limpiarCampos(limpiar);
    let p={};
-   p.idPrestacion=prestacion.id_prestacion;
-   if(prestacion.estado_prestacion===1){
+   p.idPrestacion=medicamento.id_prestacion;
+   if(medicamento.estado_prestacion===1){
         p.estadoPrestacion=false;
    }else{
         p.estadoPrestacion=true;
@@ -38,10 +62,10 @@ function cambiarEstado(){
    async function modificarPresentacion(){
   
    let nuevoProcedimientoValue=inputNuevaPresentacion.value;
-   let pro=await procedimientos.data.find(no=>no.nombre_procedimiento===nuevoProcedimientoValue);
+   let pro=await familias.data.find(no=>no.nombre_procedimiento===nuevoProcedimientoValue);
    if(pro){
    let p={};
-   p.idPrestacion=prestacion.id_prestacion;
+   p.idPrestacion=medicamento.id_prestacion;
    p.idProcedimiento=pro.id_procedimiento;
    fechProtegidoPost('/modificarProcedimiento',p);
    }else{
@@ -54,7 +78,7 @@ function cambiarEstado(){
    let ex=await presentaciones.data.find(e=>e.nombre_examen===nuevoExamenValue);
    if(ex){
    let exa={};
-   exa.idPrestacion=prestacion.id_prestacion;
+   exa.idPrestacion=medicamento.id_prestacion;
    exa.idExamen=ex.id_examen;
    fechProtegidoPost('/modificarExamen',exa);
    }   
@@ -65,7 +89,7 @@ function cambiarEstado(){
    async function modificarCategoria(){
 
    }
-   async function seleccionarPrestacion(event){
+   async function seleccionarMedicamento(event){
        fOcultar();
        mostrar(divModificarMedicamento);
         // Obtener el botón que se hizo clic
@@ -76,22 +100,22 @@ function cambiarEstado(){
        
         // Obtener todas las celdas (<td>) dentro de esa fila
         let celdas = fila.getElementsByTagName('td');
-       prestacion={};
+       medicamento={};
         // Recorrer las celdas y obtener los valores
         
-        prestacion=await prestaciones.data.find(pre=>pre.id_prestacion===parseInt(celdas[0].textContent));
-        console.log(prestacion);
+        medicamento=await medicamentos.data.find(pre=>pre.id_prestacion===parseInt(celdas[0].textContent));
+        console.log(medicamento);
         eliminarHijos(cuerpo2);
         let tr2=document.createElement('tr');
                            cuerpo2.appendChild(tr2);
-                           agregarTdCuerpo(prestacion.id_prestacion,tr2);
-                           agregarTdCuerpo(prestacion.id_practica,tr2);
-                           agregarTdCuerpo(prestacion.nombre_practica,tr2);
-                           agregarTdCuerpo(prestacion.id_procedimiento,tr2);
-                           agregarTdCuerpo(prestacion.nombre_procedimiento,tr2);
-                           agregarTdCuerpo(prestacion.id_examen,tr2);
-                           agregarTdCuerpo(prestacion.nombre_examen,tr2);
-                           if(prestacion.estado_procedimiento===1){
+                           agregarTdCuerpo(medicamento.id_prestacion,tr2);
+                           agregarTdCuerpo(medicamento.id_practica,tr2);
+                           agregarTdCuerpo(medicamento.nombre_practica,tr2);
+                           agregarTdCuerpo(medicamento.id_procedimiento,tr2);
+                           agregarTdCuerpo(medicamento.nombre_procedimiento,tr2);
+                           agregarTdCuerpo(medicamento.id_examen,tr2);
+                           agregarTdCuerpo(medicamento.nombre_examen,tr2);
+                           if(medicamento.estado_procedimiento===1){
                                 agregarTdCuerpo('Activo',tr2);
                            }else{
                                 agregarTdCuerpo('Inactivo',tr2);

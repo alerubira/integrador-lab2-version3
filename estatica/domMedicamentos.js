@@ -29,7 +29,9 @@ let botonEstado=document.getElementById('botonEstado');
 let cuerpo2=document.getElementById('cuerpo2');
 let divANombreGenerico=document.getElementById('divAgregarNombreGenerico');
 let divAFamilia=document.getElementById('divAgregarFamilia');
-let divAExamen=document.getElementById('divAgregarExamen');
+let divACategoria=document.getElementById('divAgregarCategoria');
+let divAFornma=document.getElementById('divAgregarForma');
+let divAPresentacion=document.getElementById('divAgregarPresentacion');
 let inputAPractica=document.getElementById('agregarPractica');
 let inputAProcedimiento=document.getElementById('agregarProcedimiento');
 let inputAExamen=document.getElementById('agregarExamen');
@@ -41,14 +43,13 @@ let inputNuevaCategoria=document.getElementById('nuevaCategoria');
 let dlNuevaCategoria=document.getElementById('dlNuevaCategoria');
 let formas;
 let presentaciones;
-let procedimientos;
+let nombresGenericos;
 let familias;
 let categorias;
 let bandera;
 let banderaAux;
-let prestaciones=[];
-let prestacion;
-let pMedico=document.getElementById('pMedico');
+let medicamentos=[];
+let medicamento;
 
 /*(async function(){  
 practicas=await fechProtegido('/practica'); 
@@ -88,12 +89,17 @@ if(procedimientos.error){
      fOcultar();
      switch(selectedValue) {
           case 'crearMedicamento':
-              /* formas=await traerPracticas();
-               //procedimientos=await traerProcedimentos();
-               presentaciones=await traerExamenes();
-               llenarDl(dlNombreGenerico,formas.data,'nombre_practica');
-               llenarDl(dlFamilia,procedimientos.data,'nombre_procedimiento')
-               llenarDl(dlCategoria,presentaciones.data,'nombre_examen');*/
+               nombresGenericos=await traerNombresGenericos();
+               formas=await traerFormas();
+               presentaciones=await traerPresentaciones();
+               familias=await traerFamilias();
+               categorias=await traerCategorias();
+               console.log(formas);
+               llenarDl(dlNombreGenerico,nombresGenericos.data,'nombre_generico');
+               llenarDl(dlForma,formas.data,'nombre_forma');
+               llenarDl(dlPresentacion,presentaciones.data,'nombre_presentacion');
+               llenarDl(dlFamilia,familias.data,'nombre_familia')
+               llenarDl(dlCategoria,categorias.data,'nombre_categoria');
                
                mostrar(divCMedicamento);
                break;
@@ -101,14 +107,14 @@ if(procedimientos.error){
           case 'buscarMedicamentos':
               fOcultar();
               eliminarHijos(cuerpo);
-               prestaciones=await fechProtegido('/traerTodasPrestaciones');
-              if(prestaciones.error){
-                    alerta(pagina,`Hubo un inconveniente al buscar prestaciones: ${prestaciones.error.message}`);
-                    console.log(prestaciones.error.message);
+               medicamentos=await fechProtegido('/traerTodasPrestaciones');
+              if(medicamentos.error){
+                    alerta(pagina,`Hubo un inconveniente al buscar prestaciones: ${medicamentos.error.message}`);
+                    console.log(medicamentos.error.message);
                }else{
-               console.log(prestaciones.data);
+               console.log(medicamentos.data);
                 mostrar(divBuscarMedicamentos);
-                for(let p of prestaciones.data){
+                for(let p of medicamentos.data){
                     let tr=document.createElement('tr');
                     cuerpo.appendChild(tr);
                     agregarTdCuerpo(p.id_prestacion,tr);
@@ -126,7 +132,7 @@ if(procedimientos.error){
                     let btn=document.createElement('button');
                               btn.textContent = 'Seleccionar';
                               btn.className = 'boton';
-                              btn.addEventListener('click', seleccionarPrestacion);
+                              btn.addEventListener('click', seleccionarMedicamento);
                              let td=document.createElement('td');
                              td.appendChild(btn);
                              tr.appendChild(td);
@@ -143,11 +149,15 @@ if(procedimientos.error){
                break;
           case 'agregarCategoria':
                fOcultar();
-               mostrar(divAExamen);
+               mostrar(divACategoria);
                break;
           case 'agregarFormaFarmaceutica':
+               fOcultar();
+               mostrar(divAFornma)
                break;
           case 'agregarPresentacion' :
+               fOcultar();
+               mostrar(divAPresentacion);
                break;         
           default:
                console.log('Selección no válida');
@@ -164,7 +174,7 @@ document.getElementById('modificarMedicamento').addEventListener('change',async 
           case 'estadoMedicamento':
                limpiarCampos(limpiar);
                fOcultar2();
-               if(prestacion.estado_prestacion===1){
+               if(medicamento.estado_prestacion===1){
                     botonEstado.innerText="Inhabilitar";
                }else{
                     botonEstado.innerText="Habilitar";
@@ -174,15 +184,15 @@ document.getElementById('modificarMedicamento').addEventListener('change',async 
           case 'forma':
                limpiarCampos(limpiar);
                fOcultar2();
-               procedimientos=await traerProcedimentos();
-               llenarDl(dlNuevaPresentacion,procedimientos.data,'nombre_procedimiento');
+               familias=await traerMedicamentos();
+               llenarDl(dlNuevaPresentacion,familias.data,'nombre_procedimiento');
                mostrar(divNuevaPresentacion);
                break
           case 'presentacion':
                limpiarCampos(limpiar);
                fOcultar2();
                //eliminarHijos(especialidadNuevas);
-               presentaciones=await traerExamenes();
+               presentaciones=await traerPresentaciones();
                //console.log(examenes.data);
                llenarDl(dlNuevaForma,presentaciones.data,'nombre_examen');
                mostrar(divNuevaForma);
@@ -221,7 +231,7 @@ formularioMedicamentoCrear.addEventListener('submit',async function(event) {
           idCategoria.value= objetoEncontrado.id_examen;
           //console.log(idExamen.value);
      }
-      objetoEncontrado =await procedimientos.data.find(objet => objet.nombre_procedimiento === procedimientoValue);
+      objetoEncontrado =await familias.data.find(objet => objet.nombre_procedimiento === procedimientoValue);
 
       banderaAux=  validar(!objetoEncontrado,pagina,'El procedimiento no corresponde',event);
       if(!banderaAux){bandera=false};

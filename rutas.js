@@ -124,6 +124,21 @@ ruta.get('/examen',verificarToken,async(req,res)=>{
  ruta.post('/agregarespecialidad',verificarToken,async (req,res)=>{
   manejadorMedicos(req,res,'agregarEspecialidad');
  }) 
+ ruta.get('/nombresGenericos',verificarToken,async(req,res)=>{
+  manejadorMedicamentos(req,res,'nombresGenericos');
+ })
+ ruta.get('/formas',verificarToken,async(req,res)=>{
+  manejadorMedicamentos(req,res,'formas');
+ })
+ ruta.get('/presentaciones',verificarToken,async(req,res)=>{
+  manejadorMedicamentos(req,res,'presentaciones');
+ })
+ ruta.get('/familias',verificarToken,async(req,res)=>{
+  manejadorMedicamentos(req,res,'familias');
+ })
+ ruta.get('/categorias',verificarToken,async(req,res)=>{
+  manejadorMedicamentos(req,res,'categorias');
+ })
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
    // Obtener el ID del Profesional enviado desde el formulario
  const idProfecional = req.body.idAdministrativoR;

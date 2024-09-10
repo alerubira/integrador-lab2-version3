@@ -74,6 +74,11 @@ app.use('/agregarProcedimiento',ruta);
 app.use('/agregarExamen',ruta);
 app.use('/agregarProfecion',ruta);
 app.use('/agregarEspecialidad',ruta);
+app.use('/nombresGenericos',ruta);
+app.use('/formas',ruta);
+app.use('/presentaciones',ruta);
+app.use('/familias',ruta);
+app.use('/categorias',ruta);
 /*app.get('/', (req, res) => {
     encabezado="Bienvenido al Ministerio de Salud";
      res.render('vistaPrincipal',{encabezado,mensajeExito,estadoSuces});

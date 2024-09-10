@@ -23,15 +23,15 @@ block content
                 button.boton(type="button",onclick='agregarFamilia()') Agregar
             #divAgregarCategoria.ocultar
                 lavel(for="agregarCategoria") Categoria Nueva
-                input.limpiar(type="text",id="agregarCategoria",autocomplete="of")
+                input.limpiar(type="text",id="agregarCategoria",autocomplete="of",placeHolder="Nueva Categoria")
                 button.boton(type="button",onclick='agregarCategoria()') Agregar 
             #divAgregarForma.ocultar
                 lavel(for="agregarForma") Forma Farmaceutica Nueva
-                input.limpiar(type="text",id="agregarForma",autocomplete="of")
+                input.limpiar(type="text",id="agregarForma",autocomplete="of",placeHolder="Nueva Forma")
                 button.boton(type="button",onclick='agregarForma()') Agregar
             #divAgregarPresentacion.ocultar
                 lavel(for="agregarPresentacion") Presentacion Nueva
-                input.limpiar(type="text",id="agregarPresentacion",autocomplete="of")
+                input.limpiar(type="text",id="agregarPresentacion",autocomplete="of",placeHolder="Nueva Presentacion")
                 button.boton(type="button",onclick='agregarPresentacion()') Agregar                   
             #divCrearMedicamento.ocultar.crear 
                     form#formularioMedicamentoCrear.form(action="/crearMedico", method="POST")
