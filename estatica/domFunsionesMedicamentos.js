@@ -132,15 +132,40 @@ if(a){
 }
 inputAPractica.value="";
 } 
-async function agregarProcedimiento(){
-    let aProcedimientoValue=inputAProcedimiento.value;
-    let a=validar(aProcedimientoValue.length<1||aProcedimientoValue.length>28,pagina,'El Procedimiento es obligatoria y no debe superar los 28 caracteres');
+async function agregarNombreGenerico(){
+     bandera=true;
+    let aNombreValue=inputNombreGenericoNuevo.value;
+    let categoriaValue=inputCategoria.value;
+    let familiaValue=inputFamilia.value;
+    let a=validar(aNombreValue.length<1||aNombreValue.length>28,pagina,'El Nombre es obligatoria y no debe superar los 28 caracteres');
     if(a){
-         let b={};
-         b.nombreProcedimiento=aProcedimientoValue;
-         fechProtegidoPost('/agregarProcedimiento',b);//hacer endpoint
+     objetoEncontrado =await familias.data.find(objet => objet.nombre_familia === familiaValue);
+     banderaAux=  validar(!objetoEncontrado,pagina,'La familia no corresponde',event);
+     if(!banderaAux){bandera=false};
+     if(objetoEncontrado){
+         idFamilia.value= objetoEncontrado.id_familia;
+         objetoEncontrado =await categorias.data.find(objet => objet.nombre_categoria === categoriaValue);
+         banderaAux=  validar(!objetoEncontrado,pagina,'La categoria no corresponde',event);
+         if(objetoEncontrado){idCategoria.value=objetoEncontrado.id_categoria}
+         if(!banderaAux){bandera=false};
+     }
     }
-    inputAProcedimiento.value="";
+    
+    if(bandera){
+
+         let nG={};
+         nG.nombreGenerico=aNombreValue;
+         nG.familia=parseInt(idFamilia.value);
+         nG.categoria=parseInt(idCategoria.value);
+         fechProtegidoPost('/agregarNombreGenerico',nG);
+    }
+    inputNombreGenericoNuevo.value="";
+    inputFamilia.value="";
+    inputCategoria.value="";
+    idCategoria.value="";
+    idFamilia.value="";
+    eliminarHijos(dlCategoria);
+    eliminarHijos(dlFamilia);
     } 
 
 async function agregarExamen(){

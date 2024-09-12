@@ -13,9 +13,20 @@ block content
                         option(value="agregarCategoria") Agregar Categoria
                         option(value="agregarFormaFarmaceutica") Agregar Forma Farmaceutica 
                         option(value="agregarPresentacion") Agregar Presentacion
-            #divAgregarNombreGenerico.ocultar 
-                lavel(for="agregarNombreGenerico") Nombre Generico Nuenvo
+            #divAgregarNombreGenerico.ocultar.form 
+                label(for="agregarNombreGenerico") Nombre Generico Nuenvo
                 input.limpiar(type="text",id="agregarNombreGenerico",autocomplete="of",placeHolder="Nombre Generico Nuevo")
+                br
+                label(for="familia") Nombre de laFamila
+                input.limpiar.ocultar(type="number",id="idFamilia",name="idFamilia",autocomplete="off")
+                input.limpiar(type="text", id="familia", name="familia",list="dlFamilia", autocomplete="off")
+                datalist#dlFamilia
+                br
+                label(for="categoria") Nombre de la Categoria
+                input.limpiar.ocultar(type="number",id="idCategoria",name="idCategoria",autocomplete="off")
+                input.limpiar(type="text", id="categoria" ,name="categoria",list="dlCategoria", autocomplete="off")
+                datalist#dlCategoria
+                br
                 button.boton(type="button",onclick='agregarNombreGenerico()') Agregar
             #divAgregarFamilia.ocultar 
                 lavel(for="agregarFamilia") Familia Nueva
@@ -41,16 +52,7 @@ block content
                         input.limpiar(type="text", id="nombreGenerico" ,name="nombreGenerico",autocomplete="off",list="dlNombreGenerico")
                         datalist#dlNombreGenerico
                         br
-                        label(for="familia") Nombre de laFamila
-                        input.limpiar.ocultar(type="number",id="idFamilia",name="idFamilia",autocomplete="off")
-                        input.limpiar(type="text", id="familia", name="familia",list="dlFamilia", autocomplete="off")
-                        datalist#dlFamilia
-                        br
-                        label(for="categoria") Nombre de la Categoria
-                        input.limpiar.ocultar(type="number",id="idCategoria",name="idCategoria",autocomplete="off")
-                        input.limpiar(type="text", id="categoria" ,name="categoria",list="dlCategoria", autocomplete="off")
-                        datalist#dlCategoria
-                        br
+                       
                         label(for="forma") Nombre de la Forma Farmaceutica
                         input.limpiar.ocultar(type="number",id="idForma",name="idForma",autocomplete="off")
                         input.limpiar(type="text", id="forma" ,name="forma",list="dlForma", autocomplete="off")
@@ -62,6 +64,7 @@ block content
                         datalist#dlPresentacion
                         br
                         input.boton(type="submit", value="Enviar")
+                   
             #divBuscarMedicamentos.ocultar
                     table#todosMediicamentos
                         thead#cabecera

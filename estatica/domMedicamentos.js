@@ -34,6 +34,7 @@ let divAFamilia=document.getElementById('divAgregarFamilia');
 let divACategoria=document.getElementById('divAgregarCategoria');
 let divAFornma=document.getElementById('divAgregarForma');
 let divAPresentacion=document.getElementById('divAgregarPresentacion');
+let inputNombreGenericoNuevo=document.getElementById('agregarNombreGenerico');
 let inputAPractica=document.getElementById('agregarPractica');
 let inputAProcedimiento=document.getElementById('agregarProcedimiento');
 let inputAExamen=document.getElementById('agregarExamen');
@@ -94,14 +95,12 @@ if(procedimientos.error){
                nombresGenericos=await traerNombresGenericos();
                formas=await traerFormas();
                presentaciones=await traerPresentaciones();
-               familias=await traerFamilias();
-               categorias=await traerCategorias();
+              
                console.log(formas);
                llenarDl(dlNombreGenerico,nombresGenericos.data,'nombre_generico');
                llenarDl(dlForma,formas.data,'nombre_forma');
                llenarDl(dlPresentacion,presentaciones.data,'nombre_presentacion');
-               llenarDl(dlFamilia,familias.data,'nombre_familia')
-               llenarDl(dlCategoria,categorias.data,'nombre_categoria');
+              
                
                mostrar(divCMedicamento);
                break;
@@ -143,6 +142,10 @@ if(procedimientos.error){
                 break;
           case 'agregarNombreGenerico':
                fOcultar();
+               familias=await traerFamilias();
+               categorias=await traerCategorias();
+               llenarDl(dlFamilia,familias.data,'nombre_familia')
+               llenarDl(dlCategoria,categorias.data,'nombre_categoria');
                mostrar(divANombreGenerico);
                break;
           case 'agregarFamilia':
@@ -215,8 +218,7 @@ formularioMedicamentoCrear.addEventListener('submit',async function(event) {
      event.preventDefault(); 
      bandera=true;
      let nombreValue=nombreGenerico.value;
-     let categoriaValue=inputCategoria.value;
-     let familiaValue=inputFamilia.value;
+     
      let formaValue=inputForma.value;
      let presentacionValue=inputPresentacion.value;
      let objetoEncontrado ;
@@ -241,13 +243,7 @@ formularioMedicamentoCrear.addEventListener('submit',async function(event) {
           idPresentacion.value= objetoEncontrado.id_presentacion;
           //console.log(idExamen.value);
      }
-      objetoEncontrado =await familias.data.find(objet => objet.nombre_familia === familiaValue);
-
-      banderaAux=  validar(!objetoEncontrado,pagina,'La familia no corresponde',event);
-      if(!banderaAux){bandera=false};
-      if(objetoEncontrado){
-          idFamilia.value= objetoEncontrado.id_familia;
-     }
+     
      
      
      if(bandera){

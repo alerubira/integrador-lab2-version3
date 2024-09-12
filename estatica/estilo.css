@@ -96,6 +96,13 @@
     margin-right: 5px; /* Espacio entre las etiquetas y los campos de entrada */
     padding: 0.50rem 0; /* 0.75rem arriba y abajo, 0 en los lados */
 }
+label {
+  display: inline-block;
+  width: 200px; /* Ancho deseado para las etiquetas */
+  text-align: right; /* Alinea el texto de las etiquetas a la derecha */
+  margin-right: 5px; /* Espacio entre las etiquetas y los campos de entrada */
+  padding: 0.50rem 0; /* 0.75rem arriba y abajo, 0 en los lados */
+}
 .ocultar{
     display: none;
 }
