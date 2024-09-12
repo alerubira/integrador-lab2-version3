@@ -111,9 +111,9 @@ return await(consulta1(query,domicilio,idMedico));
 }*/
 
 
-async function crearPrestacion(Prestacion) {
-    let query='INSERT INTO `prestacion`(`id_practica`, `id_procedimiento`, `id_examen`,`estado_prestacion`) values(?,?,?,?)'
-    let respuesta=await consulta1(query,Prestacion.idPractica,Prestacion.idProcedimiento,Prestacion.idExamen,true);
+async function crearMedicamento(medicamento) {
+    let query='INSERT INTO `medicamento`(`id_nombre_generico`, `id_forma`, `id_presentacion`,`id_familia`,`id_categoria`,`estado_prestacion`) values(?,?,?,?,?,?)'
+    let respuesta=await consulta1(query,medicamento.idNombreGenerico,medicamento.idForma,medicamento.idPresentacion,medicamento.idFamilia,medicamento.idCategoria,true);
     //console.log(respuesta);
    return respuesta;
 
@@ -185,4 +185,4 @@ async function prestacionDataAgregar(objet,agregar){
 
 
 
-export{medicamentoDatatodos,medicamentoDataModificar,crearPrestacion,prestacionDataAgregar};
+export{medicamentoDatatodos,medicamentoDataModificar,crearMedicamento,prestacionDataAgregar};

@@ -6,7 +6,9 @@ let dlNombreGenerico=document.getElementById('dlNombreGenerico');
 let dlCategoria=document.getElementById('dlCategoria');
 let dlFamilia=document.getElementById('dlFamilia');
 let dlNuevaPresentacion=document.getElementById('dlNuevaPresentacion');
-let idPractica=document.getElementById('idPractica');
+let idNombreGenerico=document.getElementById('idNombreGenerico');
+let idForma=document.getElementById('idForma');
+let idPresentacion=document.getElementById('idPresentacion');
 let idCategoria=document.getElementById('idCategoria');
 let idProcedimiento=document.getElementById('idProcedimiento');
 let inputCategoria=document.getElementById('categoria');
@@ -213,37 +215,45 @@ formularioMedicamentoCrear.addEventListener('submit',async function(event) {
      event.preventDefault(); 
      bandera=true;
      let nombreValue=nombreGenerico.value;
-     let examenValue=inputCategoria.value;
-     let procedimientoValue=inputFamilia.value;
+     let categoriaValue=inputCategoria.value;
+     let familiaValue=inputFamilia.value;
+     let formaValue=inputForma.value;
+     let presentacionValue=inputPresentacion.value;
      let objetoEncontrado ;
-    //banderaAux= validar(nombreValue.length<1||nombreValue.length>28||!/^[a-zA-Z]+$/.test(nombreValue),pagina,"El nombre es obligatorio,debe contener menos de 30 letras unicamente",event)
-     objetoEncontrado=await formas.data.find(ob=>ob.nombre_practica===nombreValue);
-     banderaAux=validar(!objetoEncontrado,pagina,'La practica no corresponde',event);
+     objetoEncontrado=await nombresGenericos.data.find(non=>non.nombre_generico===nombreValue);
+     banderaAux=validar(!objetoEncontrado,pagina,'Eñ nombre generico no corresponde');
      if(!banderaAux){bandera=false};
      if(objetoEncontrado){
-          idPractica.value=objetoEncontrado.id_practica;
+          idNombreGenerico.value=objetoEncontrado.id_nombre_generico;
+     }
+    //banderaAux= validar(nombreValue.length<1||nombreValue.length>28||!/^[a-zA-Z]+$/.test(nombreValue),pagina,"El nombre es obligatorio,debe contener menos de 30 letras unicamente",event)
+     objetoEncontrado=await formas.data.find(ob=>ob.nombre_forma===formaValue);
+     banderaAux=validar(!objetoEncontrado,pagina,'La forma no corresponde',event);
+     if(!banderaAux){bandera=false};
+     if(objetoEncontrado){
+          idForma.value=objetoEncontrado.id_forma;
      } 
-      objetoEncontrado = await presentaciones.data.find(objeto => objeto.nombre_examen === examenValue);
-     banderaAux= validar(!objetoEncontrado,pagina,'El examen no corresponde',event);
+      objetoEncontrado = await presentaciones.data.find(objeto => objeto.nombre_presentacion === presentacionValue);
+     banderaAux= validar(!objetoEncontrado,pagina,'La presentacion no corresponde',event);
      if(!banderaAux){bandera=false};
      if(objetoEncontrado){
           //console.log(objetoEncontrado.id_examen);
-          idCategoria.value= objetoEncontrado.id_examen;
+          idPresentacion.value= objetoEncontrado.id_presentacion;
           //console.log(idExamen.value);
      }
-      objetoEncontrado =await familias.data.find(objet => objet.nombre_procedimiento === procedimientoValue);
+      objetoEncontrado =await familias.data.find(objet => objet.nombre_familia === familiaValue);
 
-      banderaAux=  validar(!objetoEncontrado,pagina,'El procedimiento no corresponde',event);
+      banderaAux=  validar(!objetoEncontrado,pagina,'La familia no corresponde',event);
       if(!banderaAux){bandera=false};
       if(objetoEncontrado){
-          idProcedimiento.value= objetoEncontrado.id_procedimiento;
+          idFamilia.value= objetoEncontrado.id_familia;
      }
      
      
      if(bandera){
-         let prestacionCreado={idPractica:idPractica.value,idProcedimiento:idProcedimiento.value,idExamen:idCategoria.value};
+         let medicamentoCreado={idNombreGenerico:idNombreGenerico.value,idForma:idForma.value,idPresentacion:idPresentacion.value,idFamilia:idFamilia.value,idCategoria:idCategoria.value};
        
-         fechProtegidoPost('/crearPrestacion',prestacionCreado);
+         fechProtegidoPost('/crearMedicamento',medicamentoCreado);
           /*const token = localStorage.getItem('token');
     
     try {

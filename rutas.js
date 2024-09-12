@@ -139,6 +139,9 @@ ruta.get('/examen',verificarToken,async(req,res)=>{
  ruta.get('/categorias',verificarToken,async(req,res)=>{
   manejadorMedicamentos(req,res,'categorias');
  })
+ ruta.post('/crearMedicamento',verificarToken,async(req,res)=>{
+manejadorMedicamentos(req,res,'crearMedicamento');
+ })
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
    // Obtener el ID del Profesional enviado desde el formulario
  const idProfecional = req.body.idAdministrativoR;

@@ -34,7 +34,7 @@ block content
                 input.limpiar(type="text",id="agregarPresentacion",autocomplete="of",placeHolder="Nueva Presentacion")
                 button.boton(type="button",onclick='agregarPresentacion()') Agregar                   
             #divCrearMedicamento.ocultar.crear 
-                    form#formularioMedicamentoCrear.form(action="/crearMedico", method="POST")
+                    form#formularioMedicamentoCrear.form(action="/crearMedicamento", method="POST")
                         
                         label(for="nombreGenerico") Nombre Generico
                         input.limpiar.ocultar(type="number",id="idNombreGenerico",autocomplete="off")

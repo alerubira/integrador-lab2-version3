@@ -1,6 +1,6 @@
 import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { encabezado } from "../rutas.js";
-import { medicamentoDatatodos,medicamentoDataModificar } from "../modelo/medicamentoData.js";
+import { medicamentoDatatodos,medicamentoDataModificar,crearMedicamento } from "../modelo/medicamentoData.js";
 //import { medicoDatatodos,medicoDataModificar,crearMedico } from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 //import { Medico } from "../modelo/clasesEntidad.js";
@@ -63,26 +63,30 @@ async function manejadorMedicamentos(req,res,objeto){
         // console.log(aux);
          res.send(aux);  
          break;      
-     case 'crearPrestacion':
+     case 'crearMedicamento':
         objet = req.body;
-        if(!existeBd(objet.idPractica,'practica','id_practica')){
+        if(!existeBd(objet.idNombreGenerico,'nombre_generico','id_nombre_generico')){
             return res.status(500).send(error);
         }
-        if(!existeBd(objet.idProcedimiento,'procedimiento','id_procedimiento')){
+        if(!existeBd(objet.idForma,'forma_farmaceutica','id_forma')){
             return res.status(500).send(error);
         }
-        if(!existeBd(objet.idExamen,'examen','id_examen')){
+        if(!existeBd(objet.idPresentacion,'presentacion','id_presentacion')){
             return res.status(500).send(error);
         }
-          let suces=await crearPrestacion(objet);
-          console.log(suces);
-            if(suces.error){
-                //console.log(`suces error : ${suces.error}`);
-                return res.status(500).send(suces.error);
-            }else{
-                //let estadoSuces=suces.success;
-                return res.send(suces);
-                   }
+        if(!existeBd(objet.idFamilia,'familia','id_familia')){
+            return res.status(500).send(error);
+        }
+        if(!existeBd(objet.idCategoria,'categoria','id_categoria')){
+            return res.status(500).send(error);
+        }    
+          let suces=await crearMedicamento(objet);
+          if (suces instanceof Error) {
+            console.error("Error en la consulta sql:", suces.message);
+            return res.status(500).json({ message: suces.message }); // Devuelve un error HTTP 500 al cliente
+          }else{
+            return suces;
+          }
           
             break;
       
