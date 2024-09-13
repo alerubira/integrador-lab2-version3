@@ -5,6 +5,7 @@ import { consulta1 ,existeBd,pool} from "./conexxionBD.js";
 //import { buscarIdPorDni } from './PersonaData.js';
 let medicamentos;
 let query;
+let respuesta;
 async function medicamentoDataModificar(modificar,id,modificante){
    try{
     switch(modificar){
@@ -112,8 +113,8 @@ return await(consulta1(query,domicilio,idMedico));
 
 
 async function crearMedicamento(medicamento) {
-    let query='INSERT INTO `medicamento`(`id_nombre_generico`, `id_forma`, `id_presentacion`,`id_familia`,`id_categoria`,`estado_prestacion`) values(?,?,?,?,?,?)'
-    let respuesta=await consulta1(query,medicamento.idNombreGenerico,medicamento.idForma,medicamento.idPresentacion,medicamento.idFamilia,medicamento.idCategoria,true);
+     query='INSERT INTO `medicamento`(`id_nombre_generico`, `id_forma`, `id_presentacion`,`id_familia`,`id_categoria`,`estado_prestacion`) values(?,?,?,?,?,?)'
+     respuesta=await consulta1(query,medicamento.idNombreGenerico,medicamento.idForma,medicamento.idPresentacion,medicamento.idFamilia,medicamento.idCategoria,true);
     //console.log(respuesta);
    return respuesta;
 
@@ -159,9 +160,15 @@ async function crearMedicamento(medicamento) {
     }*/
 }
 
-async function prestacionDataAgregar(objet,agregar){
+async function medicamentoDataAgregar(objet,agregar){
     try{
         switch(agregar){
+         case 'nombreGenerico':
+            console.log(objet);
+            query='INSERT INTO `nombre_generico`( `nombre_generico`, `id_familia`,`id_categoria`,`estado_nombre_generico`) values(?,?,?,?)';
+            respuesta=await consulta1(query,objet.nombreGenerico,objet.idFamilia,objet.idCategoria,true);
+            return respuesta;
+            break;   
          case 'practica':
             query='INSERT INTO `practica`( `nombre_practica`) VALUES (?)';
             return await consulta1(query,objet);
@@ -185,4 +192,4 @@ async function prestacionDataAgregar(objet,agregar){
 
 
 
-export{medicamentoDatatodos,medicamentoDataModificar,crearMedicamento,prestacionDataAgregar};
+export{medicamentoDatatodos,medicamentoDataModificar,crearMedicamento,medicamentoDataAgregar};

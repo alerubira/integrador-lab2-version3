@@ -106,6 +106,11 @@ const usuarioClaveY= yup.object().shape({
     .max(28,'El nombre de la Especialidad debe tener como maximo 28 caracteres')
     .required('El nombre de la Especialidad es obligatorio')
  })  
+ const nombreGenericoY=yup.object().shape({
+    nombreGenerico:yup.string()
+    .required('El Nombre es Oblogatorio')
+    .max(38,'El nombre no debe superar los 38 caracteres')
+ })
 
 //console.log(medicamentos);
 //console.log(profecionales);
@@ -149,7 +154,11 @@ async function verificar(objeto,nombre){
              case 'nombreEspecialidad':
                     aux=await verificarY(objeto,especialidadY);
                     return aux;
-                    break       
+                    break
+             case 'nombreGenerico':
+                   aux=await verificarY(objeto,nombreGenericoY);
+                   return aux;
+                break;              
              default:
        }
        

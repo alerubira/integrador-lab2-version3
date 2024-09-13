@@ -137,7 +137,8 @@ async function agregarNombreGenerico(){
     let aNombreValue=inputNombreGenericoNuevo.value;
     let categoriaValue=inputCategoria.value;
     let familiaValue=inputFamilia.value;
-    let a=validar(aNombreValue.length<1||aNombreValue.length>28,pagina,'El Nombre es obligatoria y no debe superar los 28 caracteres');
+    console.log(aNombreValue);
+    let a=validar(aNombreValue.length<1||aNombreValue.length>38,pagina,'El Nombre es obligatoria y no debe superar los 28 caracteres');
     if(a){
      objetoEncontrado =await familias.data.find(objet => objet.nombre_familia === familiaValue);
      banderaAux=  validar(!objetoEncontrado,pagina,'La familia no corresponde',event);
@@ -149,14 +150,14 @@ async function agregarNombreGenerico(){
          if(objetoEncontrado){idCategoria.value=objetoEncontrado.id_categoria}
          if(!banderaAux){bandera=false};
      }
-    }
+    }else{bandera=false};
     
     if(bandera){
 
          let nG={};
          nG.nombreGenerico=aNombreValue;
-         nG.familia=parseInt(idFamilia.value);
-         nG.categoria=parseInt(idCategoria.value);
+         nG.idFamilia=parseInt(idFamilia.value);
+         nG.idCategoria=parseInt(idCategoria.value);
          fechProtegidoPost('/agregarNombreGenerico',nG);
     }
     inputNombreGenericoNuevo.value="";
@@ -166,6 +167,7 @@ async function agregarNombreGenerico(){
     idFamilia.value="";
     eliminarHijos(dlCategoria);
     eliminarHijos(dlFamilia);
+    fOcultar();
     } 
 
 async function agregarExamen(){

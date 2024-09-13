@@ -1,6 +1,6 @@
 import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { encabezado } from "../rutas.js";
-import { medicamentoDatatodos,medicamentoDataModificar,crearMedicamento } from "../modelo/medicamentoData.js";
+import { medicamentoDatatodos,medicamentoDataModificar,crearMedicamento,medicamentoDataAgregar } from "../modelo/medicamentoData.js";
 //import { medicoDatatodos,medicoDataModificar,crearMedico } from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 //import { Medico } from "../modelo/clasesEntidad.js";
@@ -8,7 +8,7 @@ import {  existeBd } from "../modelo/conexxionBD.js";
 let estadoSuces;
 let mensajeExito;
 let objet;
-let e1,e2,errorMessage;
+let e1,e2,errorMessage,suces;
 async function manejadorMedicamentos(req,res,objeto){
     try {
         
@@ -62,25 +62,40 @@ async function manejadorMedicamentos(req,res,objeto){
         aux=await medicamentoDatatodos('categorias');
         // console.log(aux);
          res.send(aux);  
-         break;      
-     case 'crearMedicamento':
-        objet = req.body;
-        if(!existeBd(objet.idNombreGenerico,'nombre_generico','id_nombre_generico')){
-            return res.status(500).send(error);
-        }
-        if(!existeBd(objet.idForma,'forma_farmaceutica','id_forma')){
-            return res.status(500).send(error);
-        }
-        if(!existeBd(objet.idPresentacion,'presentacion','id_presentacion')){
-            return res.status(500).send(error);
+         break;  
+    case 'crearNombreGenerico':
+        objet=req.body;
+        let a={};
+         a.nombreGenerico=objet.nombreGenerico;
+        aux=await verificar(a,'nombreGenerico');
+        if(aux.errors){
+            return res.status(500).send(aux.errors);
         }
         if(!existeBd(objet.idFamilia,'familia','id_familia')){
             return res.status(500).send(error);
         }
         if(!existeBd(objet.idCategoria,'categoria','id_categoria')){
             return res.status(500).send(error);
-        }    
-          let suces=await crearMedicamento(objet);
+        } 
+         suces=await medicamentoDataAgregar(objet,'nombreGenerico');
+        if (suces instanceof Error) {
+          console.error("Error en la consulta sql:", suces.message);
+          return res.status(500).json({ message: suces.message }); // Devuelve un error HTTP 500 al cliente
+        }else{
+          return suces;
+        }
+        break;         
+     case 'crearMedicamento':
+        objet = req.body;
+       
+        if(!existeBd(objet.idForma,'forma_farmaceutica','id_forma')){
+            return res.status(500).send(error);
+        }
+        if(!existeBd(objet.idPresentacion,'presentacion','id_presentacion')){
+            return res.status(500).send(error);
+        }
+           
+           suces=await crearMedicamento(objet);
           if (suces instanceof Error) {
             console.error("Error en la consulta sql:", suces.message);
             return res.status(500).json({ message: suces.message }); // Devuelve un error HTTP 500 al cliente
