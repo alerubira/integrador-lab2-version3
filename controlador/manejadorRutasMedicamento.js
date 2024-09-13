@@ -4,7 +4,8 @@ import { medicamentoDatatodos,medicamentoDataModificar,crearMedicamento,medicame
 //import { medicoDatatodos,medicoDataModificar,crearMedico } from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 //import { Medico } from "../modelo/clasesEntidad.js";
-import {  existeBd } from "../modelo/conexxionBD.js";
+import {  existeBd,existeNombreBd } from "../modelo/conexxionBD.js";
+import { retornarError } from "./funsionesControlador.js";
 let estadoSuces;
 let mensajeExito;
 let objet;
@@ -71,18 +72,20 @@ async function manejadorMedicamentos(req,res,objeto){
         if(aux.errors){
             return res.status(500).send(aux.errors);
         }
-        if(!existeBd(objet.idFamilia,'familia','id_familia')){
-            return res.status(500).send(error);
-        }
-        if(!existeBd(objet.idCategoria,'categoria','id_categoria')){
-            return res.status(500).send(error);
-        } 
+        aux=await existeNombreBd(objet.nombreGenerico,'nombre_generico','nombre_generico');
+        if(aux){return retornarError(res,'el nombre generico del madicamento ya existe , coloque uno distinto') }
+     
+        aux=await existeBd(objet.idFamilia,'familia','id_familia')
+        if(!aux){return retornarError(res,'La familiano existe en la base de datos')}
+        aux=await existeBd(objet.idCategoria,'categoria','id_categoria');   
+        if(!aux){return retornarError(res,'La categoria no existe en la base de datos')}
+            
          suces=await medicamentoDataAgregar(objet,'nombreGenerico');
         if (suces instanceof Error) {
           console.error("Error en la consulta sql:", suces.message);
           return res.status(500).json({ message: suces.message }); // Devuelve un error HTTP 500 al cliente
         }else{
-          return suces;
+          return res.send(suces);
         }
         break;         
      case 'crearMedicamento':
@@ -144,23 +147,24 @@ async function manejadorMedicamentos(req,res,objeto){
             return res.status(400).send({message:errorMessage});
             }
        break;
-       case 'agregarPractica':
+       case 'agregarFamilia':
            objet=req.body;
            aux=await verificar(objet,'nombrePractica');
-          // console.log(aux.ValidationError);
            if(aux.errors){
             return res.status(500).send(aux.errors);
-           }else{
-            aux=await prestacionDataAgregar(objet.nombrePractica,'practica');
+           }
+           aux=await existeNombreBd(objet.nombreFamilia,'familia','nombre_familia');
+           if(aux){return retornarError(res,'el nombre de la Famili ya existe , coloque uno distinto') }
+            aux=await medicamentoDataAgregar(objet.nombreFamila,'familia');
             if (aux instanceof Error) {
                 console.error("Error en la consulta sql:", aux.message);
                 return res.status(500).json({ message: aux.message }); // Devuelve un error HTTP 500 al cliente
      }
             return res.send(aux);
-           }
+           
         break;
-       case 'agregarProcedimiento':
-            objet=req.body;
+       case 'agregarCategoria':
+            objet=req.body;//seguir agregando verificaciones
             aux=await verificar(objet,'nombreProcedimiento');
           // console.log(aux.errors);
             if(aux.errors){
@@ -174,7 +178,7 @@ async function manejadorMedicamentos(req,res,objeto){
               return res.send(aux);
             }
         break;
-       case 'agregarExamen':
+       case 'agregarForma':
             objet=req.body;
             aux=await verificar(objet,'nombreExamen');
             //console.log(aux);
@@ -190,7 +194,24 @@ async function manejadorMedicamentos(req,res,objeto){
                  }
                 
 
-        break;                    
+        break;      
+        case 'agregarPresentacion':
+            objet=req.body;
+            aux=await verificar(objet,'nombreExamen');
+            //console.log(aux);
+            if(aux.errors){
+                return res.status(500).send(aux.errors);
+            }else{
+                aux=await prestacionDataAgregar(objet.nombreExamen,'examen');
+                 if (aux instanceof Error) {
+                            console.error("Error en la consulta sql:", aux.message);
+                            return res.status(500).json({ message: aux.message }); // Devuelve un error HTTP 500 al cliente
+                 }
+                return res.send(aux);
+                 }
+                
+
+        break;                  
     }
 }catch (error) {
     console.error(`Error al Procesar el ${objeto} en Medicamentos`, error);

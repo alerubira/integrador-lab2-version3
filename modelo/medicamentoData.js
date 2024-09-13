@@ -164,23 +164,26 @@ async function medicamentoDataAgregar(objet,agregar){
     try{
         switch(agregar){
          case 'nombreGenerico':
-            console.log(objet);
             query='INSERT INTO `nombre_generico`( `nombre_generico`, `id_familia`,`id_categoria`,`estado_nombre_generico`) values(?,?,?,?)';
             respuesta=await consulta1(query,objet.nombreGenerico,objet.idFamilia,objet.idCategoria,true);
             return respuesta;
             break;   
-         case 'practica':
-            query='INSERT INTO `practica`( `nombre_practica`) VALUES (?)';
+         case 'familia':
+            query='INSERT INTO `familia`( `nombre_familia`) VALUES (?)';
             return await consulta1(query,objet);
             break;   
-         case 'examen':
-             query='INSERT INTO `examen`( `nombre_examen`) VALUES (?)';
+         case 'categoria':
+             query='INSERT INTO `categoria`( `nombre_categoria`) VALUES (?)';
             return await consulta1(query,objet);
             break
-         case 'procedimiento':
-            query='INSERT INTO `procedimiento`(`nombre_procedimiento`) VALUES (?)';
+         case 'forma':
+            query='INSERT INTO `forma_farmaceutica`(`nombre_forma`) VALUES (?)';
             return await consulta1(query,objet);
             break
+        case 'presentacion':
+            query='INSERT INTO `presentacion`(`nombre_presentacion`) VALUES (?)';
+            return await consulta1(query,objet);
+            break;    
          
           }
     }catch(error){

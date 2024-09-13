@@ -88,8 +88,33 @@ try {
     return false;
 }
 }
+async function existeNombreBd(nombre,tabla,columna){
+    
+try {
+    // Ejecuta el procedimiento almacenado
+    //await consulta1('CALL VerificarEstaBd(?, ?, ?, @existe)',nombre,tabla ,columna);
+    await consulta1('CALL VerificarEstaNombreBD(?, ?, ?, @resultado)',nombre,tabla,columna);
+   /* CALL VerificarEstaNombreBD('valor_a_buscar', 'nombre_de_tabla', 'nombre_de_columna', @resultado);
+SELECT @resultado; -- Para ver el resultado*/
 
-export {pool,consulta1,existeBd} ;
+    // Obtiene el valor del parámetro de salida
+    const result = await consulta1('SELECT @resultado AS existe');
+     // Verifica que el resultado esté en el formato esperado
+     if (result && result.length > 0) {
+        const existe = result[0].existe;
+        return existe === 1;
+    } else {
+        return false;
+    }
+    
+
+} catch (err) {
+    console.error('Error al ejecutar el procedimiento almacenado,existe nombre :', err.message);
+    return false;
+}
+}
+
+export {pool,consulta1,existeBd,existeNombreBd} ;
 
 
 
