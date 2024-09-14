@@ -170,16 +170,50 @@ async function agregarNombreGenerico(){
     fOcultar();
     } 
 
-async function agregarExamen(){
-    let aExamenValue=inputAExamen.value;
-    let a=validar(aExamenValue.length<1||aExamenValue.length>28,pagina,'El Examen es obligatoria y no debe superar los 28 caracteres');
+async function agregarFamilia(){
+    let aFamiliaValue=inputNuevaFamilia.value;
+    let a=validar(aFamiliaValue.length<1||aFamiliaValue.length>28,pagina,'La Familia es obligatoria y no debe superar los 28 caracteres');
     if(a){
          let b={};
-         b.nombreExamen=aExamenValue;
-         fechProtegidoPost('/agregarExamen',b);//hacer endpoint
+         b.nombreFamilia=aFamiliaValue;
+         fechProtegidoPost('/agregarFamilia',b);
     }
-    inputAExamen.value="";
+    inputNuevaFamilia.value="";
+fOcultar();
     } 
+async function agregarCategoria(){
+     let aCategoriaValue=inputNuevaCategoria.value;
+     let a=validar(aCategoriaValue.length<1||aCategoriaValue.length>28,pagina,'La Categoria es obligatoria y no debe superar los 28 caracteres');
+     if(a){
+          let b={};
+          b.nombreCategoria=aCategoriaValue;
+          fechProtegidoPost('/agregarCategoria',b);
+     }
+     inputNuevaCategoria.value="";
+ fOcultar();
+     } 
+     async function agregarForma(){
+          let aFormaValue=inputNuevaForma.value;
+          let a=validar(aFormaValue.length<1||aFormaValue.length>28,pagina,'La Forma es obligatoria y no debe superar los 28 caracteres');
+          if(a){
+               let b={};
+               b.nombreForma=aFormaValue;
+               fechProtegidoPost('/agregarForma',b);
+          }
+          inputNuevaForma.value="";
+      fOcultar();
+          } 
+          async function agregarPresentacion(){
+               let aPresentacionValue=inputNuevaPresentacion.value;
+               let a=validar(aPresentacionValue.length<1||aPresentacionValue.length>28,pagina,'La Familia es obligatoria y no debe superar los 28 caracteres');
+               if(a){
+                    let b={};
+                    b.nombreFamilia=aPresentacionValue;
+                    fechProtegidoPost('/agregarPresentacion',b);
+               }
+               inputNuevaPresentacion.value="";
+           fOcultar();
+               } 
 
 
        

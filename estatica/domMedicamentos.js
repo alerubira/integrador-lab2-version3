@@ -35,15 +35,13 @@ let divACategoria=document.getElementById('divAgregarCategoria');
 let divAFornma=document.getElementById('divAgregarForma');
 let divAPresentacion=document.getElementById('divAgregarPresentacion');
 let inputNombreGenericoNuevo=document.getElementById('agregarNombreGenerico');
-let inputAPractica=document.getElementById('agregarPractica');
-let inputAProcedimiento=document.getElementById('agregarProcedimiento');
-let inputAExamen=document.getElementById('agregarExamen');
 let divNuevaFamilia=document.getElementById('divNuevaFamilia');
 let inputNuevaFamilia=document.getElementById('nuevaFamilia');
 let dlNuevaFamilia=document.getElementById('dlNuevaFamilia');
 let divNuevaCategoria=document.getElementById('divNuevaCategoria');
 let inputNuevaCategoria=document.getElementById('nuevaCategoria');
 let dlNuevaCategoria=document.getElementById('dlNuevaCategoria');
+//reestructura nombres de input div y datalist crear y modificar
 let formas;
 let presentaciones;
 let nombresGenericos;

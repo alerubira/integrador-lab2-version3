@@ -145,6 +145,18 @@ manejadorMedicamentos(req,res,'crearMedicamento');
  ruta.post('/agregarNombreGenerico',verificarToken,async(req,res)=>{
   manejadorMedicamentos(req,res,'crearNombreGenerico');
  })
+ ruta.post('/agregarFamilia',verificarToken,async(req,res)=>{
+  manejadorMedicamentos(req,res,'agregarFamilia');
+ })
+ ruta.post('/agregarCategoria',verificarToken,async(req,res)=>{
+  manejadorMedicamentos(req,res,'agregarCategoria');
+ })
+ ruta.post('/agregarForma',verificarToken,async(req,res)=>{
+  manejadorMedicamentos(req,res,'agregarForma');
+ })
+ ruta.post('/agregarPresentacion',verificarToken,async(req,res)=>{
+  manejadorMedicamentos(req,res,'agregarPresentacion');
+ })
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
    // Obtener el ID del Profesional enviado desde el formulario
  const idProfecional = req.body.idAdministrativoR;

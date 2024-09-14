@@ -29,20 +29,24 @@ block content
                 br
                 button.boton(type="button",onclick='agregarNombreGenerico()') Agregar
             #divAgregarFamilia.ocultar 
-                lavel(for="agregarFamilia") Familia Nueva
-                input.limpiar(type="text",id="agregarFamilia",autocomplete="of",placeHolder="Nueva Familia")
+                lavel(for="nuevaFamilia") Familia Nueva
+                input.limpiar(type="text",id="nuevaFamilia",autocomplete="of",placeHolder="Nueva Familia")
+                br
                 button.boton(type="button",onclick='agregarFamilia()') Agregar
             #divAgregarCategoria.ocultar
-                lavel(for="agregarCategoria") Categoria Nueva
-                input.limpiar(type="text",id="agregarCategoria",autocomplete="of",placeHolder="Nueva Categoria")
+                lavel(for="nuevaCategoria") Categoria Nueva
+                input.limpiar(type="text",id="nuevaCategoria",autocomplete="of",placeHolder="Nueva Categoria")
+                br
                 button.boton(type="button",onclick='agregarCategoria()') Agregar 
             #divAgregarForma.ocultar
-                lavel(for="agregarForma") Forma Farmaceutica Nueva
-                input.limpiar(type="text",id="agregarForma",autocomplete="of",placeHolder="Nueva Forma")
+                lavel(for="nuevaForma") Forma Farmaceutica Nueva
+                input.limpiar(type="text",id="nuevaForma",autocomplete="of",placeHolder="Nueva Forma")
+                br
                 button.boton(type="button",onclick='agregarForma()') Agregar
             #divAgregarPresentacion.ocultar
-                lavel(for="agregarPresentacion") Presentacion Nueva
-                input.limpiar(type="text",id="agregarPresentacion",autocomplete="of",placeHolder="Nueva Presentacion")
+                lavel(for="nuevaPresentacion") Presentacion Nueva
+                input.limpiar(type="text",id="nuevaPresentacion",autocomplete="of",placeHolder="Nueva Presentacion")
+                br
                 button.boton(type="button",onclick='agregarPresentacion()') Agregar                   
             #divCrearMedicamento.ocultar.crear 
                     form#formularioMedicamentoCrear.form(action="/crearMedicamento", method="POST")

@@ -111,6 +111,27 @@ const usuarioClaveY= yup.object().shape({
     .required('El Nombre es Oblogatorio')
     .max(38,'El nombre no debe superar los 38 caracteres')
  })
+ const nombreFamiliaY=yup.object().shape({
+    nombreGenerico:yup.string()
+    .required('El Nombre es Oblogatorio')
+    .max(28,'El nombre no debe superar los 28 caracteres')
+ })
+ const nombreCategoriaY=yup.object().shape({
+    nombreGenerico:yup.string()
+    .required('El Nombre es Oblogatorio')
+    .max(28,'El nombre no debe superar los 28 caracteres')
+ })
+ const nombreFormaY=yup.object().shape({
+    nombreGenerico:yup.string()
+    .required('El Nombre es Oblogatorio')
+    .max(28,'El nombre no debe superar los 28 caracteres')
+ })
+ const nombrePresentacionY=yup.object().shape({
+    nombreGenerico:yup.string()
+    .required('El Nombre es Oblogatorio')
+    .max(28,'El nombre no debe superar los 28 caracteres')
+ })
+ 
 
 //console.log(medicamentos);
 //console.log(profecionales);
@@ -158,7 +179,23 @@ async function verificar(objeto,nombre){
              case 'nombreGenerico':
                    aux=await verificarY(objeto,nombreGenericoY);
                    return aux;
-                break;              
+                break; 
+            case 'nombreFamilia':
+                   aux=await verificarY(objeto,nombreFamiliaY);
+                   return aux;
+                break;
+            case 'nombreCategoria':
+                   aux=await verificarY(objeto,nombreCategoriaY);
+                   return aux;
+                break;
+            case 'nombreForma':
+                   aux=await verificarY(objeto,nombreFormaY);
+                   return aux;
+                break;
+            case 'nombrePresentacion':
+                   aux=await verificarY(objeto,nombrePresentacionY);
+                   return aux;
+                break;                             
              default:
        }
        
