@@ -41,6 +41,11 @@ let dlNuevaFamilia=document.getElementById('dlNuevaFamilia');
 let divNuevaCategoria=document.getElementById('divNuevaCategoria');
 let inputNuevaCategoria=document.getElementById('nuevaCategoria');
 let dlNuevaCategoria=document.getElementById('dlNuevaCategoria');
+let inputANombreGenerico=document.getElementById('agregarNombreGenerico');
+let inputAFamilia=document.getElementById('agregarFamilia');
+let inputACategoria=document.getElementById('agregarCategoria');
+let inputAForma=document.getElementById('agregarForma');
+let inputAPresentacion=document.getElementById('agregarPresentacion');
 //reestructura nombres de input div y datalist crear y modificar
 let formas;
 let presentaciones;
@@ -93,8 +98,6 @@ if(procedimientos.error){
                nombresGenericos=await traerNombresGenericos();
                formas=await traerFormas();
                presentaciones=await traerPresentaciones();
-              
-               console.log(formas);
                llenarDl(dlNombreGenerico,nombresGenericos.data,'nombre_generico');
                llenarDl(dlForma,formas.data,'nombre_forma');
                llenarDl(dlPresentacion,presentaciones.data,'nombre_presentacion');
@@ -241,44 +244,8 @@ formularioMedicamentoCrear.addEventListener('submit',async function(event) {
           idPresentacion.value= objetoEncontrado.id_presentacion;
           //console.log(idExamen.value);
      }
-     
-     
-     
-     if(bandera){
-         let medicamentoCreado={idNombreGenerico:idNombreGenerico.value,idForma:idForma.value,idPresentacion:idPresentacion.value,idFamilia:idFamilia.value,idCategoria:idCategoria.value};
-       
+      if(bandera){
+         let medicamentoCreado={idNombreGenerico:parseInt(idNombreGenerico.value),idForma:parseInt(idForma.value),idPresentacion:parseInt(idPresentacion.value)};
          fechProtegidoPost('/crearMedicamento',medicamentoCreado);
-          /*const token = localStorage.getItem('token');
-    
-    try {
-      const response = await fetch('/crearMedico', {
-        method: 'post',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json' // Este encabezado es necesario para enviar JSON
-        },
-        body:JSON.stringify({dniProfecional:dniValue,nombreProfecional:nombreValue,apellidoProfecional:apellidoValue
-          ,idProfecion:idProfecion.value,idEspecialidad:idEspecialidad.value,domicilioProfecional:domicilioValue
-          ,refepsProfecional:refepsValue,matriculaProfecional:matriculaValue,usuarioProvisorio:usuarioValue
-          ,claveProvisoria:claveValue,palabraClave:palabraClaveValue,nivelAutorizacion:nivelValue
-        })
-        
-      });
-      
-      if (response.ok) {
-        const responseBody = await response.json();
-        cartelExito(pagina,'El medico fue crgado con exito');
-        console.log(responseBody);
-        limpiarCampos(limpiar);
-        fOcultar();
-      } else {
-        const errorData = await response.json();
-        console.log(errorData.message);
-        alerta(pagina,`Hubo un inconveniente al cargar el medico: ${errorData.message}`);
-      }
-    } catch (error) {
-     alerta(pagina,`Error al acceder para crear Medico: ${error.message}`);
-      console.error('Error al acceder al endpoint protegido:', error.message);
-    }*/
-     }
+        }
 });

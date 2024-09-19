@@ -113,37 +113,30 @@ return await(consulta1(query,domicilio,idMedico));
 
 
 async function crearMedicamento(medicamento) {
-     query='INSERT INTO `medicamento`(`id_nombre_generico`, `id_forma`, `id_presentacion`,`id_familia`,`id_categoria`,`estado_prestacion`) values(?,?,?,?,?,?)'
+    /* query='INSERT INTO `medicamento`(`id_nombre_generico`, `id_forma`, `id_presentacion`,`id_familia`,`id_categoria`,`estado_prestacion`) values(?,?,?,?,?,?)'
      respuesta=await consulta1(query,medicamento.idNombreGenerico,medicamento.idForma,medicamento.idPresentacion,medicamento.idFamilia,medicamento.idCategoria,true);
     //console.log(respuesta);
-   return respuesta;
-
-    //let usuarioH = await crearHash(Medico.usuarioProvisorio);
-
-  /*  let connection;
+   return respuesta;*/
+let connection;
+    
     try {
         connection = await pool.getConnection();
         await connection.beginTransaction();
         
-            const [personaResult] = await connection.execute(
-                'INSERT INTO `persona`(`nombre`, `apellido`, `dni_persona`) VALUES (?,?,?)',
-                [Medico.nombreProfecional, Medico.apellidoProfecional, Medico.dniProfecional]
+            const [nombreGenericoFormaResult] = await connection.execute(
+                'INSERT INTO `nombre_generico_forma`(`id_nombre_generico`, `id_forma`) VALUES (?,?)',
+                [medicamento.idNombreGenerico,medicamento.idForma]
             );
     
-             id_persona = personaResult.insertId;
+             let id_n_g_f = nombreGenericoFormaResult.insertId;
+        console.log(id_n_g_f);
         
-        
-        const [medicoResult] = await connection.execute(
-            'INSERT INTO `medico`(`id_persona`, `domicilio`, `id_profecion`, `id_especialidad`, `matricula_profecional`, `id_refeps`,estado_medico) VALUES (?,?,?,?,?,?,?)',
-            [id_persona, Medico.domicilioProfecional, Medico.idProfecion, Medico.idEspecialidad, Medico.matriculaProfecional, Medico.refepsProfecional,true]
+        const [nombreGenericoPresentacionResult] = await connection.execute(
+            'INSERT INTO `nombre_generico_presentacion`(`id_n_g_f`, `id_presentacion`, `activo_n_g_p`) VALUES (?,?,?)',
+            [id_n_g_f, medicamento.idPresentacion,true]
         );
 
-        const id_medico = medicoResult.insertId;
-        let claveH = await crearHash(Medico.claveProvisoria);
-        const [loginResult] = await connection.execute(
-            'INSERT INTO `login`(`id_medico`, `usuario_login`, `clave_login`, `tipo_autorizacion`, `instancia`,`palabra_clave`) VALUES (?,?,?,?,?,?)',
-            [id_medico, Medico.usuarioProvisorio, claveH, Medico.nivelAutorizacion, 1,Medico.palabraClave]
-        );
+       
 
         await connection.commit();
         return { success: true };
@@ -157,7 +150,7 @@ async function crearMedicamento(medicamento) {
         if (connection) {
             connection.release(); // Devolvemos la conexión al pool
         }
-    }*/
+    }
 }
 
 async function medicamentoDataAgregar(objet,agregar){

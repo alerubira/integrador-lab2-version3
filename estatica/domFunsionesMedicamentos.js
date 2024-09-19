@@ -134,7 +134,7 @@ inputAPractica.value="";
 } 
 async function agregarNombreGenerico(){
      bandera=true;
-    let aNombreValue=inputNombreGenericoNuevo.value;
+    let aNombreValue=inputANombreGenerico.value;
     let categoriaValue=inputCategoria.value;
     let familiaValue=inputFamilia.value;
     console.log(aNombreValue);
@@ -160,7 +160,7 @@ async function agregarNombreGenerico(){
          nG.idCategoria=parseInt(idCategoria.value);
          fechProtegidoPost('/agregarNombreGenerico',nG);
     }
-    inputNombreGenericoNuevo.value="";
+    inputANombreGenerico.value="";
     inputFamilia.value="";
     inputCategoria.value="";
     idCategoria.value="";
@@ -171,47 +171,47 @@ async function agregarNombreGenerico(){
     } 
 
 async function agregarFamilia(){
-    let aFamiliaValue=inputNuevaFamilia.value;
+    let aFamiliaValue=inputAFamilia.value;
     let a=validar(aFamiliaValue.length<1||aFamiliaValue.length>28,pagina,'La Familia es obligatoria y no debe superar los 28 caracteres');
     if(a){
          let b={};
          b.nombreFamilia=aFamiliaValue;
          fechProtegidoPost('/agregarFamilia',b);
     }
-    inputNuevaFamilia.value="";
+    inputAFamilia.value="";
 fOcultar();
     } 
 async function agregarCategoria(){
-     let aCategoriaValue=inputNuevaCategoria.value;
+     let aCategoriaValue=inputACategoria.value;
      let a=validar(aCategoriaValue.length<1||aCategoriaValue.length>28,pagina,'La Categoria es obligatoria y no debe superar los 28 caracteres');
      if(a){
           let b={};
           b.nombreCategoria=aCategoriaValue;
           fechProtegidoPost('/agregarCategoria',b);
      }
-     inputNuevaCategoria.value="";
+     inputACategoria.value="";
  fOcultar();
      } 
      async function agregarForma(){
-          let aFormaValue=inputNuevaForma.value;
+          let aFormaValue=inputAForma.value;
           let a=validar(aFormaValue.length<1||aFormaValue.length>28,pagina,'La Forma es obligatoria y no debe superar los 28 caracteres');
           if(a){
                let b={};
                b.nombreForma=aFormaValue;
                fechProtegidoPost('/agregarForma',b);
           }
-          inputNuevaForma.value="";
+          inputAForma.value="";
       fOcultar();
           } 
           async function agregarPresentacion(){
-               let aPresentacionValue=inputNuevaPresentacion.value;
+               let aPresentacionValue=inputAPresentacion.value;
                let a=validar(aPresentacionValue.length<1||aPresentacionValue.length>28,pagina,'La Familia es obligatoria y no debe superar los 28 caracteres');
                if(a){
                     let b={};
-                    b.nombreFamilia=aPresentacionValue;
+                    b.nombrePresentacion=aPresentacionValue;
                     fechProtegidoPost('/agregarPresentacion',b);
                }
-               inputNuevaPresentacion.value="";
+               inputAPresentacion.value="";
            fOcultar();
                } 
 

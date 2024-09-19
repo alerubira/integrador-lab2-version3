@@ -112,22 +112,22 @@ const usuarioClaveY= yup.object().shape({
     .max(38,'El nombre no debe superar los 38 caracteres')
  })
  const nombreFamiliaY=yup.object().shape({
-    nombreGenerico:yup.string()
+    nombreFamilia:yup.string()
     .required('El Nombre es Oblogatorio')
     .max(28,'El nombre no debe superar los 28 caracteres')
  })
  const nombreCategoriaY=yup.object().shape({
-    nombreGenerico:yup.string()
+    nombreCategoria:yup.string()
     .required('El Nombre es Oblogatorio')
     .max(28,'El nombre no debe superar los 28 caracteres')
  })
  const nombreFormaY=yup.object().shape({
-    nombreGenerico:yup.string()
+    nombreForma:yup.string()
     .required('El Nombre es Oblogatorio')
     .max(28,'El nombre no debe superar los 28 caracteres')
  })
  const nombrePresentacionY=yup.object().shape({
-    nombreGenerico:yup.string()
+    nombrePresentacion:yup.string()
     .required('El Nombre es Oblogatorio')
     .max(28,'El nombre no debe superar los 28 caracteres')
  })

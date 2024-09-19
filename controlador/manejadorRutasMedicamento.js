@@ -89,23 +89,12 @@ async function manejadorMedicamentos(req,res,objeto){
         break;         
      case 'crearMedicamento':
         objet = req.body;
-       
-        if(!existeBd(objet.idForma,'forma_farmaceutica','id_forma')){
-            return res.status(500).send(error);
-        }
-        if(!existeBd(objet.idPresentacion,'presentacion','id_presentacion')){
-            return res.status(500).send(error);
-        }
-           
-           suces=await crearMedicamento(objet);
-          if (suces instanceof Error) {
-            console.error("Error en la consulta sql:", suces.message);
-            return res.status(500).json({ message: suces.message }); // Devuelve un error HTTP 500 al cliente
-          }else{
+        if(!existeBd(objet.idForma,'forma_farmaceutica','id_forma')){return retornarError(res,`La forma no existe en la base de datos ${aux.message}`)}
+        if(!existeBd(objet.idPresentacion,'presentacion','id_presentacion')){return retornarError(res,`La presentacion no existe en la base de datos ${aux.message}`)}
+         suces=await crearMedicamento(objet);
+          if (suces instanceof Error) {return retornarError(res,`Error al crear el medicamento ${suces.message}`)}
             return suces;
-          }
-          
-            break;
+           break;
       
     case 'modificarEsatdo':
          objet=req.body;
@@ -149,18 +138,18 @@ async function manejadorMedicamentos(req,res,objeto){
        case 'agregarFamilia':
            objet=req.body;
            aux=await verificar(objet,'nombreFamilia');
-           if(aux.errors){return retornarError(res,`Error al verificar el Nombre ${aux.message}`)}
+           if(aux.errors){return retornarError(res,`Error al verificar el Nombre de la Familia ${aux.message}`)}
            
            aux=await existeNombreBd(objet.nombreFamilia,'familia','nombre_familia');
            if(aux){return retornarError(res,'el nombre de la Familia ya existe , coloque uno distinto') }
-            aux=await medicamentoDataAgregar(objet.nombreFamila,'familia');
+            aux=await medicamentoDataAgregar(objet.nombreFamilia,'familia');
             if (aux instanceof Error) {return retornarError(res,`Error en la consulta ${aux.message}`)}
             return res.send(aux);
            break;
        case 'agregarCategoria':
             objet=req.body;
             aux=await verificar(objet,'nombreCategoria');
-            if(aux.errors){return retornarError(res,`Error al verificar el nombre ${aux.message}`)}
+            if(aux.errors){return retornarError(res,`Error al verificar el nombre de la Categoria ${aux.message}`)}
            aux=await medicamentoDataAgregar(objet.nombreCategoria,'categoria');
             if (aux instanceof Error) {return retornarError(res,`Error en la consulta ${aux.message}`)}
              return res.send(aux);
@@ -168,7 +157,7 @@ async function manejadorMedicamentos(req,res,objeto){
        case 'agregarForma':
             objet=req.body;
             aux=await verificar(objet,'nombreForma');
-            if(aux.errors){return retornarError(res,`Error al verificar ${aux.message}`)}
+            if(aux.errors){return retornarError(res,`Error al verificar el nombre de la forma ${aux.message}`)}
             aux=await medicamentoDataAgregar(objet.nombreForma,'forma');
             if(aux instanceof Error) {return retornarError(res,`Error en la consulta ${aux.message}`)}
             return res.send(aux);
@@ -176,8 +165,8 @@ async function manejadorMedicamentos(req,res,objeto){
         case 'agregarPresentacion':
             objet=req.body;
             aux=await verificar(objet,'nombrePresentacion');
-            if(aux.errors){return retornarError(res,`Error en la verificacion ${aux.message}`)}
-            aux=await medicamentoDataAgregar(objet.nombreExamen,'examen');
+            if(aux.errors){return retornarError(res,`Error en la verificacion del nombre de la Presentacion ${aux.message}`)}
+            aux=await medicamentoDataAgregar(objet.nombrePresentacion,'presentacion');
             if (aux instanceof Error) {return retornarError(res,`Error en la consulta ${aux.message}`)}
             return res.send(aux);
             break;                  
