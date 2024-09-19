@@ -113,8 +113,31 @@ SELECT @resultado; -- Para ver el resultado*/
     return false;
 }
 }
+async function existeConjuntoBD(tabla,nombreId,id1,id2){//modificar aca y en bd para recibir el nombre de las columnas
+    try {
+        
+        await consulta1(`CALL verificar_numeros_en_tabla(?, ?, ?, ?, @resultado); `,tabla,nombreId,id1,id2);
+    
+        // Obtiene el valor del parámetro de salida
+        const result = await consulta1('SELECT @resultado as resultado;');
+         // Verifica que el resultado esté en el formato esperado
+        /* if (result && result.length > 0) {
+            const existe = result[0].existe;
+            return existe === 1;
+        } else {
+            return false;
+        }*/
+       console.log(result);
+       return result;
+        
+    
+    } catch (err) {
+        console.error('Error al ejecutar el procedimiento almacenado,existe nombre :', err.message);
+        return err;
+    }
+}
 
-export {pool,consulta1,existeBd,existeNombreBd} ;
+export {pool,consulta1,existeBd,existeNombreBd,existeConjuntoBD} ;
 
 
 

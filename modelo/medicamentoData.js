@@ -1,6 +1,6 @@
 //import { connection } from "./conexxionBD.js";
 //import { Medico } from './clasesEntidad.js';
-import { consulta1 ,existeBd,pool} from "./conexxionBD.js";
+import { consulta1 ,existeBd,pool,existeConjuntoBD} from "./conexxionBD.js";
 //import { crearHash } from "./loginn.js";
 //import { buscarIdPorDni } from './PersonaData.js';
 let medicamentos;
@@ -113,33 +113,35 @@ return await(consulta1(query,domicilio,idMedico));
 
 
 async function crearMedicamento(medicamento) {
-    /* query='INSERT INTO `medicamento`(`id_nombre_generico`, `id_forma`, `id_presentacion`,`id_familia`,`id_categoria`,`estado_prestacion`) values(?,?,?,?,?,?)'
-     respuesta=await consulta1(query,medicamento.idNombreGenerico,medicamento.idForma,medicamento.idPresentacion,medicamento.idFamilia,medicamento.idCategoria,true);
-    //console.log(respuesta);
-   return respuesta;*/
+   
 let connection;
-    
+let id_n_g_f;  
     try {
         connection = await pool.getConnection();
         await connection.beginTransaction();
-        
+        respuesta=await existeConjuntoBD('nombre_generico_forma','id_n_g_f',medicamento.idNombreGenerico,medicamento.idForma);
+        if(respuesta===0){
+           
             const [nombreGenericoFormaResult] = await connection.execute(
                 'INSERT INTO `nombre_generico_forma`(`id_nombre_generico`, `id_forma`) VALUES (?,?)',
                 [medicamento.idNombreGenerico,medicamento.idForma]
             );
-    
-             let id_n_g_f = nombreGenericoFormaResult.insertId;
-        console.log(id_n_g_f);
-        
-        const [nombreGenericoPresentacionResult] = await connection.execute(
+              id_n_g_f = nombreGenericoFormaResult.insertId;
+        }else{id_n_g_f=respuesta.resultado[0]}
+        respuesta=await existeConjuntoBD('nombre_generico_presentacion','id_n_g_p',id_n_g_f,medicamento.idPresentacion);
+        if(respuesta[0]===0){
+         const [nombreGenericoPresentacionResult] = await connection.execute(
             'INSERT INTO `nombre_generico_presentacion`(`id_n_g_f`, `id_presentacion`, `activo_n_g_p`) VALUES (?,?,?)',
             [id_n_g_f, medicamento.idPresentacion,true]
         );
-
-       
-
+    
+       await connection.commit();
+       return { success: true ,message:'El medicamento fue creado con exito'};
+    }else{
         await connection.commit();
-        return { success: true };
+        return { success: false, message: 'El medicamento ya existe' };
+    }
+    
     } catch (error) {
         if (connection) {
             await connection.rollback();

@@ -93,7 +93,7 @@ async function manejadorMedicamentos(req,res,objeto){
         if(!existeBd(objet.idPresentacion,'presentacion','id_presentacion')){return retornarError(res,`La presentacion no existe en la base de datos ${aux.message}`)}
          suces=await crearMedicamento(objet);
           if (suces instanceof Error) {return retornarError(res,`Error al crear el medicamento ${suces.message}`)}
-            return suces;
+            return res.send(suces);
            break;
       
     case 'modificarEsatdo':
