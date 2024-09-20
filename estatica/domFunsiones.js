@@ -157,7 +157,7 @@ async function fechProtegidoPost(endpoin,objeto){
         body:JSON.stringify(objeto)
         
       });
-      
+     
       if (response.ok) {
         const responseBody = await response.json();
         cartelExito(pagina,`La tarea fue realizada con exito: ${responseBody.info}`);

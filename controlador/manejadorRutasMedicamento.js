@@ -44,7 +44,11 @@ async function manejadorMedicamentos(req,res,objeto){
      case 'nombresGenericos':
            aux = await medicamentoDatatodos('nombresGenericos');
            res.send(aux);
-        break;     
+        break;
+     case 'medicamentos':
+            aux=await medicamentoDatatodos('medicamentos');
+            res.send(aux);
+        break;        
      case 'formas':
             aux= await medicamentoDatatodos('formas');
             res.send(aux);
@@ -92,7 +96,8 @@ async function manejadorMedicamentos(req,res,objeto){
         if(!existeBd(objet.idForma,'forma_farmaceutica','id_forma')){return retornarError(res,`La forma no existe en la base de datos ${aux.message}`)}
         if(!existeBd(objet.idPresentacion,'presentacion','id_presentacion')){return retornarError(res,`La presentacion no existe en la base de datos ${aux.message}`)}
          suces=await crearMedicamento(objet);
-          if (suces instanceof Error) {return retornarError(res,`Error al crear el medicamento ${suces.message}`)}
+         
+          if (suces instanceof Error||!suces.success) {return retornarError(res,`Error al crear el medicamento ${suces.message}`)}
             return res.send(suces);
            break;
       

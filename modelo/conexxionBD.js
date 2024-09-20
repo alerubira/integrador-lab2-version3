@@ -113,10 +113,10 @@ SELECT @resultado; -- Para ver el resultado*/
     return false;
 }
 }
-async function existeConjuntoBD(tabla,nombreId,id1,id2){//modificar aca y en bd para recibir el nombre de las columnas
+async function existeConjuntoBD(tabla,nombreId,tabla1,tabla2,id1,id2){
     try {
         
-        await consulta1(`CALL verificar_numeros_en_tabla(?, ?, ?, ?, @resultado); `,tabla,nombreId,id1,id2);
+        await consulta1(`CALL verificar_numeros_en_tabla(?, ?, ?, ?,?,?, @resultado); `,tabla,nombreId,tabla1,tabla2,id1,id2);
     
         // Obtiene el valor del parámetro de salida
         const result = await consulta1('SELECT @resultado as resultado;');
@@ -127,12 +127,12 @@ async function existeConjuntoBD(tabla,nombreId,id1,id2){//modificar aca y en bd 
         } else {
             return false;
         }*/
-       console.log(result);
+       
        return result;
         
     
     } catch (err) {
-        console.error('Error al ejecutar el procedimiento almacenado,existe nombre :', err.message);
+        console.error('Error al ejecutar el procedimiento almacenado,existe ConjuntoBD :', err.message);
         return err;
     }
 }

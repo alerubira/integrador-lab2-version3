@@ -111,7 +111,7 @@ if(procedimientos.error){
               eliminarHijos(cuerpo);
                medicamentos=await fechProtegido('/traerTodasPrestaciones');
               if(medicamentos.error){
-                    alerta(pagina,`Hubo un inconveniente al buscar prestaciones: ${medicamentos.error.message}`);
+                    alerta(pagina,`Hubo un inconveniente al buscar medicamentos: ${medicamentos.error.message}`);
                     console.log(medicamentos.error.message);
                }else{
                console.log(medicamentos.data);
