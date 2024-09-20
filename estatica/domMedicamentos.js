@@ -109,24 +109,33 @@ if(procedimientos.error){
           case 'buscarMedicamentos':
               fOcultar();
               eliminarHijos(cuerpo);
-               medicamentos=await fechProtegido('/traerTodasPrestaciones');
+               medicamentos=await fechProtegido('/medicamentosTodos');
+               let medData=medicamentos.data;
               if(medicamentos.error){
                     alerta(pagina,`Hubo un inconveniente al buscar medicamentos: ${medicamentos.error.message}`);
-                    console.log(medicamentos.error.message);
                }else{
-               console.log(medicamentos.data);
+                    medData[0].sort((a, b) => a.id_nombre_generico - b.id_nombre_generico);
                 mostrar(divBuscarMedicamentos);
-                for(let p of medicamentos.data){
+                for(let m of medData[0]){
                     let tr=document.createElement('tr');
                     cuerpo.appendChild(tr);
-                    agregarTdCuerpo(p.id_prestacion,tr);
-                    agregarTdCuerpo(p.id_practica,tr);
-                    agregarTdCuerpo(p.nombre_practica,tr);
-                    agregarTdCuerpo(p.id_procedimiento,tr);
-                    agregarTdCuerpo(p.nombre_procedimiento,tr);
-                    agregarTdCuerpo(p.id_examen,tr);
-                    agregarTdCuerpo(p.nombre_examen,tr);
-                    if(p.estado_prestacion===1){
+                    agregarTdCuerpo(m.id_n_g_p,tr);
+                    agregarTdCuerpo(m.id_nombre_generico,tr);
+                    agregarTdCuerpo(m.nombre_generico,tr);
+                    if(m.estado_nomgre_generico===1){
+                         agregarTdCuerpo('Activo',tr);
+                    }else{
+                         agregarTdCuerpo('Inactivo',tr);
+                    }
+                    agregarTdCuerpo(m.id_familia,tr);
+                    agregarTdCuerpo(m.nombre_familia,tr);
+                    agregarTdCuerpo(m.id_categoria,tr);
+                    agregarTdCuerpo(m.nombre_categoria,tr);
+                    agregarTdCuerpo(m.id_forma,tr);
+                    agregarTdCuerpo(m.nombre_forma,tr);
+                    agregarTdCuerpo(m.id_presentacion,tr);
+                    agregarTdCuerpo(m.nombre_presentacion,tr);
+                    if(m.activo_n_g_p===1){
                          agregarTdCuerpo('Activo',tr);
                     }else{
                          agregarTdCuerpo('Inactivo',tr);
@@ -137,8 +146,9 @@ if(procedimientos.error){
                               btn.addEventListener('click', seleccionarMedicamento);
                              let td=document.createElement('td');
                              td.appendChild(btn);
-                             tr.appendChild(td);
+                             tr.appendChild(td); 
                               }
+                           
                   }
                 break;
           case 'agregarNombreGenerico':

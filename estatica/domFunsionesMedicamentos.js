@@ -103,11 +103,12 @@ function cambiarEstado(){
        medicamento={};
         // Recorrer las celdas y obtener los valores
         
-        medicamento=await medicamentos.data.find(pre=>pre.id_prestacion===parseInt(celdas[0].textContent));
+        medicamento=await medicamentos.data.find(med=>med.id_n_g_p===parseInt(celdas[0].textContent));
         console.log(medicamento);
         eliminarHijos(cuerpo2);
         let tr2=document.createElement('tr');
                            cuerpo2.appendChild(tr2);
+                           agregarTdCuerpo(medicamento.id_n_g_p,tr2);//seguir llenando
                            agregarTdCuerpo(medicamento.id_prestacion,tr2);
                            agregarTdCuerpo(medicamento.id_practica,tr2);
                            agregarTdCuerpo(medicamento.nombre_practica,tr2);

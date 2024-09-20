@@ -53,8 +53,8 @@ try{
         break;   
       
     case 'medicamentos':
-        query='SELECT ng.id_nombre_generico,ng.nombre_generico,ng.estado_nombre_generico,fa.id_familia,fa.nombre_familia,ca.id_categoria,ca.nombre_categoria ,fo.id_forma,fo.nombre_forma,pr.id_presentacion,pr.nombre_presentacion,ngp.activo_n_g_p FROM `nombre_generico` ng JOIN familia fa ON ng.id_familia=fa.id_familia categoria ca JOIN ON ng.id_categoria=ca.id_categoria JOIN nombre_generico_forma ngf on ng.id_nombre_generico=ngf.id_nombre_generico JOIN forma_farmaceutica fo ON fo.id_forma=ngf.id_forma JOIN nombre_generico_presentacion ngp on ngp.id_n_g_f=ngf.id_n_g_f JOIN presentacion pr on pr.id_presentacion=ngp.id_presentacion WHERE 1';
- return await consulta1(query);
+        query='CALL obtener_medicamentos()';
+        return await consulta1(query);
         break;
     }
 }catch(error){

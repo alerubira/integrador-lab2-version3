@@ -70,20 +70,21 @@ block content
                         input.boton(type="submit", value="Enviar")
                    
             #divBuscarMedicamentos.ocultar
-                    table#todosMediicamentos
+                    table#todosMedicamentos
                         thead#cabecera
                             tr
-                                th Id Medicamento
-                                th Id nombre Generico
+                                th Id referencial
+                                th Id N Gen
                                 th Nombre nombre Generico
-                                th id Forma Farmaceuitica
-                                th Nombre Forma Farmaceuitica
-                                th Id Presentacion
-                                th Nombre Presentacion
-                                th Id Familia 
-                                th Nombre Familia 
+                                th Estado N Gen
+                                th Id Familia
+                                th Nombre Familia
                                 th Id Categoria 
-                                th Nombre Categoria
+                                th Nombre Categoria 
+                                th Id Forma 
+                                th Nombre Forma
+                                th Id Presentacion 
+                                th Nombre Presentacion
                                 th Estado 
                                 th Seleccionar
                         tbody#cuerpo  
@@ -92,26 +93,28 @@ block content
                 table#tblMedicamento
                         thead#cabecera2
                             tr
-                                th Id Medicamento
-                                th Id Nombre Generico
-                                th Nombre Nombre Generico
-                                th id Forma Farmaceutica
-                                th Nombre Forma Farmaceutica
-                                th Id Presentacion
-                                th Nombre Presentacion
-                                th Id Familia 
-                                th Nombre Familia 
+                                th Id referencial
+                                th Id N Gen
+                                th Nombre nombre Generico
+                                th Estado N Gen
+                                th Id Familia
+                                th Nombre Familia
                                 th Id Categoria 
-                                th Nombre Categoria
+                                th Nombre Categoria 
+                                th Id Forma 
+                                th Nombre Forma
+                                th Id Presentacion 
+                                th Nombre Presentacion
                                 th Estado 
                         tbody#cuerpo2  
                 select(id="modificarMedicamento", name="modificarMedicamento")
                             option(value="") Elija una opcion
-                            option(value="estadoMedicamento") Modificar Estdo 
+                            option(value="estadoNombreGenerico") Modificar Estdo nombre Generico 
                             option(value="forma") Modificar Forma 
                             option(value='presentacion') Modificar Presentacion 
                             option(value="familia") Modificar Familia 
                             option(value="categoria") Modificar Categoria
+                            option(value="estadoMedicamento")
                 #divNuevaForma.ocultar2            
                         label(for="NuevaForma") Nueva Forma 
                         input.limpiar(type="text",id="NuevaForma",name="NuevaForma",placeHolder="Nuevo Forma",list="dlNuevaForma")
