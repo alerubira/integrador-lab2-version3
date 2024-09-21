@@ -46,34 +46,46 @@ async function traerFamilias(){
           return familias;
      }
 }
-function cambiarEstado(){
+function cambiarEstadoM(){
    limpiarCampos(limpiar);
-   let p={};
-   p.idPrestacion=medicamento.id_prestacion;
-   if(medicamento.estado_prestacion===1){
-        p.estadoPrestacion=false;
+   let m={};
+   m.idNGP=medicamento.id_n_g_p;
+   if(medicamento.estado_n_g_p===1){
+        m.estado_n_g_p=false;
    }else{
-        p.estadoPrestacion=true;
+        m.estado_n_g_p=true;
    }
-   console.log(p);
-   fechProtegidoPost('/cambiarEstadoPrestacion',p);
-   }             
-                  
-   async function modificarPresentacion(){
+   console.log(m);
+   fechProtegidoPost('/cambiarEstadoMedicamento',m);
+   } 
+function canbiarEstadoNG(){
+     limpiarCampos(limpiar);
+     let ng={};
+     ng.idNG=medicamento.id_nombre_generico;
+     if(medicamento.estado_nonbre_generico===1){
+          ng.estadoNombreGenerico=false;
+     }else{
+          ng.estadoNombreGenerico=true;
+     }
+     console.log(ng);
+     fechProtegidoPost('/cambiarEstadoMedicamento',ng);
+}               
+ async function modificarPresentacion(){
   
-   let nuevoProcedimientoValue=inputNuevaPresentacion.value;
-   let pro=await familias.data.find(no=>no.nombre_procedimiento===nuevoProcedimientoValue);
-   if(pro){
+   let nuevoPresentacionValue=inputNuevaPresentacion.value;
+   let pre=await presentaciones.data.find(no=>no.nombre_presentacion===nuevoPresentacionValue);
+   if(pre){
    let p={};
-   p.idPrestacion=medicamento.id_prestacion;
-   p.idProcedimiento=pro.id_procedimiento;
-   fechProtegidoPost('/modificarProcedimiento',p);
+   p.idPrestacion=pre.id_presentacion;
+   p.idNGP=medicamento.id_n_g_p;
+   fechProtegidoPost('/modificarPresentacion',p);
    }else{
-        alerta(pagina,'El procedimiento seleccionada no es valida');
+        alerta(pagina,'La Presentacion seleccionada no es valida');
    }
    
    }
    async function modificarForma(){
+     //traer con el medicamento(modificar procedimiento)el id de nombre generico forma para hacer update
    let nuevoExamenValue=inputNuevaForma.value;
    let ex=await presentaciones.data.find(e=>e.nombre_examen===nuevoExamenValue);
    if(ex){
@@ -84,11 +96,32 @@ function cambiarEstado(){
    }   
    }
    async function modificarFamilia(){
-
+     let nuevaFamiliaValue=inputNuevaFamilia.value;
+     let fa=await familias.data.find(no=>no.nombre_familia===nuevaFamiliaValue);
+     if(fa){
+     let f={};
+     f.idFamilia=fa.id_familia;
+     f.idNG=medicamento.id_nombre_generico;
+     fechProtegidoPost('/modificarFamilia',f);
+     }else{
+          alerta(pagina,'La Familia seleccionada no es valida');
    }
+}
    async function modificarCategoria(){
-
+     let nuevaCategoriaValue=inputNuevaCategoria.value;
+     let ca=await categorias.data.find(no=>no.nombre_categoria===nuevaCategoriaValue);
+     if(ca){
+     let c={};
+     c.idCategoria=ca.id_categoria;
+     c.idNG=medicamento.id_nombre_generico;
+     fechProtegidoPost('/modificarCategoria',c);
+     }else{
+          alerta(pagina,'La Familia seleccionada no es valida');
    }
+   }
+ async function modificarNG(){
+
+ }  
    async function seleccionarMedicamento(event){
        fOcultar();
        mostrar(divModificarMedicamento);
@@ -103,20 +136,28 @@ function cambiarEstado(){
        medicamento={};
         // Recorrer las celdas y obtener los valores
         
-        medicamento=await medicamentos.data.find(med=>med.id_n_g_p===parseInt(celdas[0].textContent));
+        medicamento=await medData[0].find(med=>med.id_n_g_p===parseInt(celdas[0].textContent));
         console.log(medicamento);
         eliminarHijos(cuerpo2);
         let tr2=document.createElement('tr');
                            cuerpo2.appendChild(tr2);
-                           agregarTdCuerpo(medicamento.id_n_g_p,tr2);//seguir llenando
-                           agregarTdCuerpo(medicamento.id_prestacion,tr2);
-                           agregarTdCuerpo(medicamento.id_practica,tr2);
-                           agregarTdCuerpo(medicamento.nombre_practica,tr2);
-                           agregarTdCuerpo(medicamento.id_procedimiento,tr2);
-                           agregarTdCuerpo(medicamento.nombre_procedimiento,tr2);
-                           agregarTdCuerpo(medicamento.id_examen,tr2);
-                           agregarTdCuerpo(medicamento.nombre_examen,tr2);
-                           if(medicamento.estado_procedimiento===1){
+                           agregarTdCuerpo(medicamento.id_n_g_p,tr2);
+                           agregarTdCuerpo(medicamento.id_nombre_generico,tr2);
+                           agregarTdCuerpo(medicamento.nombre_generico,tr2);
+                           if(medicamento.estado_nombre_generico===1){
+                              agregarTdCuerpo('Activo',tr2);
+                           }else{
+                               agregarTdCuerpo('Inactivo',tr2);
+                           }
+                           agregarTdCuerpo(medicamento.id_familia,tr2);
+                           agregarTdCuerpo(medicamento.nombre_familia,tr2);
+                           agregarTdCuerpo(medicamento.id_categoria,tr2);
+                           agregarTdCuerpo(medicamento.nombre_categoria,tr2);
+                           agregarTdCuerpo(medicamento.id_forma,tr2);
+                           agregarTdCuerpo(medicamento.nombre_forma,tr2);
+                           agregarTdCuerpo(medicamento.id_presentacion,tr2);
+                           agregarTdCuerpo(medicamento.nombre_presentacion,tr2);
+                           if(medicamento.activo_n_g_p===1){
                                 agregarTdCuerpo('Activo',tr2);
                            }else{
                                 agregarTdCuerpo('Inactivo',tr2);

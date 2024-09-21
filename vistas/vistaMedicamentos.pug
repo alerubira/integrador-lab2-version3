@@ -110,11 +110,12 @@ block content
                 select(id="modificarMedicamento", name="modificarMedicamento")
                             option(value="") Elija una opcion
                             option(value="estadoNombreGenerico") Modificar Estdo nombre Generico 
-                            option(value="forma") Modificar Forma 
-                            option(value='presentacion') Modificar Presentacion 
+                            option(value="nombreGenerico") Modificar Nombre Generico
                             option(value="familia") Modificar Familia 
                             option(value="categoria") Modificar Categoria
-                            option(value="estadoMedicamento")
+                            option(value="forma") Modificar Forma 
+                            option(value='presentacion') Modificar Presentacion 
+                            option(value="estadoMedicamento") Modificar Estado Medicamento
                 #divNuevaForma.ocultar2            
                         label(for="NuevaForma") Nueva Forma 
                         input.limpiar(type="text",id="NuevaForma",name="NuevaForma",placeHolder="Nuevo Forma",list="dlNuevaForma")
@@ -138,8 +139,16 @@ block content
                         input.limpiar(type="text",id="nuevaCategoria",name="nuevaCategoria",placeHolder="Nueva Categoria",list="dlNuevaCategoria")
                         datalist#dlNuevaCategoria.limpiar
                         br 
-                        button.boton(type="button",onclick='modificarCategoria()') Modificar        
-                #divEstado.ocultar2 
-                        button#botonEstado.boton(type="button",onclick='cambiarEstado()')
+                        button.boton(type="button",onclick='modificarCategoria()') Modificar
+                #divNuevoNombreG.ocultar2
+                        label(for="nuevoNombreG") Nueva Categoria
+                        input.limpiar(type="text",id="nuevoNombreG",name="nuevoNombreG",placeHolder="Nueva Nombre Generico")
+                        br 
+                        button.boton(type="button",onclick='modificarNombreG()') Modificar         
+                #divEstadoNG.ocultar2 
+                        button#botonEstadoNG.boton(type="button",onclick='cambiarEstadoNG()')
+                #divEstadoM.ocultar2 
+                        button#botonEstadoM.boton(type="button",onclick='cambiarEstadoM()')        
+
 block boton1 
         button.boton(type="button",onclick='volver()') volver 

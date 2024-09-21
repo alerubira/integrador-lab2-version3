@@ -27,7 +27,8 @@ let especialidadNuevas=document.getElementById('especialidadNuevas');
 let inputNuevaPresentacion=document.getElementById('nuevaPresentacion');
 let inputNuevaForma=document.getElementById('nuevaForma');
 let dlNuevaForma=document.getElementById('dlNuevaForma');
-let botonEstado=document.getElementById('botonEstado');
+let botonEstadoNG=document.getElementById('botonEstadoNG');
+let botonEstadoM=document.getElementById('botonEstadoM');
 let cuerpo2=document.getElementById('cuerpo2');
 let divANombreGenerico=document.getElementById('divAgregarNombreGenerico');
 let divAFamilia=document.getElementById('divAgregarFamilia');
@@ -46,7 +47,10 @@ let inputAFamilia=document.getElementById('agregarFamilia');
 let inputACategoria=document.getElementById('agregarCategoria');
 let inputAForma=document.getElementById('agregarForma');
 let inputAPresentacion=document.getElementById('agregarPresentacion');
-//reestructura nombres de input div y datalist crear y modificar
+let divEstadoNG=document.getElementById('divEstadoNG');
+let divEstadoM=document.getElementById('divEstadoM');
+let divNuevoNombreG=document.getElementById('divNuevoNombreG');
+let inputNNombreG=document.getElementById('nuevoNombreG');
 let formas;
 let presentaciones;
 let nombresGenericos;
@@ -56,37 +60,9 @@ let bandera;
 let banderaAux;
 let medicamentos=[];
 let medicamento;
+let medData;
 
-/*(async function(){  
-practicas=await fechProtegido('/practica'); 
-dlPractica.innerHTML='';
-console.log(practicas.data);
-if(practicas.error){
-     alerta(pagina,'Hubo un inconveniente al buscar Practicas');
-} else{
-     llenarDl(dlPractica,practicas.data,'nombre_practica');
-}   
-examenes=await fechProtegido("/examen");
-dlExamen.innerHTML = '';
-console.log(examenes.data); 
-if(examenes.error){
-     alerta(pagina,'Hubo un inconveniente al buscar examenes');
-}else{
-    
-        
-        llenarDl(dlExamen,examenes.data,'nombre_examen');
 
-}
-procedimientos=await fechProtegido("/procedimiento");
-dlProcedimiento.innerHTML = ''; 
-console.log(procedimientos.data);
-if(procedimientos.error){
-     alerta(pagina,'Hubo un inconveniente al buscar procedimientos');
-}else{
-    
-    llenarDl(dlProcedimiento,procedimientos.data,'nombre_procedimiento')
-     }
-})();*/
 
  document.getElementById('crudMedicamentos').addEventListener('change',async function() {
      limpiarCampos(limpiar);
@@ -110,7 +86,7 @@ if(procedimientos.error){
               fOcultar();
               eliminarHijos(cuerpo);
                medicamentos=await fechProtegido('/medicamentosTodos');
-               let medData=medicamentos.data;
+                medData=medicamentos.data;
               if(medicamentos.error){
                     alerta(pagina,`Hubo un inconveniente al buscar medicamentos: ${medicamentos.error.message}`);
                }else{
@@ -190,12 +166,12 @@ document.getElementById('modificarMedicamento').addEventListener('change',async 
           case 'estadoMedicamento':
                limpiarCampos(limpiar);
                fOcultar2();
-               if(medicamento.estado_prestacion===1){
-                    botonEstado.innerText="Inhabilitar";
+               if(medicamento.activo_n_g_p===1){
+                    botonEstadoM.innerText="Inhabilitar";
                }else{
-                    botonEstado.innerText="Habilitar";
+                    botonEstadoM.innerText="Habilitar";
                }
-               mostrar(divEstado);
+               mostrar(divEstadoM);
               break;
           case 'forma':
                limpiarCampos(limpiar);
@@ -214,12 +190,38 @@ document.getElementById('modificarMedicamento').addEventListener('change',async 
                mostrar(divNuevaForma);
                break;
           case 'familia':
+               limpiarCampos(limpiar);
+               fOcultar();
+               familias=await traerFamilias();
+               llenarDl(dlNuevaFamilia,familias.data,'nombre_familia');
+               mostrar(divNuevaFamilia);
                break;
           case 'categoria':
-               break;           
+               limpiarCampos(limpiar);
+               fOcultar();
+               categorias=await traerFamilias();
+               llenarDl(dlNuevaCategoria,categorias.data,'nombre_categoria');
+               mostrar(divNuevaCategoria);
+               break;  
+          case 'estadoNombreGenerico':
+               limpiarCampos(limpiar);
+               fOcultar2();
+               if(medicamento.estado_nombre_generico===1){
+                    botonEstadoNG.innerText="Inhabilitar";
+               }else{
+                    botonEstadoNG.innerText="Habilitar";
+               }
+               mostrar(divEstadoNG);
+               break;
+          case 'nombreGenerico':
+               limpiarCampos(limpiar);
+               fOcultar2();
+               mostrar(divNuevoNombreG);
+               break;                   
                default:
                     console.log('Selección no válida');
-                    alerta(pagina,('Seleccion no valida'));         
+                    alerta(pagina,('Seleccion no valida'));  
+               break            
      } 
      document.getElementById("modificarPrestacion").selectedIndex = 0;      
      })    
