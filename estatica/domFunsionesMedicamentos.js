@@ -58,7 +58,7 @@ function cambiarEstadoM(){
    console.log(m);
    fechProtegidoPost('/cambiarEstadoMedicamento',m);
    } 
-function canbiarEstadoNG(){
+function modificarEstadoNG(){
      limpiarCampos(limpiar);
      let ng={};
      ng.idNG=medicamento.id_nombre_generico;
@@ -67,8 +67,7 @@ function canbiarEstadoNG(){
      }else{
           ng.estadoNombreGenerico=true;
      }
-     console.log(ng);
-     fechProtegidoPost('/cambiarEstadoMedicamento',ng);
+     fechProtegidoPost('/modificarEstadoNG',ng);
 }               
  async function modificarPresentacion(){
   
@@ -116,7 +115,7 @@ function canbiarEstadoNG(){
      c.idNG=medicamento.id_nombre_generico;
      fechProtegidoPost('/modificarCategoria',c);
      }else{
-          alerta(pagina,'La Familia seleccionada no es valida');
+          alerta(pagina,'La Categoria seleccionada no es valida');
    }
    }
  async function modificarNG(){

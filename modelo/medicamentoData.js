@@ -9,16 +9,16 @@ let respuesta;
 async function medicamentoDataModificar(modificar,id,modificante){
    try{
     switch(modificar){
-        case 'estado':
-             query='UPDATE `prestacion` SET `estado_prestacion`=? WHERE id_prestacion=?'
+        case 'estadoNombreGenerico':
+             query='UPDATE `nombre_generico` SET `estado_nombre_generico`=? WHERE id_nombre_generico=?'
              return await(consulta1(query,modificante,id));
              break
-        case 'procedimiento':
-            query='UPDATE `prestacion` SET `id_procedimiento`=? WHERE id_prestacion=?';
+        case 'categoria':
+            query='UPDATE `nombre_generico` SET `id_categoria`=? WHERE id_nombre_generico=?';
             return await(consulta1(query,modificante,id));
             break
-        case 'examen':
-             query='UPDATE `prestacion` SET `id_examen`=? WHERE id_prestacion=?';
+        case 'familia':
+             query='UPDATE `nombre_generico` SET `id_familia`=? WHERE id_nombre_generico=?';
             return await(consulta1(query,modificante,id));
             break; 
     }

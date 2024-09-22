@@ -159,6 +159,15 @@ manejadorMedicamentos(req,res,'crearMedicamento');
  })
  ruta.get('/medicamentosTodos',verificarToken,async(req,res)=>{
   manejadorMedicamentos(req,res,'medicamentos');
+ });
+ ruta.post('/modificarCategoria',verificarToken,async(req,res)=>{
+  manejadorMedicamentos(req,res,'modificarCategoria');
+ })
+ ruta.post('/modificarFamilia',verificarToken,async (req,res)=>{
+  manejadorMedicamentos(req,res,'modificarFamilia');
+ })
+ ruta.post('/modificarEstadoNG',verificarToken,(req,res)=>{
+  manejadorMedicamentos(req,res,'modificarEstadoNG');
  })
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
    // Obtener el ID del Profesional enviado desde el formulario

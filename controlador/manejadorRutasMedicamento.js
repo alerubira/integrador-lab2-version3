@@ -101,44 +101,39 @@ async function manejadorMedicamentos(req,res,objeto){
             return res.send(suces);
            break;
       
-    case 'modificarEsatdo':
+    case 'modificarEsatdoNG':
          objet=req.body;
          //console.log(objet);
-         e1=await existeBd(objet.idPrestacion,'prestacion','id_prestacion');
+         e1=await existeBd(objet.idNG,'nombre_generico','id_nombre_generico');
          if(e1){
-            aux=await prestacionDataModificar('estado',objet.idPrestacion,objet.estadoPrestacion) ;
+            aux=await medicamentoDataModificar('estadoNombreGenerico',objet.idNG,objet.estadoNombreGenerico) ;
+            if (aux instanceof Error) {return retornarError(res,`Error al modificar el Estado ${suces.message}`)}
             return res.send(aux);
-         }else{
-            errorMessage='La Prestacion no existe en la base de datos';
-            return res.status(400).send({message:errorMessage});
-         }
+         }else{return retornarError(res,'El nombre Generico no existe')}
         
         break 
-    case 'cambiarProcedimiemto':
+    case 'modificarCategoria':
         objet=req.body;
         //console.log(objet);
-         e1=await existeBd(objet.idPrestacion,'prestacion','id_prestacion');
-         e2=await existeBd(objet.idProcedimiento,'procedimiento','id_procedimiento');
+         e1=await existeBd(objet.idNG,'nombre_generico','id_nombre_generico');
+         e2=await existeBd(objet.idCategoria,'categoria','id_categoria');
          if(e1&&e2){
-            aux=await prestacionDataModificar('procedimiento',objet.idPrestacion,objet.idProcedimiento);
+            aux=await medicamentoDataModificar('categoria',objet.idNG,objet.idCategoria);
+            if (aux instanceof Error) {return retornarError(res,`Error al modificar la Categoria ${suces.message}`)}
             return res.send(aux); 
-         }else{
-            errorMessage='La prestacion o el procedimiento no existen en la base de datos';
-            return res.status(400).send({message:errorMessage});
-         }
+         }else{ return retornarError(res,'El nombre Generico o la Categoria no existen') }
        
         break 
-    case 'cambiarExamen':
+    case 'modificarFamilia':
         objet=req.body;
-        e1=await existeBd(objet.idPrestacion,'prestacion','id_prestacion');
-        e2=await existeBd(objet.idExamen,'examen','id_examen');
+        //console.log(objet);
+        e1=await existeBd(objet.idNG,'nombre_generico','id_nombre_generico');
+        e2=await existeBd(objet.idFamilia,'familia','id_familia');
         if(e1&&e2){
-            aux=await prestacionDataModificar('examen',objet.idPrestacion,objet.idExamen);
+            aux=await medicamentoDataModificar('familia',objet.idNG,objet.idFamilia);
+            if (aux instanceof Error) {return retornarError(res,`Error al modificar la Familia ${suces.message}`)}
             return res.send(aux); 
-          }else{
-            errorMessage='La prestacion o el examen no existen en la base de datos';
-            return res.status(400).send({message:errorMessage});
-            }
+          }else{return retornarError(res,'El nombre Generico o la Familia no existaen')}
        break;
        case 'agregarFamilia':
            objet=req.body;

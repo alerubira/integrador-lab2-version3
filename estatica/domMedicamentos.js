@@ -176,9 +176,9 @@ document.getElementById('modificarMedicamento').addEventListener('change',async 
           case 'forma':
                limpiarCampos(limpiar);
                fOcultar2();
-               familias=await traerMedicamentos();
-               llenarDl(dlNuevaPresentacion,familias.data,'nombre_procedimiento');
-               mostrar(divNuevaPresentacion);
+               formas=await traerFormas();
+               llenarDl(dlNuevaForma,formas.data,'nombre_forma');
+               mostrar(divNuevaForma);
                break
           case 'presentacion':
                limpiarCampos(limpiar);
@@ -186,20 +186,20 @@ document.getElementById('modificarMedicamento').addEventListener('change',async 
                //eliminarHijos(especialidadNuevas);
                presentaciones=await traerPresentaciones();
                //console.log(examenes.data);
-               llenarDl(dlNuevaForma,presentaciones.data,'nombre_examen');
-               mostrar(divNuevaForma);
+               llenarDl(dlNuevaPresentacion,presentaciones.data,'nombre_presentacion');
+               mostrar(divNuevaPresentacion);
                break;
           case 'familia':
                limpiarCampos(limpiar);
-               fOcultar();
+               fOcultar2();
                familias=await traerFamilias();
                llenarDl(dlNuevaFamilia,familias.data,'nombre_familia');
                mostrar(divNuevaFamilia);
                break;
           case 'categoria':
                limpiarCampos(limpiar);
-               fOcultar();
-               categorias=await traerFamilias();
+               fOcultar2();
+               categorias=await traerCategorias();
                llenarDl(dlNuevaCategoria,categorias.data,'nombre_categoria');
                mostrar(divNuevaCategoria);
                break;  
@@ -223,7 +223,7 @@ document.getElementById('modificarMedicamento').addEventListener('change',async 
                     alerta(pagina,('Seleccion no valida'));  
                break            
      } 
-     document.getElementById("modificarPrestacion").selectedIndex = 0;      
+     document.getElementById("modificarMedicamento").selectedIndex = 0;      
      })    
 
 
