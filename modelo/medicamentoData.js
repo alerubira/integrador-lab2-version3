@@ -9,6 +9,10 @@ let respuesta;
 async function medicamentoDataModificar(modificar,id,modificante){
    try{
     switch(modificar){
+        case 'estadoMedicamento':
+            query='UPDATE `nombre_generico_presentacion` SET `activo_n_g_p`=? WHERE id_n_g_p=?'
+             return await(consulta1(query,modificante,id));
+            break;
         case 'estadoNombreGenerico':
              query='UPDATE `nombre_generico` SET `estado_nombre_generico`=? WHERE id_nombre_generico=?'
              return await(consulta1(query,modificante,id));

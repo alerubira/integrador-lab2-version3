@@ -101,17 +101,25 @@ async function manejadorMedicamentos(req,res,objeto){
             return res.send(suces);
            break;
       
-    case 'modificarEsatdoNG':
+    case 'modificarEstadoNG':
          objet=req.body;
-         //console.log(objet);
          e1=await existeBd(objet.idNG,'nombre_generico','id_nombre_generico');
          if(e1){
             aux=await medicamentoDataModificar('estadoNombreGenerico',objet.idNG,objet.estadoNombreGenerico) ;
-            if (aux instanceof Error) {return retornarError(res,`Error al modificar el Estado ${suces.message}`)}
+            if (aux instanceof Error) {return retornarError(res,`Error al modificar el Estado del nombre Generico ${aux.message}`)}
             return res.send(aux);
          }else{return retornarError(res,'El nombre Generico no existe')}
         
-        break 
+        break ;
+    case 'modificarEstadoMedicamento':
+        objet=req.body;
+        e1=await existeBd(objet.idNGP,'nombre_generico_presentacion','id_n_g_p');
+        if(e1){
+           aux=await medicamentoDataModificar('estadoMedicamento',objet.idNGP,objet.estado_n_g_p) ;
+           if (aux instanceof Error) {return retornarError(res,`Error al modificar el Estado del Medicamento ${aux.message}`)}
+           return res.send(aux);
+        }else{return retornarError(res,'El nombre Medicamento no existe')}
+        break;    
     case 'modificarCategoria':
         objet=req.body;
         //console.log(objet);
@@ -169,7 +177,8 @@ async function manejadorMedicamentos(req,res,objeto){
             aux=await medicamentoDataAgregar(objet.nombrePresentacion,'presentacion');
             if (aux instanceof Error) {return retornarError(res,`Error en la consulta ${aux.message}`)}
             return res.send(aux);
-            break;                  
+            break;  
+        default:return retornarError(res,'El manejador de rutas de Medicamentos no encontro la ruta');                
     }
 }catch (error) {
     console.error(`Error al Procesar el ${objeto} en Medicamentos`, error);

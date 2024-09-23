@@ -98,7 +98,7 @@ let medData;
                     agregarTdCuerpo(m.id_n_g_p,tr);
                     agregarTdCuerpo(m.id_nombre_generico,tr);
                     agregarTdCuerpo(m.nombre_generico,tr);
-                    if(m.estado_nomgre_generico===1){
+                    if(m.estado_nombre_generico===1){
                          agregarTdCuerpo('Activo',tr);
                     }else{
                          agregarTdCuerpo('Inactivo',tr);

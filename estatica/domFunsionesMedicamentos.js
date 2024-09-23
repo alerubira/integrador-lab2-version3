@@ -46,7 +46,7 @@ async function traerFamilias(){
           return familias;
      }
 }
-function cambiarEstadoM(){
+function modificarEstadoM(){
    limpiarCampos(limpiar);
    let m={};
    m.idNGP=medicamento.id_n_g_p;
@@ -56,7 +56,7 @@ function cambiarEstadoM(){
         m.estado_n_g_p=true;
    }
    console.log(m);
-   fechProtegidoPost('/cambiarEstadoMedicamento',m);
+   fechProtegidoPost('/modificarEstadoMedicamento',m);
    } 
 function modificarEstadoNG(){
      limpiarCampos(limpiar);

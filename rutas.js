@@ -166,8 +166,11 @@ manejadorMedicamentos(req,res,'crearMedicamento');
  ruta.post('/modificarFamilia',verificarToken,async (req,res)=>{
   manejadorMedicamentos(req,res,'modificarFamilia');
  })
- ruta.post('/modificarEstadoNG',verificarToken,(req,res)=>{
+ ruta.post('/modificarEstadoNG',verificarToken,async(req,res)=>{
   manejadorMedicamentos(req,res,'modificarEstadoNG');
+ })
+ ruta.post('/modificarEstadoMedicamento',verificarToken,async(req,res)=>{
+  manejadorMedicamentos(req,res,'modificarEstadoMedicamento');
  })
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
    // Obtener el ID del Profesional enviado desde el formulario
