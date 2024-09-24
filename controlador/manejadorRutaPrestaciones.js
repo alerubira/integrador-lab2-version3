@@ -4,7 +4,7 @@ import { prestacionDatatodos,crearPrestacion,prestacionDataModificar,prestacionD
 //import { medicoDatatodos,medicoDataModificar,crearMedico } from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 //import { Medico } from "../modelo/clasesEntidad.js";
-import {  existeBd } from "../modelo/conexxionBD.js";
+import {  existeBd ,existeNombreBd} from "../modelo/conexxionBD.js";
 import { retornarError } from "./funsionesControlador.js";
 let estadoSuces;
 let mensajeExito;
@@ -69,6 +69,7 @@ async function manejadorPrestaciones(req,res,objeto){
         if(!existeBd(objet.idExamen,'examen','id_examen')){
             return retornarError (res,'El Examen no existe en la base de datos');
         }
+        //verificar que la prestacion no exista en la base de datos
           let suces=await crearPrestacion(objet);
           if (suces instanceof Error) {return retornarError(res,`Error al crear la Prestacion ${suces.message}`)}
                 return res.send(suces);
@@ -118,7 +119,9 @@ async function manejadorPrestaciones(req,res,objeto){
           // console.log(aux.ValidationError);
            if(aux.errors){
             return res.status(500).send(aux.errors);
-           }//verificar que el nombre no exista en la base de datos
+           }
+           //verificar que el nombre exista en la base de datos
+          // aux=await existeNombreBd(objet.nombreGenerico,'nombre_generico','nombre_generico');
             aux=await prestacionDataAgregar(objet.nombrePractica,'practica');
             if (aux instanceof Error) {
                 console.error("Error en la consulta sql:", aux.message);
@@ -127,7 +130,7 @@ async function manejadorPrestaciones(req,res,objeto){
             return res.send(aux);
            
         break;
-       case 'agregarProcedimiento':
+       case 'agregarProcedimiento'://reacomodar y verificar
             objet=req.body;
             aux=await verificar(objet,'nombreProcedimiento');
           // console.log(aux.errors);
@@ -142,7 +145,7 @@ async function manejadorPrestaciones(req,res,objeto){
               return res.send(aux);
             }
         break;
-       case 'agregarExamen':
+       case 'agregarExamen'://reacomodar y verificar
             objet=req.body;
             aux=await verificar(objet,'nombreExamen');
             //console.log(aux);
