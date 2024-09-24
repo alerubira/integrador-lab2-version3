@@ -5,6 +5,7 @@ import { prestacionDatatodos,crearPrestacion,prestacionDataModificar,prestacionD
 import { verificar } from "./verificaryup.js";
 //import { Medico } from "../modelo/clasesEntidad.js";
 import {  existeBd } from "../modelo/conexxionBD.js";
+import { retornarError } from "./funsionesControlador.js";
 let estadoSuces;
 let mensajeExito;
 let objet;
@@ -41,8 +42,7 @@ async function manejadorPrestaciones(req,res,objeto){
           
           break;
      case 'practica':
-        //verificar parctica procedimient y examen em el servidor,que esten en la base de datos
-           aux = await prestacionDatatodos('practicas');
+            aux = await prestacionDatatodos('practicas');
            res.send(aux);
         break;     
      case 'examen':
@@ -61,23 +61,18 @@ async function manejadorPrestaciones(req,res,objeto){
      case 'crearPrestacion':
         objet = req.body;
         if(!existeBd(objet.idPractica,'practica','id_practica')){
-            return res.status(500).send(error);
+            return retornarError(res,'La practica no existe en la base de datos');
         }
         if(!existeBd(objet.idProcedimiento,'procedimiento','id_procedimiento')){
-            return res.status(500).send(error);
+            return retornarError(res,'El Procedimiento no existe en la base de datos');
         }
         if(!existeBd(objet.idExamen,'examen','id_examen')){
-            return res.status(500).send(error);
+            return retornarError (res,'El Examen no existe en la base de datos');
         }
           let suces=await crearPrestacion(objet);
-          console.log(suces);
-            if(suces.error){
-                //console.log(`suces error : ${suces.error}`);
-                return res.status(500).send(suces.error);
-            }else{
-                //let estadoSuces=suces.success;
+          if (suces instanceof Error) {return retornarError(res,`Error al crear la Prestacion ${suces.message}`)}
                 return res.send(suces);
-                   }
+                   
           
             break;
       
@@ -89,8 +84,7 @@ async function manejadorPrestaciones(req,res,objeto){
             aux=await prestacionDataModificar('estado',objet.idPrestacion,objet.estadoPrestacion) ;
             return res.send(aux);
          }else{
-            errorMessage='La Prestacion no existe en la base de datos';
-            return res.status(400).send({message:errorMessage});
+            return retornarError(res,'La Prestacion no existe en la base de datos');
          }
         
         break 
@@ -103,8 +97,7 @@ async function manejadorPrestaciones(req,res,objeto){
             aux=await prestacionDataModificar('procedimiento',objet.idPrestacion,objet.idProcedimiento);
             return res.send(aux); 
          }else{
-            errorMessage='La prestacion o el procedimiento no existen en la base de datos';
-            return res.status(400).send({message:errorMessage});
+            return retornarError(res,'La prestacion o el procedimiento no existen en la base de datos');
          }
        
         break 
@@ -116,8 +109,7 @@ async function manejadorPrestaciones(req,res,objeto){
             aux=await prestacionDataModificar('examen',objet.idPrestacion,objet.idExamen);
             return res.send(aux); 
           }else{
-            errorMessage='La prestacion o el examen no existen en la base de datos';
-            return res.status(400).send({message:errorMessage});
+            return retornarError(res,'La prestacion o el examen no existen en la base de datos');
             }
        break;
        case 'agregarPractica':
@@ -126,14 +118,14 @@ async function manejadorPrestaciones(req,res,objeto){
           // console.log(aux.ValidationError);
            if(aux.errors){
             return res.status(500).send(aux.errors);
-           }else{
+           }//verificar que el nombre no exista en la base de datos
             aux=await prestacionDataAgregar(objet.nombrePractica,'practica');
             if (aux instanceof Error) {
                 console.error("Error en la consulta sql:", aux.message);
                 return res.status(500).json({ message: aux.message }); // Devuelve un error HTTP 500 al cliente
      }
             return res.send(aux);
-           }
+           
         break;
        case 'agregarProcedimiento':
             objet=req.body;

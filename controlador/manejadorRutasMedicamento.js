@@ -97,7 +97,7 @@ async function manejadorMedicamentos(req,res,objeto){
         if(!existeBd(objet.idPresentacion,'presentacion','id_presentacion')){return retornarError(res,`La presentacion no existe en la base de datos ${aux.message}`)}
          suces=await crearMedicamento(objet);
          
-          if (suces instanceof Error||!suces.success) {return retornarError(res,`Error al crear el medicamento ${suces.message}`)}
+          if (suces instanceof Error) {return retornarError(res,`Error al crear el medicamento ${suces.message}`)}
             return res.send(suces);
            break;
       
@@ -139,11 +139,22 @@ async function manejadorMedicamentos(req,res,objeto){
         e2=await existeBd(objet.idFamilia,'familia','id_familia');
         if(e1&&e2){
             aux=await medicamentoDataModificar('familia',objet.idNG,objet.idFamilia);
-            if (aux instanceof Error) {return retornarError(res,`Error al modificar la Familia ${suces.message}`)}
+            if (aux instanceof Error) {return retornarError(res,`Error al modificar la Familia ${aux.message}`)}
             return res.send(aux); 
           }else{return retornarError(res,'El nombre Generico o la Familia no existaen')}
        break;
-       case 'agregarFamilia':
+    case 'modificarPresentacion':
+        objet=req.body;
+        //console.log(objet);
+        e1=await existeBd(objet.idNGP,'nombre_generico_presentacion','id_n_g_p');
+        e2=await existeBd(objet.idPresentacion,'presentacion','id_presentacion');
+        if(e1&&e2){
+            aux=await medicamentoDataModificar('presentacion',objet.idNGP,objet.idPresentacion);
+            if (aux instanceof Error) {return retornarError(res,`Error al modificar la Presentacion ${aux.message}`)}
+            return res.send(aux); 
+          }else{return retornarError(res,'El nombre del Medicamento o la Presentacion no existaen')}
+        break;   
+    case 'agregarFamilia':
            objet=req.body;
            aux=await verificar(objet,'nombreFamilia');
            if(aux.errors){return retornarError(res,`Error al verificar el Nombre de la Familia ${aux.message}`)}

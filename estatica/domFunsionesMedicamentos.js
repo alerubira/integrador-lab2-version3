@@ -50,7 +50,7 @@ function modificarEstadoM(){
    limpiarCampos(limpiar);
    let m={};
    m.idNGP=medicamento.id_n_g_p;
-   if(medicamento.estado_n_g_p===1){
+   if(medicamento.activo_n_g_p===1){
         m.estado_n_g_p=false;
    }else{
         m.estado_n_g_p=true;
@@ -75,7 +75,7 @@ function modificarEstadoNG(){
    let pre=await presentaciones.data.find(no=>no.nombre_presentacion===nuevoPresentacionValue);
    if(pre){
    let p={};
-   p.idPrestacion=pre.id_presentacion;
+   p.idPresentacion=pre.id_presentacion;
    p.idNGP=medicamento.id_n_g_p;
    fechProtegidoPost('/modificarPresentacion',p);
    }else{
@@ -83,17 +83,19 @@ function modificarEstadoNG(){
    }
    
    }
-   async function modificarForma(){
-     //traer con el medicamento(modificar procedimiento)el id de nombre generico forma para hacer update
-   let nuevoExamenValue=inputNuevaForma.value;
-   let ex=await presentaciones.data.find(e=>e.nombre_examen===nuevoExamenValue);
-   if(ex){
-   let exa={};
-   exa.idPrestacion=medicamento.id_prestacion;
-   exa.idExamen=ex.id_examen;
-   fechProtegidoPost('/modificarExamen',exa);
-   }   
-   }
+ /*  async function modificarForma(){
+
+   let nuevaFormaValue=inputNuevaForma.value;
+   let fo=await formas.data.find(e=>e.nombre_forma===nuevaFormaValue);
+   if(fo){
+   let f={};
+   f.idPrestacion=medicamento.id_prestacion;
+   f.idExamen=fo.id_examen;
+   fechProtegidoPost('/modificarForma',f);
+   }  else{
+     alerta(pagina,'La Forma Farmacologica seleccionada no es valida');
+} 
+   }*/
    async function modificarFamilia(){
      let nuevaFamiliaValue=inputNuevaFamilia.value;
      let fa=await familias.data.find(no=>no.nombre_familia===nuevaFamiliaValue);
