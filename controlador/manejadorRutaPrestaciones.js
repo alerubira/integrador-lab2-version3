@@ -73,16 +73,13 @@ async function manejadorPrestaciones(req,res,objeto){
           let suces=await crearPrestacion(objet);
           if (suces instanceof Error) {return retornarError(res,`Error al crear la Prestacion ${suces.message}`)}
                 return res.send(suces);
-                   
-          
             break;
-      
-    case 'modificarEsatdo':
+       case 'modificarEsatdo':
          objet=req.body;
-         //console.log(objet);
          e1=await existeBd(objet.idPrestacion,'prestacion','id_prestacion');
          if(e1){
             aux=await prestacionDataModificar('estado',objet.idPrestacion,objet.estadoPrestacion) ;
+            if (aux instanceof Error) {return retornarError(res,`Error al modificar el Estado de la Prestacion ${aux.message}`)}
             return res.send(aux);
          }else{
             return retornarError(res,'La Prestacion no existe en la base de datos');
@@ -96,6 +93,7 @@ async function manejadorPrestaciones(req,res,objeto){
          e2=await existeBd(objet.idProcedimiento,'procedimiento','id_procedimiento');
          if(e1&&e2){
             aux=await prestacionDataModificar('procedimiento',objet.idPrestacion,objet.idProcedimiento);
+            if (aux instanceof Error) {return retornarError(res,`Error al modificar el Estado del Procedimiento ${aux.message}`)}
             return res.send(aux); 
          }else{
             return retornarError(res,'La prestacion o el procedimiento no existen en la base de datos');
@@ -108,6 +106,7 @@ async function manejadorPrestaciones(req,res,objeto){
         e2=await existeBd(objet.idExamen,'examen','id_examen');
         if(e1&&e2){
             aux=await prestacionDataModificar('examen',objet.idPrestacion,objet.idExamen);
+            if (aux instanceof Error) {return retornarError(res,`Error al modificar el El Examen ${aux.message}`)}
             return res.send(aux); 
           }else{
             return retornarError(res,'La prestacion o el examen no existen en la base de datos');
@@ -116,56 +115,37 @@ async function manejadorPrestaciones(req,res,objeto){
        case 'agregarPractica':
            objet=req.body;
            aux=await verificar(objet,'nombrePractica');
-          // console.log(aux.ValidationError);
-           if(aux.errors){
-            return res.status(500).send(aux.errors);
-           }
-           //verificar que el nombre exista en la base de datos
-          // aux=await existeNombreBd(objet.nombreGenerico,'nombre_generico','nombre_generico');
+           if(aux.errors){return retornarError(res,`El nombre de la Prestacion no es valido,${aux.message}`)}
+           aux=await existeNombreBd(objet.nombrePractica,'practica','nombre_practica');
+           if(aux){return retornarError(res,'el nombre de la Practica ya existe , coloque uno distinto') }
             aux=await prestacionDataAgregar(objet.nombrePractica,'practica');
-            if (aux instanceof Error) {
-                console.error("Error en la consulta sql:", aux.message);
-                return res.status(500).json({ message: aux.message }); // Devuelve un error HTTP 500 al cliente
-     }
+            if (aux instanceof Error) {return retornarError(res,`Error al agregar Practica,${aux.message}`)}
             return res.send(aux);
-           
-        break;
-       case 'agregarProcedimiento'://reacomodar y verificar
+           break;
+       case 'agregarProcedimiento':
             objet=req.body;
             aux=await verificar(objet,'nombreProcedimiento');
-          // console.log(aux.errors);
-            if(aux.errors){
-                return res.status(500).send(aux.errors);
-            }else{
-              aux=await prestacionDataAgregar(objet.nombreProcedimiento,'procedimiento');
-              if (aux instanceof Error) {
-                console.error("Error en la consulta sql:", aux.message);
-                return res.status(500).json({ message: aux.message }); // Devuelve un error HTTP 500 al cliente
-     }
-              return res.send(aux);
-            }
-        break;
-       case 'agregarExamen'://reacomodar y verificar
+            if(aux.errors){return retornarError(res,`El nombre del Procedimiento no es valido,${aux.message}`)}
+            aux=await existeNombreBd(objet.nombreProcedimiento,'procedimiento','nombre_procedimiento');
+            if(aux){return retornarError(res,'el nombre del Procedimiento  ya existe , coloque uno distinto') }
+            aux=await prestacionDataAgregar(objet.nombreProcedimiento,'procedimiento');
+            if (aux instanceof Error) {return retornarError(res,`Error al agregar el Procedimiento,${aux.message}`)}
+             return res.send(aux);
+            break;
+       case 'agregarExamen':
             objet=req.body;
             aux=await verificar(objet,'nombreExamen');
-            //console.log(aux);
-            if(aux.errors){
-                return res.status(500).send(aux.errors);
-            }else{
-                aux=await prestacionDataAgregar(objet.nombreExamen,'examen');
-                 if (aux instanceof Error) {
-                            console.error("Error en la consulta sql:", aux.message);
-                            return res.status(500).json({ message: aux.message }); // Devuelve un error HTTP 500 al cliente
-                 }
-                return res.send(aux);
-                 }
-                
-
-        break;                    
+            if(aux.errors){return retornarError(res,`El nombre del Eamen no es valido:${aux.message}`)}
+            aux=await existeNombreBd(objet.nombreExamen,'examen','nombre_examen');
+            if(aux){return retornarError(res,'el nombre del Examen  ya existe , coloque uno distinto') }
+             aux=await prestacionDataAgregar(objet.nombreExamen,'examen');
+            if (aux instanceof Error) {return retornarError(res,`Error al agregar Examen:${aux.message}`)}
+            return res.send(aux);
+             break;                    
     }
 }catch (error) {
-    console.error(`Error al Procesar el ${objeto} en Prestaciones`, error);
-    return res.status(500).send(error.message);
+    return retornarError(res,`Error al precesar ${objeto} en Prestaciones , ${error.message}` )
+    
 }
     }
     

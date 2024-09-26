@@ -72,9 +72,7 @@ async function manejadorMedicamentos(req,res,objeto){
         let a={};
          a.nombreGenerico=objet.nombreGenerico;
         aux=await verificar(a,'nombreGenerico');
-        if(aux.errors){
-            return res.status(500).send(aux.errors);
-        }
+        if(aux.errors){return retornarError(res,`El Nomre Generico no tiene el formato correcto,${aux.message}`)}
         aux=await existeNombreBd(objet.nombreGenerico,'nombre_generico','nombre_generico');
         if(aux){return retornarError(res,'el nombre generico del madicamento ya existe , coloque uno distinto') }
      
@@ -84,20 +82,16 @@ async function manejadorMedicamentos(req,res,objeto){
         if(!aux){return retornarError(res,'La categoria no existe en la base de datos')}
             
          suces=await medicamentoDataAgregar(objet,'nombreGenerico');
-        if (suces instanceof Error) {
-          console.error("Error en la consulta sql:", suces.message);
-          return res.status(500).json({ message: suces.message }); // Devuelve un error HTTP 500 al cliente
-        }else{
+        if (suces instanceof Error) {return retornarError(res,`Error al crear Nombre Generico,${suces.message}`)}
           return res.send(suces);
-        }
         break;         
      case 'crearMedicamento':
         objet = req.body;
         if(!existeBd(objet.idForma,'forma_farmaceutica','id_forma')){return retornarError(res,`La forma no existe en la base de datos ${aux.message}`)}
         if(!existeBd(objet.idPresentacion,'presentacion','id_presentacion')){return retornarError(res,`La presentacion no existe en la base de datos ${aux.message}`)}
-         suces=await crearMedicamento(objet);
-         
-          if (suces instanceof Error) {return retornarError(res,`Error al crear el medicamento ${suces.message}`)}
+         //verificar que el medicamento no exista en la base de datos
+        suces=await crearMedicamento(objet);
+         if (suces instanceof Error) {return retornarError(res,`Error al crear el medicamento ${suces.message}`)}
             return res.send(suces);
            break;
       
@@ -192,8 +186,7 @@ async function manejadorMedicamentos(req,res,objeto){
         default:return retornarError(res,'El manejador de rutas de Medicamentos no encontro la ruta');                
     }
 }catch (error) {
-    console.error(`Error al Procesar el ${objeto} en Medicamentos`, error);
-    return res.status(500).send(error.message);
+    return retornarError(res,`Error al procesar ${objeto} en Medicamentos ,${error.message}`)
 }
     }
     

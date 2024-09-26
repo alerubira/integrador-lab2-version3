@@ -110,49 +110,10 @@ return await(consulta1(query,domicilio,idMedico));
 async function crearPrestacion(Prestacion) {
     let query='INSERT INTO `prestacion`(`id_practica`, `id_procedimiento`, `id_examen`,`estado_prestacion`) values(?,?,?,?)'
     let respuesta=await consulta1(query,Prestacion.idPractica,Prestacion.idProcedimiento,Prestacion.idExamen,true);
-    //console.log(respuesta);
+    
    return respuesta;
 
-    //let usuarioH = await crearHash(Medico.usuarioProvisorio);
-
-  /*  let connection;
-    try {
-        connection = await pool.getConnection();
-        await connection.beginTransaction();
-        
-            const [personaResult] = await connection.execute(
-                'INSERT INTO `persona`(`nombre`, `apellido`, `dni_persona`) VALUES (?,?,?)',
-                [Medico.nombreProfecional, Medico.apellidoProfecional, Medico.dniProfecional]
-            );
-    
-             id_persona = personaResult.insertId;
-        
-        
-        const [medicoResult] = await connection.execute(
-            'INSERT INTO `medico`(`id_persona`, `domicilio`, `id_profecion`, `id_especialidad`, `matricula_profecional`, `id_refeps`,estado_medico) VALUES (?,?,?,?,?,?,?)',
-            [id_persona, Medico.domicilioProfecional, Medico.idProfecion, Medico.idEspecialidad, Medico.matriculaProfecional, Medico.refepsProfecional,true]
-        );
-
-        const id_medico = medicoResult.insertId;
-        let claveH = await crearHash(Medico.claveProvisoria);
-        const [loginResult] = await connection.execute(
-            'INSERT INTO `login`(`id_medico`, `usuario_login`, `clave_login`, `tipo_autorizacion`, `instancia`,`palabra_clave`) VALUES (?,?,?,?,?,?)',
-            [id_medico, Medico.usuarioProvisorio, claveH, Medico.nivelAutorizacion, 1,Medico.palabraClave]
-        );
-
-        await connection.commit();
-        return { success: true };
-    } catch (error) {
-        if (connection) {
-            await connection.rollback();
-        }
-        console.error('Error en la transacción:', error);
-        return { success: false, message: 'Error en la transacción', error };
-    } finally {
-        if (connection) {
-            connection.release(); // Devolvemos la conexión al pool
-        }
-    }*/
+   
 }
 
 async function prestacionDataAgregar(objet,agregar){
