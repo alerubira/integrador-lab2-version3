@@ -70,8 +70,8 @@ let existe=await consulta1(query,id,tabla,columna);
 return existe ;*/
 try {
     // Ejecuta el procedimiento almacenado
-    await consulta1('CALL VerificarEstaBd(?, ?, ?, @existe)', id ,tabla ,columna);
-    
+    let a=await consulta1('CALL VerificarEstaBd(?, ?, ?, @existe)', id ,tabla ,columna);
+    if(a instanceof Error){return a}
     // Obtiene el valor del parámetro de salida
     const result = await consulta1('SELECT @existe AS existe');
      // Verifica que el resultado esté en el formato esperado
@@ -82,10 +82,9 @@ try {
         return false;
     }
     
-
 } catch (err) {
     console.error('Error al ejecutar el procedimiento almacenado,existe id :', err.message);
-    return false;
+    return err;
 }
 }
 async function existeNombreBd(nombre,tabla,columna){
@@ -93,10 +92,11 @@ async function existeNombreBd(nombre,tabla,columna){
 try {
     // Ejecuta el procedimiento almacenado
     //await consulta1('CALL VerificarEstaBd(?, ?, ?, @existe)',nombre,tabla ,columna);
-    await consulta1('CALL VerificarEstaNombreBD(?, ?, ?, @resultado)',nombre,tabla,columna);
+  let a=  await consulta1('CALL VerificarEstaNombreBD(?, ?, ?, @resultado)',nombre,tabla,columna);
    /* CALL VerificarEstaNombreBD('valor_a_buscar', 'nombre_de_tabla', 'nombre_de_columna', @resultado);
 SELECT @resultado; -- Para ver el resultado*/
 
+if(a instanceof Error){return a}
     // Obtiene el valor del parámetro de salida
     const result = await consulta1('SELECT @resultado AS existe');
      // Verifica que el resultado esté en el formato esperado
@@ -110,7 +110,7 @@ SELECT @resultado; -- Para ver el resultado*/
 
 } catch (err) {
     console.error('Error al ejecutar el procedimiento almacenado,existe nombre :', err.message);
-    return false;
+    return err;
 }
 }
 async function existeConjuntoBD(tabla,nombreId,tabla1,tabla2,id1,id2){

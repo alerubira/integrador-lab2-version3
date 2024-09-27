@@ -3,7 +3,7 @@ import { encabezado } from "../rutas.js";
 import { medicoDatatodos,medicoDataModificar,crearMedico ,medicoDataAgregar} from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 import { Medico } from "../modelo/clasesEntidad.js";
-import {  existeBd } from "../modelo/conexxionBD.js";
+import {  existeBd,existeNombreBd } from "../modelo/conexxionBD.js";
 import { retornarError } from "./funsionesControlador.js";
 let estadoSuces;
 let mensajeExito;
@@ -108,32 +108,29 @@ async function manejadorMedicos(req,res,objeto){
                 objet=req.body;
                 aux=await verificar(objet,'nombreProfecion');
                 if(aux.errors){ return retornarError(res,`Error al verificar la tipologia de la Profecion,${aux.message}`)}
-               //verificar que el nombre no exista en la base de datos
+               aux=await existeNombreBd(objet.nombreProfecion,'profecion','nombre_profecion');
+               if(aux instanceof Error){return retornarError(res,`Error al verificar si existe Profecion,${aux.message}`)}
+               if(aux){return retornarError(res,'La profecion ya existe, seleccione otro nombre')}
                 aux=await medicoDataAgregar(objet.nombreProfecion,'profecion');
                 if (aux instanceof Error) {return retornarError(res,`Error al agregar Profecion a la base de datos,${aux.message}`)}
                  return res.send(aux);  
             break;
-        case 'agregarEspecialidad'://realizar lo mismo que en agregarProfecion
+        case 'agregarEspecialidad':
                 objet=req.body;
                 aux=await verificar(objet,'nombreEspecialidad');
-                if(aux.errors){
-                    return res.status(500).send(aux.errors);
-                }else{
-                    aux=await medicoDataAgregar(objet.nombreEspecialidad,'especialidad');
-                    if (aux instanceof Error) {
-                                console.error("Error en la consulta sql:", aux.message);
-                                return res.status(500).json({ message: aux.message }); // Devuelve un error HTTP 500 al cliente
-                    }
-                    return res.send(aux);
-                    }
-                    
-
-            break;                    
-                     
-    }
+                if(aux.errors){return retornarError(res,`Error al verificar la tiologia de la Especialidad,${aux.message}`)}
+                aux=await existeNombreBd(objet.nombreespecialidad,'especialidad','nombre_especialidad');
+                if(aux instanceof Error){return retornarError(res,`Error al verificar si existe Especialidad,${aux.message}`)}
+                if(aux){return retornarError(res,'La especialidad ya existe,seleccione una nueva')}
+                aux=await medicoDataAgregar(objet.nombreEspecialidad,'especialidad');
+                if (aux instanceof Error) {return retornarError(res,`Error al agregar la Especialidad,${aux.message}`)}
+                return res.send(aux);
+                break;                    
+        default :
+        return retornarError(res,'Seleccion no nalida en el manejador Medicos')             
+            }
 }catch (error) {
-    console.error(`Error al Procesar el ${objeto} en Medicos`, error);
-    return res.status(500).send(error);
+    return retornarError(res,`Erroe al procesar el ${objeto} en Medicos:${error.message}`)
 }
 }
     

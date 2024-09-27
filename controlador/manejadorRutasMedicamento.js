@@ -64,7 +64,7 @@ async function manejadorMedicamentos(req,res,objeto){
         break  
      case 'categorias':
         aux=await medicamentoDatatodos('categorias');
-        // console.log(aux);
+        
          res.send(aux);  
          break;  
     case 'crearNombreGenerico':
@@ -98,6 +98,7 @@ async function manejadorMedicamentos(req,res,objeto){
     case 'modificarEstadoNG':
          objet=req.body;
          e1=await existeBd(objet.idNG,'nombre_generico','id_nombre_generico');
+         if(e1 instanceof Error){return retornarError(res,`Error al verificar si existe el nombre generico,${e1.message}`)}
          if(e1){
             aux=await medicamentoDataModificar('estadoNombreGenerico',objet.idNG,objet.estadoNombreGenerico) ;
             if (aux instanceof Error) {return retornarError(res,`Error al modificar el Estado del nombre Generico ${aux.message}`)}
@@ -128,7 +129,6 @@ async function manejadorMedicamentos(req,res,objeto){
         break 
     case 'modificarFamilia':
         objet=req.body;
-        //console.log(objet);
         e1=await existeBd(objet.idNG,'nombre_generico','id_nombre_generico');
         e2=await existeBd(objet.idFamilia,'familia','id_familia');
         if(e1&&e2){
@@ -152,8 +152,8 @@ async function manejadorMedicamentos(req,res,objeto){
            objet=req.body;
            aux=await verificar(objet,'nombreFamilia');
            if(aux.errors){return retornarError(res,`Error al verificar el Nombre de la Familia ${aux.message}`)}
-           
            aux=await existeNombreBd(objet.nombreFamilia,'familia','nombre_familia');
+           if(aux instanceof Error){return retornarError(res,`Error al verificar si existe la Familia,${aux.message}`)}
            if(aux){return retornarError(res,'el nombre de la Familia ya existe , coloque uno distinto') }
             aux=await medicamentoDataAgregar(objet.nombreFamilia,'familia');
             if (aux instanceof Error) {return retornarError(res,`Error en la consulta ${aux.message}`)}
@@ -162,7 +162,10 @@ async function manejadorMedicamentos(req,res,objeto){
        case 'agregarCategoria':
             objet=req.body;
             aux=await verificar(objet,'nombreCategoria');
-            if(aux.errors){return retornarError(res,`Error al verificar el nombre de la Categoria ${aux.message}`)}
+            if(aux.errors){return retornarError(res,`Error al verificar la tipologia de el nombre de la Categoria ${aux.message}`)}
+            aux=await existeNombreBd(objet.nombreCategoria,'categoria','nombre_categoria');
+            if(aux instanceof Error){return retornarError(res,`Error al verificar si existe la Categoria,${aux.message}`)}
+            if(aux){return retornarError(res,'La Categoria ya exista, seleccione otro nombre')}
            aux=await medicamentoDataAgregar(objet.nombreCategoria,'categoria');
             if (aux instanceof Error) {return retornarError(res,`Error en la consulta ${aux.message}`)}
              return res.send(aux);
@@ -170,7 +173,11 @@ async function manejadorMedicamentos(req,res,objeto){
        case 'agregarForma':
             objet=req.body;
             aux=await verificar(objet,'nombreForma');
-            if(aux.errors){return retornarError(res,`Error al verificar el nombre de la forma ${aux.message}`)}
+            if(aux.errors){return retornarError(res,`Error al verificar la tipologia de el nombre de la forma ${aux.message}`)}
+            aux=await existeNombreBd(objet.nombreForma,'forma_farmaceutica','nombre_forma_farmacologica');
+           
+            if(aux instanceof Error){return retornarError(res,`Error al buscar si existe la forma farmacologica,${aux.message}`)}
+            if(aux){return retornarError(res,'La Forma Farmacologica ya existe,coloque una nueva')}
             aux=await medicamentoDataAgregar(objet.nombreForma,'forma');
             if(aux instanceof Error) {return retornarError(res,`Error en la consulta ${aux.message}`)}
             return res.send(aux);
@@ -178,7 +185,10 @@ async function manejadorMedicamentos(req,res,objeto){
         case 'agregarPresentacion':
             objet=req.body;
             aux=await verificar(objet,'nombrePresentacion');
-            if(aux.errors){return retornarError(res,`Error en la verificacion del nombre de la Presentacion ${aux.message}`)}
+            if(aux.errors){return retornarError(res,`Error en la verificacion de la tipologia del nombre de la Presentacion ${aux.message}`)}
+            aux=await existeNombreBd(objet.nombrePresentacion,'presentacion','nombre_presentacion');
+            if(aux instanceof Error){return retornarError(res,`Error al verificar si existe la prestacion,${aux.message}`)}
+            if(aux){return retornarError(res,'El nombre de la Prestacion ya existe, seleccione uno nuevo')}
             aux=await medicamentoDataAgregar(objet.nombrePresentacion,'presentacion');
             if (aux instanceof Error) {return retornarError(res,`Error en la consulta ${aux.message}`)}
             return res.send(aux);

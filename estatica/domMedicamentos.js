@@ -131,6 +131,8 @@ let medData;
                fOcultar();
                familias=await traerFamilias();
                categorias=await traerCategorias();
+               eliminarHijos(dlFamilia);
+               eliminarHijos(dlCategoria);
                llenarDl(dlFamilia,familias.data,'nombre_familia')
                llenarDl(dlCategoria,categorias.data,'nombre_categoria');
                mostrar(divANombreGenerico);
