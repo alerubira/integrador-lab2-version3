@@ -1,10 +1,14 @@
 async function traerMedicamentos(){
-    familias=await fechProtegido("/procedimiento");
-    if(familias.error){
-         alerta(pagina,'Hubo un inconveniente al buscar procedimientos');
+     medicamentos=await fechProtegido('/medicamentosTodos');
+     medData=medicamentos.data;
+   if(medicamentos.error){
+         alerta(pagina,`Hubo un inconveniente al buscar medicamentos: ${medicamentos.error.message}`);
+         return false;
     }else{
-         return familias;
+         medData[0].sort((a, b) => a.id_nombre_generico - b.id_nombre_generico);
+        return medData[0];
     }
+   
 }
 async function traerNombresGenericos(){
      nombresGenericos=await fechProtegido("/nombresGenericos");
@@ -83,19 +87,7 @@ function modificarEstadoNG(){
    }
    
    }
- /*  async function modificarForma(){
-
-   let nuevaFormaValue=inputNuevaForma.value;
-   let fo=await formas.data.find(e=>e.nombre_forma===nuevaFormaValue);
-   if(fo){
-   let f={};
-   f.idPrestacion=medicamento.id_prestacion;
-   f.idExamen=fo.id_examen;
-   fechProtegidoPost('/modificarForma',f);
-   }  else{
-     alerta(pagina,'La Forma Farmacologica seleccionada no es valida');
-} 
-   }*/
+ 
    async function modificarFamilia(){
      let nuevaFamiliaValue=inputNuevaFamilia.value;
      let fa=await familias.data.find(no=>no.nombre_familia===nuevaFamiliaValue);
@@ -120,9 +112,17 @@ function modificarEstadoNG(){
           alerta(pagina,'La Categoria seleccionada no es valida');
    }
    }
- async function modificarNG(){
-
- }  
+ async function modificarNombreG(){
+     let nuevoNombreGenericoValue=inputNombreGenericoNuevo.value;
+     let a=validar(nuevoNombreGenericoValue.length<1||nuevoNombreGenericoValue.length>38,pagina,'El Nombre es obligatoria y no debe superar los 28 caracteres');
+     if(a){
+     let nNG={};
+     nNG.idNombreGenerico=medicamento.id_nombre_generico;
+     nNG.nuevoNombreGenerico=nuevoNombreGenericoValue
+     fechProtegidoPost('/modificarNombreGenerico',nNG);
+     }
+   } 
+ 
    async function seleccionarMedicamento(event){
        fOcultar();
        mostrar(divModificarMedicamento);

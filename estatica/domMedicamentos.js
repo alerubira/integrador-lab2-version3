@@ -71,6 +71,9 @@ let medData;
      fOcultar();
      switch(selectedValue) {
           case 'crearMedicamento':
+               eliminarHijos(dlNombreGenerico);
+               eliminarHijos(dlForma);
+               eliminarHijos(dlPresentacion);
                nombresGenericos=await traerNombresGenericos();
                formas=await traerFormas();
                presentaciones=await traerPresentaciones();
@@ -85,14 +88,10 @@ let medData;
           case 'buscarMedicamentos':
               fOcultar();
               eliminarHijos(cuerpo);
-               medicamentos=await fechProtegido('/medicamentosTodos');
-                medData=medicamentos.data;
-              if(medicamentos.error){
-                    alerta(pagina,`Hubo un inconveniente al buscar medicamentos: ${medicamentos.error.message}`);
-               }else{
-                    medData[0].sort((a, b) => a.id_nombre_generico - b.id_nombre_generico);
+              medicamentos=await traerMedicamentos();
+              if(medicamentos){
                 mostrar(divBuscarMedicamentos);
-                for(let m of medData[0]){
+                for(let m of medicamentos){
                     let tr=document.createElement('tr');
                     cuerpo.appendChild(tr);
                     agregarTdCuerpo(m.id_n_g_p,tr);
@@ -124,8 +123,8 @@ let medData;
                              td.appendChild(btn);
                              tr.appendChild(td); 
                               }
-                           
-                  }
+                         }          
+                  
                 break;
           case 'agregarNombreGenerico':
                fOcultar();

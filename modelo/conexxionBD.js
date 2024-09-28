@@ -74,6 +74,7 @@ try {
     if(a instanceof Error){return a}
     // Obtiene el valor del parámetro de salida
     const result = await consulta1('SELECT @existe AS existe');
+    if(result instanceof Error){return result}
      // Verifica que el resultado esté en el formato esperado
      if (result && result.length > 0) {
         const existe = result[0].existe;
@@ -99,6 +100,7 @@ SELECT @resultado; -- Para ver el resultado*/
 if(a instanceof Error){return a}
     // Obtiene el valor del parámetro de salida
     const result = await consulta1('SELECT @resultado AS existe');
+    if(result instanceof Error){return result}
      // Verifica que el resultado esté en el formato esperado
      if (result && result.length > 0) {
         const existe = result[0].existe;
@@ -116,10 +118,11 @@ if(a instanceof Error){return a}
 async function existeConjuntoBD(tabla,nombreId,tabla1,tabla2,id1,id2){
     try {
         
-        await consulta1(`CALL verificar_numeros_en_tabla(?, ?, ?, ?,?,?, @resultado); `,tabla,nombreId,tabla1,tabla2,id1,id2);
-    
+       let a= await consulta1(`CALL verificar_numeros_en_tabla(?, ?, ?, ?,?,?, @resultado); `,tabla,nombreId,tabla1,tabla2,id1,id2);
+    if(a instanceof Error){return a}
         // Obtiene el valor del parámetro de salida
         const result = await consulta1('SELECT @resultado as resultado;');
+        if (result instanceof Error){return result}
          // Verifica que el resultado esté en el formato esperado
         /* if (result && result.length > 0) {
             const existe = result[0].existe;

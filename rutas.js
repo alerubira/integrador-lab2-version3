@@ -175,6 +175,9 @@ manejadorMedicamentos(req,res,'crearMedicamento');
  ruta.post('/modificarPresentacion',verificarToken,async(req,res)=>{
   manejadorMedicamentos(req,res,'modificarPresentacion');
  })
+ ruta.post('/modificarNombreGenerico',verificarToken,async(req,res)=>{
+  manejadorMedicamentos(req,res,'modificarNombreGenerico');
+ })
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
    // Obtener el ID del Profesional enviado desde el formulario
  const idProfecional = req.body.idAdministrativoR;
