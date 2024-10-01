@@ -5,4 +5,8 @@ function retornarError(res,mensaje){
         message: mensaje,
     });
 }
-export{retornarError}
+function retornarErrorSinRes(message) {
+    console.log(message);
+    return new Error(message);
+}
+export{retornarError,retornarErrorSinRes}

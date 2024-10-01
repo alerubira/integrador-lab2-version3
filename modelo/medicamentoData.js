@@ -1,5 +1,6 @@
 //import { connection } from "./conexxionBD.js";
 //import { Medico } from './clasesEntidad.js';
+import { retornarErrorSinRes } from "../controlador/funsionesControlador.js";
 import { consulta1 ,existeBd,pool,existeConjuntoBD} from "./conexxionBD.js";
 //import { crearHash } from "./loginn.js";
 //import { buscarIdPorDni } from './PersonaData.js';
@@ -28,7 +29,13 @@ async function medicamentoDataModificar(modificar,id,modificante){
         case 'presentacion':
             query='UPDATE `nombre_generico_presentacion` SET `id_presentacion`=? WHERE id_n_g_p=?';
             return await(consulta1(query,modificante,id));
-            break;    
+            break;
+        case 'nombreGenerico':
+            query='UPDATE `nombre_generico` SET `nombre_generico`=? WHERE id_nombre_generico=?';
+            return await(consulta1(query,modificante,id));
+            break; 
+        default:
+             return retornarErrorSinRes(`Seleccion:${modificar}, en medicamentoDataModificar,NO VALIDA`);          
     }
 
    }catch(error){
@@ -64,6 +71,8 @@ try{
         query='CALL obtener_medicamentos()';
         return await consulta1(query);
         break;
+        default:
+            return retornarErrorSinRes(`Seleccion:${traer}, en MedicamentosDataTodos,NO VALIDA`)
     }
 }catch(error){
     console.error(`Error al buscar  ${traer} `, error);
@@ -194,7 +203,8 @@ async function medicamentoDataAgregar(objet,agregar){
             query='INSERT INTO `presentacion`(`nombre_presentacion`) VALUES (?)';
             return await consulta1(query,objet);
             break;    
-         
+        default:
+            return retornarErrorSinRes(`Seleccion:${agregar},en medicamentoDataAgregar,NO VALIDA`) 
           }
     }catch(error){
         console.error(`Error al agregar  ${agregar} `, error);

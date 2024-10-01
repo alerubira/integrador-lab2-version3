@@ -166,14 +166,16 @@ async function manejadorMedicamentos(req,res,objeto){
         break;
     case 'modificarNombreGenerico':
         objet=req.body;
-        aux=await existeBd(objet.idNonmbreGenerico,'nombre_generico','id_nombre_generico');
+        aux=await existeBd(objet.idNombreGenerico,'nombre_generico','id_nombre_generico');
         if (aux instanceof Error) {return retornarError(res,`Error al verificar si existe el nombre generico ${aux.message}`)}
         if(!aux){return retornarError(res,'El nombre generico a modificar no se ncontro en la base de datos')}
        let nG={};
-         nG.nombreGenerico=objet.nuevNombreGenerico;
+         nG.nombreGenerico=objet.nuevoNombreGenerico;
         aux=await verificar(nG,'nombreGenerico');
-           if(aux.errors){return retornarError(res,`Error al verificar la tipologia del nuevo Nombre Generico ${aux.message}`)}
-//hacer udate
+        if(aux.errors){return retornarError(res,`Error al verificar la tipologia del nuevo Nombre Generico ${aux.message}`)}
+        aux=await medicamentoDataModificar('nombreGenerico',objet.idNombreGenerico,objet.nuevNombreGenerico);
+        if(aux instanceof Error){return retornarError(res,`Error al modificar el Nombre Generico:${aux.message}`)}
+       return res.send(aux);
         break;       
     case 'agregarFamilia':
            objet=req.body;

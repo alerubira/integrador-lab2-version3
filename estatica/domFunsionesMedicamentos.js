@@ -113,8 +113,8 @@ function modificarEstadoNG(){
    }
    }
  async function modificarNombreG(){
-     let nuevoNombreGenericoValue=inputNombreGenericoNuevo.value;
-     let a=validar(nuevoNombreGenericoValue.length<1||nuevoNombreGenericoValue.length>38,pagina,'El Nombre es obligatoria y no debe superar los 28 caracteres');
+     let nuevoNombreGenericoValue=inputNNombreG.value;
+     let a=validar(nuevoNombreGenericoValue.length<1||nuevoNombreGenericoValue.length>38,pagina,'El Nombre es obligatoria y no debe superar los 38 caracteres');
      if(a){
      let nNG={};
      nNG.idNombreGenerico=medicamento.id_nombre_generico;
