@@ -72,6 +72,18 @@ function modificarEstadoNG(){
           ng.estadoNombreGenerico=true;
      }
      fechProtegidoPost('/modificarEstadoNG',ng);
+}
+async function modificarForma(){
+     let nuevaFormaValue=inputNuevaForma.value;
+     let fo=await formas.data.find(no=>no.nombre_forma===nuevaFormaValue);
+     if(fo){
+     let f={};
+     f.idForma=fo.id_forma;
+     f.idNGP=medicamento.id_n_g_p;
+     fechProtegidoPost('/modificarForma',f);
+     }else{
+          alerta(pagina,'La Forma Farmaceutica seleccionada no es valida');
+     }  
 }               
  async function modificarPresentacion(){
   

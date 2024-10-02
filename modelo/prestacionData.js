@@ -1,6 +1,7 @@
 //import { connection } from "./conexxionBD.js";
 //import { Medico } from './clasesEntidad.js';
 import { consulta1 ,existeBd,pool} from "./conexxionBD.js";
+import { retornarErrorSinRes } from "../controlador/funsionesControlador.js";
 //import { crearHash } from "./loginn.js";
 import { buscarIdPorDni } from './PersonaData.js';
 let profecionales;
@@ -20,6 +21,8 @@ async function prestacionDataModificar(modificar,id,modificante){
              query='UPDATE `prestacion` SET `id_examen`=? WHERE id_prestacion=?';
             return await(consulta1(query,modificante,id));
             break; 
+            default:
+                return retornarErrorSinRes(`Seleccion:${modificar}, en prestacionDataModificar,NO VALIDA`);    
     }
 
    }catch(error){
@@ -45,7 +48,9 @@ try{
      case 'prestaciones':
          query='SELECT pre.id_prestacion,pre.id_practica,pre.id_procedimiento,pre.id_examen,pra.nombre_practica,pro.nombre_procedimiento,ex.nombre_examen,pre.estado_prestacion FROM `prestacion` pre JOIN `practica` pra ON pre.id_practica=pra.id_practica JOIN `examen` ex on pre.id_examen=ex.id_examen JOIN `procedimiento` pro on pre.id_procedimiento=pro.id_procedimiento WHERE 1';
         return await   consulta1(query);
-        break 
+        break;
+        default:
+            return retornarErrorSinRes(`Seleccion:${traer}, en prestacionDatatodos,NO VALIDA`); 
       }
 }catch(error){
     console.error(`Error al buscar  ${traer} `, error);
@@ -131,7 +136,8 @@ async function prestacionDataAgregar(objet,agregar){
             query='INSERT INTO `procedimiento`(`nombre_procedimiento`) VALUES (?)';
             return await consulta1(query,objet);
             break
-         
+            default:
+                return retornarErrorSinRes(`Seleccion:${agregar}, en prestacionDataAgregar,NO VALIDA`);
           }
     }catch(error){
         console.error(`Error al agregar  ${agregar} `, error);

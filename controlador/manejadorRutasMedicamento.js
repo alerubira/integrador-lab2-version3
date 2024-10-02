@@ -134,10 +134,11 @@ async function manejadorMedicamentos(req,res,objeto){
         objet=req.body;
          e1=await existeBd(objet.idNG,'nombre_generico','id_nombre_generico');
          e2=await existeBd(objet.idCategoria,'categoria','id_categoria');
-         if(e1||e2 instanceof Error){return retornarError(res,`Error al verificar si existe el nombre generico o la categoria,${aux.message}`)}
+         if(e1 instanceof Error){return retornarError(res,`Error al verificar si existe el nombre generico ,${e1.message}`)}
+         if(e2 instanceof Error){return retornarError(res,`Error al verificar si existe la categoria ,${e2.message}`)}
          if(e1&&e2){
             aux=await medicamentoDataModificar('categoria',objet.idNG,objet.idCategoria);
-            if (aux instanceof Error) {return retornarError(res,`Error al modificar la Categoria ${suces.message}`)}
+            if (aux instanceof Error) {return retornarError(res,`Error al modificar la Categoria ${aux.message}`)}
             return res.send(aux); 
          }else{ return retornarError(res,'El nombre Generico o la Categoria no existen') }
        
@@ -146,18 +147,24 @@ async function manejadorMedicamentos(req,res,objeto){
         objet=req.body;
         e1=await existeBd(objet.idNG,'nombre_generico','id_nombre_generico');
         e2=await existeBd(objet.idFamilia,'familia','id_familia');
-        if(e1||e2 instanceof Error){return retornarError(res,`Error al verificar si existe el nombre generico o la categoria,${aux.message}`)}
+        if(e1 instanceof Error){return retornarError(res,`Error al verificar si existe el nombre generico ,${e1.message}`)}
+        if(e2 instanceof Error){return retornarError(res,`Error al verificar si existe la Familia ,${e2.message}`)}
         if(e1&&e2){
             aux=await medicamentoDataModificar('familia',objet.idNG,objet.idFamilia);
             if (aux instanceof Error) {return retornarError(res,`Error al modificar la Familia ${aux.message}`)}
             return res.send(aux); 
           }else{return retornarError(res,'El nombre Generico o la Familia no existaen')}
        break;
+    case 'modificarForma':
+        objet=req.body;
+        e1=await existeBd(objet.idNGP,'nombre_generico_presentacion','id_n_g_p')
+        break;   
     case 'modificarPresentacion':
         objet=req.body;
         e1=await existeBd(objet.idNGP,'nombre_generico_presentacion','id_n_g_p');
         e2=await existeBd(objet.idPresentacion,'presentacion','id_presentacion');
-        if(e1||e2 instanceof Error){return retornarError(res,`Error al verificar si existe el nombre generico o la presentacion,${aux.message}`)}
+        if(e1 instanceof Error){return retornarError(res,`Error al verificar si existe el nombre generico ,${e1.message}`)}
+        if(e2 instanceof Error){return retornarError(res,`Error al verificar si existe la Presentacion ,${e2.message}`)}
         if(e1&&e2){
             aux=await medicamentoDataModificar('presentacion',objet.idNGP,objet.idPresentacion);
             if (aux instanceof Error) {return retornarError(res,`Error al modificar la Presentacion ${aux.message}`)}
@@ -169,11 +176,11 @@ async function manejadorMedicamentos(req,res,objeto){
         aux=await existeBd(objet.idNombreGenerico,'nombre_generico','id_nombre_generico');
         if (aux instanceof Error) {return retornarError(res,`Error al verificar si existe el nombre generico ${aux.message}`)}
         if(!aux){return retornarError(res,'El nombre generico a modificar no se ncontro en la base de datos')}
-       let nG={};
+        let nG={};
          nG.nombreGenerico=objet.nuevoNombreGenerico;
         aux=await verificar(nG,'nombreGenerico');
         if(aux.errors){return retornarError(res,`Error al verificar la tipologia del nuevo Nombre Generico ${aux.message}`)}
-        aux=await medicamentoDataModificar('nombreGenerico',objet.idNombreGenerico,objet.nuevNombreGenerico);
+        aux=await medicamentoDataModificar('nombreGenerico',objet.idNombreGenerico,objet.nuevoNombreGenerico);
         if(aux instanceof Error){return retornarError(res,`Error al modificar el Nombre Generico:${aux.message}`)}
        return res.send(aux);
         break;       
@@ -222,7 +229,8 @@ async function manejadorMedicamentos(req,res,objeto){
             if (aux instanceof Error) {return retornarError(res,`Error al agregar la Presentacion ${aux.message}`)}
             return res.send(aux);
             break;  
-        default:return retornarError(res,'El manejador de rutas de Medicamentos no encontro la ruta');                
+        default:
+            return retornarError(res,'El manejador de rutas de Medicamentos no encontro la ruta');                
     }
 }catch (error) {
     return retornarError(res,`Error al procesar ${objeto} en Medicamentos ,${error.message}`)

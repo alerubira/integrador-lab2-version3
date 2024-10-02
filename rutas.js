@@ -175,6 +175,9 @@ manejadorMedicamentos(req,res,'crearMedicamento');
  ruta.post('/modificarPresentacion',verificarToken,async(req,res)=>{
   manejadorMedicamentos(req,res,'modificarPresentacion');
  })
+ ruta.post('modificarForma',verificarToken,async(req,res)=>{
+  manejadorMedicamentos(req,res,'modificarForma');
+ })
  ruta.post('/modificarNombreGenerico',verificarToken,async(req,res)=>{
   manejadorMedicamentos(req,res,'modificarNombreGenerico');
  })
