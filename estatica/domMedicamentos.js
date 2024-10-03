@@ -51,6 +51,7 @@ let divEstadoNG=document.getElementById('divEstadoNG');
 let divEstadoM=document.getElementById('divEstadoM');
 let divNuevoNombreG=document.getElementById('divNuevoNombreG');
 let inputNNombreG=document.getElementById('nuevoNombreG');
+
 let formas;
 let presentaciones;
 let nombresGenericos;

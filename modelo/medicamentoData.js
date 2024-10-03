@@ -30,6 +30,10 @@ async function medicamentoDataModificar(modificar,id,modificante){
             query='UPDATE `nombre_generico_presentacion` SET `id_presentacion`=? WHERE id_n_g_p=?';
             return await(consulta1(query,modificante,id));
             break;
+        case 'forma':
+            query='CALL modificarForma(?, ?);';
+            return await(consulta1(query,modificante,id));
+            break;    
         case 'nombreGenerico':
             query='UPDATE `nombre_generico` SET `nombre_generico`=? WHERE id_nombre_generico=?';
             return await(consulta1(query,modificante,id));

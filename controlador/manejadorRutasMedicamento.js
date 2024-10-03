@@ -157,7 +157,15 @@ async function manejadorMedicamentos(req,res,objeto){
        break;
     case 'modificarForma':
         objet=req.body;
-        e1=await existeBd(objet.idNGP,'nombre_generico_presentacion','id_n_g_p')
+        e1=await existeBd(objet.idForma,'forma_farmaceutica','id_forma');
+        if(e1 instanceof Error){return retornarError(res,`Error al verificar si existe La Forma Farmaceutica:${e1.message}`)}
+        e2=await existeBd(objet.idNGP,'nombre_generico_forma','id_n_g_f');
+        if(e2 instanceof Error){return retornarError(res,`Error al verficar si existe el Madicamento:${e2.message}`)}
+        if(e1&&e2){
+            aux=await medicamentoDataModificar('forma',objet.idNGP,objet.idForma);
+            if(aux instanceof Error){return retornarError(res,`Error al modificar la Forma:${aux.message}`)}
+            return res.send(aux);
+        }else{return retornarError(res,'El medicamento o la Forma Farmaceutica no existe')}
         break;   
     case 'modificarPresentacion':
         objet=req.body;
