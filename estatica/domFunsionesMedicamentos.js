@@ -66,7 +66,7 @@ function modificarEstadoNG(){
      limpiarCampos(limpiar);
      let ng={};
      ng.idNG=medicamento.id_nombre_generico;
-     if(medicamento.estado_nonbre_generico===1){
+     if(medicamento.estado_nombre_generico===1){
           ng.estadoNombreGenerico=false;
      }else{
           ng.estadoNombreGenerico=true;

@@ -27,6 +27,14 @@ async function medicamentoDataModificar(modificar,id,modificante){
             return await(consulta1(query,modificante,id));
             break; 
         case 'presentacion':
+            //verificar la respuesta,no funsiona,elmedicamento existe pro no lo toma
+            respuesta=await existeConjuntoBD('nombre_generico_presentacion','id_n_g_p','id_n_g_f','id_presentacion', modificante,id);
+           if(respuesta instanceof Error){
+            retornarErrorSinRes(`Error al verificar si existe el medicamento:${respuesta.message}`)
+           }
+            if(respuesta){
+                return retornarErrorSinRes("Error:El medicamento ya existe")
+            }
             query='UPDATE `nombre_generico_presentacion` SET `id_presentacion`=? WHERE id_n_g_p=?';
             return await(consulta1(query,modificante,id));
             break;
@@ -167,7 +175,8 @@ let id_n_g_f;
        return { success: true ,message:'El medicamento fue creado con exito'};
     }else{
         await connection.commit();
-        return { success: false, message: 'El medicamento ya existe' };
+        return retornarErrorSinRes("ElMedicamento ya existe");
+       // return { success: false, message: 'El medicamento ya existe' };
     }
     
     } catch (error) {

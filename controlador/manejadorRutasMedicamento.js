@@ -90,7 +90,7 @@ async function manejadorMedicamentos(req,res,objeto){
             
          suces=await medicamentoDataAgregar(objet,'nombreGenerico');
         if (suces instanceof Error) {return retornarError(res,`Error al crear Nombre Generico,${suces.message}`)}
-          return res.send(suces);
+        return res.send({ message: "El nombre Generico fue creado  con exito", datos: aux });
         break;         
      case 'crearMedicamento':
         objet = req.body;
@@ -103,7 +103,7 @@ async function manejadorMedicamentos(req,res,objeto){
         aux=await existeBd(objet.idPresentacion,'presentacion','id_presentacion');
         if(aux instanceof Error){return retornarError(res,`Error al verificar si existe la Presentacion,${aux.message}`)}
         if(!aux){return retornarError(res,`La presentacion no existe en la base de datos ${aux.message}`)}
-         //verificar que el medicamento no exista en la base de datos
+         
         suces=await crearMedicamento(objet);
          if (suces instanceof Error) {return retornarError(res,`Error al crear el medicamento ${suces.message}`)}
             return res.send(suces);
@@ -116,7 +116,7 @@ async function manejadorMedicamentos(req,res,objeto){
          if(e1){
             aux=await medicamentoDataModificar('estadoNombreGenerico',objet.idNG,objet.estadoNombreGenerico) ;
             if (aux instanceof Error) {return retornarError(res,`Error al modificar el Estado del nombre Generico ${aux.message}`)}
-            return res.send(aux);
+            return res.send({ message: "El Estado del Medicamento fue modificado con exito", datos: aux });
          }else{return retornarError(res,'El nombre Generico no existe')}
         
         break ;
@@ -127,8 +127,8 @@ async function manejadorMedicamentos(req,res,objeto){
         if(e1){
            aux=await medicamentoDataModificar('estadoMedicamento',objet.idNGP,objet.estado_n_g_p) ;
            if (aux instanceof Error) {return retornarError(res,`Error al modificar el Estado del Medicamento ${aux.message}`)}
-           return res.send(aux);
-        }else{return retornarError(res,'El nombre Medicamento no existe')}
+           return res.send({ message: "El Estado del Medicamento fue modificado con exito", datos: aux });
+        }else{return retornarError(res,'El nombre del Medicamento no existe')}
         break;    
     case 'modificarCategoria':
         objet=req.body;
@@ -139,7 +139,7 @@ async function manejadorMedicamentos(req,res,objeto){
          if(e1&&e2){
             aux=await medicamentoDataModificar('categoria',objet.idNG,objet.idCategoria);
             if (aux instanceof Error) {return retornarError(res,`Error al modificar la Categoria ${aux.message}`)}
-            return res.send(aux); 
+            return res.send({ message: "La Categoria fue modificada con exito", datos: aux });
          }else{ return retornarError(res,'El nombre Generico o la Categoria no existen') }
        
         break 
@@ -152,7 +152,7 @@ async function manejadorMedicamentos(req,res,objeto){
         if(e1&&e2){
             aux=await medicamentoDataModificar('familia',objet.idNG,objet.idFamilia);
             if (aux instanceof Error) {return retornarError(res,`Error al modificar la Familia ${aux.message}`)}
-            return res.send(aux); 
+            return res.send({ message: "La Familia fue modificada con exito", datos: aux });
           }else{return retornarError(res,'El nombre Generico o la Familia no existaen')}
        break;
     case 'modificarForma':
@@ -164,7 +164,7 @@ async function manejadorMedicamentos(req,res,objeto){
         if(e1&&e2){
             aux=await medicamentoDataModificar('forma',objet.idNGP,objet.idForma);
             if(aux instanceof Error){return retornarError(res,`Error al modificar la Forma:${aux.message}`)}
-            return res.send(aux);
+            return res.send({ message: "La Forma fue modificada con exito", datos: aux });
         }else{return retornarError(res,'El medicamento o la Forma Farmaceutica no existe')}
         break;   
     case 'modificarPresentacion':
@@ -176,7 +176,7 @@ async function manejadorMedicamentos(req,res,objeto){
         if(e1&&e2){
             aux=await medicamentoDataModificar('presentacion',objet.idNGP,objet.idPresentacion);
             if (aux instanceof Error) {return retornarError(res,`Error al modificar la Presentacion ${aux.message}`)}
-            return res.send(aux); 
+            return res.send({ message: "La Presentacion fue modificada con exito", datos: aux }); 
           }else{return retornarError(res,'El nombre del Medicamento o la Presentacion no existaen')}
         break;
     case 'modificarNombreGenerico':
@@ -190,7 +190,7 @@ async function manejadorMedicamentos(req,res,objeto){
         if(aux.errors){return retornarError(res,`Error al verificar la tipologia del nuevo Nombre Generico ${aux.message}`)}
         aux=await medicamentoDataModificar('nombreGenerico',objet.idNombreGenerico,objet.nuevoNombreGenerico);
         if(aux instanceof Error){return retornarError(res,`Error al modificar el Nombre Generico:${aux.message}`)}
-       return res.send(aux);
+        return res.send({ message: "El nombre generico fue modificado con exito", datos: aux });
         break;       
     case 'agregarFamilia':
            objet=req.body;
@@ -200,8 +200,8 @@ async function manejadorMedicamentos(req,res,objeto){
            if(aux instanceof Error){return retornarError(res,`Error al verificar si existe la Familia,${aux.message}`)}
            if(aux){return retornarError(res,'el nombre de la Familia ya existe , coloque uno distinto') }
             aux=await medicamentoDataAgregar(objet.nombreFamilia,'familia');
-            if (aux instanceof Error) {return retornarError(res,`Error alagregar la Familia ${aux.message}`)}
-            return res.send(aux);
+            if (aux instanceof Error) {return retornarError(res,`Error al agregar la Familia ${aux.message}`)}
+            return res.send({ message: "La Familia fue gregada con exito", datos: aux });
            break;
        case 'agregarCategoria':
             objet=req.body;
@@ -212,7 +212,7 @@ async function manejadorMedicamentos(req,res,objeto){
             if(aux){return retornarError(res,'La Categoria ya exista, seleccione otro nombre')}
            aux=await medicamentoDataAgregar(objet.nombreCategoria,'categoria');
             if (aux instanceof Error) {return retornarError(res,`Error al agregar la Categoria ${aux.message}`)}
-             return res.send(aux);
+            return res.send({ message: "La Categoria fue gregada con exito", datos: aux });
             break;
        case 'agregarForma':
             objet=req.body;
@@ -224,7 +224,7 @@ async function manejadorMedicamentos(req,res,objeto){
             if(aux){return retornarError(res,'La Forma Farmacologica ya existe,coloque una nueva')}
             aux=await medicamentoDataAgregar(objet.nombreForma,'forma');
             if(aux instanceof Error) {return retornarError(res,`Error al agregar la Forma Farmaceutica ${aux.message}`)}
-            return res.send(aux);
+            return res.send({ message: "La Forma fue gregada con exito", datos: aux });
             break;      
         case 'agregarPresentacion':
             objet=req.body;
@@ -235,7 +235,7 @@ async function manejadorMedicamentos(req,res,objeto){
             if(aux){return retornarError(res,'El nombre de la Presentacion ya existe, seleccione uno nuevo')}
             aux=await medicamentoDataAgregar(objet.nombrePresentacion,'presentacion');
             if (aux instanceof Error) {return retornarError(res,`Error al agregar la Presentacion ${aux.message}`)}
-            return res.send(aux);
+            return res.send({ message: "La Presentacion fue gregada con exito", datos: aux });
             break;  
         default:
             return retornarError(res,'El manejador de rutas de Medicamentos no encontro la ruta');                
