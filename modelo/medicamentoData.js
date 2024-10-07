@@ -7,6 +7,7 @@ import { consulta1 ,existeBd,pool,existeConjuntoBD} from "./conexxionBD.js";
 let medicamentos;
 let query;
 let respuesta;
+let aux;
 async function medicamentoDataModificar(modificar,id,modificante){
    try{
     switch(modificar){
@@ -27,14 +28,6 @@ async function medicamentoDataModificar(modificar,id,modificante){
             return await(consulta1(query,modificante,id));
             break; 
         case 'presentacion':
-            //verificar la respuesta,no funsiona,elmedicamento existe pro no lo toma
-            respuesta=await existeConjuntoBD('nombre_generico_presentacion','id_n_g_p','id_n_g_f','id_presentacion', modificante,id);
-           if(respuesta instanceof Error){
-            retornarErrorSinRes(`Error al verificar si existe el medicamento:${respuesta.message}`)
-           }
-            if(respuesta){
-                return retornarErrorSinRes("Error:El medicamento ya existe")
-            }
             query='UPDATE `nombre_generico_presentacion` SET `id_presentacion`=? WHERE id_n_g_p=?';
             return await(consulta1(query,modificante,id));
             break;
@@ -154,18 +147,18 @@ let id_n_g_f;
         connection = await pool.getConnection();
         await connection.beginTransaction();
         respuesta=await existeConjuntoBD('nombre_generico_forma','id_n_g_f','id_nombre_generico','id_forma', medicamento.idNombreGenerico,medicamento.idForma);
-        aux=respuesta[0].resultado;
-        if(aux===0){
+        
+        if(respuesta===0){
            
             const [nombreGenericoFormaResult] = await connection.execute(
                 'INSERT INTO `nombre_generico_forma`(`id_nombre_generico`, `id_forma`) VALUES (?,?)',
                 [medicamento.idNombreGenerico,medicamento.idForma]
             );
               id_n_g_f = nombreGenericoFormaResult.insertId;
-        }else{id_n_g_f=aux}
+        }else{id_n_g_f=respuesta}
         respuesta=await existeConjuntoBD('nombre_generico_presentacion','id_n_g_p','id_n_g_f','id_presentacion', id_n_g_f,medicamento.idPresentacion);
-        aux=respuesta[0].resultado;
-        if(aux===0){
+        
+        if(respuesta===0){
          const [nombreGenericoPresentacionResult] = await connection.execute(
             'INSERT INTO `nombre_generico_presentacion`(`id_n_g_f`, `id_presentacion`, `activo_n_g_p`) VALUES (?,?,?)',
             [id_n_g_f, medicamento.idPresentacion,true]

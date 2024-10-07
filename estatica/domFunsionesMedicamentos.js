@@ -80,6 +80,7 @@ async function modificarForma(){
      let f={};
      f.idForma=fo.id_forma;
      f.idNGP=medicamento.id_n_g_p;
+     f.idNG=medicamento.id_nombre_generico;
      fechProtegidoPost('/modificarForma',f);
      }else{
           alerta(pagina,'La Forma Farmaceutica seleccionada no es valida');
@@ -91,13 +92,14 @@ async function modificarForma(){
    let pre=await presentaciones.data.find(no=>no.nombre_presentacion===nuevoPresentacionValue);
    if(pre){
    let p={};
+   p.id_n_g_f=medicamento.id_n_g_f;
    p.idPresentacion=pre.id_presentacion;
    p.idNGP=medicamento.id_n_g_p;
    fechProtegidoPost('/modificarPresentacion',p);
    }else{
         alerta(pagina,'La Presentacion seleccionada no es valida');
    }
-   
+   inputNuevaPresentacion.value="";
    }
  
    async function modificarFamilia(){

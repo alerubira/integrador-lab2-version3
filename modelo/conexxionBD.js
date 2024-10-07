@@ -124,14 +124,15 @@ async function existeConjuntoBD(tabla,nombreId,tabla1,tabla2,id1,id2){
         const result = await consulta1('SELECT @resultado as resultado;');
         if (result instanceof Error){return result}
          // Verifica que el resultado esté en el formato esperado
-        /* if (result && result.length > 0) {
+         
+         /*if (result && result.length > 0) {
             const existe = result[0].existe;
             return existe === 1;
         } else {
             return false;
         }*/
        
-       return result;
+       return result[0].resultado;
         
     
     } catch (err) {

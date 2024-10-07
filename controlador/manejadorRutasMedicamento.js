@@ -4,7 +4,7 @@ import { medicamentoDatatodos,medicamentoDataModificar,crearMedicamento,medicame
 //import { medicoDatatodos,medicoDataModificar,crearMedico } from "../modelo/medicoData.js";
 import { verificar } from "./verificaryup.js";
 //import { Medico } from "../modelo/clasesEntidad.js";
-import {  existeBd,existeNombreBd } from "../modelo/conexxionBD.js";
+import {  existeBd,existeNombreBd ,existeConjuntoBD} from "../modelo/conexxionBD.js";
 import { retornarError } from "./funsionesControlador.js";
 let estadoSuces;
 let mensajeExito;
@@ -49,6 +49,7 @@ async function manejadorMedicamentos(req,res,objeto){
      case 'medicamentos':
             aux=await medicamentoDatatodos('medicamentos');
             if(aux instanceof Error){return retornarError(res,`Error al buscar Medicamentos,${aux.message}`)}
+           
             res.send(aux);
         break;        
      case 'formas':
@@ -157,6 +158,9 @@ async function manejadorMedicamentos(req,res,objeto){
        break;
     case 'modificarForma':
         objet=req.body;
+        aux=await existeConjuntoBD('nombre_generico_forma','id_n_g_f','id_nombre_generico','id_forma', objet.idNG,objet.idForma);
+        if(aux instanceof Error){return retornarError(res,`Error al verificar si existe Nombre Generico_Forma:${aux}`)}
+        if(aux!==0){return retornarError(res,"El Nombre Generico con esa Forma Farmaceutica ya existe")}
         e1=await existeBd(objet.idForma,'forma_farmaceutica','id_forma');
         if(e1 instanceof Error){return retornarError(res,`Error al verificar si existe La Forma Farmaceutica:${e1.message}`)}
         e2=await existeBd(objet.idNGP,'nombre_generico_forma','id_n_g_f');
@@ -169,10 +173,14 @@ async function manejadorMedicamentos(req,res,objeto){
         break;   
     case 'modificarPresentacion':
         objet=req.body;
+        aux=await existeConjuntoBD('nombre_generico_presentacion','id_n_g_p','id_n_g_f','id_presentacion', objet.id_n_g_f,objet.idPresentacion);
+       if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Medicamento:${aux}`)}
+       if(aux!==0){return retornarError(res,"El Medicamento ya existe")}
         e1=await existeBd(objet.idNGP,'nombre_generico_presentacion','id_n_g_p');
         e2=await existeBd(objet.idPresentacion,'presentacion','id_presentacion');
         if(e1 instanceof Error){return retornarError(res,`Error al verificar si existe el nombre generico ,${e1.message}`)}
         if(e2 instanceof Error){return retornarError(res,`Error al verificar si existe la Presentacion ,${e2.message}`)}
+       
         if(e1&&e2){
             aux=await medicamentoDataModificar('presentacion',objet.idNGP,objet.idPresentacion);
             if (aux instanceof Error) {return retornarError(res,`Error al modificar la Presentacion ${aux.message}`)}
