@@ -89,14 +89,15 @@ if(procedimientos.error){
           case 'buscarPrestaciones':
               fOcultar();
               eliminarHijos(cuerpo);
-               prestaciones=await fechProtegido('/traerTodasPrestaciones');
+              prestaciones=await traerPresentaciones();
+              /* prestaciones=await fechProtegido('/traerTodasPrestaciones');
               if(prestaciones.error){
                     alerta(pagina,`Hubo un inconveniente al buscar prestaciones: ${prestaciones.error.message}`);
                     console.log(prestaciones.error.message);
                }else{
-               console.log(prestaciones.data);
+               console.log(prestaciones.data);*/
                 mostrar(divBuscarPrestacion);
-                for(let p of prestaciones.data){
+                for(let p of prestaciones){
                     let tr=document.createElement('tr');
                     cuerpo.appendChild(tr);
                     agregarTdCuerpo(p.id_prestacion,tr);
@@ -119,7 +120,7 @@ if(procedimientos.error){
                              td.appendChild(btn);
                              tr.appendChild(td);
                               }
-                  }
+                  
                 break;
           case 'agregarPractica':
                fOcultar();

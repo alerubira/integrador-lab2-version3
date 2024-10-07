@@ -33,7 +33,20 @@ function cambiarEstado(){
     }
     console.log(p);
     fechProtegidoPost('/cambiarEstadoPrestacion',p);
-    }             
+    }  
+    async function traerPrestaciones(){
+     //adaptar par prestaciones ordenedas por id practica
+     medicamentos=await fechProtegido('/traerTodasPrestaciones');
+     medData=medicamentos.data;
+   if(medicamentos.error){
+         alerta(pagina,`Hubo un inconveniente al buscar medicamentos: ${medicamentos.error.message}`);
+         return false;
+    }else{
+         medData[0].sort((a, b) => a.id_nombre_generico - b.id_nombre_generico);
+        return medData[0];
+    }
+   
+}               
                    
     async function modificarProcedimiento(){
    
@@ -47,7 +60,7 @@ function cambiarEstado(){
     }else{
          alerta(pagina,'El procedimiento seleccionada no es valida');
     }
-    
+    inputNuevoProcedimiento.value="";
     }
     async function modificarExamen(){
     let nuevoExamenValue=inputNuevoExamen.value;
@@ -57,7 +70,8 @@ function cambiarEstado(){
     exa.idPrestacion=prestacion.id_prestacion;
     exa.idExamen=ex.id_examen;
     fechProtegidoPost('/modificarExamen',exa);
-    }   
+    } 
+    inputNuevoExamen.value="";  
     }
     async function seleccionarPrestacion(event){
         fOcultar();
@@ -85,7 +99,7 @@ function cambiarEstado(){
                             agregarTdCuerpo(prestacion.nombre_procedimiento,tr2);
                             agregarTdCuerpo(prestacion.id_examen,tr2);
                             agregarTdCuerpo(prestacion.nombre_examen,tr2);
-                            if(prestacion.estado_procedimiento===1){
+                            if(prestacion.estado_prestacion===1){
                                  agregarTdCuerpo('Activo',tr2);
                             }else{
                                  agregarTdCuerpo('Inactivo',tr2);
