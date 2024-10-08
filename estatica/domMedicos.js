@@ -131,12 +131,12 @@ document.getElementById('modificarMedico').addEventListener('change',async funct
           case 'especialidadMedico':
                eliminarHijos(especialidadNuevas);
                especialidades=await traerEspecialidades();
-               llenarDl(especialidadNuevas,especialidades.data);
+               llenarDl(especialidadNuevas,especialidades.data,'nombre_especialidad');
                mostrar(divNuevaEspecialidad);
                break; 
                default:
-                    console.log('Selección no válida');
-                    alerta(pagina,('Seleccion no valida'));         
+                    console.log('Selección no válida en modificarMedico');
+                    alerta(pagina,('Seleccion no valida en modificarMedico'));         
      } 
      document.getElementById("modificarMedico").selectedIndex = 0;      
      })    
@@ -197,38 +197,10 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
           ,refepsProfecional:refepsValue,matriculaProfecional:matriculaValue,usuarioProvisorio:usuarioValue
           ,claveProvisoria:claveValue,palabraClave:palabraClaveValue,nivelAutorizacion:nivelValue
         };
-        fechProtegidoPost('/crearMedico',profecionalCreado);
-          /*const token = localStorage.getItem('token');
-    
-    try {
-      const response = await fetch('/crearMedico', {
-        method: 'post',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json' // Este encabezado es necesario para enviar JSON
-        },
-        body:JSON.stringify({dniProfecional:dniValue,nombreProfecional:nombreValue,apellidoProfecional:apellidoValue
-          ,idProfecion:idProfecion.value,idEspecialidad:idEspecialidad.value,domicilioProfecional:domicilioValue
-          ,refepsProfecional:refepsValue,matriculaProfecional:matriculaValue,usuarioProvisorio:usuarioValue
-          ,claveProvisoria:claveValue,palabraClave:palabraClaveValue,nivelAutorizacion:nivelValue
-        })
-        
-      });
-      
-      if (response.ok) {
-        const responseBody = await response.json();
-        cartelExito(pagina,'El medico fue crgado con exito');
-        console.log(responseBody);
-        limpiarCampos(limpiar);
-        fOcultar();
-      } else {
-        const errorData = await response.json();
-        console.log(errorData.message);
-        alerta(pagina,`Hubo un inconveniente al cargar el medico: ${errorData.message}`);
-      }
-    } catch (error) {
-     alerta(pagina,`Error al acceder para crear Medico: ${error.message}`);
-      console.error('Error al acceder al endpoint protegido:', error.message);
-    }*/
+      let aux=await  fechProtegidoPost('/verificarREFEPS_Argentino',profecionalCreado);
+       console.log(aux);
+
+       // fechProtegidoPost('/crearMedico',profecionalCreado);
+       
      }
 });

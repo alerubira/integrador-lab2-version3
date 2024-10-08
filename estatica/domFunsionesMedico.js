@@ -1,13 +1,13 @@
 function cambiarEstado(){
     //construir endpoin,hacer modificacion
-    let p={};
-    p.idPersona=medico.idPersona;
+    let m={};
+    m.idMedico=medico.idMedico;
     if(medico.estadoMedico===1){
-         p.estadoMedico=false;
+         m.estadoMedico=false;
     }else{
-         p.estadoMedico=true;
+         m.estadoMedico=true;
     }
-    fechProtegidoPost('/cambiarEstado',p);
+    fechProtegidoPost('/cambiarEstado',m);
     }             
                    
     async function modificarEspecialidad(){

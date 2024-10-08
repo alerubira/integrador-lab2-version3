@@ -3,13 +3,14 @@ import { Medico } from './clasesEntidad.js';
 import { consulta1 ,existeBd,pool} from "./conexxionBD.js";
 import { crearHash } from "./loginn.js";
 import { buscarIdPorDni } from './PersonaData.js';
+import { retornarErrorSinRes } from '../controlador/funsionesControlador.js';
 let profecionales;
 let query;
 async function medicoDataModificar(modificar,id,modificante){
    try{
     switch(modificar){
         case 'estado':
-             query='UPDATE `medico` SET `estado_medico`=? WHERE id_persona=?'
+             query='UPDATE `medico` SET `estado_medico`=? WHERE id_medico=?'
              return await(consulta1(query,modificante,id));
              break
         case 'domicilio':
@@ -20,6 +21,8 @@ async function medicoDataModificar(modificar,id,modificante){
              query='UPDATE `medico` SET `id_especialidad`=? WHERE id_medico=?';
             return await(consulta1(query,modificante,id));
             break; 
+        default:
+            return retornarErrorSinRes('seleccion no valida en MedicoDataModificar');    
     }
 
    }catch(error){
@@ -146,7 +149,7 @@ async function crearMedico(Medico) {
             await connection.rollback();
         }
         console.error('Error en la transacción:', error);
-        return { success: false, message: 'Error en la transacción', error };
+        throw new Error(`Error en la Transaccion:${error}`);
     } finally {
         if (connection) {
             connection.release(); // Devolvemos la conexión al pool

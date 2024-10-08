@@ -5,6 +5,7 @@ import { manejadorAcceso } from './controlador/manejadorRutaAcceso.js';
 import { manejadorMedicos } from './controlador/manejadorRutaMedicos.js';
 import { manejadorPrestaciones } from './controlador/manejadorRutaPrestaciones.js';
 import { manejadorMedicamentos } from './controlador/manejadorRutasMedicamento.js';
+import { verificarREFEPS } from './controlador/manejadorRutaREFEPS.js';
 const ruta = express.Router();
 let encabezado;
 let mensajeExito;
@@ -63,6 +64,9 @@ ruta.get('/especialidades',verificarToken,async(req,res)=>{
 ruta.get('/traertodosMedicos',verificarToken,async(req,res)=>{
   manejadorMedicos(req,res,'traerTodosMedicos');
 }) 
+ruta.post('/verificarREFEPS_Argentino',verificarToken,async(req,res)=>{
+verificarREFEPS(req,res);
+})
 ruta.post('/crearMedico',verificarToken,async(req,res) =>{
   
     manejadorMedicos(req,res,'crearMedico')

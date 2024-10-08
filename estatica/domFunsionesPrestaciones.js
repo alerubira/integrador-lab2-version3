@@ -36,14 +36,14 @@ function cambiarEstado(){
     }  
     async function traerPrestaciones(){
      //adaptar par prestaciones ordenedas por id practica
-     medicamentos=await fechProtegido('/traerTodasPrestaciones');
-     medData=medicamentos.data;
-   if(medicamentos.error){
-         alerta(pagina,`Hubo un inconveniente al buscar medicamentos: ${medicamentos.error.message}`);
+     prestaciones=await fechProtegido('/traerTodasPrestaciones');
+     preData=prestaciones.data;
+   if(prestaciones.error){
+         alerta(pagina,`Hubo un inconveniente al buscar prestaciones: ${prestaciones.error.message}`);
          return false;
     }else{
-         medData[0].sort((a, b) => a.id_nombre_generico - b.id_nombre_generico);
-        return medData[0];
+         preData.sort((a, b) => a.id_practica - b.id_practica);
+        return preData;
     }
    
 }               
