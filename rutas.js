@@ -10,13 +10,11 @@ const ruta = express.Router();
 let encabezado;
 let mensajeExito;
 let estadoSuces;
-// Definir tus rutas aquí
-
 ruta.get('/', (req, res) => {
     encabezado="Bienvenido al Ministerio de Salud";
     let errLogin;
      res.render('vistaPrincipal',{encabezado,errLogin:true});
-    //res.send('hola mundo');
+    
    });
 ruta.post('/verificarLogin',(req,res) =>{
    manejadorLogin(req,res,'verificarLogin');
@@ -27,28 +25,14 @@ ruta.post('/modificarLogin',(req,res)=>{
 ruta.post('/recuperarLogin',(req,res)=>{
     manejadorLogin(req,res,'recuperarLogin');
     })  ;
-// Ruta protegida
-/*ruta.get('/protected', verifyToken, (req, res) => {
-  res.json({ message: 'Acceso autorizado', user: req.user });
-});*/   
-/*ruta.get('/acceso',(req,res)=>{
-  encabezado="Vienvenido a Accesos";
-res.render('vistaAcceso',{encabezado});
-});*/
+
 ruta.get('/acceso',  (req, res) => {
-  //encabezado = "Bienvenido a Accesos";
   manejadorAcceso(req,res);
- 
- 
-});
-
-
+ });
 ruta.get('/medicos',(req,res)=>{
     encabezado="Planilla para procesar medicos"
-     //res.render('medicos',{encabezado,mensajeExito,estadoSuces});
      manejadorMedicos(req,res,'ingresar');
-    
-   });
+    });
 ruta.get('/medicamentos',(req,res)=>{
   encabezado="Planilla para procesar Medicamentos";
   manejadorMedicamentos(req,res,'ingresar');
@@ -65,7 +49,7 @@ ruta.get('/traertodosMedicos',verificarToken,async(req,res)=>{
   manejadorMedicos(req,res,'traerTodosMedicos');
 }) 
 ruta.post('/verificarREFEPS_Argentino',verificarToken,async(req,res)=>{
-verificarREFEPS(req,res);
+  verificarREFEPS(req,res);
 })
 ruta.post('/crearMedico',verificarToken,async(req,res) =>{
   

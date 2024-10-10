@@ -47,6 +47,7 @@ async function manejadorMedicos(req,res,objeto){
             res.send(aux);
                 break;
         case 'crearMedico':
+            
             objet = req.body;
             aux= await verificar(objet,'medico');
             if(aux.errors){return retornarError(res,`Los datos del Medico no son compatibles,${aux.message}`)}
