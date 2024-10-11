@@ -27,10 +27,7 @@ if(exitoValue==='true'){
  if(errLoginValue==='false'){
         alerta(pagina,'Algo esta mal con el login');
     }
- /*if(instanciaValue==='true'){
-    alerta(pagina,'Para continuar,deve modificar su clave');
-    mostrar();
- }*/
+ 
 function mostrar(){
     limpiarCampos(limpiar);
     fOcultar();
@@ -91,6 +88,7 @@ formLogin.addEventListener('submit',async function(event) {
                               }    
           } else {
             console.error('Error en el login:', data.message);
+            alerta(pagina,`Error al verificar el Login:${data.message}`);
           }
     }
 });
@@ -186,6 +184,7 @@ formLogin.addEventListener('submit',async function(event) {
     accederEndpointProtegido();
   }*/
 formModificarLogin.addEventListener('submit',async function(event){
+  event.preventDefault();
 let usuario2Value=inputUsuari2.value;
 let clave2Value=inputClave2.value;
 let clave3Value=inpuClave3.value;
@@ -194,6 +193,42 @@ validar(usuario2Value.length<1||usuario2Value.length>6,pagina,'El usuario es obl
 validar(clave2Value.length<1||!cla.test(clave2Value),pagina,'La clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
 validar(clave3Value.length<1||!cla.test(clave3Value),pagina,'La nueva clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
 validar(clave3Value!==clave4Value,pagina,'La confirmacion de la clave no es igual a la clave nueva',event);
+//adaptar el codigo
+if(a&&b){//corroborar si hace falta el if
+  const response = await fetch('/modificarLogin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },//crear objeto nuevo,y segir modificando
+      body: JSON.stringify({usuario: usuarioValue,clave1: claveValue })
+    });
+  
+    const data = await response.json();
+  
+    if (response.ok) {
+                  if (data.codigoPersonalizado === 801) {
+                    
+                    alerta(pagina,'Para continuar,deve modificar su clave');
+                    mostrar();
+                    
+                  }else{
+                  // Almacenar el token en localStorage
+                  localStorage.setItem('token', data.token);
+                  localStorage.setItem('tipoAutorizacion', data.tipoAutorizacion);
+                  
+                      // Redirigir o realizar acciones basadas en el tipo de autorización
+                      if (data.tipoAutorizacion === 3) {
+                        
+                          const token = data.token;
+                          window.location.href = `/acceso?token=${token}`;
+                          
+                          }
+                        }    
+    } else {
+      console.error('Error en el login:', data.message);
+      alerta(pagina,`Error al verificar el Login:${data.message}`);
+    }
+}
 });
 
 limpiarCampos(limpiar);

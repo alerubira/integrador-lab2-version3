@@ -1,18 +1,12 @@
-//import {buscarMID,crearMedico} from '../modelo/medicoData.js'; 
-//import { traerProfecionl} from './conexxion.js';
-//import { buscarPacienteDni,todosSexo,createPaciente} from '../modelo/pacienteData.js';
-//import { buscarOSIdPaciente, todasObras} from '../modelo/obraSocialData.js';
-//import { todoGenericos ,todasAdministracion,todasPrestaciones,ladoTodos} from '../modelo/medicamentos.js';
-//import { profecionesTodas,especialidadesTodas } from '../modelo/medicoData.js';
-//import { verificarMedico } from './procesarDatos.js';
+
 
 import { verificar } from "./verificaryup.js";
 import { encabezado } from "../rutas.js";
 import { buscarLoginPorUsuario, modificarLogin } from "../modelo/loginData.js";
 import { verificarHash,crearHash,Login,usuarioClave } from "../modelo/loginn.js";
-//import { agregarMedico } from '../modelo/medicoData.js';
 import jwt from 'jsonwebtoken';
 import { jwtSecret } from '../config.js';
+import { retornarError } from "./funsionesControlador.js";
 let errLogin;
 let objetAux={};
 let objet={};
@@ -32,14 +26,14 @@ async function manejadorLogin(req,res,objeto){
          aux=await verificar(usCl,'usuarioClave');
          
          if(aux.errors){
-          return  res.render('vistaPrincipal',{encabezado,errLogin:false});
+          return  retornarError(res,`Error al verificar la tipologia del usuario:${aux.errors}`)
          }
          login=await buscarLoginPorUsuario(aux.usuario);
+         if(login instanceof Error){return retornarError(res,`Error al buscar el Login:${login}`)}
+         if(login.length<1){return retornarError(res,"El usuario no existe, intente nuevamente")}
           l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,login[0].clave_login,login[0].tipo_autorizacion,login[0].instancia,login[0].palabra_clave);
          //console.log(l);
-         if(login.length<1){
-          return res.render('vistaPrincipal',{encabezado,errLogin:false});
-         }
+         
           boolean=await verificarHash(usCl.clave,l.clave);
           if(boolean) {
               if(l.instancia===1){
@@ -75,20 +69,20 @@ async function manejadorLogin(req,res,objeto){
          usCl=new usuarioClave(objet.usuario2,objet.clave2);
         aux=await verificar(usCl,'usuarioClave');
          if(aux.errors){
-          return  res.render('vistaPrincipal',{encabezado,errLogin:false});
+          return retornarError(res,`Error en la tipologia del Login:${aux.errors}`)
          }
          if(objet.clave3!==objet.clave4){
-          return res.render('vistaPrincipal',{encabezado,errLogin:false});
+          return retornarError(res,"Laconfirmacion de la Clave debe ser igual a la Clave Nueva")
          }
          usCl=new usuarioClave(objet.usuario2,objet.clave3);
          aux=await verificar(usCl,'usuarioClave');
          if(aux.errors){
-          return  res.render('vistaPrincipal',{encabezado,errLogin:false});
+          return  retornarError(res,`Error al verificar la tipologia del usuario:${aux.errors}`);
          }
          login=await buscarLoginPorUsuario(aux.usuario);
          
          if(login.length<1){
-          return res.render('vistaPrincipal',{encabezado,errLogin:false});
+          return retornarError(res,"El usuario no se encuentra registrado");
          }
          
         boolean=await verificarHash(objet.clave2,login[0].clave_login);
@@ -99,11 +93,12 @@ async function manejadorLogin(req,res,objeto){
              l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,b,login[0].tipo_autorizacion,login[0].instancia+1,login[0].palabra_clave);
             //res.send(l);
             let result=await modificarLogin(l);
+            if(result instanceof Error){return retornarError(res,`Error al modificar el Login:${result}`)}
             if(result.affectedRows===1){
               return res.render('vistaPrincipal',{encabezado,exito:true})
             }
            }else{
-           return res.render('vistaPrincipal',{encabezado,errLogin:false})
+           return retornarError(res,"La Clave no corresponde al usuario");
            }
          
          
@@ -139,7 +134,7 @@ async function manejadorLogin(req,res,objeto){
 
 }catch (error) {
     console.error(`Error al Procesar ${objeto}`, error);
-    res.status(500).send('Error interno del servidor');
+    return retornarError(res,`Èrror en el Manejador Login:${error}`)
 }
 }
 // Middleware para verificar el token

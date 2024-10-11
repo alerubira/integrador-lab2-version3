@@ -87,7 +87,7 @@ function cambiarEstado(){
         prestacion={};
          // Recorrer las celdas y obtener los valores
          
-         prestacion=await prestaciones.data.find(pre=>pre.id_prestacion===parseInt(celdas[0].textContent));
+         prestacion=await prestaciones.find(pre=>pre.id_prestacion===parseInt(celdas[0].textContent));
          console.log(prestacion);
          eliminarHijos(cuerpo2);
          let tr2=document.createElement('tr');
