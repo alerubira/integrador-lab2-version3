@@ -22,6 +22,7 @@ async function manejadorLogin(req,res,objeto){
     let l;
     switch (objeto) {
       case 'verificarLogin':
+       // console.log(body);
           usCl=new usuarioClave(body.usuario,body.clave1);  
          aux=await verificar(usCl,'usuarioClave');
          
@@ -32,7 +33,7 @@ async function manejadorLogin(req,res,objeto){
          if(login instanceof Error){return retornarError(res,`Error al buscar el Login:${login}`)}
          if(login.length<1){return retornarError(res,"El usuario no existe, intente nuevamente")}
           l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,login[0].clave_login,login[0].tipo_autorizacion,login[0].instancia,login[0].palabra_clave);
-         //console.log(l);
+        // console.log(l);
          
           boolean=await verificarHash(usCl.clave,l.clave);
           if(boolean) {
@@ -49,17 +50,19 @@ async function manejadorLogin(req,res,objeto){
                  // Datos que quieres almacenar en el token
                  const payload = {
                   username: l.usuario,
-                  tipoAutorizacion: l.tipoAutorizacion // Agregar tipo de autorización al payload
+                  tipoAutorizacion: l.tipoAutorizacion, // Agregar tipo de autorización al payload
+                  idSolicitante:l.idMedico
                 };// Genera el token
                 const token = jwt.sign(payload, jwtSecret, { expiresIn: '3h' });
                 // Devuelve el token al cliente
               return  res.json({ token: token ,
-                tipoAutorizacion: l.tipoAutorizacion // Agregar tipo de autorización al payload});
+                tipoAutorizacion: l.tipoAutorizacion, // Agregar tipo de autorización al payload});
+                idSolicitante:l.idMedico
                //return res.redirect('/acceso');
               })}
               
            }else{
-            res.render('vistaPrincipal',{encabezado,errLogin:false})
+            return retornarError(res,"Clave o Usuario Incorrecta");
            }
          
         

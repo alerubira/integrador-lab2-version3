@@ -1,0 +1,123 @@
+extends layout
+block script1 
+    script(src="domPrescripcion.js", defer)
+block script2
+    script(src='domPrescripcionPaciente.js',defer)           
+block content 
+            form#formularioReceta(action="/guardarReceta", method="POST")
+                        - let fechaActual = new Date();
+                        p= `${fechaActual.getDate()}/${fechaActual.getMonth() + 1}/${fechaActual.getFullYear()}`
+                        
+                        div#app.oculto(data-profesional=profecional)
+                        #divProfecional 
+                            h3 PROFECIONAL
+                            label=`${profecional.nombre}  ${profecional.apellido}`
+
+                            br
+                            label=` DNI : ${profecional.dni}`
+                            br
+                            label=`Profecion : ${profecional.profesion}` 
+                            label=`Especialida : ${profecional.especialidad}` 
+                            br
+                            label=`Domicilio : ${profecional.domicilio}`
+                            label=`Matricula numero : ${profecional.matriculaProfesional}` 
+                            
+                        #divPaciente 
+                            h3 PACIENTE 
+                            label(for="dniP") DNI :
+                            input(type="text", id="dniP", name="dniP",placeholder="Ingrese DNI",required)
+                            br
+                            label(for="nombreP") Nombre :
+                            input(type="text", id="nombreP", name="nombreP",required)
+                            br
+                            label(for="apellidoP") Apellido :
+                            input(type="text" ,id="apellidoP", name="apellidoP",required)
+                            br
+                            label(for="sexoP") Sexo :
+                            input(type="text", id="sexoP", name="sexoP",required)
+                            select#selectSexo.ocultar(name="selectSexo") 
+                            br
+                            label(for="obraSP") Obra Social :
+                            select(id="obraSP", name="ObraSP")
+                                        option(value="j") Obra Social
+                            br
+                            label(for="plan") Plan :
+                            select(id="plan", name="plan")
+                                        option(value="h") Plan Obra Social
+                            br
+                            label(for="fechaNP") Fecha de nacimiento :
+                            input(type="date", id="fechaNP", name="fechaNP",required) 
+                            #divPacientes
+                        #divReceta 
+                            #divDiagnostico 
+                                h3 DIAGNOSTICO 
+                                textarea(type="textarea", id="diagnostico", name="diagnostico")
+                            #divMedicamentoPrestacion    
+                            #divTipo
+                                select(id="tipo", name="tipo")
+                                        option(value="j") Prestacion o Medicamento
+                                        option(value="prestacion") Prestacion
+                                        option(value="medicamento") Medicamento
+                            #divMedicamento.ocultar
+                                
+                                label(for="nombre_generico_medicamento") Nombre Generico del medicamento :
+                                input(type="text", id="nombre_generico_medicamento", name="nombre_generico_medicamento",list='genericos')
+                                datalist#genericos
+                                button(onclick="obtenerNombre()") seleccionar
+                                br
+                                
+                                label(for="forma_farmaceutica_medicamento") Forma Farmaceutica :
+                                input(type="text", id="forma_farmaceutica_medicamento", name="forma_farmaceutica_medicamento",list="forma")
+                                datalist#forma 
+                                button(onclick="obtenerForma()") selccionar
+                                br
+                                label(for="presentacion_medicamento") Presentacion :
+                                input(type="text", id="presentacion_medicamento", name="presentacion_medicamento",list="presentacion")
+                                datalist#presentacion 
+                                button(onclick="obtenerPresentacion()") seleccionar
+                                br
+                                label(for="administracion_medicamento") Administracion :
+                                input(type="text", id="administracion_medicamento", name="administracion_medicamento",list="administracion")
+                                datalist#administracion 
+                                button(onclick="obtenerAdministracion()") seleccionar
+                                br
+                                
+                                label(for="marcaMedicamento") Marca del medicamento(opcional)
+                                input(type="text",id="marcaMedicamento",name="marcaMedicamento")
+                                br
+                                button(onclick="agregarMedicamentoCompleto()") Agregar  
+                                    
+                            #divPrestacion.ocultar
+                                label(for="nombre_prestacion") Practica :
+                                input(type="text", id="nombre_prestacion", name="nombre_prestacion",list="nombrePractica")
+                                datalist#nombrePractica
+                                button(onclick="capturarNombrePrestacion()") Agregar
+                                br
+                                label(for="procedimiento_prestacion") Procedimiento :
+                                input(type="text" ,id="procedimiento_prestacion", name="procedimiento_prestacion",list="procedimiento")
+                                datalist#procedimiento 
+                                button(onclick="capturarProcedimiento()") Agregar
+                                br
+                                label(for="examen_prestacion") Examen  :
+                                input(type="text", id="examen_prestacion", name="examen_prestacion",list="examen")
+                                datalist#examen 
+                                button(onclick="capturarExamen()") Agregar
+                                br
+                                label(for="lado_prestacion") Lado(opcional) :
+                                input(type="text", id="lado_prestacion", name="lado_prestacion",list="lado")
+                                datalist#lado 
+                                button(onclick="capturarLado()") Agregar
+                                br
+                                textarea(id="indicacionPrestacion", name="indicacionPrestacion", rows="4", cols="50", placeholder="La indicacion es obligatoria")
+                                
+                                br
+                                br
+                                textarea(id="justificacionPrestacion", name="justificacionPrestacion", rows="4", cols="50", placeholder="La justificacion es obligatora")
+                                br
+                                textarea(id="observacionPrestacion", name="observacionPrestacion", rows="4", cols="50", placeholder="La observacion es opcional")
+                                br
+                                button(onclick="agregarPrestacionCompleta()") Agregar        
+                            #divRecetado   
+                        input(type="submit", value="Enviar")
+block boton1 
+        button.boton(type="button",onclick='volver()') volver 

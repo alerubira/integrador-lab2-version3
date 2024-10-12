@@ -107,6 +107,10 @@ formLogin.addEventListener('submit',async function(event) {
                                 window.location.href = `/acceso?token=${token}`;
                                 
                                 }
+                            if(data.tipoAutorizacion===2){
+                              const token=data.token;
+                              window.location.href = `/prescripcion?token=${token}`;
+                            }    
                               }    
           } else {
             console.error('Error en el login:', data.message);
