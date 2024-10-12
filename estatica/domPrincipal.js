@@ -40,15 +40,37 @@ fOcultar();
 formRecuperarLogin.style.display='block';
 }
 formRecuperarLogin.addEventListener('submit',async function(event){
+  event.preventDefault();
 let usuario5Value=inputUsuario5.value;
 let palabraClaveValue=inputPalabraClave.value;
 let clave6Value=inputClave6.value;
 let clave7Value=inputClave7.value;
-validar(usuario5Value.length<1||usuario5Value.length>6,pagina,'El usuario es obligatorio y no debe superar los 6 caracteres',event);
-validar(palabraClaveValue.length<1||palabraClaveValue.length>35,pagina,'La palabra clave es obligatorio y no debe superar los 35 caracteres',event);
-validar(clave6Value.length<1||!cla.test(clave6Value),pagina,'La clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
-validar(clave7Value.length<1||!cla.test(clave7Value),pagina,'La nueva clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
-validar(clave6Value!==clave7Value,pagina,'La confirmacion de la clave no es igual a la clave nueva',event);
+let a=validar(usuario5Value.length<1||usuario5Value.length>6,pagina,'El usuario es obligatorio y no debe superar los 6 caracteres',event);
+let b=validar(palabraClaveValue.length<1||palabraClaveValue.length>35,pagina,'La palabra clave es obligatorio y no debe superar los 35 caracteres',event);
+let c=validar(clave6Value.length<1||!cla.test(clave6Value),pagina,'La clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
+let d=validar(clave7Value.length<1||!cla.test(clave7Value),pagina,'La nueva clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
+let e=validar(clave6Value!==clave7Value,pagina,'La confirmacion de la clave no es igual a la clave nueva',event);
+if(a&&b&&c&&d&&e){
+  const response = await fetch('/recuperarLogin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({usuario5: usuario5Value,clave6: clave6Value,clave7:clave7Value,palabraClave:palabraClaveValue })
+    });
+  
+    const data = await response.json();
+  
+    if (response.ok) {
+               cartelExito(pagina,"El Login fue modificado con exito");  
+               limpiarCampos(limpiar);
+               fOcultar(); 
+                  
+    } else {
+      console.error('Error al modificarlogin:', data.message);
+      alerta(pagina,`Error al modificar el Login:${data.message}`);
+    }
+}
 });
 formLogin.addEventListener('submit',async function(event) {
     event.preventDefault();
@@ -189,44 +211,30 @@ let usuario2Value=inputUsuari2.value;
 let clave2Value=inputClave2.value;
 let clave3Value=inpuClave3.value;
 let clave4Value=inputClave4.value;
-validar(usuario2Value.length<1||usuario2Value.length>6,pagina,'El usuario es obligatorio y no debe superar los 6 caracteres',event);
-validar(clave2Value.length<1||!cla.test(clave2Value),pagina,'La clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
-validar(clave3Value.length<1||!cla.test(clave3Value),pagina,'La nueva clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
-validar(clave3Value!==clave4Value,pagina,'La confirmacion de la clave no es igual a la clave nueva',event);
-//adaptar el codigo
-if(a&&b){//corroborar si hace falta el if
+let a=validar(usuario2Value.length<1||usuario2Value.length>6,pagina,'El usuario es obligatorio y no debe superar los 6 caracteres',event);
+let b=validar(clave2Value.length<1||!cla.test(clave2Value),pagina,'La clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
+let c=validar(clave3Value.length<1||!cla.test(clave3Value),pagina,'La nueva clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
+let d=validar(clave3Value!==clave4Value,pagina,'La confirmacion de la clave no es igual a la clave nueva',event);
+
+if(a&&b&&c&&d){
   const response = await fetch('/modificarLogin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-      },//crear objeto nuevo,y segir modificando
-      body: JSON.stringify({usuario: usuarioValue,clave1: claveValue })
+      },
+      body: JSON.stringify({usuario2: usuario2Value,clave2: clave2Value,clave3:clave3Value,clave4:clave4Value })
     });
   
     const data = await response.json();
   
     if (response.ok) {
-                  if (data.codigoPersonalizado === 801) {
-                    
-                    alerta(pagina,'Para continuar,deve modificar su clave');
-                    mostrar();
-                    
-                  }else{
-                  // Almacenar el token en localStorage
-                  localStorage.setItem('token', data.token);
-                  localStorage.setItem('tipoAutorizacion', data.tipoAutorizacion);
+               cartelExito(pagina,"El Login fue modificado con exito");  
+               limpiarCampos(limpiar);
+               fOcultar(); 
                   
-                      // Redirigir o realizar acciones basadas en el tipo de autorización
-                      if (data.tipoAutorizacion === 3) {
-                        
-                          const token = data.token;
-                          window.location.href = `/acceso?token=${token}`;
-                          
-                          }
-                        }    
     } else {
-      console.error('Error en el login:', data.message);
-      alerta(pagina,`Error al verificar el Login:${data.message}`);
+      console.error('Error al modificarlogin:', data.message);
+      alerta(pagina,`Error al modificar el Login:${data.message}`);
     }
 }
 });

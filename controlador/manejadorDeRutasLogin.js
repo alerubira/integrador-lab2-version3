@@ -95,7 +95,7 @@ async function manejadorLogin(req,res,objeto){
             let result=await modificarLogin(l);
             if(result instanceof Error){return retornarError(res,`Error al modificar el Login:${result}`)}
             if(result.affectedRows===1){
-              return res.render('vistaPrincipal',{encabezado,exito:true})
+              return res.send(result);
             }
            }else{
            return retornarError(res,"La Clave no corresponde al usuario");
@@ -106,24 +106,25 @@ async function manejadorLogin(req,res,objeto){
       case 'recuperarLogin':
         aux=await verificar(body,'usuarioPalabra');
         if(aux.errors){
-          return  res.render('vistaPrincipal',{encabezado,errLogin:false});
+          return  retornarError(res,`Error al verificar la tipologia del Usuario y la Palabra Clave:${aux.errors}`);
          }
-        
+         if(body.clave6!==body.clave7){return retornarError(res,"La confirmacion de la Clave es distinta a la clave Nueva")}
         login=await buscarLoginPorUsuario(body.usuario5);
+        if(login instanceof Error){return retornarError(res,`Error al buscar el Usuario:${login}`)}
         if(login.length===1){
           l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,login[0].clave_login,login[0].tipo_autorizacion,login[0].instancia+1,login[0].palabra_clave);
        }else{
-        return res.render('vistaPrincipal',{encabezado,errLogin:false});
+        return retornarError(res,"El Usuario no se encuentra Registrado");
        }
          if(l.palabraClave===body.palabraClave){
           let c=await crearHash(body.clave6);
           let l1=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,c,login[0].tipo_autorizacion,login[0].instancia+1,login[0].palabra_clave);
           let result1=await modificarLogin(l1);
+          if(result1 instanceof Error){return retornarError(`Error al modificar el Login:${result1}`)}
           if(result1.affectedRows===1){
-            return res.render('vistaPrincipal',{encabezado,exito:true})
-          }
+            return res.send(result1);          }
          }else{
-          return res.render('vistaPrincipal',{encabezado,errLogin:false});
+          return retornarError(res,"La palabra clave no corresponde al Usuario");
          }
         break;  
       

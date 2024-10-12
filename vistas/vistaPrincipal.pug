@@ -3,7 +3,7 @@ block script1
     script(src="domPrincipal.js", defer)
 block content 
  
-        form#formularioLogin(action="/verificarLogin", method="POST", autocomplete="off")
+        form#formularioLogin.form(action="/verificarLogin", method="POST", autocomplete="off")
             label(for="usuario") Usuario:
             input.limpiar(type="text", id="usuario",name="usuario",placeholder="usuario",autocomplete="off")
             br
@@ -12,7 +12,7 @@ block content
             br
             input.boton(type="submit", value="Ingresar")
         button.boton(onclick="mostrar()") Modificar Clave
-        form#formularioModificarLogin.ocultar(action="/modificarLogin", method="POST", autocomplete="off")
+        form#formularioModificarLogin.ocultar.form(action="/modificarLogin", method="POST", autocomplete="off")
             label(for="usuario2") Usuario:
             input.limpiar(type="text", id="usuario2",name="usuario2",placeholder="usuario",autocomplete="off")
             br
@@ -28,7 +28,7 @@ block content
             input.boton(type="submit", value="Enviar")
             
         button.boton(onclick="mostrar1()") Olvidaste tu Clave?
-        form#formularioRecuperarLogin.ocultar(action="/recuperarLogin", method="POST", autocomplete="off")
+        form#formularioRecuperarLogin.ocultar.form(action="/recuperarLogin", method="POST", autocomplete="off")
             p Para generar una clave nueva deve usar su usuario y Palabra Clave
             label(for="usuario5") Usuario:
             input.limpiar(type="text", id="usuario5",name="usuario5",placeholder="usuario",autocomplete="off")
