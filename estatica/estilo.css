@@ -79,16 +79,23 @@
     display: inline-block; /* Para colocarlos uno al lado del otro */
     vertical-align: top; /* Alinea los elementos superiormente */
 }
+
+
+#divDiagnostico {
+  /*border-radius: 10px; /* Establece los bordes redondeados */
+  /*border: 2px solid black; /* Establece el borde de color negro */
+  height: 30%; /* Ajusta el alto del contenedor */
+  width: 95%; /* Establece el ancho del contenedor */
+  padding: 10px; /* Añade un espacio interno para el contenido */
+  box-sizing: border-box; /* Asegura que el padding y borde no excedan el tamaño */
+}
 #diagnostico {
-    width: 95%;
-    height: 100%;
-    resize: none; /* Evita que el usuario pueda cambiar el tamaño manualmente */
-    
-  }
-  #divDiagnostico{
-    border-radius: 10px; /* Establece los bordes redondeados */
-    border: 2px solid black; /* Establece el borde de color negro */
-  }
+  width: 100%; /* Ocupa el 100% del ancho de su contenedor */
+  height: 60%; /* Ocupa el 100% del alto de su contenedor */
+  resize: none; /* Evita que el usuario cambie el tamaño manualmente */
+  box-sizing: border-box; /* Incluye padding y borde en el ancho y alto */
+}
+
   form label {
     display: inline-block;
     width: 200px; /* Ancho deseado para las etiquetas */

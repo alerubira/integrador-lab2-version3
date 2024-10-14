@@ -51,7 +51,11 @@ try{
     return error;
 }
 }
-function buscarMID(id, callback) {
+async function buscarMID(id){
+query='CALL buscarMID(?) ';
+return await consulta1(query,id);
+}
+/*function buscarMID(id, callback) {
     connection.connect(function(err) {
         if (err) {
             throw err;
@@ -70,12 +74,12 @@ function buscarMID(id, callback) {
                     console.log(m);
                     console.log("--------------------------");*/
                    
-                    callback(m);
+                    /*callback(m);
                 }
             });
         }
     });
-}
+}*/
 
 /*async function profecionesTodas(){
     let query='SELECT * FROM `profecion` WHERE 1;';
