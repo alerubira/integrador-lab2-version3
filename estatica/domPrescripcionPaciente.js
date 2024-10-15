@@ -4,10 +4,14 @@ document.getElementById('dniP').addEventListener('input', async function() {
     //console.log(inputDniP);
     if (inputDniP.length === 7||inputDniP.length===8) {
         try {
+            let p={};
            // console.log(`dni antes deir al fetch ${inputDniP}`);
            //usar un fech get protegido para traer los pacientes,hacer endpoin completo
-             pacientes = await fech(inputDniP, '/buscarPacientes');
-            if (pacientes!="") {
+           p.dni =parseInt(inputDniP);
+          pacientes=await fechProtegidoPost('/buscarPacientes',p);
+          console.log(pacientes);
+            // pacientes = await fech(inputDniP, '/buscarPacientes');
+            if (pacientes.length>0) {
                 sugerirPacientes(pacientes);
             }else{
                 crearPaciente();
@@ -35,6 +39,7 @@ traerSexo();//traer todos los sexos para el nuevo pacienta
 let p=document.createElement('p');
 p.textContent='El paciente no esta registrado,por favor complete los campos y registrelo';
 let buton=document.createElement('button');
+buton.classList.add('boton'); // Agregar la clase 'boton'
 buton.textContent = 'Registrar';
 //buton.addEventListener('click', registrarPaciente);
 
@@ -121,7 +126,7 @@ async function registrarPaciente(){
     //hacer la queri a la base de datos
 } 
 function sugerirPacientes(aux) {
-    Focultar();
+    fOcultar();
     // Lógica para sugerir pacientes usando la información recibida en aux
     //console.log('Sugerir pacientes con los datos:', aux);
     for(let paciente of aux){
