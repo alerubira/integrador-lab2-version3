@@ -6,7 +6,7 @@ import { manejadorMedicos } from './controlador/manejadorRutaMedicos.js';
 import { manejadorPrestaciones } from './controlador/manejadorRutaPrestaciones.js';
 import { manejadorMedicamentos } from './controlador/manejadorRutasMedicamento.js';
 import { verificarREFEPS } from './controlador/manejadorRutaREFEPS.js';
-import { manejadorAccesoPrescripcion,manejadorPrescripcion } from './controlador/manejadorRutaPrescripcion.js';
+
 const ruta = express.Router();
 let encabezado;
 let mensajeExito;
@@ -170,12 +170,7 @@ manejadorMedicamentos(req,res,'crearMedicamento');
  ruta.post('/modificarNombreGenerico',verificarToken,async(req,res)=>{
   manejadorMedicamentos(req,res,'modificarNombreGenerico');
  })
- ruta.get('/prescripcion',(req,res)=>{
-  manejadorAccesoPrescripcion(req,res);
- })
- ruta.post('/buscarPacientes',verificarToken,async(req,res)=>{
-  manejadorPrescripcion(req,res,'buscarPacientes');
- })
+
 /* ruta.post('/verificarAdministrativoR',(req,res)=>{
    // Obtener el ID del Profesional enviado desde el formulario
  const idProfecional = req.body.idAdministrativoR;

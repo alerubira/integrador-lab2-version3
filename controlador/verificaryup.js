@@ -4,6 +4,20 @@ domicilioProfecional:yup.string()
      .required('El domocilio es obligatorio')
      .max(30,'El domocilio no debe superar los 30 caracteres')
 })
+const pacienteY=yup.object().shape({
+dniPaciente: yup.string()
+    .matches(/^\d{7,8}$/, 'El DNI debe ser un número de 7 u 8 caracteres')
+    .required('El DNI es obligatorio'),
+nombrePaciente: yup.string()
+    .matches(/^[a-zA-Z]+$/, 'El nombre solo debe contener letras')
+    .max(30, 'El nombre debe tener como máximo 30 caracteres')
+    .required('El nombre es obligatorio'),
+apellidoPaciente: yup.string()
+    .matches(/^[a-zA-Z]+$/, 'El apellido solo debe contener letras')
+    .max(30, 'El apellido debe tener como máximo 30 caracteres')
+    .required('El apellido es obligatorio'),
+
+})
 const MedicoY = yup.object().shape({
 dniProfecional: yup.string()
     .matches(/^\d{7,8}$/, 'El DNI debe ser un número de 7 u 8 caracteres')
@@ -195,7 +209,11 @@ async function verificar(objeto,nombre){
             case 'nombrePresentacion':
                    aux=await verificarY(objeto,nombrePresentacionY);
                    return aux;
-                break;                             
+                break; 
+            case 'paciente':
+                aux=await verificarY(objeto,pacienteY);
+                return aux;
+                break;                                
              default:
        }
        

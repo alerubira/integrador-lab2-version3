@@ -2,7 +2,10 @@ import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { buscarMID } from "../modelo/medicoData.js";
 import { retornarError } from "./funsionesControlador.js";
 import { Medico } from "../modelo/clasesEntidad.js";
-import { buscarPacienteDni } from "../modelo/pacienteData.js";
+import { buscarPacienteDni,pacienteTarea ,generarPaciente} from "../modelo/pacienteData.js";
+import { verificar } from "./verificaryup.js";
+let aux;
+let objet;
  async function manejadorAccesoPrescripcion(req,res){
     try {
       /*if (req.user.tipoAutorizacion === 3) {
@@ -43,29 +46,31 @@ import { buscarPacienteDni } from "../modelo/pacienteData.js";
   }
   async function manejadorPrescripcion(req,res,accion){
     try {
-      let aux;
     switch (accion) {
      case 'buscarPacientes':
             aux=await buscarPacienteDni(req.body.dni)
             if(aux instanceof Error){return retornarError(res,`Error al buscar Pacientes:${aux}`)}
             return res.send(aux);
        break;
-     case 'profecion':
-              
+     case 'traerObras':
+             aux=await pacienteTarea('traerObras') ;
+             if(aux instanceof Error){return retornarError(res,`Error al buscar las Obras sociales${aux}`)}
+             return res.send(aux);
          break;
-     case 'especialidad':
-         aux=await medicoDatatodos('especialidades');
-         if(aux instanceof Error){return retornarError(res,`Error al buscar Especialidades:${aux}`)}
-         res.send(aux);
+     case 'traerSexos':
+             aux=await pacienteTarea('traerSexos');
+             if(aux instanceof Error){return retornarError(res,`Error al buscar sexos:${aux}`)}
+             return res.send(aux);
              break;
-     case 'crearMedico':
-         
+     case 'generarPaciente':
          objet = req.body;
-         aux= await verificar(objet,'medico');
-         if(aux.errors){return retornarError(res,`Los datos del Medico no son compatibles,${aux.message}`)}
-          aux=await crearMedico(objet);
+         console.log(objet);
+         aux= await verificar(objet,'paciente');
+         if(aux.errors){return retornarError(res,`Los datos del Paciente no son compatibles,${aux.message}`)}
+         //corroborar todo en generar paciente,si existe persona y si existe el paciente
+          aux=await generarPaciente(objet);
          if (aux instanceof Error) {return retornarError(res,`Error al crear el Medico,${aux.message}`)}
-         return res.send({ message: "El Medioco fue archivado con exito", datos: aux }); 
+         return res.send({ message: "El Paciente fue archivado con exito", datos: aux }); 
              break;
      case 'traerTodosMedicos':
          aux=await medicoDatatodos('medicos');

@@ -1,3 +1,4 @@
+let sexos;
 document.getElementById('dniP').addEventListener('input', async function() {
     eliminarHijos(divPacientes);
     let inputDniP = this.value;
@@ -14,28 +15,98 @@ document.getElementById('dniP').addEventListener('input', async function() {
             if (pacientes.length>0) {
                 sugerirPacientes(pacientes);
             }else{
-                crearPaciente();
+                
+                crearPaciente()
             }
         } catch (error) {
             console.error('Error fetching pacientes:', error);
         }
     }
 });
-function traerObras(){
-fech('*', '/traerObras')
-.then(function(obras) {
-obrass=obras;
-llenarSelecObraS(obras);
-
-}).catch(function(error) {
-console.error("Error al traer las obras:", error);
-});
+async function traerSexos(){
+    let s=await fechProtegido('/traerSexos');
+     sexos=s.data;
+    console.log(sexos);
+    eliminarHijos(selectSexo);
+    let opt=document.createElement('option');
+    opt.value=null;
+    opt.textContent='Elija un sexo';
+    selectSexo.appendChild(opt);
+    for(let sexo of sexos){
+    let opti=document.createElement('option');
+    opti.value=sexo.nombre_sexo;
+    opti.textContent=sexo.nombre_sexo;
+    selectSexo.appendChild(opti);
+    
 }
+}
+async function traerObras(){
+let o=await fechProtegido('/traerObras');
+obras=o.data;
+llenarSelecObraS(obras);
+}
+
+ function llenarSelecObraS(obras){
+    eliminarHijos(obraSocialSelec);
+    let option2 = document.createElement('option');
+    option2.value=null;
+    option2.textContent='Obra Social';
+    obraSocialSelec.appendChild(option2);
+    /*for(let ob of obras){
+        let option = document.createElement('option');
+        option.value = ob.nombre_obra_social;
+        option.textContent = ob.nombre_obra_social;
+        obraSocialSelec.appendChild(option);
+      }*/
+      let nombresUnicos = new Set();
+
+for (let ob of obras) {
+    // Verifica si el nombre de la obra social ya está en el Set
+    if (!nombresUnicos.has(ob.nombre_obra_social)) {
+        // Si no está, añade el nombre al Set y crea la opción
+        nombresUnicos.add(ob.nombre_obra_social);
+        
+        let option = document.createElement('option');
+        option.value = ob.nombre_obra_social;
+        option.textContent = ob.nombre_obra_social;
+        obraSocialSelec.appendChild(option);
+    }
+}
+      llenarO(obras);
+ } 
+
+ function llenarO(obras) {
+    obraSocialSelec.addEventListener("change", function() {
+        //console.log(obraSocialSelec.value);
+       // console.log(obras);
+
+        // Crear una promesa para manejar el filtrado
+        let filtrarObras = new Promise((resolve, reject) => {
+            // Filtrar las obras
+            let planes = obras.filter(ob => ob.nombre_obra_social === obraSocialSelec.value);
+            if (planes) {
+                resolve(planes); // Resuelve la promesa con los planes filtrados
+            } else {
+                reject("No se encontraron planes."); // Rechaza la promesa en caso de error
+            }
+        });
+
+        // Manejar la promesa
+        filtrarObras
+            .then(planes => {
+                llenarPlan(planes); // Ejecutar llenarPlan después de que se resuelva la promesa
+            })
+            .catch(error => {
+                console.error(error); // Manejar errores si los hay
+            });
+    });
+ }
+
 
 function crearPaciente(){
 selectSexo.style.display="block";
 traerObras();
-traerSexo();//traer todos los sexos para el nuevo pacienta
+traerSexos();//traer todos los sexos para el nuevo pacienta
 let p=document.createElement('p');
 p.textContent='El paciente no esta registrado,por favor complete los campos y registrelo';
 let buton=document.createElement('button');
@@ -50,21 +121,7 @@ event.preventDefault(); // Evitar el envío del formulario
 registrarPaciente();
 });
 
-async function traerSexo(){
-let sexos=await fech('*','sexoTodos');
-//llenar el selec
-//console.log(sexos);
-eliminarHijos(selectSexo);
-let opt=document.createElement('option');
-opt.value=null;
-opt.textContent='Elija un sexo';
-selectSexo.appendChild(opt);
-for(let sexo of sexos){
-let opti=document.createElement('option');
-opti.value=sexo.nombre_sexo;
-opti.textContent=sexo.nombre_sexo;
-selectSexo.appendChild(opti);
-}
+
 selectSexo.addEventListener('change', async function(event) {
 // 3. Capturar el valor seleccionado
 const valorSeleccionado = event.target.value;
@@ -83,7 +140,7 @@ alert('La opcion de sexo ingresada no es valida');
 });
 }
 
-} 
+
 function controlar(input,cartel){
     if(!input||input===undefined){
         alert(cartel);
@@ -109,7 +166,7 @@ async function registrarPaciente(){
     controlar(sexo,'el sexo es obligatorio y debe elegirse con el seleccionador');
     paciente.sexo=sexo.id_sexo;
     console.log(`Paciente antes de ir al fech ${paciente}`);
-   let pacienteCreado=await fech2(paciente,'/generarPaciente');
+   let pacienteCreado=await fechProtegidoPost('/generarPaciente',paciente);
   // console.log(`fecha ${paciente.fecha}`);
    if(pacienteCreado.success){
     alert('Paciente cargado con exito');
@@ -187,61 +244,7 @@ async function asignarPaciente(dniPaciente){
         llenarSelecObraS(obras,true);
     eliminarHijos(divPacientes);
  }    
- function llenarSelecObraS(obras){
-    eliminarHijos(obraSocialSelec);
-    let option2 = document.createElement('option');
-    option2.value=null;
-    option2.textContent='Obra Social';
-    obraSocialSelec.appendChild(option2);
-    /*for(let ob of obras){
-        let option = document.createElement('option');
-        option.value = ob.nombre_obra_social;
-        option.textContent = ob.nombre_obra_social;
-        obraSocialSelec.appendChild(option);
-      }*/
-      let nombresUnicos = new Set();
 
-for (let ob of obras) {
-    // Verifica si el nombre de la obra social ya está en el Set
-    if (!nombresUnicos.has(ob.nombre_obra_social)) {
-        // Si no está, añade el nombre al Set y crea la opción
-        nombresUnicos.add(ob.nombre_obra_social);
-        
-        let option = document.createElement('option');
-        option.value = ob.nombre_obra_social;
-        option.textContent = ob.nombre_obra_social;
-        obraSocialSelec.appendChild(option);
-    }
-}
-      llenarO(obras);
- } 
-
- function llenarO(obras) {
-    obraSocialSelec.addEventListener("change", function() {
-        //console.log(obraSocialSelec.value);
-       // console.log(obras);
-
-        // Crear una promesa para manejar el filtrado
-        let filtrarObras = new Promise((resolve, reject) => {
-            // Filtrar las obras
-            let planes = obras.filter(ob => ob.nombre_obra_social === obraSocialSelec.value);
-            if (planes) {
-                resolve(planes); // Resuelve la promesa con los planes filtrados
-            } else {
-                reject("No se encontraron planes."); // Rechaza la promesa en caso de error
-            }
-        });
-
-        // Manejar la promesa
-        filtrarObras
-            .then(planes => {
-                llenarPlan(planes); // Ejecutar llenarPlan después de que se resuelva la promesa
-            })
-            .catch(error => {
-                console.error(error); // Manejar errores si los hay
-            });
-    });
-}
 function llenarPlan(planes){
     eliminarHijos(planSelec);
     let option2 = document.createElement('option');
@@ -257,6 +260,6 @@ function llenarPlan(planes){
  }
  planSelec.addEventListener("change",async function(){
     //console.log(obrass);
-obraSocialPlan=await obrass.find(ob=>ob.nombre_plan===planSelec.value);
+obraSocialPlan=await obras.find(ob=>ob.nombre_plan===planSelec.value);
 //console.log(`plan obra social seleccionad ${obraSocialPlan.id_plan}`);
  });

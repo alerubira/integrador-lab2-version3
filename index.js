@@ -6,6 +6,7 @@ import { dirname } from 'path';
 import bodyParser from'body-parser';
 //import { logins } from '../modelo/loginData.js';
 import {ruta} from './rutas.js';
+import { rutaP } from './rutaPrescripcion.js';
 let profecionales;
 let profecional;
 
@@ -94,8 +95,11 @@ app.use('/modificarPresentacion',ruta);
 app.use('/modificarNombreGenerico',ruta);
 app.use('/modificarForma',ruta);
 app.use('/verificarREFEPS_Argentino',ruta);
-app.use('/prescripcion',ruta);
-app.use('/buscarPacientes',ruta);
+app.use('/',rutaP);
+app.use('/buscarPacientes',rutaP);
+app.use('/traerObras',rutaP);
+app.use('/traerSexos',rutaP);
+app.use('/generarPaciente',rutaP);
 /*app.get('/', (req, res) => {
     encabezado="Bienvenido al Ministerio de Salud";
      res.render('vistaPrincipal',{encabezado,mensajeExito,estadoSuces});
