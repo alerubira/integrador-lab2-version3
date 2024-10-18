@@ -95,7 +95,7 @@ function bloquearDiv(bloquear) {
     });
 }
 let genericoDL=document.getElementById('genericos');
-(async function (){
+(async function (){//corregir y armar endpoint a todos los autoejecutable
      genericos=await fech('*','/nombreGenerico');
   let nombreCompleto=new Set();
     //console.log(genericos);
@@ -119,7 +119,7 @@ let genericoDL=document.getElementById('genericos');
     administraciones=await fech('*','/administraciones');
 })();
 let nombrePracticaDL=document.getElementById("nombrePractica");
-(async function(){ 
+(async function(){ //traer bien las prestaciones con fec protegido armar endpoin
     let auxPractica=new Set();
    prestacionesTodas=await fech('*','/prestaciones');
    for(let prestacion of prestacionesTodas){
@@ -135,7 +135,7 @@ let nombrePracticaDL=document.getElementById("nombrePractica");
 }
 })();
 (async ()=>{
-lados=await fech('*','/lados');
+lados=await fech('*','/lados');//armar bien con fech protegido , armar endpoin
 })();
 let practica=document.getElementById('nombre_prestacion');
 let practicaMomentanea;

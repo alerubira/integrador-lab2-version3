@@ -8,7 +8,7 @@ query='CALL obtenerPacientesPorDNI(?)';
 aux= await consulta1(query,dni);
 return aux[0];
 }
-async function pacienteTarea(tarea){
+async function pacienteTarea(tarea,objeto){
     try{
      switch(tarea){
          case 'traerObras':
@@ -19,10 +19,10 @@ async function pacienteTarea(tarea){
              query='SELECT * FROM `sexo` WHERE 1';
              return await(consulta1(query));
              break
-         case 'examen':
-              query='UPDATE `prestacion` SET `id_examen`=? WHERE id_prestacion=?';
-             return await(consulta1(query,modificante,id));
-             break; 
+        case 'traerOSP':
+            query='CALL ObtenerPlanesObraSocialPorPaciente(?)'
+            return await consulta1(query,objeto);
+            break; 
              default:
                  return retornarErrorSinRes(`Seleccion:${tarea}, en pacienteTarea,NO VALIDA`);    
      }

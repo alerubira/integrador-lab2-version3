@@ -100,6 +100,7 @@ app.use('/buscarPacientes',rutaP);
 app.use('/traerObras',rutaP);
 app.use('/traerSexos',rutaP);
 app.use('/generarPaciente',rutaP);
+app.use('/obraSocialPaciente',rutaP);
 /*app.get('/', (req, res) => {
     encabezado="Bienvenido al Ministerio de Salud";
      res.render('vistaPrincipal',{encabezado,mensajeExito,estadoSuces});

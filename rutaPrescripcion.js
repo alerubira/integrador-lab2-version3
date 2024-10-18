@@ -17,5 +17,8 @@ rutaP.get('/traerSexos',verificarToken,async(req,res)=>{
 rutaP.post('/generarPaciente',verificarToken,async(req,res)=>{
     manejadorPrescripcion(req,res,'generarPaciente');
 })
+rutaP.post('/obraSocialPaciente',verificarToken,async(req,res)=>{
+    manejadorPrescripcion(req,res,'traerOSP');
+})
 export{rutaP}
     

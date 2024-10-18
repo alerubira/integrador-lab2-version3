@@ -163,7 +163,7 @@ async function fechProtegidoPost(endpoin,objeto){
         console.log(responseBody);
         if(responseBody===false){return responseBody}
         if(responseBody===true){return responseBody}
-        cartelExito(pagina,`La tarea fue realizada con exito: ${responseBody.message}`);
+       if(responseBody.message) {cartelExito(pagina,`La tarea fue realizada con exito: ${responseBody.message}`);}
         console.log(responseBody);
         limpiarCampos(limpiar);
         fOcultar();

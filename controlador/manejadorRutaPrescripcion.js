@@ -70,16 +70,23 @@ let objet;
          aux=await existeBd(objet.idPlanObraSocial,'plan_obra_social','id_plan');
          if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Plan:${aux}`)}
          if(!aux){return retornarError(res,'La obra social o el plan seleccionado no existe')}
-         aux=await existeBd(paciente.sexo,'sexo','id_sexo');
+         aux=await existeBd(objet.sexo,'sexo','id_sexo');
          if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el sexo`)}
          if(!aux){return retornarError(res,"El sexo seleccionado no existe")}
           aux=await generarPaciente(objet);
          if (aux instanceof Error) {return retornarError(res,`Error al crear el Medico,${aux}`)}
          return res.send({ message: "El Paciente fue archivado con exito", datos: aux }); 
              break;
-     case 'traerTodosMedicos':
-        
-         
+     case 'traerOSP':
+        objet=req.body;
+    
+        aux=await existeBd(objet.id_paciente,'paciente','id_paciente');
+         if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Paciente:${aux}`)}
+         if(!aux){return retornarError(res,"El Paciente no existe")}
+         aux=await pacienteTarea('traerOSP',objet.id_paciente);
+         if(aux instanceof Error){return retornarError(res,`Error al buscar obras sociales por Paciente:${aux}`)};
+         if(aux.length<1){return retornarError(res,"El Paciente no posee obra social")}
+         return res.send(aux);
           break  
      case 'cambiarEstado':
          objet=req.body;

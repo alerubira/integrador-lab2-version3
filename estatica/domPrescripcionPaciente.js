@@ -41,13 +41,14 @@ async function traerSexos(){
     
 }
 }
-async function traerObras(){
+async function traerObras(a){
 let o=await fechProtegido('/traerObras');
 obras=o.data;
-llenarSelecObraS(obras);
+if(!a){llenarSelecObraS(obras);}
 }
 
  function llenarSelecObraS(obras){
+    console.log(obras);
     eliminarHijos(obraSocialSelec);
     let option2 = document.createElement('option');
     option2.value=null;
@@ -230,21 +231,24 @@ function sugerirPacientes(aux) {
        
 }
 async function asignarPaciente(dniPaciente){
-    console.log(dniPaciente);
+    
     paciente= pacientes.find(persona => persona.dni_persona === dniPaciente);
-    console.log(paciente);
-    //console.log(`idPaciente en dom ${paciente.idPaciente}`);
+    if(paciente){
         document.getElementById('dniP').value = paciente.dni_persona;
         document.getElementById('nombreP').value = paciente.nombre;
         document.getElementById('apellidoP').value = paciente.apellido;
         document.getElementById('sexoP').value = paciente.nombre_sexo;
         document.getElementById('obraSP').value = paciente.obraSocial;
         document.getElementById('plan').value = paciente.plan;
-        document.getElementById('fechaNP').value =convertirFechaISOaFechaLocal(paciente.fechaNacimiento) ;
-        let obras=  await fech(paciente.idPaciente,'/obraSocialPaciente');
-      //console.log(obras);
-        llenarSelecObraS(obras,true);
+        document.getElementById('fechaNP').value =convertirFechaISOaFechaLocal(paciente.fecha_nacimiento) ;
+        let p={};
+        p.id_paciente=paciente.id_paciente;
+       let o=await fechProtegidoPost('/obraSocialPaciente',p);
+       console.log(o);
+       obras=o[0];
+       llenarSelecObraS(obras,true);
     eliminarHijos(divPacientes);
+    }else{alerta(pagina,'El DNI no corresponde aun Paciente')}
  }    
 
 function llenarPlan(planes){
