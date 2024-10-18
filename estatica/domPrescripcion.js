@@ -20,6 +20,7 @@ let medicamentos=[];//para la prescripcion
 let administracion={};
 let administraciones;
 let medicamentoCompleto={};//para guardar en medicamentos
+pagina="Prescripcion";
 inputSexoP=document.getElementById('sexoP');
 let genericos;
 let prestacionesPrescripcion=[];//para la prscripcion

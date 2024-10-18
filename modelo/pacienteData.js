@@ -1,6 +1,6 @@
 import { retornarErrorSinRes } from "../controlador/funsionesControlador.js"
-import { consulta1 } from "./conexxionBD.js";
-
+import { consulta1 ,pool,existeBd} from "./conexxionBD.js";
+import { buscarIdPorDni } from "./PersonaData.js";
 let query;
 let aux;
 async function buscarPacienteDni(dni){
@@ -32,94 +32,55 @@ async function pacienteTarea(tarea){
      return retornarErrorSinRes(`Error en pacienteTarea:${error}`);
     }
  }
- function generarPaciente(paciente) {
-    return new Promise((resolve, reject) => {
-        connection.beginTransaction((err) => {
-            if (err) {
-                return connection.rollback(() => {
-                    reject(err);
-                });
+async function generarPaciente(paciente) {
+    //let usuarioH = await crearHash(Medico.usuarioProvisorio);
+
+    let connection;
+    try {
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+        let p=await existeBd(paciente.dni,'persona','dni_persona');
+        let id_persona;
+        if(p){
+            let resultado=await  buscarIdPorDni(paciente.dni);
+            if(!resultado.error){
+                id_persona=resultado[0].id_persona;
             }
-//console.log(`paciente antes de entrar a la query ${paciente.nombre}`);
-            connection.query(
-                'INSERT INTO `persona`(`nombre`, `apellido`, `dni_persona`, `estado_persona`) VALUES (?,?,?,?)',
-                [paciente.nombre, paciente.apellido, paciente.dni, paciente.estado],
-                (error, results) => {
-                    if (error) {
-                        return connection.rollback(() => {
-                            reject(error);
-                        });
-                    }
-
-                    if (results.affectedRows !== 1) {
-                        return connection.rollback(() => {
-                            reject(new Error('Error inserting into persona'));
-                        });
-                    }
-
-                    const id_persona = results.insertId;
-
-                    connection.query(
-                        'INSERT INTO `paciente`(`id_persona`, `fecha_nacimiento`, `id_sexo`) VALUES (?,?,?)',
-                        [id_persona, paciente.fechaNacimiento, paciente.sexo],
-                        (error, results) => {
-                            if (error) {
-                                return connection.rollback(() => {
-                                    reject(error);
-                                });
-                            }
-
-                            if (results.affectedRows !== 1) {
-                                return connection.rollback(() => {
-                                    reject(new Error('Error inserting into paciente'));
-                                });
-                            }
-
-                            const id_paciente = results.insertId;
-
-                            connection.query(
-                                'INSERT INTO `paciente_obra_social_plan`(`id_paciente`, `id_plan`) VALUES (?,?)',
-                                [id_paciente, paciente.idPlanObraSocial],
-                                (error, results) => {
-                                    if (error) {
-                                        return connection.rollback(() => {
-                                            reject(error);
-                                        });
-                                    }
-
-                                    if (results.affectedRows !== 1) {
-                                        return connection.rollback(() => {
-                                            reject(new Error('Error inserting into paciente_obra_social_plan'));
-                                        });
-                                    }
-
-                                    connection.commit((err) => {
-                                        if (err) {
-                                            return connection.rollback(() => {
-                                                reject(err);
-                                            });
-                                        }
-                                        resolve({ success: true });
-                                    });
-                                }
-                            );
-                        }
-                    );
-                }
+        }else{
+            const [personaResult] = await connection.execute(
+                'INSERT INTO `persona`(`nombre`, `apellido`, `dni_persona`) VALUES (?,?,?)',
+                [paciente.nombre, paciente.apellido, paciente.dni]
             );
-        });
-    })
-    .catch((error) => {
-        console.error('Transaction error:', error);
-        return { success: false, message: 'Transaction error', error };
-    })
-    .finally(() => {
-        connection.end((err) => {
-            if (err) {
-                console.error('Error closing the connection:', err);
-            }
-        });
-    });
+    
+             id_persona = personaResult.insertId;
+        }
+        
+        const [pacienteResult] = await connection.execute(
+            'INSERT INTO `paciente`(`id_persona`, `fecha_nacimiento`, `id_sexo`, `estado_paciente`) VALUES (?,?,?,?)',
+            
+            [id_persona, paciente.fechaNacimiento,paciente.sexo,paciente.estado]
+        );
+
+        const id_paciente = pacienteResult.insertId;
+        
+        const [planResult] = await connection.execute(
+            'INSERT INTO `paciente_obra_social_plan`(`id_paciente`, `id_plan`) VALUES (?,?)',
+            [id_paciente,paciente.idPlanObraSocial]
+        );
+
+        await connection.commit();
+        return { success: true };
+    } catch (error) {
+        if (connection) {
+            await connection.rollback();
+        }
+        console.error('Error en la transacción:', error);
+        throw new Error(`Error en la Transaccion:${error}`);
+    } finally {
+        if (connection) {
+            connection.release(); // Devolvemos la conexión al pool
+        }
+    }
 }
 
 

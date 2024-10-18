@@ -4,6 +4,7 @@ import { retornarError } from "./funsionesControlador.js";
 import { Medico } from "../modelo/clasesEntidad.js";
 import { buscarPacienteDni,pacienteTarea ,generarPaciente} from "../modelo/pacienteData.js";
 import { verificar } from "./verificaryup.js";
+import { existeBd } from "../modelo/conexxionBD.js";
 let aux;
 let objet;
  async function manejadorAccesoPrescripcion(req,res){
@@ -64,26 +65,21 @@ let objet;
              break;
      case 'generarPaciente':
          objet = req.body;
-         console.log(objet);
          aux= await verificar(objet,'paciente');
          if(aux.errors){return retornarError(res,`Los datos del Paciente no son compatibles,${aux.message}`)}
-         //corroborar todo en generar paciente,si existe persona y si existe el paciente
+         aux=await existeBd(objet.idPlanObraSocial,'plan_obra_social','id_plan');
+         if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Plan:${aux}`)}
+         if(!aux){return retornarError(res,'La obra social o el plan seleccionado no existe')}
+         aux=await existeBd(paciente.sexo,'sexo','id_sexo');
+         if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el sexo`)}
+         if(!aux){return retornarError(res,"El sexo seleccionado no existe")}
           aux=await generarPaciente(objet);
-         if (aux instanceof Error) {return retornarError(res,`Error al crear el Medico,${aux.message}`)}
+         if (aux instanceof Error) {return retornarError(res,`Error al crear el Medico,${aux}`)}
          return res.send({ message: "El Paciente fue archivado con exito", datos: aux }); 
              break;
      case 'traerTodosMedicos':
-         aux=await medicoDatatodos('medicos');
-         if (aux instanceof Error) {return retornarError(res,`Error al traer los Medicos,${aux}`)}
+        
          
-             let medicos=[];
-             let medico;
-             for(let m of aux){
-             
-             medico= new Medico(m.id_medico,m.id_persona,m.nombre,m.apellido,m.dni_persona,m.domicilio,m.id_profecion,m.nombre_profecion,m.id_especialidad,m.nombre_especialidad,m.matricula_profecional,m.id_refeps,m.estado_medico);
-             medicos.push(medico);
-             }
-         return res.send(medicos);
           break  
      case 'cambiarEstado':
          objet=req.body;

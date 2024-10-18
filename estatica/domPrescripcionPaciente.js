@@ -2,9 +2,10 @@ let sexos;
 document.getElementById('dniP').addEventListener('input', async function() {
     eliminarHijos(divPacientes);
     let inputDniP = this.value;
-    //console.log(inputDniP);
+    validar(inputDniP.length>8,pagina,'El dni no deve superar los 8 caracteres');
     if (inputDniP.length === 7||inputDniP.length===8) {
         try {
+            
             let p={};
            // console.log(`dni antes deir al fetch ${inputDniP}`);
            //usar un fech get protegido para traer los pacientes,hacer endpoin completo
@@ -167,14 +168,12 @@ async function registrarPaciente(){
     paciente.sexo=sexo.id_sexo;
     console.log(`Paciente antes de ir al fech ${paciente}`);
    let pacienteCreado=await fechProtegidoPost('/generarPaciente',paciente);
-  // console.log(`fecha ${paciente.fecha}`);
-   if(pacienteCreado.success){
-    alert('Paciente cargado con exito');
+    console.log(pacienteCreado.datos.success);
+   if(pacienteCreado.datos.success){
+
     bloquearDiv(divPacientes);
-    Focultar();
+    fOcultar();
     eliminarHijos(divPacientes);
-   }else{
-    alert('Hubo un error en la carga del paciente');
    }
   
     //console.log(`paciente en la funsion registrarPaciente ${paciente.nombre}`);
@@ -194,7 +193,7 @@ function sugerirPacientes(aux) {
        // Crear y agregar label para DNI
        let labelDni = document.createElement('label');
        labelDni.className=('label');
-       labelDni.textContent = paciente.dni;
+       labelDni.textContent = paciente.dni_persona;
        labelDni.htmlFor = 'dniP';
        div.appendChild(labelDni);
        
@@ -211,13 +210,14 @@ function sugerirPacientes(aux) {
        labelApellido.textContent = paciente.apellido;
        labelApellido.htmlFor = 'apellidoP';
        div.appendChild(labelApellido);
-       
+       console.log(paciente.dni_persona);
        // Crear y agregar el botón
        let buton = document.createElement('button');
        buton.textContent = 'Agregar';
+       buton.className='boton';
        buton.addEventListener('click', (event) => {
         event.preventDefault(); // Evitar el envío del formulario
-        asignarPaciente(paciente.dni);
+        asignarPaciente(paciente.dni_persona);
     });
        div.appendChild(buton);
        
@@ -230,12 +230,14 @@ function sugerirPacientes(aux) {
        
 }
 async function asignarPaciente(dniPaciente){
-    paciente= pacientes.find(persona => persona.dni === dniPaciente);
+    console.log(dniPaciente);
+    paciente= pacientes.find(persona => persona.dni_persona === dniPaciente);
+    console.log(paciente);
     //console.log(`idPaciente en dom ${paciente.idPaciente}`);
-        document.getElementById('dniP').value = paciente.dni;
+        document.getElementById('dniP').value = paciente.dni_persona;
         document.getElementById('nombreP').value = paciente.nombre;
         document.getElementById('apellidoP').value = paciente.apellido;
-        document.getElementById('sexoP').value = paciente.sexo;
+        document.getElementById('sexoP').value = paciente.nombre_sexo;
         document.getElementById('obraSP').value = paciente.obraSocial;
         document.getElementById('plan').value = paciente.plan;
         document.getElementById('fechaNP').value =convertirFechaISOaFechaLocal(paciente.fechaNacimiento) ;

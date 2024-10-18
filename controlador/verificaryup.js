@@ -5,17 +5,33 @@ domicilioProfecional:yup.string()
      .max(30,'El domocilio no debe superar los 30 caracteres')
 })
 const pacienteY=yup.object().shape({
-dniPaciente: yup.string()
-    .matches(/^\d{7,8}$/, 'El DNI debe ser un número de 7 u 8 caracteres')
-    .required('El DNI es obligatorio'),
-nombrePaciente: yup.string()
+
+nombre: yup.string()
     .matches(/^[a-zA-Z]+$/, 'El nombre solo debe contener letras')
     .max(30, 'El nombre debe tener como máximo 30 caracteres')
     .required('El nombre es obligatorio'),
-apellidoPaciente: yup.string()
+apellido: yup.string()
     .matches(/^[a-zA-Z]+$/, 'El apellido solo debe contener letras')
     .max(30, 'El apellido debe tener como máximo 30 caracteres')
     .required('El apellido es obligatorio'),
+dni: yup.string()
+    .matches(/^\d{7,8}$/, 'El DNI debe ser un número de 7 u 8 caracteres')
+    .required('El DNI es obligatorio'),    
+estado: yup.boolean()
+    .required('El estado es obligatorio'),
+fechaNacimiento: yup.date()
+    .required('La fecha de nacimiento es obligatoria')
+    .typeError('La fecha de nacimiento debe ser válida'),
+idPlanObraSocial: yup.number()
+    .integer('El ID del plan debe ser un número entero')
+    .min(1, 'El ID del plan debe ser mayor que 0')
+    .required('El ID del plan es obligatorio'),
+  
+sexo: yup.number()
+    .integer('El sexo debe ser un número entero')
+    .min(1, 'El sexo debe ser mayor que 0')
+    .required('El sexo es obligatorio'),
+      
 
 })
 const MedicoY = yup.object().shape({
