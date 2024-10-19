@@ -23,8 +23,10 @@ limpiarCampos(limpiar);
     //fOcultar();
     elemento.style.display = 'block';
  }       
-function limpiarCampos(list){
+function limpiarCampos(list1,...list){
     //console.log(list);
+    list1.textContent="";
+    list1.value=null;
     for (let li of list){
         li.textContent="";
         li.value=null;

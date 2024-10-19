@@ -62,7 +62,8 @@ for(let lad of lados){
     ladoDL.appendChild(option);
 }
 }
-document.getElementById('nombre_prestacion').addEventListener('input', function() {
+let nombrePrestacion=document.getElementById('nombre_prestacion');
+nombrePrestacion.addEventListener('input', function() {
     const input = this.value.toLowerCase();
     const lista = document.getElementById('listaPrestaciones');
     
@@ -109,46 +110,58 @@ function capturarLado(){
         });
       
         if (idLadoSeleccionado) {
-            
+            lado.nombre=inputLado;
             prestacion.lado=idLadoSeleccionado;
           
           // Aquí puedes usar el id_lado para lo que necesites, como enviarlo al servidor
         } else {
           console.log('Lado no encontrado');
         }
-      
+     inputLado.value=null; 
       
 }
 let indicacion=document.getElementById('indicacionPrestacion');
 let justificacion=document.getElementById('justificacionPrestacion');
 let observacion=document.getElementById('observacionPrestacion');
 function agregarPrestacionCompleta(){
+  lado.nombre="";
     capturarLado();
-    console.log(prestacion);
-//verificar lado cliente todos los datos antes de cargarlos a la prestacion
-
+bandera=true;
+if(!validar(!prestacion.idPrestacion,pagina,'NO HAY prestacion seleccionada')){bandera=false};
+if(!validar(!indicacion.value,pagina,'La Indicacion es Obligatoria')){bandera=false};
+if(!validar(!justificacion.value,pagina,'La Justificacion es Obligatoria')){bandera=false};
+if(!validar(!nombrePrestacion.value,pagina,'El Nombre de la Prestacion es Obligatorio')){bandera=false};
+if(bandera){
 prestacion.indicacion=indicacion.value;
 prestacion.justificacion=justificacion.value;
 prestacion.observacion=observacion.value;
-console.log(prestacion);
 prestacionesPrescripcion.push(prestacion);
-console.log(prestacionesPrescripcion);
-let p=document.createElement('p');
-p.textContent=`${practicaMomentanea.nombre_practica}--${practicaMomentanea.nombre_procedimiento}--${practicaMomentanea.nombre_examen}--${practicaMomentanea.nombre_lado}`;
-divMedicamentoPrestacion.appendChild(p);
-let p1=document.createElement('p'); 
-p1.textContent=`${indicacion.value}`
-divMedicamentoPrestacion.appendChild(p1);
-let p2=document.createElement('p');
-p2.textContent=`${justificacion.value}`;
-divMedicamentoPrestacion.appendChild(p2);
-let p3=document.createElement('p');
+let divAux=document.createElement('div');
+divAux.classList.add('divAuxiliar');
+let p=document.createElement('h6');
+let l;
+//solucionar andefine para lado cuando no se selecciona lado
+if(lado.nombre===undefined){l='No se requiere'}
+/*if(lado.nombre!==""){
+  l=lado.nombre
+   }else{
+    lado='No se Requiere'}*/
+p.textContent=`PRESTACION : ${nombrePrestacion.value}---Lado: ${l}`;
+divAux.appendChild(p);
+let p1=document.createElement('h6'); 
+p1.textContent=`INDICACION : ${indicacion.value}`
+divAux.appendChild(p1);
+let p2=document.createElement('h6');
+p2.textContent=`JUSTIFICACION : ${justificacion.value}`;
+divAux.appendChild(p2);
+let p3=document.createElement('h6');
 p3.textContent=`${observacion.value}`;
-divMedicamentoPrestacion.appendChild(p3);
+divAux.appendChild(p3);
+divMedicamentoPrestacion.appendChild(divAux);
 limpiarCampos(indicacion,justificacion,observacion,ladoPrestacion,inputNombrePrestacion);
 
 
- ladoDL.innerHTML="";
+ ladoPrestacion.innerHTML="";
  
  //nombrePracticaDL.innerHTML="";
  
@@ -157,5 +170,6 @@ limpiarCampos(indicacion,justificacion,observacion,ladoPrestacion,inputNombrePre
  // Restablecemos el valor a la opción inicial
  selectElement.value = 'j'; // O el valor que corresponda a la opción inicial
  fOcultar();
+}
 }
     

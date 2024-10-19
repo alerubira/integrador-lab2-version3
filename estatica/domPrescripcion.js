@@ -27,7 +27,8 @@ let prestacionesPrescripcion=[];//para la prscripcion
 let prestacion={};
 let prestacionesTodas;
 let lados;
-let lado={};    
+let lado={};  
+let bandera;  
    /*     async function fech2(input, endpoint) {
             try {
                 console.log(`input en fech: ${input}`);
