@@ -49,6 +49,10 @@ try{
          query='SELECT pre.id_prestacion,pre.id_practica,pre.id_procedimiento,pre.id_examen,pra.nombre_practica,pro.nombre_procedimiento,ex.nombre_examen,pre.estado_prestacion FROM `prestacion` pre JOIN `practica` pra ON pre.id_practica=pra.id_practica JOIN `examen` ex on pre.id_examen=ex.id_examen JOIN `procedimiento` pro on pre.id_procedimiento=pro.id_procedimiento WHERE 1';
         return await   consulta1(query);
         break;
+    case 'lados':
+        query='SELECT * FROM `lado` WHERE 1';
+        return await consulta1(query);
+        break;    
         default:
             return retornarErrorSinRes(`Seleccion:${traer}, en prestacionDatatodos,NO VALIDA`); 
       }

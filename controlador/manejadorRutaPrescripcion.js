@@ -5,6 +5,7 @@ import { Medico } from "../modelo/clasesEntidad.js";
 import { buscarPacienteDni,pacienteTarea ,generarPaciente} from "../modelo/pacienteData.js";
 import { verificar } from "./verificaryup.js";
 import { existeBd } from "../modelo/conexxionBD.js";
+import { prestacionDatatodos } from "../modelo/prestacionData.js";
 let aux;
 let objet;
  async function manejadorAccesoPrescripcion(req,res){
@@ -34,8 +35,13 @@ let objet;
              let p=p1[0][0]
              if(p.estado_medico!==1){return retornarError(res,"El Profecional Esta dado de baja")}
             let profecional=new Medico(p.id_medico,null,p.nombre,p.apellido,p.dni_persona,p.domicilio,null,p.nombre_profecion,null,p.nombre_especialidad,p.matricula_profecional,null,p.estado_medico);
-            
-             res.render('vistaPrescripcion', { encabezado ,profecional});
+            let lados=await prestacionDatatodos('lados');
+            if(lados instanceof Error){return retornarError(res,`Error al buscar los lados:${lados}`)}
+            let prestaciones=await prestacionDatatodos('prestaciones');
+            if(prestaciones instanceof Error){return retornarError(res,`Error al buscar las Prestaciones`)}
+            let presAprobadas=await prestaciones.filter(pre=>pre.estado_prestacion===1);
+            console.log(presAprobadas);
+             res.render('vistaPrescripcion', { encabezado ,profecional,lados,presAprobadas});
               
            } 
        });

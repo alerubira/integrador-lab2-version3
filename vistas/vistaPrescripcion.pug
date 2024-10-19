@@ -2,7 +2,9 @@ extends layout
 block script1 
     script(src="domPrescripcion.js", defer)
 block script2
-    script(src='domPrescripcionPaciente.js',defer)           
+    script(src='domPrescripcionPaciente.js',defer)
+block script3 
+    script(src='domPrescripcionPrestacion.js',defer)               
 block content 
             form#formularioReceta(action="/guardarReceta", method="POST")
                         - let fechaActual = new Date();
@@ -88,36 +90,28 @@ block content
                                 button(onclick="agregarMedicamentoCompleto()") Agregar  
                                     
                             #divPrestacion.ocultar
-                                label(for="nombre_prestacion") Practica :
-                                input(type="text", id="nombre_prestacion", name="nombre_prestacion",list="nombrePractica")
-                                datalist#nombrePractica
-                                button(onclick="capturarNombrePrestacion()") Agregar
-                                br
-                                label(for="procedimiento_prestacion") Procedimiento :
-                                input(type="text" ,id="procedimiento_prestacion", name="procedimiento_prestacion",list="procedimiento")
-                                datalist#procedimiento 
-                                button(onclick="capturarProcedimiento()") Agregar
-                                br
-                                label(for="examen_prestacion") Examen  :
-                                input(type="text", id="examen_prestacion", name="examen_prestacion",list="examen")
-                                datalist#examen 
-                                button(onclick="capturarExamen()") Agregar
+                                label(for="nombre_prestacion") Prestación:
+                                input.inputTotal(type="text", id="nombre_prestacion", name="nombre_prestacion", placeholder="Escribe para buscar...")
+                                ul#listaPrestaciones
+                                script.
+                                    const presAprobadas = !{JSON.stringify(presAprobadas)};
+
                                 br
                                 label(for="lado_prestacion") Lado(opcional) :
                                 input(type="text", id="lado_prestacion", name="lado_prestacion",list="lado")
-                                datalist#lado 
-                                button(onclick="capturarLado()") Agregar
-                                br
-                                textarea(id="indicacionPrestacion", name="indicacionPrestacion", rows="4", cols="50", placeholder="La indicacion es obligatoria")
+                                datalist#lado
+                                    each lado in lados
+                                        option(value=lado.nombre_lado data-id=lado.id_lado) 
                                 
                                 br
+                                textarea(id="indicacionPrestacion", name="indicacionPrestacion", rows="4", cols="50", placeholder="La indicacion es obligatoria")
                                 br
                                 textarea(id="justificacionPrestacion", name="justificacionPrestacion", rows="4", cols="50", placeholder="La justificacion es obligatora")
                                 br
                                 textarea(id="observacionPrestacion", name="observacionPrestacion", rows="4", cols="50", placeholder="La observacion es opcional")
                                 br
-                                button(onclick="agregarPrestacionCompleta()") Agregar        
+                                button.boton(onclick="agregarPrestacionCompleta()") Agregar        
                             #divRecetado   
-                        input(type="submit", value="Enviar")
+                        input.boton(type="submit", value="Enviar")
 block boton1 
         button.boton(type="button",onclick='volver()') volver 

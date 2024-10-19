@@ -184,6 +184,16 @@ border: 1px solid black;
     padding: 2px; /* Agrega un relleno dentro de las celdas */
     text-align: left; /* Alinea el texto a la izquierda */
   }
+  li {
+    text-align: left; /* Alinea el texto del <li> a la izquierda */
+  }
+  .inputTotal {
+    width: 60%;         /* Ocupa el 100% del ancho del contenedor padre */
+    box-sizing: border-box; /* Incluye el padding y el borde en el cálculo del ancho */
+    padding: 5px;      /* Añade un poco de espacio interno */
+    margin: 0;          /* Elimina márgenes externos */
+  }
+  
 
  
   
