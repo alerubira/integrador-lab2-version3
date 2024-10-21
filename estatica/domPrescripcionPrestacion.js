@@ -108,7 +108,7 @@ let ladoPrestacion=document.getElementById('lado_prestacion');
 function capturarLado(){
     
         const inputLado = document.getElementById('lado_prestacion').value;
-        const opciones = document.querySelectorAll('#lado option');
+        let opciones = document.querySelectorAll('#lado option');
         let idLadoSeleccionado = null;
       
         // Buscar el id_lado correspondiente al nombre_lado seleccionado
@@ -170,11 +170,11 @@ divMedicamentoPrestacion.appendChild(divAux);
 limpiarCampos(indicacion,justificacion,observacion,ladoPrestacion,inputNombrePrestacion);
 
 
- ladoPrestacion.innerHTML="";
+ //inputNombreMedicamento.innerHTML="";
  
  //nombrePracticaDL.innerHTML="";
  
- const selectElement = document.getElementById('tipo');
+ 
  
  // Restablecemos el valor a la opción inicial
  selectElement.value = 'j'; // O el valor que corresponda a la opción inicial

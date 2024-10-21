@@ -1,7 +1,9 @@
 function capturarAdministracion(){
-    
-    const inputAdministracion = document.getElementById('administracion_medicamento').value;
-    const opciones = document.querySelectorAll('#administracion option');
+    console.log('hola');
+     inputAdministracion.value;
+    console.log(inputAdministracion.value)
+    let opciones = document.querySelectorAll('#administracion  option'); 
+    console.log(opciones);
     let idAdministracion = null;
   
     // Buscar el id_administracion correspondiente al nombre_administracion_medicamento seleccionado
@@ -17,110 +19,54 @@ function capturarAdministracion(){
       console.log(idAdministracion);
       // Aquí puedes usar el id_lado para lo que necesites, como enviarlo al servidor
     }
- inputAdministracion.value=null; 
+// inputAdministracion.value=null; 
   
 }
 async function capturarMedicamento(){
     medicamento.nombre="";
       capturarAdministracion();
   bandera=true;
-  /*if(!validar(!prestacion.idPrestacion,pagina,'NO HAY prestacion seleccionada')){bandera=false};
-  if(!validar(!indicacion.value,pagina,'La Indicacion es Obligatoria')){bandera=false};
-  if(!validar(!justificacion.value,pagina,'La Justificacion es Obligatoria')){bandera=false};
-  if(!validar(!nombrePrestacion.value,pagina,'El Nombre de la Prestacion es Obligatorio')){bandera=false};
-  console.log(prestacionesPrescripcion);
-  console.log(prestacion.idPrestacion);
-  let a=await prestacionesPrescripcion.find(p=>p.idPrestacion===prestacion.idPrestacion);
+  if(!validar(!medicamento.idNGP,pagina,'NO HAY Medicamento seleccionado ')){bandera=false};
+  if(!validar(!medicamento.idAdministracion,pagina,'La Administracion es Obligatoria')){bandera=false};
+  
+  if(!validar(!inputNombreMedicamento.value,pagina,'El Nombre del Medicamento es Obligatorio')){bandera=false};
+  console.log(medicamentosPrescripcion);
+  console.log(medicamento.idNGP);
+  let a=await medicamentosPrescripcion.find(m=>m.idNGP===medicamento.idNGP);
   console.log(a);
-  if(!validar(a,pagina,"La Practica ya se encuentra en la Prescripcion,no se puede recetar la misma Practica")){bandera=false}
-  */
- /* if(bandera){
-  medicamento.indicacion=indicacion.value;
-  medicamento.justificacion=justificacion.value;
-  medicamento.observacion=observacion.value;
-  medicamentosPrescripcion.push(medicamento);
-  medicamento={};
-  let divAux=document.createElement('div');
-  divAux.classList.add('divAuxiliar');
-  let p=document.createElement('h6');
+  if(!validar(a,pagina,"el Medicamento ya se encuentra en la Prescripcion,no se puede recetar el mismo Medicamento")){bandera=false}
   
-  p.textContent=`PRESTACION : ${nombrePrestacion.value}---Lado: ${lado.nombre}`;
-  divAux.appendChild(p);
-  let p1=document.createElement('h6'); 
-  p1.textContent=`INDICACION : ${indicacion.value}`
-  divAux.appendChild(p1);
-  let p2=document.createElement('h6');
-  p2.textContent=`JUSTIFICACION : ${justificacion.value}`;
-  divAux.appendChild(p2);
-  let p3=document.createElement('h6');
-  p3.textContent=`${observacion.value}`;
-  divAux.appendChild(p3);
-  divMedicamentoPrestacion.appendChild(divAux);
-  limpiarCampos(indicacion,justificacion,observacion,ladoPrestacion,inputNombrePrestacion);
-  
-  
-   ladoPrestacion.innerHTML="";
-   
-   //nombrePracticaDL.innerHTML="";
-   
-   const selectElement = document.getElementById('tipo');
-   
-   // Restablecemos el valor a la opción inicial
-   selectElement.value = 'j'; // O el valor que corresponda a la opción inicial
-   fOcultar();
-  }*/
-}
-async function agregarPrestacionCompleta(){
-    lado.nombre="";
-      capturarLado();
-  bandera=true;
-  if(!validar(!prestacion.idPrestacion,pagina,'NO HAY prestacion seleccionada')){bandera=false};
-  if(!validar(!indicacion.value,pagina,'La Indicacion es Obligatoria')){bandera=false};
-  if(!validar(!justificacion.value,pagina,'La Justificacion es Obligatoria')){bandera=false};
-  if(!validar(!nombreMedicamento.value,pagina,'El Nombre de la Prestacion es Obligatorio')){bandera=false};
-  console.log(prestacionesPrescripcion);
-  console.log(prestacion.idPrestacion);
-  let a=await prestacionesPrescripcion.find(p=>p.idPrestacion===prestacion.idPrestacion);
-  console.log(a);
-  if(!validar(a,pagina,"La Practica ya se encuentra en la Prescripcion,no se puede recetar la misma Practica")){bandera=false}
   if(bandera){
-  prestacion.indicacion=indicacion.value;
-  prestacion.justificacion=justificacion.value;
-  prestacion.observacion=observacion.value;
-  prestacionesPrescripcion.push(prestacion);
-  prestacion={};
+    console.log(marca.valu);
+   if(marca.value===""){marca.value="No Especificado"}
+  medicamento.nombre=inputNombreMedicamento.value;
+  medicamento.nombreComercial=marca.value;
+  medicamentosPrescripcion.push(medicamento);
+  
+  console.log(medicamentosPrescripcion);
   let divAux=document.createElement('div');
   divAux.classList.add('divAuxiliar');
   let p=document.createElement('h6');
   
-  p.textContent=`PRESTACION : ${nombreMedicamento.value}---Lado: ${lado.nombre}`;
+  p.textContent=`Medicamento : ${medicamento.nombre}---Administracion: ${administracion.nombre}`;
   divAux.appendChild(p);
   let p1=document.createElement('h6'); 
-  p1.textContent=`INDICACION : ${indicacion.value}`
+  p1.textContent=`MARCA COMERCIAL : ${medicamento.marca}`
   divAux.appendChild(p1);
-  let p2=document.createElement('h6');
-  p2.textContent=`JUSTIFICACION : ${justificacion.value}`;
-  divAux.appendChild(p2);
-  let p3=document.createElement('h6');
-  p3.textContent=`${observacion.value}`;
-  divAux.appendChild(p3);
+ 
+  
   divMedicamentoPrestacion.appendChild(divAux);
-  limpiarCampos(indicacion,justificacion,observacion,ladoPrestacion,inputNombrePrestacion);
-  
-  
-   ladoPrestacion.innerHTML="";
-   
-   //nombrePracticaDL.innerHTML="";
-   
-   const selectElement = document.getElementById('tipo');
-   
+  limpiarCampos(marca,inputNombreMedicamento,inputAdministracion);
+  medicamento={};
    // Restablecemos el valor a la opción inicial
+   
    selectElement.value = 'j'; // O el valor que corresponda a la opción inicial
    fOcultar();
   }
 }
-let nombreMedicamento=document.getElementById('nombre_medicamento');
-nombreMedicamento.addEventListener('input', function() {
+
+let inputNombreMedicamento=document.getElementById('nombre_medicamento');
+inputNombreMedicamento.addEventListener('input', function() {
     const input = this.value.toLowerCase();
     const lista = document.getElementById('listaMedicamentos');
     
@@ -128,7 +74,7 @@ nombreMedicamento.addEventListener('input', function() {
     lista.innerHTML = '';
   
     // Filtrar medicamentos basadas en la entrada del usuario
-    const filtradas = medAprobadas.filter(med => 
+    const filtradas = medAprobados.filter(med => 
       med.nombre_generico.toLowerCase().includes(input)
     );
   
@@ -142,9 +88,9 @@ nombreMedicamento.addEventListener('input', function() {
       
       // Añadir evento al hacer clic en una opción
       li.addEventListener('click', function() {
-        inputNombrePrestacion.value =`${med.nombre_generico}-FORMA FARMACEUTICA:${med.nombre_forma}-PRESENTACION:${med.nombre_presentacion}`;
+        inputNombreMedicamento.value =`${med.nombre_generico}-FORMA FARMACEUTICA:${med.nombre_forma}-PRESENTACION:${med.nombre_presentacion}`;
         lista.innerHTML = ''; // Limpiar la lista al seleccionar una opción
-        console.log('ID de la prestación seleccionada:', med.id_n_g_p);
+        console.log('ID del medicamento seleccionada:', med.id_n_g_p);
         medicamento.idNGP=med.id_n_g_p;
       });
   

@@ -204,7 +204,7 @@ border: 1px solid black;
   
   
   .inputTotal {
-    width: 60%;         /* Ocupa el 100% del ancho del contenedor padre */
+    width: 80%;         /* Ocupa el 100% del ancho del contenedor padre */
     box-sizing: border-box; /* Incluye el padding y el borde en el cálculo del ancho */
     padding: 5px;      /* Añade un poco de espacio interno */
     margin: 0;          /* Elimina márgenes externos */

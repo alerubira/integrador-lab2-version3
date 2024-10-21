@@ -65,15 +65,26 @@ block content
                             #divMedicamento.ocultar
                                 
                                 label(for="nombre_medicamento") Nombre del Medicamento :
+                                br
                                 input.inputTotal(type="text", id="nombre_medicamento", name="nombre_medicamento",placeholder="Escriba para buscar...")
                                 ul#listaMedicamentos
                                 script. 
-                                    const medAprobados=medAprobados;
+                                    const medAprobados=!{JSON.stringify(medAprobados)};
                                 br
+                                label(for="administracion_medicamento") Administracion :
+                                input(type="text", id="administracion_medicamento", name="administracion_medicamento",list="administracion")
+                                datalist#administracion 
+                                      each administracion in adMedicamentos
+                                        option(value=administracion.nombre_administracion_medicamento data-id=administracion.id_administracion_medicamento) 
+                                label(for="marcaMedicamento") Marca del medicamento(opcional)
+                                input(type="text",id="marcaMedicamento",name="marcaMedicamento")
+                                br
+                               
                                 button.boton(onclick="capturarMedicamento()") Agregar  
                                     
                             #divPrestacion.ocultar
                                 label(for="nombre_prestacion") Prestación:
+                                br
                                 input.inputTotal(type="text", id="nombre_prestacion", name="nombre_prestacion", placeholder="Escribe para buscar...")
                                 ul#listaPrestaciones
                                 script.

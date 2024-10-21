@@ -12,6 +12,8 @@ let obraSocialSelec=document.getElementById('obraSP');
 let planSelec=document.getElementById('plan');
 let divMedicamentoPrestacion=document.getElementById('divMedicamentoPrestacion');
 let marca=document.getElementById('marcaMedicamento')
+const selectElement = document.getElementById('tipo');
+let inputAdministracion = document.getElementById('administracion_medicamento');
 let obraSocialPlan;//para la prescripcion
 let obrass;
 let sexo;
