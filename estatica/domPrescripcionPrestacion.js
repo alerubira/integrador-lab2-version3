@@ -1,5 +1,5 @@
 let nombrePracticaDL=document.getElementById("nombrePractica");
-(async function(){ //traer bien las prestaciones con fec protegido armar endpoin
+/*(async function(){ //traer bien las prestaciones con fec protegido armar endpoin
     let auxPractica=new Set();
    prestacionesTodas=await fech('*','/prestaciones');
    for(let prestacion of prestacionesTodas){
@@ -13,11 +13,11 @@ let nombrePracticaDL=document.getElementById("nombrePractica");
         nombrePracticaDL.appendChild(option);
     }
 }
-})();
+})();*/
 let practica=document.getElementById('nombre_prestacion');
 let practicaMomentanea;
 let procedimientDL=document.getElementById('procedimiento');
-function capturarNombrePrestacion(){
+/*function capturarNombrePrestacion(){
     //console.log(practica.value);
 practicaMomentanea=prestacionesTodas.filter(pres=>pres.nombre_practica===practica.value);
 //console.log(practicaMomentanea);
@@ -31,11 +31,11 @@ for(let pro of practicaMomentanea){
     procedimientDL.appendChild(option);
 }
 
-}
+}*/
 let procedimiento=document.getElementById('procedimiento_prestacion');
 let examenDL=document.getElementById('examen');
 let inputNombrePrestacion= document.getElementById('nombre_prestacion');
-function capturarProcedimiento(){
+/*function capturarProcedimiento(){
    practicaMomentanea=practicaMomentanea.filter(pro=>pro.nombre_procedimiento===procedimiento.value);
    if(practicaMomentanea.length<1){
     alert('El procedimiento seleccionado no cooresponde a la practica')
@@ -47,10 +47,10 @@ function capturarProcedimiento(){
     examenDL.appendChild(option);
 }
 
-}
+}*/
 let examen=document.getElementById('examen_prestacion');
 let ladoDL=document.getElementById('lado');
-function capturarExamen(){
+/*function capturarExamen(){
 practicaMomentanea=practicaMomentanea.find(ex=>ex.nombre_examen===examen.value);
 if(!practicaMomentanea){
     alert('El examen no corresponde')
@@ -61,7 +61,7 @@ for(let lad of lados){
     option.textContent = lad.nombre_lado;
     ladoDL.appendChild(option);
 }
-}
+}*/
 let nombrePrestacion=document.getElementById('nombre_prestacion');
 nombrePrestacion.addEventListener('input', function() {
     const input = this.value.toLowerCase();
@@ -93,6 +93,15 @@ nombrePrestacion.addEventListener('input', function() {
   
       lista.appendChild(li);
     });
+    const listItems = document.querySelectorAll('li');
+    let currentTop = 0; // Posición inicial para el primer <li>
+    const spacing = 5; // Espaciado entre los <li>
+  
+    listItems.forEach((li) => {
+      const liHeight = li.offsetHeight; // Calcula la altura del <li>
+      li.style.top = `${currentTop}px`; // Posiciona el <li> usando top
+      currentTop += liHeight + spacing; // Aumenta el valor de top para el siguiente <li>
+    });
   });
   
 let ladoPrestacion=document.getElementById('lado_prestacion');
@@ -115,7 +124,7 @@ function capturarLado(){
           
           // Aquí puedes usar el id_lado para lo que necesites, como enviarlo al servidor
         } else {
-          console.log('Lado no encontrado');
+          lado.nombre="No se Requiere";
         }
      inputLado.value=null; 
       
@@ -123,7 +132,7 @@ function capturarLado(){
 let indicacion=document.getElementById('indicacionPrestacion');
 let justificacion=document.getElementById('justificacionPrestacion');
 let observacion=document.getElementById('observacionPrestacion');
-function agregarPrestacionCompleta(){
+async function agregarPrestacionCompleta(){
   lado.nombre="";
     capturarLado();
 bandera=true;
@@ -131,22 +140,22 @@ if(!validar(!prestacion.idPrestacion,pagina,'NO HAY prestacion seleccionada')){b
 if(!validar(!indicacion.value,pagina,'La Indicacion es Obligatoria')){bandera=false};
 if(!validar(!justificacion.value,pagina,'La Justificacion es Obligatoria')){bandera=false};
 if(!validar(!nombrePrestacion.value,pagina,'El Nombre de la Prestacion es Obligatorio')){bandera=false};
+console.log(prestacionesPrescripcion);
+console.log(prestacion.idPrestacion);
+let a=await prestacionesPrescripcion.find(p=>p.idPrestacion===prestacion.idPrestacion);
+console.log(a);
+if(!validar(a,pagina,"La Practica ya se encuentra en la Prescripcion,no se puede recetar la misma Practica")){bandera=false}
 if(bandera){
 prestacion.indicacion=indicacion.value;
 prestacion.justificacion=justificacion.value;
 prestacion.observacion=observacion.value;
 prestacionesPrescripcion.push(prestacion);
+prestacion={};
 let divAux=document.createElement('div');
 divAux.classList.add('divAuxiliar');
 let p=document.createElement('h6');
-let l;
-//solucionar andefine para lado cuando no se selecciona lado
-if(lado.nombre===undefined){l='No se requiere'}
-/*if(lado.nombre!==""){
-  l=lado.nombre
-   }else{
-    lado='No se Requiere'}*/
-p.textContent=`PRESTACION : ${nombrePrestacion.value}---Lado: ${l}`;
+
+p.textContent=`PRESTACION : ${nombrePrestacion.value}---Lado: ${lado.nombre}`;
 divAux.appendChild(p);
 let p1=document.createElement('h6'); 
 p1.textContent=`INDICACION : ${indicacion.value}`

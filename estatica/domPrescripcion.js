@@ -10,13 +10,14 @@ let profecional = document.getElementById('app').dataset.profesional;
 let paciente={};//para la prescripcion
 let obraSocialSelec=document.getElementById('obraSP');
 let planSelec=document.getElementById('plan');
-let divMedicamentoPrestacion=document.getElementById('divMedicamentoPrestacion')
+let divMedicamentoPrestacion=document.getElementById('divMedicamentoPrestacion');
+let marca=document.getElementById('marcaMedicamento')
 let obraSocialPlan;//para la prescripcion
 let obrass;
 let sexo;
 let prescripcion={};
 let medicamento={};
-let medicamentos=[];//para la prescripcion
+let medicamentosPrescripcion=[];//para la prescripcion
 let administracion={};
 let administraciones;
 let medicamentoCompleto={};//para guardar en medicamentos
@@ -95,8 +96,8 @@ function bloquearDiv(bloquear) {
         element.disabled = true;
     });
 }
-let genericoDL=document.getElementById('genericos');
-(async function (){//corregir y armar endpoint a todos los autoejecutable
+//let genericoDL=document.getElementById('genericos');
+/*(async function (){//corregir y armar endpoint a todos los autoejecutable
      genericos=await fech('*','/nombreGenerico');
   let nombreCompleto=new Set();
     //console.log(genericos);
@@ -115,19 +116,20 @@ let genericoDL=document.getElementById('genericos');
        }
        
     
-})();
-(async()=>{
+})();*/
+/*(async()=>{
     administraciones=await fech('*','/administraciones');
-})();
+})();*/
 
 /*(async ()=>{
 lados=await fech('*','/lados');//armar bien con fech protegido , armar endpoin
 })();*/
 
-let medicamentMomentaneo;
+/*let medicamentMomentaneo;
 let nombre;
 let formaDL=document.getElementById('forma');
-function obtenerNombre() {
+*/
+/*function obtenerNombre() {
     
     // Obtener el valor del input
     nombre = document.getElementById("nombre_generico_medicamento");
@@ -145,10 +147,11 @@ function obtenerNombre() {
         option.textContent=form.nombre_forma;
         formaDL.appendChild(option);
     }
-  }
-  let forma=document.getElementById('forma_farmaceutica_medicamento');
+  }*/
+  /*let forma=document.getElementById('forma_farmaceutica_medicamento');
   let presDL=document.getElementById('presentacion');
-  function obtenerForma(){
+  */
+  /*function obtenerForma(){
     
      // console.log(forma);
      // console.log(medicamentMomentaneo);
@@ -164,10 +167,10 @@ function obtenerNombre() {
         option.textContent=pres.nombre_presentacion;
         presDL.appendChild(option);
       }
-  }
-  let presentacion=document.getElementById('presentacion_medicamento');
-  let administracionDL=document.getElementById('administracion');
-  function obtenerPresentacion(){
+  }*/
+ // let presentacion=document.getElementById('presentacion_medicamento');
+  //let administracionDL=document.getElementById('administracion');
+  /*function obtenerPresentacion(){
     //console.log(`en lafunsion`);
        //console.log(presentacion);
        medicamento=medicamentMomentaneo.find(med=>med.nombre_presentacion===presentacion.value);
@@ -183,17 +186,17 @@ function obtenerNombre() {
         option.textContent=adm.nombre_administracion_medicamento;
         administracionDL.appendChild(option);
       }
-  }
-  let admin=document.getElementById('administracion_medicamento')
-  async function obtenerAdministracion(){
+  }*/
+  //let admin=document.getElementById('administracion_medicamento')
+ /* async function obtenerAdministracion(){
       
        administracion=await administraciones.find(ad=>ad.nombre_administracion_medicamento===admin.value);
        if(!administracion){
         alert('La administracion del medicamento elegida no es aceptada');
        }
-  }
-  let marca=document.getElementById('marcaMedicamento')
-  function agregarMedicamentoCompleto(){
+  }*/
+  
+  /*function agregarMedicamentoCompleto(){
     
    // console.log(administracion);
    const existe = objetoEnArreglo(medicamentMomentaneo, medicamentos);
@@ -219,7 +222,7 @@ function obtenerNombre() {
     eliminarHijos( presDL);*/
    /* formaDL.innerHTML="";
     genericoDL.innerHTML="";*/
-    administracionDL.innerHTML="";
+   /* administracionDL.innerHTML="";
     presDL.innerHTML="";
     formaDL.innerHTML="";
     const selectElement = document.getElementById('tipo');
@@ -229,11 +232,11 @@ function obtenerNombre() {
     Focultar();
     console.log(medicamentos);
    }
-  }
-  function objetosSonIguales(obj1, obj2) {
+  }*/
+ /* function objetosSonIguales(obj1, obj2) {
     return Object.keys(obj1).length === Object.keys(obj2).length &&
            Object.keys(obj1).every(key => obj2.hasOwnProperty(key) && obj1[key] === obj2[key]);
 }
 function objetoEnArreglo(objeto, arreglo) {
     return arreglo.some(elemento => objetosSonIguales(objeto, elemento));
-}
+}*/

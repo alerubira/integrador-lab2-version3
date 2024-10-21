@@ -4,7 +4,9 @@ block script1
 block script2
     script(src='domPrescripcionPaciente.js',defer)
 block script3 
-    script(src='domPrescripcionPrestacion.js',defer)               
+    script(src='domPrescripcionPrestacion.js',defer)  
+block script4 
+    script(src='domPrescripcionMedicamento.js',defer)                 
 block content 
             form#formularioReceta(action="/guardarReceta", method="POST")
                         - let fechaActual = new Date();
@@ -62,32 +64,13 @@ block content
                                         option(value="medicamento") Medicamento
                             #divMedicamento.ocultar
                                 
-                                label(for="nombre_generico_medicamento") Nombre Generico del medicamento :
-                                input(type="text", id="nombre_generico_medicamento", name="nombre_generico_medicamento",list='genericos')
-                                datalist#genericos
-                                button(onclick="obtenerNombre()") seleccionar
+                                label(for="nombre_medicamento") Nombre del Medicamento :
+                                input.inputTotal(type="text", id="nombre_medicamento", name="nombre_medicamento",placeholder="Escriba para buscar...")
+                                ul#listaMedicamentos
+                                script. 
+                                    const medAprobados=medAprobados;
                                 br
-                                
-                                label(for="forma_farmaceutica_medicamento") Forma Farmaceutica :
-                                input(type="text", id="forma_farmaceutica_medicamento", name="forma_farmaceutica_medicamento",list="forma")
-                                datalist#forma 
-                                button(onclick="obtenerForma()") selccionar
-                                br
-                                label(for="presentacion_medicamento") Presentacion :
-                                input(type="text", id="presentacion_medicamento", name="presentacion_medicamento",list="presentacion")
-                                datalist#presentacion 
-                                button(onclick="obtenerPresentacion()") seleccionar
-                                br
-                                label(for="administracion_medicamento") Administracion :
-                                input(type="text", id="administracion_medicamento", name="administracion_medicamento",list="administracion")
-                                datalist#administracion 
-                                button(onclick="obtenerAdministracion()") seleccionar
-                                br
-                                
-                                label(for="marcaMedicamento") Marca del medicamento(opcional)
-                                input(type="text",id="marcaMedicamento",name="marcaMedicamento")
-                                br
-                                button(onclick="agregarMedicamentoCompleto()") Agregar  
+                                button.boton(onclick="capturarMedicamento()") Agregar  
                                     
                             #divPrestacion.ocultar
                                 label(for="nombre_prestacion") Prestación:

@@ -6,6 +6,7 @@ import { buscarPacienteDni,pacienteTarea ,generarPaciente} from "../modelo/pacie
 import { verificar } from "./verificaryup.js";
 import { existeBd } from "../modelo/conexxionBD.js";
 import { prestacionDatatodos } from "../modelo/prestacionData.js";
+import { medicamentoDatatodos } from "../modelo/medicamentoData.js";
 let aux;
 let objet;
  async function manejadorAccesoPrescripcion(req,res){
@@ -40,8 +41,15 @@ let objet;
             let prestaciones=await prestacionDatatodos('prestaciones');
             if(prestaciones instanceof Error){return retornarError(res,`Error al buscar las Prestaciones`)}
             let presAprobadas=await prestaciones.filter(pre=>pre.estado_prestacion===1);
-            console.log(presAprobadas);
-             res.render('vistaPrescripcion', { encabezado ,profecional,lados,presAprobadas});
+            let adMedicamentos=await medicamentoDatatodos('administraciones');
+            if(adMedicamentos instanceof Error){return retornarError(res,`Error al buscar Administraciones de Medicamento:${adMedicamentos}`)}
+            let medicamentos=await medicamentoDatatodos('medicamentos');
+            if(medicamentos instanceof Error){return retornarError(res,`Error al buscar Medicamentos:${medicamentos}`)}
+            
+            let mNGA=await medicamentos[0].filter(m=>m.estado_nombre_generico===1);
+            let medAprobados=await mNGA.filter(me=>me.activo_n_g_p===1);
+            
+             res.render('vistaPrescripcion', { encabezado ,profecional,lados,presAprobadas,adMedicamentos,medAprobados});
               
            } 
        });
@@ -95,13 +103,7 @@ let objet;
          return res.send(aux);
           break  
      case 'cambiarEstado':
-         objet=req.body;
-         e1=await existeBd(objet.idMedico,'medico','id_medico');
-         if(e1 instanceof Error){return retornarError(res,`Error al verificar si existe el Medico:${e1}`)}
-         if(!e1){return retornarError(res,`El medico no existe`)}
-         aux=await medicoDataModificar('estado',objet.idMedico,objet.estadoMedico) ;
-         if(aux instanceof Error){return retornarError(res,`Error al modificar el estado del Medico,${aux}`)}
-         return res.send({ message: "El Estado del Medico fue modificado con exito", datos: aux }); 
+         
          break 
      case 'cambiarEspecialidad':
          objet=req.body;

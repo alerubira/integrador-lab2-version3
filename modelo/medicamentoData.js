@@ -76,6 +76,10 @@ try{
         query='CALL obtener_medicamentos()';
         return await consulta1(query);
         break;
+    case 'administraciones':
+        query='SELECT * FROM `administracion_medicamento` WHERE 1';
+        return await consulta1(query);
+        break;    
         default:
             return retornarErrorSinRes(`Seleccion:${traer}, en MedicamentosDataTodos,NO VALIDA`)
     }
