@@ -1,67 +1,16 @@
 let nombrePracticaDL=document.getElementById("nombrePractica");
-/*(async function(){ //traer bien las prestaciones con fec protegido armar endpoin
-    let auxPractica=new Set();
-   prestacionesTodas=await fech('*','/prestaciones');
-   for(let prestacion of prestacionesTodas){
-    if (!auxPractica.has(prestacion.nombre_practica)) {
-        // Si no está, añade el nombre al Set y crea la opción
-        auxPractica.add(prestacion.nombre_practica);
-        
-        let option = document.createElement('option');
-        option.value = prestacion.nombre_practica;
-        option.textContent = prestacion.nombre_practica;
-        nombrePracticaDL.appendChild(option);
-    }
-}
-})();*/
+
 let practica=document.getElementById('nombre_prestacion');
 let practicaMomentanea;
 let procedimientDL=document.getElementById('procedimiento');
-/*function capturarNombrePrestacion(){
-    //console.log(practica.value);
-practicaMomentanea=prestacionesTodas.filter(pres=>pres.nombre_practica===practica.value);
-//console.log(practicaMomentanea);
-if(practicaMomentanea.length<1){
-    alert('El nombre de la practica no es valido');
-}
-for(let pro of practicaMomentanea){
-    let option = document.createElement('option');
-    option.value = pro.nombre_procedimiento;
-    option.textContent = pro.nombre_procedimiento;
-    procedimientDL.appendChild(option);
-}
 
-}*/
 let procedimiento=document.getElementById('procedimiento_prestacion');
 let examenDL=document.getElementById('examen');
 let inputNombrePrestacion= document.getElementById('nombre_prestacion');
-/*function capturarProcedimiento(){
-   practicaMomentanea=practicaMomentanea.filter(pro=>pro.nombre_procedimiento===procedimiento.value);
-   if(practicaMomentanea.length<1){
-    alert('El procedimiento seleccionado no cooresponde a la practica')
-   }
-   for(let exa of practicaMomentanea){
-    let option = document.createElement('option');
-    option.value = exa.nombre_examen;
-    option.textContent = exa.nombre_examen;
-    examenDL.appendChild(option);
-}
 
-}*/
 let examen=document.getElementById('examen_prestacion');
 let ladoDL=document.getElementById('lado');
-/*function capturarExamen(){
-practicaMomentanea=practicaMomentanea.find(ex=>ex.nombre_examen===examen.value);
-if(!practicaMomentanea){
-    alert('El examen no corresponde')
-}
-for(let lad of lados){
-    let option = document.createElement('option');
-    option.value = lad.nombre_lado;
-    option.textContent = lad.nombre_lado;
-    ladoDL.appendChild(option);
-}
-}*/
+
 let nombrePrestacion=document.getElementById('nombre_prestacion');
 nombrePrestacion.addEventListener('input', function() {
     const input = this.value.toLowerCase();
@@ -132,7 +81,8 @@ function capturarLado(){
 let indicacion=document.getElementById('indicacionPrestacion');
 let justificacion=document.getElementById('justificacionPrestacion');
 let observacion=document.getElementById('observacionPrestacion');
-async function agregarPrestacionCompleta(){
+async function agregarPrestacionCompleta(event){
+  event.preventDefault(); // Prevenir el envío del formulario
   lado.nombre="";
     capturarLado();
 bandera=true;
@@ -164,7 +114,7 @@ let p2=document.createElement('h6');
 p2.textContent=`JUSTIFICACION : ${justificacion.value}`;
 divAux.appendChild(p2);
 let p3=document.createElement('h6');
-p3.textContent=`${observacion.value}`;
+p3.textContent=`observacion : ${observacion.value}`;
 divAux.appendChild(p3);
 divMedicamentoPrestacion.appendChild(divAux);
 limpiarCampos(indicacion,justificacion,observacion,ladoPrestacion,inputNombrePrestacion);

@@ -171,7 +171,8 @@ async function registrarPaciente(){
    let pacienteCreado=await fechProtegidoPost('/generarPaciente',paciente);
     console.log(pacienteCreado.datos.success);
    if(pacienteCreado.datos.success){
-
+console.log(pacienteCreado.datos.idPaciente);
+paciente.idPaciente=pacienteCreado.datos.idPaciente;
     bloquearDiv(divPacientes);
     fOcultar();
     eliminarHijos(divPacientes);
@@ -232,17 +233,18 @@ function sugerirPacientes(aux) {
 }
 async function asignarPaciente(dniPaciente){
     
-    paciente= pacientes.find(persona => persona.dni_persona === dniPaciente);
-    if(paciente){
-        document.getElementById('dniP').value = paciente.dni_persona;
-        document.getElementById('nombreP').value = paciente.nombre;
-        document.getElementById('apellidoP').value = paciente.apellido;
-        document.getElementById('sexoP').value = paciente.nombre_sexo;
-        document.getElementById('obraSP').value = paciente.obraSocial;
-        document.getElementById('plan').value = paciente.plan;
-        document.getElementById('fechaNP').value =convertirFechaISOaFechaLocal(paciente.fecha_nacimiento) ;
+    let pacienteM= pacientes.find(persona => persona.dni_persona === dniPaciente);
+    if(pacienteM){
+        document.getElementById('dniP').value = pacienteM.dni_persona;
+        document.getElementById('nombreP').value = pacienteM.nombre;
+        document.getElementById('apellidoP').value = pacienteM.apellido;
+        document.getElementById('sexoP').value = pacienteM.nombre_sexo;
+        document.getElementById('obraSP').value = pacienteM.obraSocial;
+        document.getElementById('plan').value = pacienteM.plan;
+        document.getElementById('fechaNP').value =convertirFechaISOaFechaLocal(pacienteM.fecha_nacimiento) ;
         let p={};
-        p.id_paciente=paciente.id_paciente;
+        p.id_paciente=pacienteM.id_paciente;
+        paciente.dni=pacienteM.dni_persona;
        let o=await fechProtegidoPost('/obraSocialPaciente',p);
        console.log(o);
        obras=o[0];
@@ -267,5 +269,6 @@ function llenarPlan(planes){
  planSelec.addEventListener("change",async function(){
     //console.log(obrass);
 obraSocialPlan=await obras.find(ob=>ob.nombre_plan===planSelec.value);
+paciente.idPlanObraSocial=obraSocialPlan.id_plan;
 //console.log(`plan obra social seleccionad ${obraSocialPlan.id_plan}`);
  });

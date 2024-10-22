@@ -8,15 +8,16 @@ block script3
 block script4 
     script(src='domPrescripcionMedicamento.js',defer)                 
 block content 
-            form#formularioReceta(action="/guardarReceta", method="POST")
+            form#formularioPrescripcion(action="/guardarReceta", method="POST")
                         - let fechaActual = new Date();
+                        input(type="hidden", id="fechaActual", value=fechaActual.toISOString()) 
                         p= `${fechaActual.getDate()}/${fechaActual.getMonth() + 1}/${fechaActual.getFullYear()}`
                         
                         div#app.oculto(data-profesional=profecional)
                         #divProfecional 
                             h3 PROFECIONAL
                             label=`${profecional.nombre}  ${profecional.apellido}`
-
+                            input.ocultar(type="number", id="id_profecional", name="id_profecional",value=profecional.idMedico) 
                             br
                             label=` DNI : ${profecional.dni}`
                             br
@@ -80,7 +81,7 @@ block content
                                 input(type="text",id="marcaMedicamento",name="marcaMedicamento")
                                 br
                                
-                                button.boton(onclick="capturarMedicamento()") Agregar  
+                                button.boton(type="button",onclick="capturarMedicamento(event)") Agregar  
                                     
                             #divPrestacion.ocultar
                                 label(for="nombre_prestacion") Prestación:
@@ -104,7 +105,7 @@ block content
                                 br
                                 textarea(id="observacionPrestacion", name="observacionPrestacion", rows="4", cols="50", placeholder="La observacion es opcional")
                                 br
-                                button.boton(onclick="agregarPrestacionCompleta()") Agregar        
+                                button.boton(type="button",onclick="agregarPrestacionCompleta(event)") Agregar        
                             #divRecetado   
                         input.boton(type="submit", value="Enviar")
 block boton1 

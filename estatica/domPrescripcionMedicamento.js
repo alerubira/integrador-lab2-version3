@@ -1,28 +1,25 @@
 function capturarAdministracion(){
-    console.log('hola');
-     inputAdministracion.value;
-    console.log(inputAdministracion.value)
     let opciones = document.querySelectorAll('#administracion  option'); 
-    console.log(opciones);
     let idAdministracion = null;
   
     // Buscar el id_administracion correspondiente al nombre_administracion_medicamento seleccionado
     opciones.forEach(opcion => {
-      if (opcion.value === inputAdministracion) {
+    
+      if (opcion.value === inputAdministracion.value) {
         idAdministracion = opcion.getAttribute('data-id');
       }
     });
-  
+  console.log(idAdministracion);
     if (idAdministracion) {
-        administracion.nombre=inputAdministracion;
+        administracion.nombre=inputAdministracion.value;
         medicamento.idAdministracion=idAdministracion;
-      console.log(idAdministracion);
-      // Aquí puedes usar el id_lado para lo que necesites, como enviarlo al servidor
+      
     }
-// inputAdministracion.value=null; 
+ 
   
 }
-async function capturarMedicamento(){
+async function capturarMedicamento(event){
+  event.preventDefault(); // Prevenir el envío del formulario
     medicamento.nombre="";
       capturarAdministracion();
   bandera=true;
@@ -37,7 +34,7 @@ async function capturarMedicamento(){
   if(!validar(a,pagina,"el Medicamento ya se encuentra en la Prescripcion,no se puede recetar el mismo Medicamento")){bandera=false}
   
   if(bandera){
-    console.log(marca.valu);
+  
    if(marca.value===""){marca.value="No Especificado"}
   medicamento.nombre=inputNombreMedicamento.value;
   medicamento.nombreComercial=marca.value;
@@ -48,10 +45,10 @@ async function capturarMedicamento(){
   divAux.classList.add('divAuxiliar');
   let p=document.createElement('h6');
   
-  p.textContent=`Medicamento : ${medicamento.nombre}---Administracion: ${administracion.nombre}`;
+  p.textContent=`MEDICAMENTO : ${medicamento.nombre}---ADMINISTRACION: ${administracion.nombre}`;
   divAux.appendChild(p);
   let p1=document.createElement('h6'); 
-  p1.textContent=`MARCA COMERCIAL : ${medicamento.marca}`
+  p1.textContent=`MARCA COMERCIAL : ${medicamento.nombreComercial}`
   divAux.appendChild(p1);
  
   

@@ -69,7 +69,7 @@ async function generarPaciente(paciente) {
         );
 
         await connection.commit();
-        return { success: true };
+        return { success: true ,idPaciente:id_paciente};
     } catch (error) {
         if (connection) {
             await connection.rollback();
