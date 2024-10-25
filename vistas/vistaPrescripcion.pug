@@ -77,6 +77,7 @@ block content
                                 datalist#administracion 
                                       each administracion in adMedicamentos
                                         option(value=administracion.nombre_administracion_medicamento data-id=administracion.id_administracion_medicamento) 
+                                br
                                 label(for="marcaMedicamento") Marca del medicamento(opcional)
                                 input(type="text",id="marcaMedicamento",name="marcaMedicamento")
                                 br
@@ -106,7 +107,10 @@ block content
                                 textarea(id="observacionPrestacion", name="observacionPrestacion", rows="4", cols="50", placeholder="La observacion es opcional")
                                 br
                                 button.boton(type="button",onclick="agregarPrestacionCompleta(event)") Agregar        
-                            #divRecetado   
+                            #divRecetado  
+                        label(for="fechaV") Fecha de Vencimiento :
+                        input(type="date", id="fechaV", name="fechaV",required) 
+                        br     
                         input.boton(type="submit", value="Enviar")
 block boton1 
         button.boton(type="button",onclick='volver()') volver 

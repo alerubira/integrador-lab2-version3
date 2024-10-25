@@ -17,9 +17,13 @@ const selectElement = document.getElementById('tipo');
 let inputAdministracion = document.getElementById('administracion_medicamento');
 let formularioPrescripcion=document.getElementById('formularioPrescripcion');
 let fechaActualInput = document.getElementById('fechaActual');
+let fechaACompleta = new Date(fechaActualInput.value); // Capturando y convirtiendo a Date
+let fechaActual = new Date(fechaACompleta.getDate(),fechaACompleta.getMonth()+1,fechaACompleta.getFullYear());
 let idProfecional=document.getElementById('id_profecional');
-console.log(idProfecional.value)
-let fechaActual = new Date(fechaActualInput.value); // Capturando y convirtiendo a Date
+let fechaVInput=document.getElementById('fechaV');
+let fechaV = new Date(fechaVInput.value); 
+//console.log(idProfecional.value)
+
 let obraSocialPlan;//para la prescripcion
 let obrass;
 let sexo;
@@ -106,15 +110,25 @@ function bloquearDiv(bloquear) {
 }
 formularioPrescripcion.addEventListener('submit', function(event) {
     event.preventDefault(); // Previene el envío del formulario
-    //falta fecha de caducidad
+    bandera=true;
     prescripcion.idProfecional=idProfecional.value;
     prescripcion.fechaA=fechaActual;
     prescripcion.idPaciente=paciente.idPaciente;
-    prescripcion.plan=paciente.idObraSocialPlan;
+    prescripcion.idPlanObraSocial=paciente.idPlanObraSocial;
     prescripcion.diagnostico=diagnostico.value;
     prescripcion.medicamentos=medicamentosPrescripcion;
     prescripcion.prestaciones=prestacionesPrescripcion;
-    console.log(prescripcion);
+    let fechaVC=fechaV;
+    prescripcion.fechaV = new Date(fechaVC.getDate(),fechaVC.getMonth()+1,fechaVC.getFullYear());
+    if(!validar(!prescripcion.idProfecional,pagina,'La prescripcion necesita un profecional')){bandera=false}
+    console.log(bandera)
+    if(!validar(!prescripcion.fechaA,pagina,'La prescripcion nesecita la fecha actual')){bandera=false}
+    if(!validar(!prescripcion.idPaciente,pagina,'La Prescripcion deve tener un Paciente')){bandera=false}
+    if(!validar(!prescripcion.idPlanObraSocial,pagina,'La Prescripcion deve tener una obra social con su plan')){bandera=false}
+    if(!validar(!prescripcion.diagnostico,pagina,'La Prescripcion deve tener un diagnostico')){bandera=false}
+    if(!validar(!prescripcion.fechaV,pagina,'La Prescripcion deve tener una fecha de vencimiento')){bandera=false}
+    if(bandera){ console.log(prescripcion);}else{console.log('bandera false')}
+   
   });
 
  

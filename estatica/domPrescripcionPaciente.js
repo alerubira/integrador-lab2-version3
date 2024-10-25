@@ -11,7 +11,7 @@ document.getElementById('dniP').addEventListener('input', async function() {
            //usar un fech get protegido para traer los pacientes,hacer endpoin completo
            p.dni =parseInt(inputDniP);
           pacientes=await fechProtegidoPost('/buscarPacientes',p);
-          console.log(pacientes);
+          //console.log(pacientes);
             // pacientes = await fech(inputDniP, '/buscarPacientes');
             if (pacientes.length>0) {
                 sugerirPacientes(pacientes);
@@ -48,7 +48,7 @@ if(!a){llenarSelecObraS(obras);}
 }
 
  function llenarSelecObraS(obras){
-    console.log(obras);
+    //console.log(obras);
     eliminarHijos(obraSocialSelec);
     let option2 = document.createElement('option');
     option2.value=null;
@@ -164,7 +164,7 @@ async function registrarPaciente(){
     paciente.estado=true;
     paciente.fechaNacimiento=inputFechaN.value;
     controlar(obraSocialPlan,'La obra social y el plan son obligatorios');
-    paciente.idPlanObraSocial=obraSocialPlan.id_plan;
+    //paciente.idPlanObraSocial=obraSocialPlan.id_plan;
     controlar(sexo,'el sexo es obligatorio y debe elegirse con el seleccionador');
     paciente.sexo=sexo.id_sexo;
     console.log(`Paciente antes de ir al fech ${paciente}`);
@@ -212,7 +212,7 @@ function sugerirPacientes(aux) {
        labelApellido.textContent = paciente.apellido;
        labelApellido.htmlFor = 'apellidoP';
        div.appendChild(labelApellido);
-       console.log(paciente.dni_persona);
+       //console.log(paciente.dni_persona);
        // Crear y agregar el botón
        let buton = document.createElement('button');
        buton.textContent = 'Agregar';
@@ -245,12 +245,13 @@ async function asignarPaciente(dniPaciente){
         let p={};
         p.id_paciente=pacienteM.id_paciente;
         paciente.dni=pacienteM.dni_persona;
+        paciente.idPaciente=pacienteM.id_paciente;//para la prescripcion
        let o=await fechProtegidoPost('/obraSocialPaciente',p);
-       console.log(o);
+      // console.log(o);
        obras=o[0];
        llenarSelecObraS(obras,true);
     eliminarHijos(divPacientes);
-    }else{alerta(pagina,'El DNI no corresponde aun Paciente')}
+    }else{alerta(pagina,'El DNI no corresponde a un Paciente')}
  }    
 
 function llenarPlan(planes){
@@ -270,5 +271,4 @@ function llenarPlan(planes){
     //console.log(obrass);
 obraSocialPlan=await obras.find(ob=>ob.nombre_plan===planSelec.value);
 paciente.idPlanObraSocial=obraSocialPlan.id_plan;
-//console.log(`plan obra social seleccionad ${obraSocialPlan.id_plan}`);
  });
