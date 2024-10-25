@@ -12,7 +12,7 @@ function capturarAdministracion(){
   console.log(idAdministracion);
     if (idAdministracion) {
         administracion.nombre=inputAdministracion.value;
-        medicamento.idAdministracion=idAdministracion;
+        medicamento.idAdministracion=parseInt(idAdministracion);
       
     }
  

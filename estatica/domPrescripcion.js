@@ -17,11 +17,14 @@ const selectElement = document.getElementById('tipo');
 let inputAdministracion = document.getElementById('administracion_medicamento');
 let formularioPrescripcion=document.getElementById('formularioPrescripcion');
 let fechaActualInput = document.getElementById('fechaActual');
-let fechaACompleta = new Date(fechaActualInput.value); // Capturando y convirtiendo a Date
-let fechaActual = new Date(fechaACompleta.getDate(),fechaACompleta.getMonth()+1,fechaACompleta.getFullYear());
+/*let fechaACompleta = new Date(fechaActualInput.value); // Capturando y convirtiendo a Date
+let fechaActual = new Date(fechaACompleta.getFullYear(),fechaACompleta.getMonth()+1,fechaACompleta.getDate());
+*/
+//
+let fechaActual=fechaActualInput.value;
 let idProfecional=document.getElementById('id_profecional');
 let fechaVInput=document.getElementById('fechaV');
-let fechaV = new Date(fechaVInput.value); 
+
 //console.log(idProfecional.value)
 
 let obraSocialPlan;//para la prescripcion
@@ -108,26 +111,33 @@ function bloquearDiv(bloquear) {
         element.disabled = true;
     });
 }
-formularioPrescripcion.addEventListener('submit', function(event) {
+formularioPrescripcion.addEventListener('submit',async  function(event) {
     event.preventDefault(); // Previene el envío del formulario
     bandera=true;
-    prescripcion.idProfecional=idProfecional.value;
+    prescripcion.idProfecional=parseInt(idProfecional.value);
     prescripcion.fechaA=fechaActual;
     prescripcion.idPaciente=paciente.idPaciente;
     prescripcion.idPlanObraSocial=paciente.idPlanObraSocial;
     prescripcion.diagnostico=diagnostico.value;
     prescripcion.medicamentos=medicamentosPrescripcion;
     prescripcion.prestaciones=prestacionesPrescripcion;
-    let fechaVC=fechaV;
-    prescripcion.fechaV = new Date(fechaVC.getDate(),fechaVC.getMonth()+1,fechaVC.getFullYear());
+    /*let fechaV = new Date(fechaVInput.value); 
+    prescripcion.fechaVC = new Date(fechaV.getFullYear(),fechaV.getMonth()+1,fechaV.getDate());
+    */
+   prescripcion.fechaVC=fechaVInput.value;
     if(!validar(!prescripcion.idProfecional,pagina,'La prescripcion necesita un profecional')){bandera=false}
     console.log(bandera)
     if(!validar(!prescripcion.fechaA,pagina,'La prescripcion nesecita la fecha actual')){bandera=false}
     if(!validar(!prescripcion.idPaciente,pagina,'La Prescripcion deve tener un Paciente')){bandera=false}
     if(!validar(!prescripcion.idPlanObraSocial,pagina,'La Prescripcion deve tener una obra social con su plan')){bandera=false}
     if(!validar(!prescripcion.diagnostico,pagina,'La Prescripcion deve tener un diagnostico')){bandera=false}
-    if(!validar(!prescripcion.fechaV,pagina,'La Prescripcion deve tener una fecha de vencimiento')){bandera=false}
-    if(bandera){ console.log(prescripcion);}else{console.log('bandera false')}
+    if(!validar(!prescripcion.fechaVC,pagina,'La Prescripcion deve tener una fecha de vencimiento')){bandera=false}
+    if(bandera){
+        aux=await fechProtegidoPost('/generarPrescripcion',prescripcion);
+        if(aux.responseBody){
+            console.log('cargo bien');
+        }
+    }
    
   });
 

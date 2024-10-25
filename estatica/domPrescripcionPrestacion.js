@@ -69,11 +69,12 @@ function capturarLado(){
       
         if (idLadoSeleccionado) {
             lado.nombre=inputLado;
-            prestacion.lado=idLadoSeleccionado;
+            prestacion.idLado=idLadoSeleccionado;
           
           // Aquí puedes usar el id_lado para lo que necesites, como enviarlo al servidor
         } else {
           lado.nombre="No se Requiere";
+          prestacion.idLado=null;
         }
      inputLado.value=null; 
       

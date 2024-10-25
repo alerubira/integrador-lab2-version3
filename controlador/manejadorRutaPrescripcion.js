@@ -102,23 +102,13 @@ let objet;
          if(aux.length<1){return retornarError(res,"El Paciente no posee obra social")}
          return res.send(aux);
           break  
-     case 'cambiarEstado':
-         
+     case 'generarPrescripcion':
+         objet=req.body;
+         console.log(objet);
+        return res.send(objet);
          break 
      case 'cambiarEspecialidad':
-         objet=req.body;
-         e1=await existeBd(objet.idMedico,'medico','id_medico');
-         if(e1 instanceof Error){return retornarError(res,`Error al verificar si existe el Medico:${e1}`)}
-         e2=await existeBd(objet.idEspecialidad,'especialida','id_especialidad');
-         if(e2 instanceof Error){return retornarError(res,`Error al verificar si existe la Especialidad:${e2}`)}
-         if(e1&&e2){
-             aux=await medicoDataModificar('especialidad',objet.idMedico,objet.idEspecialidad);
-             if(aux instanceof Error){return retornarError(res,`Error al modificar la Especialidad,${aux}`)}
-             return res.send({ message: "La Especialidad fue modificada con exito", datos: aux }); 
-         }else{
-             return retornarError(res,'El Medico o la Especialidad no existen en la base de datos')
-         }
-     
+         
          break 
      case 'cambiarDireccion':
          objet=req.body;

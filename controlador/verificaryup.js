@@ -161,8 +161,53 @@ const usuarioClaveY= yup.object().shape({
     .required('El Nombre es Oblogatorio')
     .max(28,'El nombre no debe superar los 28 caracteres')
  })
+ const prescripcionY=yup.object().shape()({
+    idProfecional:yup.number()
+    .required('La Prescripcion deve contener un Profecional'),
+    fechaA:yup.date()
+    .required('La fecha actual en la Prescripcion es obligatoria')
+    .typeError('La fecha actual en la Prescripcion debe ser válida'),
+    idPaciente:yup.number()
+    .required('La prescripcion deve contener un paciente'),
+    idPlanObraSocial:yup.number()
+    .required('La Prescripcion deve contener una Obra Social y su Plan'),
+    diagnostico:yup.string()
+    .required('La Prescripcion deve tener un diagnostico')
+    .max(298,'El Diagnostico no deve superar los 298 caracteres'),
+    fechaVC:yup.date()
+    .required('La fecha de vencimiento en la Prescripcion es obligatoria')
+    .typeError('La fecha de vencimiento en la Prescripcion debe ser válida'),
+ })
  
-
+const prestacionesY=yup.object().shape()({
+    idPrestacion:yup.number()
+    .required('La Prestacion es obligatoria'),
+    idLado: yup.number()
+    .nullable(true)
+    .notRequired()
+    .typeError('El idLado debe ser un número'),
+    indicacion:yup.string()
+    .required('La Prestacion deve contener una Indicacion')
+    .max(38,'La Indicacion no deve superar los 38 caracteres'),
+    justificacion:yup.string()
+    .required('La prestacion deve tener una justificacion')
+    .max(38,'La Justificacion no debe superar los 38 caracteres'),
+    observacion: yup.string()
+    .nullable(true)
+    .max(38, 'La observación no debe superar los 38 caracteres'),
+})
+const medicamentosY=yup.object.shape()({
+    idNGP:yup.number()
+    .required('La Prescripcion deve contener un Medicamento')
+    .typeError('El Medicamento debe ser un numero'),
+    idAdministracion:yup.number()
+    .required('El Medicamento deve contener una Administracion')
+    .typeError('La administarcion deve ser un numero'),
+    nombreComercial:yup.string()
+    .nullable(true)
+    .max(298, 'El nombre comercial del Medicamento no debe superar los 298 caracteres'),
+})
+//armar dentro del suitch,verificar en el manejador,verificar en el cliente los tamaños de indicacion.justificacion,nombre comercial,observacion
 //console.log(medicamentos);
 //console.log(profecionales);
 async function verificar(objeto,nombre){
