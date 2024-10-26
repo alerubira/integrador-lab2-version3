@@ -4,7 +4,7 @@ import { retornarError } from "./funsionesControlador.js";
 import { Medico } from "../modelo/clasesEntidad.js";
 import { buscarPacienteDni,pacienteTarea ,generarPaciente} from "../modelo/pacienteData.js";
 import { verificar } from "./verificaryup.js";
-import { existeBd } from "../modelo/conexxionBD.js";
+import { existeBd,traerPorId } from "../modelo/conexxionBD.js";
 import { prestacionDatatodos } from "../modelo/prestacionData.js";
 import { medicamentoDatatodos } from "../modelo/medicamentoData.js";
 let aux;
@@ -103,49 +103,63 @@ let objet;
          return res.send(aux);
           break  
      case 'generarPrescripcion':
+        
          objet=req.body;
          console.log(objet);
-        return res.send(objet);
+         if(objet.medicamentos.length<1&&objet.prestaciones.length<1){return retornarError(res,'La prescripcion debe tener al menos una prestacion o un medicamento')}
+         aux=await verificar(objet,'prescripcion');
+         if(aux.errors){return retornarError(res,`Erro al verifiar la tipologia de la prescripcion:${aux.message}`)}
+         for(let med of objet.medicamentos){
+            aux=await verificar(med,'medicamentos');
+            if(aux.errors){return retornarError(res,`Error en la tipologia de un Medicamento dentro de la Prescripcio:${aux.message}`)}
+         }
+         for(let pre of objet.prestaciones){
+            aux=await verificar(pre,'prestaciones');
+            if(aux.errors){return retornarError(res,`Error en la tipologia de una Prestacion dentro de la Prescripcion:${aux.message}`)}
+         }
+         aux=await existeBd(objet.idProfecional,'medico','id_medico');
+         if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Medico:${aux}`)}
+         if(!aux){return retornarError(res,'El Medico que figura en la Prescripcion no existe')}
+         aux=await existeBd(objet.idPaciente,'paciente','id_paciente');
+         if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Paciente:${aux}`)}
+         if(!aux){return retornarError(res,'El Pacienteque figura en la Prescripcion no existe')}
+         aux=await existeBd(objet.idPlanObraSocial,'plan_obra_social','id_plan');
+         if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Plan:${aux}`)}
+         if(!aux){return retornarError(res,'La obra social o el plan seleccionado no existe')}
+        for(let med of objet.medicamentos){
+            aux=await existeBd(med.idNGP,'nombre_generico_presentacion','id_n_g_p');
+            if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Medicamento:${aux}`)}
+            if(!aux){return retornarError(res,'El Medicamento dentro de la Prescripcion  no existe')}
+            aux=await existeBd(med.idAdministracion,'administracion_medicamento','id_administracion_medicamento');
+            if(aux instanceof Error){return retornarError(res,`Error al verificar si existe La Administracion del Medicamento:${aux}`)}
+            if(!aux){return retornarError(res,'La Administracion del Medicamento dentro de la Prescripcion  no existe')}
+            aux=await traerPorId(med.idNGP,'nombre_generico_presentacion','activo_n_g_p','id_n_g_p');
+            if(aux instanceof Error){return retornarError(res,`Error al buscar el estado del Medicamento:${aux}`)}
+            if(aux!==1){return retornarError(res,'El Medicamento dentro de la Prescripcion esta Inhabilitado')}
+        }
+        for(let pre of objet.prestaciones){
+            aux=await existeBd(pre.idPrestacion,'prestacion','id_prestacion');
+            if(aux instanceof Error){return retornarError(res,`Error al verificar si existe La Prestacion:${aux}`)}
+            if(!aux){return retornarError(res,'La Prestacion dentro de la Prescripcion  no existe')}
+            if(pre.idLado!==null){
+            aux=await existeBd(pre.idLado,'lado','id_lado');
+            if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Lado dentro de la Prestacion:${aux}`)}
+            if(!aux){return retornarError(res,'El Lado en la Prestacion dentro de la Prescripcion  no existe')}
+               }
+            }
+        return res.send(aux);
          break 
      case 'cambiarEspecialidad':
          
          break 
      case 'cambiarDireccion':
-         objet=req.body;
-         let dom={domicilioProfecional:objet.domicilioProfecional};
-         aux=await verificar(dom,'domicilio');
-         if(aux.errors){return retornarError(res,`Error al verificar la tipologia del Domicilio,${aux.message}`)}
-         e1=await existeBd(objet.idMedico,'medico','id_medico');
-         if(e1 instanceof Error){return retornarError(res,`Error al verificar si existe El Medico,${e}`)}
-         if(e1){
-                 aux=await medicoDataModificar('domicilio',objet.idMedico,objet.domicilioProfecional);
-                 if(aux instanceof Error){return retornarError(res,`Error al modificar el Domicilio,${aux}`)}
-                 return res.send({ message: "La direccion fue modificada con exito", datos: aux }); 
-             }else{
-                 return retornarError(res,'El Medico no existe en la base de datos');
-             }
+         
               break;
      case 'agregarProfecion':
-         objet=req.body;
-         aux=await verificar(objet,'nombreProfecion');
-         if(aux.errors){ return retornarError(res,`Error al verificar la tipologia de la Profecion,${aux.message}`)}
-         aux=await existeNombreBd(objet.nombreProfecion,'profecion','nombre_profecion');
-         if(aux instanceof Error){return retornarError(res,`Error al verificar si existe Profecion,${aux}`)}
-         if(aux){return retornarError(res,'La profecion ya existe, seleccione otro nombre')}
-         aux=await medicoDataAgregar(objet.nombreProfecion,'profecion');
-         if (aux instanceof Error) {return retornarError(res,`Error al agregar Profecion a la base de datos,${aux}`)}
-           return res.send({ message: "La Profecion fue archivada con exito", datos: aux });   
+          
          break;
      case 'agregarEspecialidad':
-             objet=req.body;
-             aux=await verificar(objet,'nombreEspecialidad');
-             if(aux.errors){return retornarError(res,`Error al verificar la tiologia de la Especialidad,${aux.message}`)}
-             aux=await existeNombreBd(objet.nombreEspecialidad,'especialida','nombre_especialidad');
-             if(aux instanceof Error){return retornarError(res,`Error al verificar si existe Especialidad,${aux}`)}
-             if(aux){return retornarError(res,'La especialidad ya existe,seleccione una nueva')}
-             aux=await medicoDataAgregar(objet.nombreEspecialidad,'especialidad');
-             if (aux instanceof Error) {return retornarError(res,`Error al agregar la Especialidad,${aux}`)}
-             return res.send({ message: "La Especiaidad fue archivada con exito", datos: aux }); 
+             
              break;                    
      default :
      return retornarError(res,'Seleccion no nalida en el manejador Prescripcion')             

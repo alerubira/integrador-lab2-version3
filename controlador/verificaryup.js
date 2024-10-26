@@ -161,7 +161,7 @@ const usuarioClaveY= yup.object().shape({
     .required('El Nombre es Oblogatorio')
     .max(28,'El nombre no debe superar los 28 caracteres')
  })
- const prescripcionY=yup.object().shape()({
+ const prescripcionY=yup.object().shape({
     idProfecional:yup.number()
     .required('La Prescripcion deve contener un Profecional'),
     fechaA:yup.date()
@@ -179,7 +179,7 @@ const usuarioClaveY= yup.object().shape({
     .typeError('La fecha de vencimiento en la Prescripcion debe ser válida'),
  })
  
-const prestacionesY=yup.object().shape()({
+const prestacionesY=yup.object().shape({
     idPrestacion:yup.number()
     .required('La Prestacion es obligatoria'),
     idLado: yup.number()
@@ -196,7 +196,7 @@ const prestacionesY=yup.object().shape()({
     .nullable(true)
     .max(38, 'La observación no debe superar los 38 caracteres'),
 })
-const medicamentosY=yup.object.shape()({
+const medicamentosY=yup.object().shape({
     idNGP:yup.number()
     .required('La Prescripcion deve contener un Medicamento')
     .typeError('El Medicamento debe ser un numero'),
@@ -207,7 +207,7 @@ const medicamentosY=yup.object.shape()({
     .nullable(true)
     .max(298, 'El nombre comercial del Medicamento no debe superar los 298 caracteres'),
 })
-//armar dentro del suitch,verificar en el manejador,verificar en el cliente los tamaños de indicacion.justificacion,nombre comercial,observacion
+//
 //console.log(medicamentos);
 //console.log(profecionales);
 async function verificar(objeto,nombre){
@@ -274,7 +274,19 @@ async function verificar(objeto,nombre){
             case 'paciente':
                 aux=await verificarY(objeto,pacienteY);
                 return aux;
-                break;                                
+                break;  
+            case 'prescripcion':
+                aux=await verificarY(objeto,prescripcionY);
+                return aux;
+                break;
+            case 'prestaciones':
+                aux=await verificarY(objeto,prestacionesY);
+                return aux;
+                break;
+            case 'medicamentos':
+                aux=verificarY(objeto,medicamentosY);
+                return aux;
+                break;                                          
              default:
        }
        

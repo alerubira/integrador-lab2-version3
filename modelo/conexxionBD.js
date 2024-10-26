@@ -34,6 +34,7 @@ function consulta1(query,caracter){
      });
 }
 export{connection,consulta1};*/
+import { query } from 'express';
 import mysql from 'mysql2/promise';
 
 const pool = mysql.createPool({
@@ -115,6 +116,17 @@ if(a instanceof Error){return a}
     return err;
 }
 }
+async function traerPorId(id,tabla,traer,columnaId){
+      try{
+        
+    let a = await consulta1('SELECT ? FROM ? WHERE ?=?',traer,tabla,columnaId,id);
+       if(a instanceof Error){return a}
+       return a[0];
+      }catch(err){
+        console.error('Error al traer una tupla de una tabla con el id');
+        return err;
+      }
+}
 async function existeConjuntoBD(tabla,nombreId,tabla1,tabla2,id1,id2){
     try {
         
@@ -141,7 +153,7 @@ async function existeConjuntoBD(tabla,nombreId,tabla1,tabla2,id1,id2){
     }
 }
 
-export {pool,consulta1,existeBd,existeNombreBd,existeConjuntoBD} ;
+export {pool,consulta1,existeBd,existeNombreBd,existeConjuntoBD,traerPorId} ;
 
 
 
