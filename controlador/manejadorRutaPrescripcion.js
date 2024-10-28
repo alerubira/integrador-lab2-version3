@@ -7,7 +7,7 @@ import { verificar } from "./verificaryup.js";
 import { existeBd,traerPorId } from "../modelo/conexxionBD.js";
 import { prestacionDatatodos } from "../modelo/prestacionData.js";
 import { medicamentoDatatodos } from "../modelo/medicamentoData.js";
-import { crearPrescripcion } from "../modelo/perscripcionData.js";
+import { crearPrescripcion,prescripcionDataTraer } from "../modelo/perscripcionData.js";
 let aux;
 let objet;
  async function manejadorAccesoPrescripcion(req,res){
@@ -158,7 +158,15 @@ let objet;
      case 'traerPrescripciones':
         objet=req.body;
         console.log(objet);
-        return res.send(objet);
+        aux=await existeBd(objet.idProfecional,'medico','id_medico');
+        if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Medico:${aux}`)}
+        if(!aux){return retornarError(res,'El Medico no existe no existe')}
+        aux=await existeBd(objet.idPacienta,'paciente','id_paciente');
+        if(aux instanceof Error){return retornarError(res,`Error al verificar si existe La Prestacion:${aux}`)}
+        if(!aux){return retornarError(res,'La Prestacion dentro de la Prescripcion  no existe')}
+        aux=await prescripcionDataTraer(objet);
+        if(aux instanceof Error){return retornarError(res,`Error al tarer Prescripciones:${aux}`)}
+        return res.send(aux);
         //hacer verificaciones con la base de datos si existe el paciente y el medico y qu sean numeros con yup
         //hacer en prescripcion data para traer las prescripciones
         //hacer el prcedimiento en la base de datos
