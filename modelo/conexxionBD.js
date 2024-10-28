@@ -119,7 +119,7 @@ if(a instanceof Error){return a}
 async function traerPorId(id,tabla,traer,columnaId){
       try{
         
-    let a = await consulta1('SELECT ? FROM ? WHERE ?=?',traer,tabla,columnaId,id);
+    let a = await consulta1(`SELECT ?? FROM ?? WHERE ??=?`,traer,tabla,columnaId,id);
        if(a instanceof Error){return a}
        return a[0];
       }catch(err){

@@ -7,6 +7,7 @@ import { verificar } from "./verificaryup.js";
 import { existeBd,traerPorId } from "../modelo/conexxionBD.js";
 import { prestacionDatatodos } from "../modelo/prestacionData.js";
 import { medicamentoDatatodos } from "../modelo/medicamentoData.js";
+import { crearPrescripcion } from "../modelo/perscripcionData.js";
 let aux;
 let objet;
  async function manejadorAccesoPrescripcion(req,res){
@@ -133,9 +134,9 @@ let objet;
             aux=await existeBd(med.idAdministracion,'administracion_medicamento','id_administracion_medicamento');
             if(aux instanceof Error){return retornarError(res,`Error al verificar si existe La Administracion del Medicamento:${aux}`)}
             if(!aux){return retornarError(res,'La Administracion del Medicamento dentro de la Prescripcion  no existe')}
-            aux=await traerPorId(med.idNGP,'nombre_generico_presentacion','activo_n_g_p','id_n_g_p');
+            aux=await traerPorId(med.idNGP,`nombre_generico_presentacion`,`activo_n_g_p`,`id_n_g_p`);
             if(aux instanceof Error){return retornarError(res,`Error al buscar el estado del Medicamento:${aux}`)}
-            if(aux!==1){return retornarError(res,'El Medicamento dentro de la Prescripcion esta Inhabilitado')}
+            if(aux.activo_n_g_p!==1){return retornarError(res,'El Medicamento dentro de la Prescripcion esta Inhabilitado')}
         }
         for(let pre of objet.prestaciones){
             aux=await existeBd(pre.idPrestacion,'prestacion','id_prestacion');
@@ -146,7 +147,12 @@ let objet;
             if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Lado dentro de la Prestacion:${aux}`)}
             if(!aux){return retornarError(res,'El Lado en la Prestacion dentro de la Prescripcion  no existe')}
                }
+               aux=await traerPorId(pre.idPrestacion,`prestacion`,`estado_prestacion`,`id_prestacion`);
+               if(aux instanceof Error){return retornarError(res,`Error al buscar el estado de la Prestacion:${aux}`)}
+               if(aux.estado_prestacion!==1){return retornarError(res,'La Prestacion dentro de la Prescripcion esta Inhabilitado')}   
             }
+        aux=await crearPrescripcion(objet);
+        if(aux instanceof Error){return retornarError(res,`Error al crea la Prescripcion Electronica:${aux}`)}    
         return res.send(aux);
          break 
      case 'cambiarEspecialidad':
