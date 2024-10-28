@@ -30,16 +30,16 @@ block content
                         #divPaciente 
                             h3 PACIENTE 
                             label(for="dniP") DNI :
-                            input(type="text", id="dniP", name="dniP",placeholder="Ingrese DNI",required)
+                            input.limpiarP(type="text", id="dniP", name="dniP",placeholder="Ingrese DNI",required)
                             br
                             label(for="nombreP") Nombre :
-                            input(type="text", id="nombreP", name="nombreP",required)
+                            input.limpiarP(type="text", id="nombreP", name="nombreP",required)
                             br
                             label(for="apellidoP") Apellido :
-                            input(type="text" ,id="apellidoP", name="apellidoP",required)
+                            input.limpiarP(type="text" ,id="apellidoP", name="apellidoP",required)
                             br
                             label(for="sexoP") Sexo :
-                            input(type="text", id="sexoP", name="sexoP",required)
+                            input.limpiarP(type="text", id="sexoP", name="sexoP",required)
                             select#selectSexo.ocultar(name="selectSexo") 
                             br
                             label(for="obraSP") Obra Social :
@@ -51,12 +51,15 @@ block content
                                         option(value="h") Plan Obra Social
                             br
                             label(for="fechaNP") Fecha de nacimiento :
-                            input(type="date", id="fechaNP", name="fechaNP",required) 
+                            input.limpiarP(type="date", id="fechaNP", name="fechaNP",required)
+                            br
+                            button.boton(type="button",onclick="traerPrescripciones(event)") Mostrar Prescripciones Anteriores   
                             #divPacientes
+                            #divPrescripcionesA
                         #divReceta 
                             #divDiagnostico 
                                 h3 DIAGNOSTICO 
-                                textarea(type="textarea", id="diagnostico", name="diagnostico")
+                                textarea.limpiarP(type="textarea", id="diagnostico", name="diagnostico")
                             #divMedicamentoPrestacion    
                             #divTipo
                                 select(id="tipo", name="tipo")
@@ -67,19 +70,19 @@ block content
                                 
                                 label(for="nombre_medicamento") Nombre del Medicamento :
                                 br
-                                input.inputTotal(type="text", id="nombre_medicamento", name="nombre_medicamento",placeholder="Escriba para buscar...")
+                                input.inputTotal.limpiarM(type="text", id="nombre_medicamento", name="nombre_medicamento",placeholder="Escriba para buscar...")
                                 ul#listaMedicamentos
                                 script. 
                                     const medAprobados=!{JSON.stringify(medAprobados)};
                                 br
                                 label(for="administracion_medicamento") Administracion :
-                                input(type="text", id="administracion_medicamento", name="administracion_medicamento",list="administracion")
+                                input.limpiarM(type="text", id="administracion_medicamento", name="administracion_medicamento",list="administracion")
                                 datalist#administracion 
                                       each administracion in adMedicamentos
                                         option(value=administracion.nombre_administracion_medicamento data-id=administracion.id_administracion_medicamento) 
                                 br
                                 label(for="marcaMedicamento") Marca del medicamento(opcional)
-                                input(type="text",id="marcaMedicamento",name="marcaMedicamento")
+                                input.limpiarM(type="text",id="marcaMedicamento",name="marcaMedicamento")
                                 br
                                
                                 button.boton(type="button",onclick="capturarMedicamento(event)") Agregar  
@@ -87,29 +90,29 @@ block content
                             #divPrestacion.ocultar
                                 label(for="nombre_prestacion") Prestación:
                                 br
-                                input.inputTotal(type="text", id="nombre_prestacion", name="nombre_prestacion", placeholder="Escribe para buscar...")
+                                input.inputTotal.limpiarPr(type="text", id="nombre_prestacion", name="nombre_prestacion", placeholder="Escribe para buscar...")
                                 ul#listaPrestaciones
                                 script.
                                     const presAprobadas = !{JSON.stringify(presAprobadas)};
 
                                 br
                                 label(for="lado_prestacion") Lado(opcional) :
-                                input(type="text", id="lado_prestacion", name="lado_prestacion",list="lado")
+                                input.limpiarPr(type="text", id="lado_prestacion", name="lado_prestacion",list="lado")
                                 datalist#lado
                                     each lado in lados
                                         option(value=lado.nombre_lado data-id=lado.id_lado) 
                                 
                                 br
-                                textarea(id="indicacionPrestacion", name="indicacionPrestacion", rows="4", cols="50", placeholder="La indicacion es obligatoria")
+                                textarea.limpiarPr(id="indicacionPrestacion", name="indicacionPrestacion", rows="4", cols="50", placeholder="La indicacion es obligatoria")
                                 br
-                                textarea(id="justificacionPrestacion", name="justificacionPrestacion", rows="4", cols="50", placeholder="La justificacion es obligatora")
+                                textarea.limpiarPr(id="justificacionPrestacion", name="justificacionPrestacion", rows="4", cols="50", placeholder="La justificacion es obligatora")
                                 br
-                                textarea(id="observacionPrestacion", name="observacionPrestacion", rows="4", cols="50", placeholder="La observacion es opcional")
+                                textarea.limpiarPr(id="observacionPrestacion", name="observacionPrestacion", rows="4", cols="50", placeholder="La observacion es opcional")
                                 br
                                 button.boton(type="button",onclick="agregarPrestacionCompleta(event)") Agregar        
                             #divRecetado  
                         label(for="fechaV") Fecha de Vencimiento :
-                        input(type="date", id="fechaV", name="fechaV",required) 
+                        input.limpiarP(type="date", id="fechaV", name="fechaV",required) 
                         br     
                         input.boton(type="submit", value="Enviar")
 block boton1 

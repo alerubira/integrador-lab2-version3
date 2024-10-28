@@ -1,6 +1,6 @@
 let divMedicamento=document.getElementById("divMedicamento");
 let divPrestacion=document.getElementById("divPrestacion");
-let dirRecetado=document.getElementById("divRecetado");
+let divRecetado=document.getElementById("divRecetado");
 //let ocultar=document.getElementsByClassName("ocultar");
 let selectTipo=document.getElementById("tipo");
 let divPacientes=document.getElementById('divPacientes');
@@ -17,6 +17,7 @@ const selectElement = document.getElementById('tipo');
 let inputAdministracion = document.getElementById('administracion_medicamento');
 let formularioPrescripcion=document.getElementById('formularioPrescripcion');
 let fechaActualInput = document.getElementById('fechaActual');
+let divPrescripcionesA=document.getElementById('divPrescripcionesA');
 /*let fechaACompleta = new Date(fechaActualInput.value); // Capturando y convirtiendo a Date
 let fechaActual = new Date(fechaACompleta.getFullYear(),fechaACompleta.getMonth()+1,fechaACompleta.getDate());
 */
@@ -135,12 +136,36 @@ formularioPrescripcion.addEventListener('submit',async  function(event) {
     if(!validar(prescripcion.prestaciones.length<1&&prescripcion.medicamentos.length<1,pagina,'La Prescripcion debe tene al menos un medicamento o una prestacion')){bandera=false}
     if(bandera){
         aux=await fechProtegidoPost('/generarPrescripcion',prescripcion);
-        if(aux.responseBody){
-            console.log('cargo bien');
+        
+        if(aux.success){
+            
+            limpiarCampos(limpiarP);
+            fOcultar();
+            eliminarHijos(divMedicamentoPrestacion);
+            obraSocialSelec.value='j';
+            planSelec.value='h';
         }
     }
    
   });
+async function traerPrescripciones(event){
+    event.preventDefault;
+    bandera=true;
+    let medicoPaciente={};
+    console.log(paciente);
+    medicoPaciente.idProfecional=parseInt(idProfecional.value);
+    medicoPaciente.idPaciente=paciente.idPaciente;
+    
+if(!Number.isInteger(medicoPaciente.idProfecional) || !Number.isInteger(medicoPaciente.idPaciente)) {
+    alerta( pagina, 'No se puede traer Prescripciones porque falta el Medico o el Paciente o no son números enteros');
+    bandera = false;
+}
+
+    if (bandera){
+        aux=await fechProtegidoPost('/traerPrescripciones',medicoPaciente)
+    }  
+    }
+   
 
  
   

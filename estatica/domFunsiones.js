@@ -2,6 +2,9 @@
  let ocultar=document.getElementsByClassName('ocultar');
  let ocultar2=document.getElementsByClassName('ocultar2');
 let limpiar=document.querySelectorAll('.limpiar');
+let limpiarP=document.querySelectorAll('.limpiarP');
+let limpiarPr=document.querySelectorAll('.limpiarPr');
+let limpiarM=document.querySelectorAll('.limpiarM');
 let divAlerta=document.getElementById('divAlerta');
 let divExito=document.getElementById('divExito');
 let pagina;
@@ -23,10 +26,10 @@ limpiarCampos(limpiar);
     //fOcultar();
     elemento.style.display = 'block';
  }       
-function limpiarCampos(list1,...list){
+function limpiarCampos(list){
     //console.log(list);
-    list1.textContent="";
-    list1.value=null;
+   // list1.textContent="";
+    //list1.value=null;
     for (let li of list){
         li.textContent="";
         li.value=null;
@@ -167,8 +170,7 @@ async function fechProtegidoPost(endpoin,objeto){
         if(responseBody===true){return responseBody}
        if(responseBody.message) {cartelExito(pagina,`La tarea fue realizada con exito: ${responseBody.message}`);}
         console.log(responseBody);
-        limpiarCampos(limpiar);
-        fOcultar();
+        
        return responseBody;
       } else {
         const errorData = await response.json();

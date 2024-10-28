@@ -53,7 +53,7 @@ async function capturarMedicamento(event){
  
   
   divMedicamentoPrestacion.appendChild(divAux);
-  limpiarCampos(marca,inputNombreMedicamento,inputAdministracion);
+  limpiarCampos(limpiarM);
   medicamento={};
    // Restablecemos el valor a la opción inicial
    

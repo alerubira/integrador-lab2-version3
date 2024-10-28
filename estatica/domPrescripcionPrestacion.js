@@ -118,7 +118,7 @@ let p3=document.createElement('h6');
 p3.textContent=`observacion : ${observacion.value}`;
 divAux.appendChild(p3);
 divMedicamentoPrestacion.appendChild(divAux);
-limpiarCampos(indicacion,justificacion,observacion,ladoPrestacion,inputNombrePrestacion);
+limpiarCampos(limpiarPr);
 
 
  //inputNombreMedicamento.innerHTML="";

@@ -155,7 +155,13 @@ let objet;
         if(aux instanceof Error){return retornarError(res,`Error al crea la Prescripcion Electronica:${aux}`)}    
         return res.send(aux);
          break 
-     case 'cambiarEspecialidad':
+     case 'traerPrescripciones':
+        objet=req.body;
+        console.log(objet);
+        return res.send(objet);
+        //hacer verificaciones con la base de datos si existe el paciente y el medico y qu sean numeros con yup
+        //hacer en prescripcion data para traer las prescripciones
+        //hacer el prcedimiento en la base de datos
          
          break 
      case 'cambiarDireccion':

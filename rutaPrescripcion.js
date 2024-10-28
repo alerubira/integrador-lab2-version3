@@ -23,6 +23,9 @@ rutaP.post('/obraSocialPaciente',verificarToken,async(req,res)=>{
 rutaP.post('/generarPrescripcion',verificarToken,async(req,res)=>{
      manejadorPrescripcion(req,res,'generarPrescripcion');
 })
+rutaP.post('/traerPrescripciones',verificarToken,async(req,res)=>{
+    manejadorPrescripcion(req,res,'traerPrescripciones');
+})
 
 export{rutaP}
     
