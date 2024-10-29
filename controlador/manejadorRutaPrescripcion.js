@@ -157,13 +157,13 @@ let objet;
          break 
      case 'traerPrescripciones':
         objet=req.body;
-        console.log(objet);
+    
         aux=await existeBd(objet.idProfecional,'medico','id_medico');
         if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Medico:${aux}`)}
         if(!aux){return retornarError(res,'El Medico no existe no existe')}
-        aux=await existeBd(objet.idPacienta,'paciente','id_paciente');
-        if(aux instanceof Error){return retornarError(res,`Error al verificar si existe La Prestacion:${aux}`)}
-        if(!aux){return retornarError(res,'La Prestacion dentro de la Prescripcion  no existe')}
+        aux=await existeBd(objet.idPaciente,'paciente','id_paciente');
+        if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Paciente:${aux}`)}
+        if(!aux){return retornarError(res,'El Paciente  no existe')}
         aux=await prescripcionDataTraer(objet);
         if(aux instanceof Error){return retornarError(res,`Error al tarer Prescripciones:${aux}`)}
         return res.send(aux);

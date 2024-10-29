@@ -59,6 +59,7 @@ async function manejadorPrestaciones(req,res,objeto){
      case 'todasPrestaciones':
         aux=await prestacionDatatodos('prestaciones');
         if(aux instanceof Error){return retornarError(res,`Error al buscar las Prestaciones:${aux}`)}
+        
         res.send(aux);
         break       
      case 'crearPrestacion':
