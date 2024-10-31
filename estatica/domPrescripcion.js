@@ -18,6 +18,7 @@ let inputAdministracion = document.getElementById('administracion_medicamento');
 let formularioPrescripcion=document.getElementById('formularioPrescripcion');
 let fechaActualInput = document.getElementById('fechaActual');
 let divPrescripcionesA=document.getElementById('divPrescripcionesA');
+
 /*let fechaACompleta = new Date(fechaActualInput.value); // Capturando y convirtiendo a Date
 let fechaActual = new Date(fechaACompleta.getFullYear(),fechaACompleta.getMonth()+1,fechaACompleta.getDate());
 */
@@ -150,6 +151,7 @@ formularioPrescripcion.addEventListener('submit',async  function(event) {
   });
 async function traerPrescripciones(event){
     event.preventDefault;
+    eliminarHijos(divPrescripcionesA);
     bandera=true;
     let medicoPaciente={};
     console.log(paciente);
@@ -160,11 +162,33 @@ if(!Number.isInteger(medicoPaciente.idProfecional) || !Number.isInteger(medicoPa
     alerta( pagina, 'No se puede traer Prescripciones porque falta el Medico o el Paciente o no son números enteros');
     bandera = false;
 }
+if (bandera){
+        aux=await fechProtegidoPost('/traerPrescripciones',medicoPaciente);
+        console.log(aux.prescripciones);
+    for(let pre of aux.prescripciones){
+        //crear un div(class divPrscripcion) para cada prescripcion al final agregar el div a divPrescripcionesA
+      //crear p y colocar los datos de la Prescripcion,agregar al didPre 
+        let divPre=document.createElement('div');
+        divPre.classList.add('divAuxiliar');
+        let h6=document.createElement('h6'); //corregir fecha
+        h6.textContent=`Prescripcion numero : ${pre.id_prescripcion}// Fecha :${pre.fecha_prescripcion}// fecha de vencimiento :${pre.vigencia_prescripcion}`
+        divPre.appendChild(h6);
+        for(let med of pre.medicamentos){
+//crear un div(class divMed)
+//crear p ,cargarlr los datos,agregarlo a divMed
+//agregar divMed a divPre
+        }
+        for(let pr of pre.prestaciones){
+//crear div(class divPr)
+//crear p,input.oculto(id_prestacion_prescripcion), cargar datos
+//crear buton que capture pr seleccionada y observacion para el update
 
-    if (bandera){
-        aux=await fechProtegidoPost('/traerPrescripciones',medicoPaciente)
+        }
+        divPrescripcionesA.appendChild(divPre);
+    }    
     }  
-    }
+    
+}
    
 
  

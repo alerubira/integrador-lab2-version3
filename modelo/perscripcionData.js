@@ -48,10 +48,11 @@ async function crearPrescripcion(prescripcion) {
         }
     }
     async function prescripcionDataTraer(objet){
-        console.log(objet);
+       // console.log(objet);
         //probar en la base de datos,no hace falta los dato del medico ni del paciente
         let connection;
         let prescripciones=[];
+        let prescripcionesT=[];
         prescripciones.prestaciones=[];
         prescripciones.medicamentos=[];
         let precripcion={};
@@ -59,7 +60,7 @@ async function crearPrescripcion(prescripcion) {
         let prestacion={};
         let medicamentos=[];
         let prestaciones=[];
-        let aux=[];
+        let aux;
         try {
             connection = await pool.getConnection();
             await connection.beginTransaction();
@@ -75,37 +76,55 @@ async function crearPrescripcion(prescripcion) {
                 [preE.id_prescripcion],
                );
             aux=medicamentoPResult;
-            console.log(aux);
+           // console.log(aux);
+            medicamentos=[];
             for(let m of aux){
+                medicamento={};
+                medicamento.nombre_comercial=m.nombre_comercial;
                 //SELECT nombre_administracion_medicamento FROM `administracion_medicamento` WHERE id_administracion_medicamento=m.id_dministarcion_medicamentp
                 //call traerMedicamentoPorId(1)
                 const[administracionResult]=await connection.execute(
                     'SELECT nombre_administracion_medicamento FROM `administracion_medicamento` WHERE id_administracion_medicamento=?',
-                    [m.id_dministarcion_medicamento],
+                    [m.id_administracion_medicamento],
                 )
-                console.log(administracionResult);
-                medicamento.administarcion=administracionResult;
+                
+                medicamento.administarcion=administracionResult[0];
                 const [medicamentoResult]=await connection.execute(
                     'call traerMedicamentoPorId(?)',
                     [m.id_n_g_p],
                 ) 
-                medicamento.nombre=medicamentoResult;
+                //connection.release(); // Devolvemos la conexión al pool
+                medicamento.nombre=medicamentoResult[0][0];
                 medicamentos.push(medicamento);
+
             }
             preE.medicamentos=medicamentos;
-               //preE.medicamentos=medicamentoPResult;
-            const[prestacionResult]=await connection.execute(
+            
+           const[prestacionResult]=await connection.execute(
                  'SELECT * FROM `prestacion_prescripcion` WHERE id_prescripcion=?',
                  [preE.id_prescripcion],
             ) ;  
-            preE.prestaciones=prestacionResult;
-              
+            //preE.prestaciones=prestacionResult;
+             aux=prestacionResult;
+            // console.log(aux);
+             prestaciones=[]
+             for(let pr of aux){
+             // prestacion={};
+              const[presResult]=await connection.execute(
+                'call traerPrestacionPorId(?)',
+                [pr.id_prestacion],
+              )
+              pr.nombre_prestacion=presResult[0][0];
+              prestaciones.push(pr);
+             }
+             preE.prestaciones=prestaciones;
+
             }
-            console.log(JSON.stringify(prescripciones, null, 2));
+          // console.log(JSON.stringify(prescripciones, null, 2));
             //console.log(prescripciones)
            await connection.commit();
-           return { success: true ,message:'Las Prescripciones fueron traidas con exito'};
-        
+           //return { success: true ,message:'Las Prescripciones fueron traidas con exito'};
+        return{prescripciones}
             
         
         
