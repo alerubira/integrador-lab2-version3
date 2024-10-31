@@ -88,13 +88,13 @@ let bandera;
         }  */
             
  
-function convertirFechaISOaFechaLocal(fechaISO) {
-    const fecha = new Date(fechaISO);
-    const year = fecha.getFullYear();
-    const month = ('0' + (fecha.getMonth() + 1)).slice(-2); // Añade ceros a la izquierda
-    const day = ('0' + fecha.getDate()).slice(-2); // Añade ceros a la izquierda
-    return `${year}-${month}-${day}`;
-}
+            function convertirFechaISOaFechaLocal(fechaISO,date) {
+                const fecha = new Date(fechaISO);
+                const year = fecha.getFullYear();
+                const month = ('0' + (fecha.getMonth() + 1)).slice(-2); // Añade ceros a la izquierda
+                const day = ('0' + fecha.getDate()).slice(-2); // Añade ceros a la izquierda
+                if(date){return `${day}/${month}/${year}`;}else{return `${year}-${month}-${day}`}
+            }
   
 selectTipo.addEventListener("change", function() {
         fOcultar();
@@ -165,24 +165,68 @@ if(!Number.isInteger(medicoPaciente.idProfecional) || !Number.isInteger(medicoPa
 if (bandera){
         aux=await fechProtegidoPost('/traerPrescripciones',medicoPaciente);
         console.log(aux.prescripciones);
-    for(let pre of aux.prescripciones){
-        //crear un div(class divPrscripcion) para cada prescripcion al final agregar el div a divPrescripcionesA
-      //crear p y colocar los datos de la Prescripcion,agregar al didPre 
+    for(let pre of aux.prescripciones){ 
         let divPre=document.createElement('div');
         divPre.classList.add('divAuxiliar');
-        let h6=document.createElement('h6'); //corregir fecha
-        h6.textContent=`Prescripcion numero : ${pre.id_prescripcion}// Fecha :${pre.fecha_prescripcion}// fecha de vencimiento :${pre.vigencia_prescripcion}`
-        divPre.appendChild(h6);
+        let h5=document.createElement('h5');
+        let fechaP=convertirFechaISOaFechaLocal(pre.fecha_prescripcion,true);
+        let fechaVP=convertirFechaISOaFechaLocal(pre.vigencia_prescripcion,true);
+        h5.textContent=`Prescripcion numero : ${pre.id_prescripcion}// Fecha :${fechaP}// fecha de vencimiento :${fechaVP}`
+        divPre.appendChild(h5);
+        let h5_0=document.createElement('h5');
+        h5_0.textContent=`Diagnostico :${pre.diagnostico_prescripcion}`;
+        divPre.appendChild(h5_0);
         for(let med of pre.medicamentos){
-//crear un div(class divMed)
-//crear p ,cargarlr los datos,agregarlo a divMed
-//agregar divMed a divPre
+        //crear un div(class divMed)
+        //crear p ,cargarlr los datos,agregarlo a divMed
+        //agregar divMed a divPre
+        let divMed=document.createElement('div');
+        let h6_1=document.createElement('h6');
+        h6_1.textContent=`Medicamento:${med.nombre.nombre_generico},${med.nombre.nombre_forma},${med.nombre.nombre_presentacion}//Nombre Comercial :${med.nombre_comercial} //Administarcion :${med.administracion.nombre_administracion_medicamento}`;
+        divMed.appendChild(h6_1);
+        divPre.appendChild(divMed);
         }
         for(let pr of pre.prestaciones){
-//crear div(class divPr)
-//crear p,input.oculto(id_prestacion_prescripcion), cargar datos
-//crear buton que capture pr seleccionada y observacion para el update
-
+                //crear div(class divPr)
+                //crear p,input.oculto(id_prestacion_prescripcion), cargar datos
+                //crear buton que capture pr seleccionada y observacion para el update
+        let divPr=document.createElement('div');
+        divPr.classList.add('divPr');
+        let h6_2=document.createElement('h6');
+        let lado;
+        if(pr.lado){lado=pr.lado.nombre_lado}else{lado='No Requerido'}
+        h6_2.textContent=`Prestacion:${pr.nombre_prestacion.nombre_practica},${pr.nombre_prestacion.nombre_procedimiento},${pr.nombre_prestacion.nombre_examen},Lado :${lado}`
+    
+        divPr.appendChild(h6_2);
+        let h6_3=document.createElement('h6');
+        h6_3.textContent=`Indicacion :${pr.indicacion}`;
+        divPr.appendChild(h6_3);
+        let h6_4=document.createElement('h6');
+        h6_4.textContent=`Justificacion :${pr.justificacion}`;
+        divPr.appendChild(h6_4);
+        let inputPrestacionPrescripcion=document.createElement('input');
+        inputPrestacionPrescripcion.type='hidden';
+        inputPrestacionPrescripcion.value=pr.id_prestacion_prescripcion;
+        divPr.appendChild(inputPrestacionPrescripcion);
+        let lblObservacion=document.createElement('label');
+        lblObservacion.textContent='Observacion';
+        divPr.appendChild(lblObservacion);
+        let inputObservacion=document.createElement('input');
+        //eliminar el undefine
+        inputObservacion.textContent=pr.observacion;
+        inputObservacion.value=pr.observasion;
+        divPr.appendChild(inputObservacion);
+        let btn=document.createElement('button');
+        btn.textContent = 'Agregar Observacion';
+        btn.addEventListener('click', (event) => {
+            event.preventDefault();
+            const prestacionId = inputPrestacionPrescripcion.value;
+            const observacion = inputObservacion.value;
+            console.log(`ID Prestacion: ${prestacionId}, Observacion: ${observacion}`);
+            // Aquí puedes agregar tu lógica para el update
+        });
+        divPr.appendChild(btn);
+        divPre.appendChild(divPr);
         }
         divPrescripcionesA.appendChild(divPre);
     }    

@@ -88,7 +88,7 @@ async function crearPrescripcion(prescripcion) {
                     [m.id_administracion_medicamento],
                 )
                 
-                medicamento.administarcion=administracionResult[0];
+                medicamento.administracion=administracionResult[0];
                 const [medicamentoResult]=await connection.execute(
                     'call traerMedicamentoPorId(?)',
                     [m.id_n_g_p],
@@ -114,6 +114,12 @@ async function crearPrescripcion(prescripcion) {
                 'call traerPrestacionPorId(?)',
                 [pr.id_prestacion],
               )
+              const[ladoResult]=await connection.execute(
+                'SELECT nombre_lado FROM `lado` WHERE id_lado=?',
+                [pr.id_lado]
+              )
+              if(ladoResult.length<1){pr.lado=null}else{pr.lado=ladoResult[0]}
+              
               pr.nombre_prestacion=presResult[0][0];
               prestaciones.push(pr);
              }
