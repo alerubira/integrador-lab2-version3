@@ -75,14 +75,25 @@ async function crearPrescripcion(prescripcion) {
                 [preE.id_prescripcion],
                );
             aux=medicamentoPResult;
+            console.log(aux);
             for(let m of aux){
-                //m.id_n_g_p traer el medicamento(nombre generico,la forma y la presentacion)
-               /* SELECT pre.nombre_presentacion FROM `nombre_generico_presentacion`ngp
-JOIN prestacion pre 
-on ngp.id_presntacion=pre.id_prestacion
-WHERE ngp.id_n_g_p=5 */
+                //SELECT nombre_administracion_medicamento FROM `administracion_medicamento` WHERE id_administracion_medicamento=m.id_dministarcion_medicamentp
+                //call traerMedicamentoPorId(1)
+                const[administracionResult]=await connection.execute(
+                    'SELECT nombre_administracion_medicamento FROM `administracion_medicamento` WHERE id_administracion_medicamento=?',
+                    [m.id_dministarcion_medicamento],
+                )
+                console.log(administracionResult);
+                medicamento.administarcion=administracionResult;
+                const [medicamentoResult]=await connection.execute(
+                    'call traerMedicamentoPorId(?)',
+                    [m.id_n_g_p],
+                ) 
+                medicamento.nombre=medicamentoResult;
+                medicamentos.push(medicamento);
             }
-               preE.medicamentos=medicamentoPResult;
+            preE.medicamentos=medicamentos;
+               //preE.medicamentos=medicamentoPResult;
             const[prestacionResult]=await connection.execute(
                  'SELECT * FROM `prestacion_prescripcion` WHERE id_prescripcion=?',
                  [preE.id_prescripcion],
