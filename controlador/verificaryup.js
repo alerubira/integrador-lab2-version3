@@ -1,4 +1,5 @@
 import * as yup from 'yup';  // Importa todas las exportaciones de yup
+import { retornarErrorSinRes } from './funsionesControlador';
 const domicilioY=yup.object().shape({
 domicilioProfecional:yup.string()
      .required('El domocilio es obligatorio')
@@ -207,13 +208,20 @@ const medicamentosY=yup.object().shape({
     .nullable(true)
     .max(298, 'El nombre comercial del Medicamento no debe superar los 298 caracteres'),
 })
+const observacionY=yup.object().shape({
+    observacion:yup.string()
+    .required('La observacion es Obligatoria')
+    .max(38,'La oservacion debe contener como maximo 38 caracteres')
+})
 //
 //console.log(medicamentos);
 //console.log(profecionales);
 async function verificar(objeto,nombre){
     let aux;
         //console.log(objeto);
-            
+    try{
+
+           
            switch (nombre) {
              case 'usuarioClave':
                 aux=await verificarY(objeto,usuarioClaveY);
@@ -286,11 +294,19 @@ async function verificar(objeto,nombre){
             case 'medicamentos':
                 aux=verificarY(objeto,medicamentosY);
                 return aux;
-                break;                                          
+                break; 
+            case 'observacion':
+                aux=verificarY(objeto,observacionY);
+                return aux;
+                break;
              default:
+                return retornarErrorSinRes('Seleccion no valida en verificar para yup');
        }
        
-       return aux;
+    }catch(error){
+        console.error(`Error en verificar yups:${error}`)
+        return retornarErrorSinRes(`Erro en verificar para yup :${error}`)
+    }
        
        }
   function verificarY(objeto,nombre){

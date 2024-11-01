@@ -6,7 +6,9 @@ block script2
 block script3 
     script(src='domPrescripcionPrestacion.js',defer)  
 block script4 
-    script(src='domPrescripcionMedicamento.js',defer)                 
+    script(src='domPrescripcionMedicamento.js',defer)
+block script5 
+    script(src='donPrescripcion2.js',defer)                     
 block content 
             form#formularioPrescripcion(action="/guardarReceta", method="POST")
                         - let fechaActual = new Date();

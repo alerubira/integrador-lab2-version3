@@ -166,21 +166,25 @@ let objet;
         if(!aux){return retornarError(res,'El Paciente  no existe')}
         aux=await prescripcionDataTraer(objet);
         if(aux instanceof Error){return retornarError(res,`Error al tarer Prescripciones:${aux}`)}
-        return res.send(aux);
-        //hacer verificaciones con la base de datos si existe el paciente y el medico y qu sean numeros con yup
-        //hacer en prescripcion data para traer las prescripciones
-        //hacer el prcedimiento en la base de datos
-         
+        return res.send(aux); 
          break 
-     case 'cambiarDireccion':
-         
-              break;
-     case 'agregarProfecion':
-          
-         break;
-     case 'agregarEspecialidad':
+     case 'modificarPrestacionPrescripcion':
+        //hacer verificaciones, si exite la prestacion y la longitud de la observacion
+         objet=req.body;
+         aux=await existeBd(objet.idPrestacionPrescripcion,'prestacion_prescripcion','id_prestacion_prescripcion');
+         if(aux instanceof Error){return retornarError(res,`Error al verificar si existe la prestacion dentrp de la Prescripcion:${aux}`)}
+         if(!aux){return retornarError(res,'La Prestacion dentro de la Prescripcion no existe')}
+         let ob={};
+         ob.observacion=objet.observacion;
+         aux=await verificar(ob,'observacion');
+         if(aux.errors){return retornarError(res,`Erro al verifiar la tipologia de la Ovservacion:${aux.message}`)}
+         //solucionar problema de ruta en yup
+         //hacer el update en prescripcionData
+         console.log(objet);
+         return res.send(objet);
              
-             break;                    
+     break;
+                      
      default :
      return retornarError(res,'Seleccion no nalida en el manejador Prescripcion')             
          }

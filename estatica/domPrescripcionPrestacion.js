@@ -88,9 +88,10 @@ async function agregarPrestacionCompleta(event){
     capturarLado();
 bandera=true;
 if(!validar(!prestacion.idPrestacion,pagina,'NO HAY prestacion seleccionada')){bandera=false};
-if(!validar(!indicacion.value,pagina,'La Indicacion es Obligatoria')){bandera=false};
-if(!validar(!justificacion.value,pagina,'La Justificacion es Obligatoria')){bandera=false};
+if(!validar(!indicacion.value||indicacion.value.length>38,pagina,'La Indicacion es Obligatoria y no debe superar los 38 caracteres')){bandera=false};
+if(!validar(!justificacion.value||justificacion.value.length>38,pagina,'La Justificacion es Obligatoria y no debe superar los 38 caracteres')){bandera=false};
 if(!validar(!nombrePrestacion.value,pagina,'El Nombre de la Prestacion es Obligatorio')){bandera=false};
+if(!validar(observacion.value.length>48,pagina,'La observacion no debe superar los 40 caracteres')){bandera=false}
 console.log(prestacionesPrescripcion);
 console.log(prestacion.idPrestacion);
 let a=await prestacionesPrescripcion.find(p=>p.idPrestacion===prestacion.idPrestacion);
