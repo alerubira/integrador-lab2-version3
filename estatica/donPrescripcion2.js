@@ -1,7 +1,7 @@
 
 async function traerPrescripciones(event){
     event.preventDefault;
-    let idPresPres=[];
+   
     eliminarHijos(divPrescripcionesA);
     bandera=true;
     let medicoPaciente={};
@@ -17,8 +17,19 @@ if (bandera){
         aux=await fechProtegidoPost('/traerPrescripciones',medicoPaciente);
         console.log(aux.prescripciones);
         //controlar si no hay prescripciones qu alerte y no ejecute
-    if(aux.prescripcioneslength<1){alerta(pagina,'El Paciente no tiene Prescripciones anteriores con este Medico')}else{
-      for(let pre of aux.prescripciones){ 
+    if(aux.prescripciones.length<1)
+        {alerta(pagina,'El Paciente no tiene Prescripciones anteriores con este Medico');
+
+        }else{
+     mostrarPrescripciones(aux.prescripciones);
+        
+    }  
+   
+}
+}
+async function mostrarPrescripciones(arrayPrescripciones){
+    let idPresPres=[];
+    for(let pre of arrayPrescripciones){ 
         let divPre=document.createElement('div');
         divPre.classList.add('divAuxiliar');
         let h5=document.createElement('h5');
@@ -82,18 +93,15 @@ if (bandera){
         divPre.appendChild(divPr);
         }
         divPrescripcionesA.appendChild(divPre);
-        
-    }  
-    let btn2=document.createElement('button');
-        btn2.textContent = 'Cerrar pestaña Prescripciones anteriores';
-        btn2.classList.add('boton');
-        btn2.addEventListener('click', (event) => {
-            event.preventDefault();
-            eliminarHijos(divPrescripcionesA);
-        });
-        divPrescripcionesA.appendChild(btn2);  
-    }  
-}
+       }
+       let btn2=document.createElement('button');
+       btn2.textContent = 'Cerrar pestaña Prescripciones anteriores';
+       btn2.classList.add('boton');
+       btn2.addEventListener('click', (event) => {
+           event.preventDefault();
+           eliminarHijos(divPrescripcionesA);
+       });
+       divPrescripcionesA.appendChild(btn2);    
 }
 async function modificarObservacion(idPrestacionPrescripcion,observacion,idPresPres){
 bandera=true;
