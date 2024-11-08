@@ -1,5 +1,5 @@
 import * as yup from 'yup';  // Importa todas las exportaciones de yup
-import { retornarErrorSinRes } from './funsionesControlador';
+import { retornarErrorSinRes } from './funsionesControlador.js';
 const domicilioY=yup.object().shape({
 domicilioProfecional:yup.string()
      .required('El domocilio es obligatorio')

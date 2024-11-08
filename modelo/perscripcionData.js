@@ -1,5 +1,7 @@
 import { pool } from "./conexxionBD.js";
 import { retornarErrorSinRes } from "../controlador/funsionesControlador.js";
+import { consulta1 } from "./conexxionBD.js";
+let query;
 async function crearPrescripcion(prescripcion) {
 
     let connection;
@@ -146,4 +148,13 @@ async function crearPrescripcion(prescripcion) {
             }
         }
     }
-export{crearPrescripcion,prescripcionDataTraer}    
+async function modificarPrescripcion(objet){
+    try{
+        query='UPDATE `prestacion_prescripcion` SET `observacion`=? WHERE id_prestacion_prescripcion=?';
+            return await(consulta1(query,objet.observacion,objet.idPrestacionPrescripcion));
+    }catch(error){
+        console.error(`Error al modificar la Prescripcion:${error}`);
+        return retornarErrorSinRes(`Error al modificar la Prescripcion:${error}`);
+    }
+}    
+export{crearPrescripcion,prescripcionDataTraer,modificarPrescripcion}    

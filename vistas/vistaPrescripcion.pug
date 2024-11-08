@@ -118,5 +118,8 @@ block content
                         input.limpiarP(type="date", id="fechaV", name="fechaV",required) 
                         br     
                         input.boton(type="submit", value="Enviar")
+            #divFinal.ocultar 
+                button.boton(type="button",onclick="realizarNuevaPrescripcion(event)") Realizar Nueva Prescripcion   
+                button.boton(type="button",onclick="imprimirPrescripcion(event)") Imprimir Prescripcion      
 block boton1 
         button.boton(type="button",onclick='volver()') volver 

@@ -18,6 +18,7 @@ let inputAdministracion = document.getElementById('administracion_medicamento');
 let formularioPrescripcion=document.getElementById('formularioPrescripcion');
 let fechaActualInput = document.getElementById('fechaActual');
 let divPrescripcionesA=document.getElementById('divPrescripcionesA');
+let divFinal=document.getElementById('divFinal');
 
 /*let fechaACompleta = new Date(fechaActualInput.value); // Capturando y convirtiendo a Date
 let fechaActual = new Date(fechaACompleta.getFullYear(),fechaACompleta.getMonth()+1,fechaACompleta.getDate());
@@ -39,7 +40,7 @@ let administracion={};
 let administraciones;
 let medicamentoCompleto={};//para guardar en medicamentos
 pagina="Prescripcion";
-inputSexoP=document.getElementById('sexoP');
+let inputSexoP=document.getElementById('sexoP');
 let genericos;
 let prestacionesPrescripcion=[];//para la prscripcion
 let prestacion={};
@@ -99,12 +100,8 @@ formularioPrescripcion.addEventListener('submit',async  function(event) {
         aux=await fechProtegidoPost('/generarPrescripcion',prescripcion);
         
         if(aux.success){
+            divFinal.style.display='block';
             
-            limpiarCampos(limpiarP);
-            fOcultar();
-            eliminarHijos(divMedicamentoPrestacion);
-            obraSocialSelec.value='j';
-            planSelec.value='h';
         }
     }
    

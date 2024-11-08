@@ -1,13 +1,13 @@
 import { verifyToken } from "./manejadorDeRutasLogin.js";
 import { buscarMID } from "../modelo/medicoData.js";
-import { retornarError } from "./funsionesControlador.js";
+import { retornarError } from "./funsionesControlador.js";//
 import { Medico } from "../modelo/clasesEntidad.js";
 import { buscarPacienteDni,pacienteTarea ,generarPaciente} from "../modelo/pacienteData.js";
 import { verificar } from "./verificaryup.js";
 import { existeBd,traerPorId } from "../modelo/conexxionBD.js";
 import { prestacionDatatodos } from "../modelo/prestacionData.js";
 import { medicamentoDatatodos } from "../modelo/medicamentoData.js";
-import { crearPrescripcion,prescripcionDataTraer } from "../modelo/perscripcionData.js";
+import { crearPrescripcion,prescripcionDataTraer,modificarPrescripcion } from "../modelo/perscripcionData.js";
 let aux;
 let objet;
  async function manejadorAccesoPrescripcion(req,res){
@@ -178,11 +178,9 @@ let objet;
          ob.observacion=objet.observacion;
          aux=await verificar(ob,'observacion');
          if(aux.errors){return retornarError(res,`Erro al verifiar la tipologia de la Ovservacion:${aux.message}`)}
-         //solucionar problema de ruta en yup
-         //hacer el update en prescripcionData
-         console.log(objet);
-         return res.send(objet);
-             
+         aux=await modificarPrescripcion(objet);
+         if(aux instanceof Error){return retornarError(res,`Error al Modificar la Observacion :${aux}`)}
+         return res.send(aux);
      break;
                       
      default :

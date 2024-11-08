@@ -16,7 +16,9 @@ if(!Number.isInteger(medicoPaciente.idProfecional) || !Number.isInteger(medicoPa
 if (bandera){
         aux=await fechProtegidoPost('/traerPrescripciones',medicoPaciente);
         console.log(aux.prescripciones);
-    for(let pre of aux.prescripciones){ 
+        //controlar si no hay prescripciones qu alerte y no ejecute
+    if(aux.prescripcioneslength<1){alerta(pagina,'El Paciente no tiene Prescripciones anteriores con este Medico')}else{
+      for(let pre of aux.prescripciones){ 
         let divPre=document.createElement('div');
         divPre.classList.add('divAuxiliar');
         let h5=document.createElement('h5');
@@ -63,7 +65,7 @@ if (bandera){
         let inputObservacion=document.createElement('input');
         if(!pr.observacion){inputObservacion.textContent=""}else{
             inputObservacion.textContent=pr.observacion;
-            inputObservacion.value=pr.observasion;
+            inputObservacion.value=pr.observacion;
         }
         
         divPr.appendChild(inputObservacion);
@@ -80,9 +82,18 @@ if (bandera){
         divPre.appendChild(divPr);
         }
         divPrescripcionesA.appendChild(divPre);
-    }    
+        
     }  
-    
+    let btn2=document.createElement('button');
+        btn2.textContent = 'Cerrar pestaña Prescripciones anteriores';
+        btn2.classList.add('boton');
+        btn2.addEventListener('click', (event) => {
+            event.preventDefault();
+            eliminarHijos(divPrescripcionesA);
+        });
+        divPrescripcionesA.appendChild(btn2);  
+    }  
+}
 }
 async function modificarObservacion(idPrestacionPrescripcion,observacion,idPresPres){
 bandera=true;
@@ -96,7 +107,15 @@ if(bandera){
     preMod.observacion=observacion;
    fechProtegidoPost('/modificarPrestacionPrescripcion',preMod);
 }
-
-
 }
-   
+function realizarNuevaPrescripcion(){
+    limpiarCampos(limpiarP);
+    fOcultar();
+    eliminarHijos(divMedicamentoPrestacion);
+    obraSocialSelec.value='j';
+    planSelec.value='h';
+    inputSexoP.placeholder="";
+}
+function imprimirPrescripcion(){
+console.log('imprimir');
+}   
