@@ -124,6 +124,43 @@ function realizarNuevaPrescripcion(){
     planSelec.value='h';
     inputSexoP.placeholder="";
 }
-function imprimirPrescripcion(){
-console.log('imprimir');
+async function imprimirPrescripcion(){
+//aux=await fechProtegido('/prescripcionImpresa');
+  // Redirige a la página HTML directamente con el token en la query
+  //window.location.href = '/prescripcionImpresa';
+    const token = localStorage.getItem('token');
+    aux = await fetch(`/generarPDF?token=${token}`, {  // Agregar el token en la query
+        method: 'GET'
+    })
+    .then(response => {
+        if (response.ok) {
+        
+            return response.blob(); // Devuelve el PDF en formato blob
+        } else {
+            return response.json(); // Devuelve el mensaje de error en JSON
+        }
+    })
+    .then(data => {
+        console.log("Tamaño del Blob:", data.size); // Esto imprimirá el tamaño del Blob correctamente
+        if (data instanceof Blob && data.size > 0) {
+           // const url = URL.createObjectURL(data);
+            //window.open(url); // Abre el PDF solo si tiene contenido
+             // Crear un enlace de descarga para el Blob
+             const url = URL.createObjectURL(data);
+             const a = document.createElement('a');
+             a.href = url;
+             a.download = 'prescripcion.pdf'; // Nombre del archivo PDF que se descargará
+             document.body.appendChild(a);
+             a.click();  // Simula el clic para descargar
+             document.body.removeChild(a); // Elimina el enlace después de la descarga
+        } else if (data.error) {
+            console.error('Error:', data.error);
+        } else {
+            console.error('El PDF generado está vacío o tiene un formato incorrecto.');
+        }
+    })
+    .catch(error => {
+        console.error('Error al acceder al endpoint protegido:', error);
+    });
+console.log(aux);
 }   

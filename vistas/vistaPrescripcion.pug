@@ -88,7 +88,7 @@ block content
                                 input.limpiarM(type="text",id="marcaMedicamento",name="marcaMedicamento")
                                 br
                                
-                                button.boton(type="button",onclick="capturarMedicamento(event)") Agregar  
+                                button.boton(type="button",onclick="capturarMedicamento(event)") Agregar Medicamento 
                                     
                             #divPrestacion.ocultar
                                 label(for="nombre_prestacion") Prestación:
@@ -112,13 +112,13 @@ block content
                                 br
                                 textarea.limpiarPr(id="observacionPrestacion", name="observacionPrestacion", rows="4", cols="50", placeholder="La observacion es opcional")
                                 br
-                                button.boton(type="button",onclick="agregarPrestacionCompleta(event)") Agregar        
+                                button.boton(type="button",onclick="agregarPrestacionCompleta(event)") Agregar Prestacion       
                             #divRecetado  
                         label(for="fechaV") Fecha de Vencimiento :
                         input.limpiarP(type="date", id="fechaV", name="fechaV",required) 
                         br     
-                        input.boton(type="submit", value="Enviar")
-            #divFinal.ocultar 
+                        input.boton(type="submit", value="Generar Prescripcion Electronica")
+            #divFinal.colocarSoloocultar
                 button.boton(type="button",onclick="realizarNuevaPrescripcion(event)") Realizar Nueva Prescripcion   
                 button.boton(type="button",onclick="imprimirPrescripcion(event)") Imprimir Prescripcion      
 block boton1 

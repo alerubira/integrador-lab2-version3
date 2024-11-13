@@ -7,6 +7,8 @@ import bodyParser from'body-parser';
 //import { logins } from '../modelo/loginData.js';
 import {ruta} from './rutas.js';
 import { rutaP } from './rutaPrescripcion.js';
+
+
 let profecionales;
 let profecional;
 
@@ -104,6 +106,8 @@ app.use('/obraSocialPaciente',rutaP);
 app.use('/generarPrescripcion',rutaP);
 app.use('/traerPrescripciones',rutaP);
 app.use('/modificarPrestacionPrescripcion',rutaP);
+app.use('/prescripcionImpresa1',rutaP);
+app.use('/generarPDF',rutaP);
 /*app.get('/', (req, res) => {
     encabezado="Bienvenido al Ministerio de Salud";
      res.render('vistaPrincipal',{encabezado,mensajeExito,estadoSuces});
