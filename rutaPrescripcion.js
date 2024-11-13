@@ -40,62 +40,52 @@ console.error(`Error al renderizar la pagina a imprimir:${error}`);
 })
 // Ruta para generar el PDF
 rutaP.get('/generarPDF', async (req, res) => {
+    let browser;
     try {
-        console.log("Iniciando Puppeteer...");
         // Extraer el token del encabezado de la solicitud
         const token = req.query.token;
         
         if (!token) {
-            // Si no hay token, responder con un error
             return res.status(401).json({ error: 'Token no proporcionado' });
         }
-        const browser = await puppeteer.launch({
+
+        browser = await puppeteer.launch({
             headless: true,
             args: ['--no-sandbox', '--disable-setuid-sandbox']
         });
         const page = await browser.newPage();
         
-
-        console.log("Página creada...");
         // Aquí se pasa el token como parámetro en la URL
         const url = `http://localhost:3000/prescripcion?token=${token}`;
-
-       /* await page.goto('http://localhost:3000/prescripcionImpresa', {
-            waitUntil: 'networkidle0'
-        });*/
-        await page.goto(url, {
-            waitUntil: 'networkidle0'
-        });
-        page.on('console', msg => console.log('PAGE LOG:', msg.text()));
-        console.log("Página cargada correctamente...");
+        await page.goto(url, { waitUntil: 'networkidle0' });
 
         const pdf = await page.pdf({
-            format: 'A4',   // O cualquier tamaño de página que necesites
-            printBackground: true  // Asegúrate de incluir los fondos en el PDF
+            format: 'A4',
+            printBackground: true
         });
-        
-        await browser.close();
-         // Guardar el PDF generado en un archivo para verificar
-         fs.writeFileSync('output.pdf', pdf);
-         console.log('PDF guardado en output.pdf');
+
+        // Verificar si el PDF está vacío
         if (pdf.length === 0) {
-            console.error("PDF generado está vacío.");
             return res.status(500).json({ error: "PDF generado está vacío." });
         }
-        console.log("Tamaño del PDF generado:", pdf.length);
-       // const pdfBlob = new Blob([pdf], { type: 'application/pdf' });
-        //res.contentType('application/pdf');
-        //res.send(pdfBlob);
+
+        // Enviar el PDF como respuesta
+        res.setHeader('Content-Type', 'application/pdf');
         res.setHeader('Content-Disposition', 'attachment; filename="prescripcion.pdf"');
-        res.contentType('application/pdf');
-        res.send(pdf);
-        console.log("PDF enviado al cliente.");
+        res.send(pdf); // Enviar el archivo PDF
+
     } catch (error) {
         console.error('Error al generar el PDF:', error);
-        res.status(500).json({ error: 'Error al generar el PDF' });
+        if (!res.headersSent) {
+            res.status(500).json({ error: 'Error al generar el PDF' });
+        }
+    } finally {
+        // Asegurar que el navegador se cierra
+        if (browser) {
+            await browser.close();
+        }
     }
 });
-
 
 export{rutaP}
     
