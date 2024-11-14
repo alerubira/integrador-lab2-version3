@@ -1,11 +1,9 @@
 
 async function traerPrescripciones(event){
     event.preventDefault;
-   
-    eliminarHijos(divPrescripcionesA);
+   eliminarHijos(divPrescripcionesA);
     bandera=true;
     let medicoPaciente={};
-   // console.log(paciente);
     medicoPaciente.idProfecional=parseInt(idProfecional.value);
     medicoPaciente.idPaciente=paciente.idPaciente;
     
@@ -16,7 +14,6 @@ if(!Number.isInteger(medicoPaciente.idProfecional) || !Number.isInteger(medicoPa
 if (bandera){
         aux=await fechProtegidoPost('/traerPrescripciones',medicoPaciente);
         console.log(aux.prescripciones);
-        //controlar si no hay prescripciones qu alerte y no ejecute
     if(aux.prescripciones.length<1)
         {alerta(pagina,'El Paciente no tiene Prescripciones anteriores con este Medico');
 
@@ -24,8 +21,7 @@ if (bandera){
      mostrarPrescripciones(aux.prescripciones);
         
     }  
-   
-}
+   }
 }
 async function mostrarPrescripciones(arrayPrescripciones){
     let idPresPres=[];
@@ -41,9 +37,6 @@ async function mostrarPrescripciones(arrayPrescripciones){
         h5_0.textContent=`Diagnostico :${pre.diagnostico_prescripcion}`;
         divPre.appendChild(h5_0);
         for(let med of pre.medicamentos){
-        //crear un div(class divMed)
-        //crear p ,cargarlr los datos,agregarlo a divMed
-        //agregar divMed a divPre
         let divMed=document.createElement('div');
         let h6_1=document.createElement('h6');
         h6_1.textContent=`Medicamento:${med.nombre.nombre_generico},${med.nombre.nombre_forma},${med.nombre.nombre_presentacion}//Nombre Comercial :${med.nombre_comercial} //Administarcion :${med.administracion.nombre_administracion_medicamento}`;
@@ -113,7 +106,8 @@ if(bandera){
     let preMod={};
     preMod.idPrestacionPrescripcion=a;
     preMod.observacion=observacion;
-   fechProtegidoPost('/modificarPrestacionPrescripcion',preMod);
+   await fechProtegidoPost('/modificarPrestacionPrescripcion',preMod);
+   
 }
 }
 function realizarNuevaPrescripcion(){
@@ -125,37 +119,6 @@ function realizarNuevaPrescripcion(){
     inputSexoP.placeholder="";
 }
 async function imprimirPrescripcion() {
-    capturarEstadoYGenerarPDF();
-    /*const token = localStorage.getItem('token');
-    
-    try {
-        const response = await fetch(`/generarPDF?token=${token}`, { method: 'GET' });
-        console.log("Content-Type:", response.headers.get('Content-Type'));
-        if (response.ok) {
-            const pdfBlob = await response.blob();
-            console.log("Tamaño del Blob:", pdfBlob.size);
-
-            if (pdfBlob.size > 0) {
-                const url = URL.createObjectURL(pdfBlob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'prescripcion.pdf';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            } else {
-                console.error("El PDF generado está vacío.");
-            }
-        } else {
-            const errorData = await response.json();
-            console.error('Error en la respuesta:', errorData.error);
-        }
-    } catch (error) {
-        console.error('Error al acceder al endpoint protegido:', error);
-    }*/
-}
-async function capturarEstadoYGenerarPDF() {
     const token = localStorage.getItem('token');
 // Ocultar los botones temporalmente 
 const buttons = document.querySelectorAll('button,.boton,#tipo'); 
@@ -181,9 +144,7 @@ buttons.forEach(button => button.style.display = 'none');
             </body>
         </html>
     `;
-
-   
-    // Restaurar la visibilidad de los botones 
+// Restaurar la visibilidad de los botones 
     buttons.forEach(button => button.style.display = '');
    // Capturar los valores de los inputs, textareas y selects 
    const inputValues = Array.from(document.querySelectorAll('input, textarea, select')).map(element => 
@@ -210,11 +171,14 @@ buttons.forEach(button => button.style.display = 'none');
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+            cartelExito(pagina,'La Prescripcion fue Generada y descargada con Exito');
         } else {
             console.error('Error en la respuesta:', response.statusText);
+            alerta(pagina,`Error en la Respuesta de la Generacion de PDF :${response.statusText}`)
         }
     } catch (error) {
         console.error('Error al generar el PDF:', error);
+        alerta(pagina,`Error al Generar PDF :${error}`)
     }
 }
 

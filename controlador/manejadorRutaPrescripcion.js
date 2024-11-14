@@ -12,12 +12,7 @@ let aux;
 let objet;
  async function manejadorAccesoPrescripcion(req,res){
     try {
-      /*if (req.user.tipoAutorizacion === 3) {
-       
-       res.render('vistaAcceso', { encabezado });
-     } else {
-       res.status(403).json({ message: 'Acceso denegado' });
-     }*/
+      
        const token = req.query.token;
        if (!token) {
            return retornarError(res,"Token no Proporcionado");
@@ -77,7 +72,7 @@ let objet;
              aux=await pacienteTarea('traerSexos');
              if(aux instanceof Error){return retornarError(res,`Error al buscar sexos:${aux}`)}
              return res.send(aux);
-             break;
+        break;
      case 'generarPaciente':
          objet = req.body;
          aux= await verificar(objet,'paciente');
@@ -151,12 +146,12 @@ let objet;
                if(aux instanceof Error){return retornarError(res,`Error al buscar el estado de la Prestacion:${aux}`)}
                if(aux.estado_prestacion!==1){return retornarError(res,'La Prestacion dentro de la Prescripcion esta Inhabilitado')}   
             }
-        aux=await crearPrescripcion(objet);
-        if(aux instanceof Error){return retornarError(res,`Error al crea la Prescripcion Electronica:${aux}`)}    
-        return res.send(aux);
-         break 
-     case 'traerPrescripciones':
-        objet=req.body;
+            aux=await crearPrescripcion(objet);
+            if(aux instanceof Error){return retornarError(res,`Error al crea la Prescripcion Electronica:${aux}`)}    
+            return res.send(aux);
+        break 
+    case 'traerPrescripciones':
+    objet=req.body;
     
         aux=await existeBd(objet.idProfecional,'medico','id_medico');
         if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Medico:${aux}`)}
@@ -169,7 +164,7 @@ let objet;
         return res.send(aux); 
          break 
      case 'modificarPrestacionPrescripcion':
-        //hacer verificaciones, si exite la prestacion y la longitud de la observacion
+        
          objet=req.body;
          aux=await existeBd(objet.idPrestacionPrescripcion,'prestacion_prescripcion','id_prestacion_prescripcion');
          if(aux instanceof Error){return retornarError(res,`Error al verificar si existe la prestacion dentrp de la Prescripcion:${aux}`)}

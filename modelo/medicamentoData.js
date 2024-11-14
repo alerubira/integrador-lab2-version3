@@ -1,9 +1,7 @@
-//import { connection } from "./conexxionBD.js";
-//import { Medico } from './clasesEntidad.js';
+
 import { retornarErrorSinRes } from "../controlador/funsionesControlador.js";
 import { consulta1 ,existeBd,pool,existeConjuntoBD} from "./conexxionBD.js";
-//import { crearHash } from "./loginn.js";
-//import { buscarIdPorDni } from './PersonaData.js';
+
 let medicamentos;
 let query;
 let respuesta;
@@ -114,33 +112,7 @@ function buscarMID(id, callback) {
     });
 }
 
-/*async function profecionesTodas(){
-    let query='SELECT * FROM `profecion` WHERE 1;';
-    
-    return await consulta1(query);
-}
-async function especialidadesTodas(){
-    let query='SELECT * FROM `especialida` WHERE 1;';
-    return await consulta1(query);
-}
-async function medicosTodos(){
-    let query='SELECT p.id_persona,p.nombre,p.apellido,p.dni_persona,p.estado_persona,m.id_medico,m.domicilio,m.id_profecion,m.id_especialidad,m.matricula_profecional,m.id_refeps,pr.nombre_profecion,e.nombre_especialidad FROM `persona` p JOIN `medico` m on m.id_persona = p.id_persona JOIN `profecion` pr on m.id_profecion=pr.id_profecion JOIN `especialida` e on m.id_especialidad=e.id_especialidad WHERE 1'
 
- return await consulta1(query);
-}*/
-/*async function cambiarEstado(idPersona,estadoPersona){
-let query='UPDATE `persona` SET `estado_persona`=? WHERE id_persona=?'
-return await(consulta1(query,estadoPersona,idPersona));
-}
-async function cambiarEspecialidad(idMedico,idEspecialidad){
-    let query='UPDATE `medico` SET `id_especialidad`=? WHERE id_medico=?';
- return await(consulta1(query,idEspecialidad,idMedico));   
-    //hacer el upDate
-}
-async function cambiarDireccion(idMedico,domicilio){
-let query='UPDATE `medico` SET `domicilio`=? WHERE id_medico=?';
-return await(consulta1(query,domicilio,idMedico));
-}*/
 
 
 async function crearMedicamento(medicamento) {
@@ -173,7 +145,7 @@ let id_n_g_f;
     }else{
         await connection.commit();
         return retornarErrorSinRes("ElMedicamento ya existe");
-       // return { success: false, message: 'El medicamento ya existe' };
+       
     }
     
     } catch (error) {

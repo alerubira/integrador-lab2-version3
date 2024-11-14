@@ -2,18 +2,14 @@ import { pool } from "./conexxionBD.js";
 import { retornarErrorSinRes } from "../controlador/funsionesControlador.js";
 import { consulta1 } from "./conexxionBD.js";
 let query;
+let aux;
 async function crearPrescripcion(prescripcion) {
-
-    let connection;
+let connection;
     
         try {
             connection = await pool.getConnection();
             await connection.beginTransaction();
-        
-            
-           
-               
-                const [prescripcionResult] = await connection.execute(
+                 const [prescripcionResult] = await connection.execute(
                     'INSERT INTO `prescripcion_electronica`(`id_medico`, `id_paciente`,`fecha_prescripcion`,`diagnostico_prescripcion`,`vigencia_prescripcion`,`id_plan`) VALUES (?,?,?,?,?,?)',
                     [prescripcion.idProfecional,prescripcion.idPaciente,prescripcion.fechaA,prescripcion.diagnostico,prescripcion.fechaVC,prescripcion.idPlanObraSocial]
                 );
@@ -34,10 +30,7 @@ async function crearPrescripcion(prescripcion) {
            await connection.commit();
            return { success: true ,message:'La prescripcion fue creada con exito'};
         
-            
-        
-        
-        } catch (error) {
+            } catch (error) {
             if (connection) {
                 await connection.rollback();
             }
@@ -50,8 +43,7 @@ async function crearPrescripcion(prescripcion) {
         }
     }
     async function prescripcionDataTraer(objet){
-       // console.log(objet);
-        //probar en la base de datos,no hace falta los dato del medico ni del paciente
+       
         let connection;
         let prescripciones=[];
         let prescripcionesT=[];
@@ -128,15 +120,11 @@ async function crearPrescripcion(prescripcion) {
              preE.prestaciones=prestaciones;
 
             }
-          // console.log(JSON.stringify(prescripciones, null, 2));
-            //console.log(prescripciones)
+          
            await connection.commit();
            //return { success: true ,message:'Las Prescripciones fueron traidas con exito'};
         return{prescripciones}
-            
-        
-        
-        } catch (error) {
+             } catch (error) {
             if (connection) {
                 await connection.rollback();
             }
@@ -151,7 +139,9 @@ async function crearPrescripcion(prescripcion) {
 async function modificarPrescripcion(objet){
     try{
         query='UPDATE `prestacion_prescripcion` SET `observacion`=? WHERE id_prestacion_prescripcion=?';
-            return await(consulta1(query,objet.observacion,objet.idPrestacionPrescripcion));
+            aux= await(consulta1(query,objet.observacion,objet.idPrestacionPrescripcion));
+            if(aux.affectedRows>0){return { success: true ,message:'La observacion dentro de la Prestacion fue modificada con exito'}
+        }else{return retornarErrorSinRes('No se realizo ninguna modificacion de observacion dentro de la Prestacion')}
     }catch(error){
         console.error(`Error al modificar la Prescripcion:${error}`);
         return retornarErrorSinRes(`Error al modificar la Prescripcion:${error}`);

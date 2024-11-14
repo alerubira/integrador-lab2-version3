@@ -19,17 +19,9 @@ let formularioPrescripcion=document.getElementById('formularioPrescripcion');
 let fechaActualInput = document.getElementById('fechaActual');
 let divPrescripcionesA=document.getElementById('divPrescripcionesA');
 let divFinal=document.getElementById('divFinal');
-
-/*let fechaACompleta = new Date(fechaActualInput.value); // Capturando y convirtiendo a Date
-let fechaActual = new Date(fechaACompleta.getFullYear(),fechaACompleta.getMonth()+1,fechaACompleta.getDate());
-*/
-//
 let fechaActual=fechaActualInput.value;
 let idProfecional=document.getElementById('id_profecional');
 let fechaVInput=document.getElementById('fechaV');
-
-//console.log(idProfecional.value)
-
 let obraSocialPlan;//para la prescripcion
 let obrass;
 let sexo;
@@ -67,9 +59,7 @@ selectTipo.addEventListener("change", function() {
     });
 // Bloquear todos los elementos dentro del div #divPaciente
 function bloquearDiv(bloquear) {
-
     let input = bloquear.querySelectorAll('input, select');
-
     input.forEach(element => {
         element.disabled = true;
     });
@@ -84,12 +74,8 @@ formularioPrescripcion.addEventListener('submit',async  function(event) {
     prescripcion.diagnostico=diagnostico.value;
     prescripcion.medicamentos=medicamentosPrescripcion;
     prescripcion.prestaciones=prestacionesPrescripcion;
-    /*let fechaV = new Date(fechaVInput.value); 
-    prescripcion.fechaVC = new Date(fechaV.getFullYear(),fechaV.getMonth()+1,fechaV.getDate());
-    */
-   prescripcion.fechaVC=fechaVInput.value;
+    prescripcion.fechaVC=fechaVInput.value;
     if(!validar(!prescripcion.idProfecional,pagina,'La prescripcion necesita un profecional')){bandera=false}
-    console.log(bandera)
     if(!validar(!prescripcion.fechaA,pagina,'La prescripcion nesecita la fecha actual')){bandera=false}
     if(!validar(!prescripcion.idPaciente,pagina,'La Prescripcion deve tener un Paciente')){bandera=false}
     if(!validar(!prescripcion.idPlanObraSocial,pagina,'La Prescripcion deve tener una obra social con su plan')){bandera=false}

@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer'; // Importa Puppeteer
-import fs from 'fs';  // Asegúrate de que esta importación sea compatible con tu entorno
+//import fs from 'fs';  // Asegúrate de que esta importación sea compatible con tu entorno
+
 async function generarPdf(req,res){
     let browser;
     try { const
@@ -15,11 +16,11 @@ async function generarPdf(req,res){
         if (element) { if (type === 'checkbox' || type === 'radio') 
            { element.checked = checked; } else { element.value = value; } } });
         }, inputValues);       
-       const pdf = await page.pdf({
-                 format: 'A4', printBackground: true,
-                  margin: { top: '1cm', right: '1cm', bottom: '1cm', left: '1cm' } });
-        if (pdf.length === 0) { return res.status(500).json({ error: "PDF generado está vacío." }); 
-       } 
+      
+      const pdf=await page.pdf({
+        format: 'A4', printBackground: true, 
+        margin: { top: '1cm', right: '1cm', bottom: '1cm', left: '1cm' } });
+      
        res.setHeader('Content-Type', 'application/pdf'); 
        res.setHeader('Content-Disposition', 'attachment; filename="prescripcion.pdf"');
         res.end(pdf); } catch (error) { console.error('Error al generar el PDF:', error); 
