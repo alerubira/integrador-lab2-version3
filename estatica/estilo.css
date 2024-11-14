@@ -85,9 +85,9 @@ h5 {
   border:1px solid #FF69B4;
 }
 #divPaciente{
-    border-radius: 10px; /* Establece los bordes redondeados */
-    border: 2px solid black; /* Establece el borde de color negro */
-    width: 55%; /* Establece el ancho al 45% del contenedor */
+   /* border-radius: 10px; /* Establece los bordes redondeados */
+   /* border: 2px solid black; /* Establece el borde de color negro */
+    width: 55%; /* Establece el ancho al 55% del contenedor */
     display: inline-block; /* Para colocarlos uno al lado del otro */
     vertical-align: top; /* Alinea los elementos superiormente */
 }

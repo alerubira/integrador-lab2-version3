@@ -125,18 +125,17 @@ function realizarNuevaPrescripcion(){
     inputSexoP.placeholder="";
 }
 async function imprimirPrescripcion() {
-    const token = localStorage.getItem('token');
+    capturarEstadoYGenerarPDF();
+    /*const token = localStorage.getItem('token');
     
     try {
         const response = await fetch(`/generarPDF?token=${token}`, { method: 'GET' });
-         // Verificar el tipo de contenido
-         console.log("Content-Type:", response.headers.get('Content-Type'));
+        console.log("Content-Type:", response.headers.get('Content-Type'));
         if (response.ok) {
             const pdfBlob = await response.blob();
             console.log("Tamaño del Blob:", pdfBlob.size);
 
             if (pdfBlob.size > 0) {
-                // Crear un enlace de descarga para el Blob
                 const url = URL.createObjectURL(pdfBlob);
                 const a = document.createElement('a');
                 a.href = url;
@@ -144,8 +143,6 @@ async function imprimirPrescripcion() {
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
-
-                // Limpia el objeto URL
                 URL.revokeObjectURL(url);
             } else {
                 console.error("El PDF generado está vacío.");
@@ -156,6 +153,68 @@ async function imprimirPrescripcion() {
         }
     } catch (error) {
         console.error('Error al acceder al endpoint protegido:', error);
+    }*/
+}
+async function capturarEstadoYGenerarPDF() {
+    const token = localStorage.getItem('token');
+// Ocultar los botones temporalmente 
+const buttons = document.querySelectorAll('button,.boton,#tipo'); 
+buttons.forEach(button => button.style.display = 'none');
+    // Capturar el HTML completo junto con los estilos
+    let htmlContent = `
+        <html>
+            <head>
+                ${document.head.innerHTML}
+                <style>
+                    ${Array.from(document.styleSheets).map(sheet => {
+                        try {
+                            return Array.from(sheet.cssRules).map(rule => rule.cssText).join('\n');
+                        } catch (e) {
+                            console.warn('No se pueden leer reglas de estilos desde:', sheet.href, e);
+                            return '';
+                        }
+                    }).join('\n')}
+                </style>
+            </head>
+            <body>
+                ${document.body.outerHTML}
+            </body>
+        </html>
+    `;
+
+   
+    // Restaurar la visibilidad de los botones 
+    buttons.forEach(button => button.style.display = '');
+   // Capturar los valores de los inputs, textareas y selects 
+   const inputValues = Array.from(document.querySelectorAll('input, textarea, select')).map(element => 
+    ({ selector: `${element.tagName.toLowerCase()}[name="${element.name}"]`,
+     type: element.type,
+      value: element.value,
+       checked: element.checked }));
+    try {
+        const response = await fetch('/generarPDF', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ token, htmlContent, inputValues })
+        });
+
+        if (response.ok) {
+            const pdfBlob = await response.blob();
+            const url = URL.createObjectURL(pdfBlob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'prescripcion.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } else {
+            console.error('Error en la respuesta:', response.statusText);
+        }
+    } catch (error) {
+        console.error('Error al generar el PDF:', error);
     }
 }
 
