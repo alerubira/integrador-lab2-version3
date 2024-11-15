@@ -37,7 +37,11 @@ ruta.get('/medicos',(req,res)=>{
 ruta.get('/medicamentos',(req,res)=>{
   encabezado="Planilla para procesar Medicamentos";
   manejadorMedicamentos(req,res,'ingresar');
-})   
+})  
+ruta.get('/prestaciones',(req,res)=>{
+  encabezado='Vienvenido a Prestaciones';
+  manejadorPrestaciones(req,res,'ingresar');
+}) 
 ruta.get('/profeciones',verificarToken,async(req,res)=>{
     manejadorMedicos(req,res,"profecion");
     
@@ -67,10 +71,7 @@ ruta.post('/cambiarEspecialidad',verificarToken,async(req,res)=>{
 ruta.post('/cambiarDireccion',verificarToken,async(req,res)=>{
 manejadorMedicos(req,res,'cambiarDireccion');
 });
-ruta.get('/prestaciones',(req,res)=>{
-  encabezado='Vienvenido a Prestaciones';
-  manejadorPrestaciones(req,res,'ingresar');
-})
+
 ruta.get('/practica',verificarToken,async(req,res)=>{
   manejadorPrestaciones(req,res,"practica");
 })
