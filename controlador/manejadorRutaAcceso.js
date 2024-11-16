@@ -10,7 +10,7 @@ import { verifyToken } from "./manejadorDeRutasLogin.js";
      }*/
        const token = req.query.token;
        if (!token) {
-           return res.status(403).json({ message: 'Token no proporcionado' });
+           return res.status(403).json({ message:'Token no proporcionado' });
        }
       
        verifyToken(token, (err, decoded) => {
@@ -31,4 +31,5 @@ import { verifyToken } from "./manejadorDeRutasLogin.js";
       res.status(500).send('Error interno del servidor al procesar el acceso');
   }
   }
+
   export{manejadorAcceso};

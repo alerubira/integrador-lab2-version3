@@ -18,6 +18,8 @@ let inputUsuario5=document.getElementById('usuario5');
 let inputPalabraClave=document.getElementById('palabraClave');
 let inputClave6=document.getElementById('clave6');
 let inputClave7=document.getElementById('clave7');
+let inputPalabraClave2=document.getElementById('palabraClave2');
+let inputPalabraClave3=document.getElementById('palabraClave3');
 pagina="Principal";
 //limpiarCampos(limpiar);
 //console.log(instanciaValue);
@@ -104,12 +106,17 @@ formLogin.addEventListener('submit',async function(event) {
                             if (data.tipoAutorizacion === 3) {
                               
                                 const token = data.token;
-                                window.location.href = `/acceso?token=${token}`;
-                                
+                               // window.location.href = `/acceso?token=${token}`;
+                                 window.location.href = '/acceso';
                                 }
                             if(data.tipoAutorizacion===2){
                               const token=data.token;
-                              window.location.href = `/prescripcion?token=${token}`;
+                              let toke={};
+                              toke.tipoAutorizacion=data.tipoAutorizacion;
+                              toke.idSolicitante=data.idSolicitante;
+                              let tokeJ=JSON.stringify(toke);
+                              let cadena=encodeURIComponent(tokeJ);
+                              window.location.href = `/prescripcion?datos=${cadena}`;
                             }    
                               }    
           } else {
@@ -168,7 +175,7 @@ formLogin.addEventListener('submit',async function(event) {
       console.error('Error al acceder al endpoint protegido:', error);
     });
   }*/
-  function accederEndpointProtegido() {
+ /* function accederEndpointProtegido() {
     //window.location.href = '/acceso';
     // Ir a la página anterior en el historial del navegador
     //history.back();
@@ -196,7 +203,7 @@ formLogin.addEventListener('submit',async function(event) {
             window.location.href = '/acceso';
           }, 5000);*/
 
-      } else {
+    /*  } else {
         return response.json().then(data => {
           console.error('Error al acceder al endpoint protegido :', data);
         });
@@ -205,7 +212,7 @@ formLogin.addEventListener('submit',async function(event) {
     .catch(error => {
       console.error('Error al acceder al endpoint protegido:', error);
     });
-  }
+  }*/
  /* if (window.location.pathname === '/acceso') {
     accederEndpointProtegido();
   }*/
@@ -215,18 +222,22 @@ let usuario2Value=inputUsuari2.value;
 let clave2Value=inputClave2.value;
 let clave3Value=inpuClave3.value;
 let clave4Value=inputClave4.value;
+let palabraClave2Value=inputPalabraClave2.value;
+let palabraClave3Value=inputPalabraClave3.value;
 let a=validar(usuario2Value.length<1||usuario2Value.length>6,pagina,'El usuario es obligatorio y no debe superar los 6 caracteres',event);
 let b=validar(clave2Value.length<1||!cla.test(clave2Value),pagina,'La clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
 let c=validar(clave3Value.length<1||!cla.test(clave3Value),pagina,'La nueva clave debe contener 3 letras(minimo una mayuscula) y debe contener 3 numeros',event);
 let d=validar(clave3Value!==clave4Value,pagina,'La confirmacion de la clave no es igual a la clave nueva',event);
-
-if(a&&b&&c&&d){
+let e=validar(palabraClave2Value.length<1||palabraClave2Value.length>38,pagina,'La Palabra Clave es Oblogtoria y no debe superar los 30 caracteres',event);
+let f=validar(palabraClave2Value.length<1||palabraClave2Value.length>38,pagina,'La Palabra Clave es Oblogtoria y no debe superar los 30 caracteres',event);
+let g=validar(palabraClave2Value!==palabraClave3Value,pagina,'Las Palabras Claves deben ser iguales',event);
+if(a&&b&&c&&d&&e&&f&&g){
   const response = await fetch('/modificarLogin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({usuario2: usuario2Value,clave2: clave2Value,clave3:clave3Value,clave4:clave4Value })
+      body: JSON.stringify({usuario2: usuario2Value,clave2: clave2Value,clave3:clave3Value,clave4:clave4Value,palabraClave2:palabraClave2Value,palabraClave3:palabraClave3Value })
     });
   
     const data = await response.json();

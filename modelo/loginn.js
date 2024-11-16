@@ -3,6 +3,7 @@ class usuarioClave{
     constructor(usuario,clave){
         this.usuario=usuario;
         this.clave=clave;
+        
     }
 }
 class Login extends usuarioClave{

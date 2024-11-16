@@ -60,10 +60,10 @@ async function crearLogin(login){
     
 }
 async function modificarLogin(l){
-    const query = "UPDATE `login` SET `clave_login`=?, `instancia`=? WHERE id_login=?";
+    const query = "UPDATE `login` SET `clave_login`=?, `instancia`=?,`palabra_clave`=? WHERE id_login=?";
   //  const values = [l.clave,l.instancia, 6];
     
-let result=await consulta1(query,l.clave,l.instancia,l.idLogin);
+let result=await consulta1(query,l.clave,l.instancia,l.palabraClave,l.idLogin);
 return result;
 }
 export{logins,buscarLoginPorUsuario,modificarLogin};

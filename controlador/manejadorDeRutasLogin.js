@@ -69,13 +69,18 @@ async function manejadorLogin(req,res,objeto){
         break;
       case 'modificarLogin':
         objet=req.body;
+         
          usCl=new usuarioClave(objet.usuario2,objet.clave2);
         aux=await verificar(usCl,'usuarioClave');
          if(aux.errors){
           return retornarError(res,`Error en la tipologia del Login:${aux.errors}`)
          }
          if(objet.clave3!==objet.clave4){
-          return retornarError(res,"Laconfirmacion de la Clave debe ser igual a la Clave Nueva")
+          return retornarError(res,"La Confirmacion de la Clave debe ser igual a la Clave Nueva")
+         }
+         if(objet.palabraClave2!==objet.palabraClave3){return retornarError(res,'La Confirmacion de la Palabra Clave es distinta')}
+         if(objet.palabraClave2.length<1||objet.palabraClave2.length>38){
+          return retornarError(res,'La aplabra clave nueva es obligatoria y no debe superar los 38 caracteres')
          }
          usCl=new usuarioClave(objet.usuario2,objet.clave3);
          aux=await verificar(usCl,'usuarioClave');
@@ -93,7 +98,7 @@ async function manejadorLogin(req,res,objeto){
            
            let b=await crearHash(objet.clave3);
             //generar un objeto Login 
-             l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,b,login[0].tipo_autorizacion,login[0].instancia+1,login[0].palabra_clave);
+             l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,b,login[0].tipo_autorizacion,login[0].instancia+1,objet.palabraClave2);
             //res.send(l);
             let result=await modificarLogin(l);
             if(result instanceof Error){return retornarError(res,`Error al modificar el Login:${result}`)}

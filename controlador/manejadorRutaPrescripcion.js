@@ -12,22 +12,28 @@ let aux;
 let objet;
  async function manejadorAccesoPrescripcion(req,res){
     try {
-      
-       const token = req.query.token;
-       if (!token) {
+      //const toke=req.query;
+      const datosEncoded = req.query.datos; 
+      const datosDecoded = decodeURIComponent(datosEncoded);
+       const toke = JSON.parse(datosDecoded);
+
+       //const token = req.query.token;
+       /*if (!token) {
            return retornarError(res,"Token no Proporcionado");
-       }
+       }*/
+      // console.log(toke);
+      if(!toke){return retornarError(res,"Datos de acceso Invalido")}
        //let profecional=await buscarMID(req.query.idProfecional);
       // if(profecional instanceof Error){return retornarError(res,`Error al buscar el Profecional:${profecional}`)}
        
-       verifyToken(token,async (err, decoded) => {
+      /* verifyToken(token,async (err, decoded) => {
            if (err) {
                return retornarError(res,`Token no valido:${err}`);
-           }
-           if(decoded.tipoAutorizacion!==2){return retornarError(res,"El Profecional no tiene el nivel de Autorizacion")}
-           if (decoded.tipoAutorizacion === 2) {
+           }*/
+           if(toke.tipoAutorizacion!==2){return retornarError(res,"El Profecional no tiene el nivel de Autorizacion")}
+           if (toke.tipoAutorizacion === 2) {
               let  encabezado = "Bienvenido a Prescripcion Electronica";
-              let p1=await buscarMID(decoded.idSolicitante);
+              let p1=await buscarMID(toke.idSolicitante);
              if(p1 instanceof Error){return retornarError(res,`Error al buscar el Profecional:${p}`)}
              let p=p1[0][0]
              if(p.estado_medico!==1){return retornarError(res,"El Profecional Esta dado de baja")}
@@ -48,7 +54,7 @@ let objet;
              res.render('vistaPrescripcion', { encabezado ,profecional,lados,presAprobadas,adMedicamentos,medAprobados});
               
            } 
-       });
+      // });
       
   }catch (error) {
       console.error(`Error al Procesar La Prescripcion`, error);

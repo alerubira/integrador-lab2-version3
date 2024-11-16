@@ -8,8 +8,8 @@
     if (tipoAutorizacion === '3') {
      console.log('dentro del if');
         //const token = data.token;
-         window.location.href = `/medicos?token=${token}`;
-       
+         //window.location.href = `/medicos?token=${token}`;
+       window.location.href = '/medicos';
         }
   }
   
@@ -21,7 +21,8 @@ function redireccionarMedicamentos(){
   if (tipoAutorizacion === '3') {
    console.log('dentro del if');
       //const token = data.token;
-       window.location.href = `/medicamentos?token=${token}`;
+       //window.location.href = `/medicamentos?token=${token}`;
+       window.location.href = '/medicamentos'
      
       }
 
@@ -35,8 +36,8 @@ function redireccionarPrestaciones(){
    if (tipoAutorizacion === '3') {
     console.log('dentro del if');
        //const token = data.token;
-        window.location.href = `/prestaciones?token=${token}`;
-      
+        //window.location.href = `/prestaciones?token=${token}`;
+      window.location.href = '/prestaciones';
        }
  }
 

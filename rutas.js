@@ -28,19 +28,24 @@ ruta.post('/recuperarLogin',(req,res)=>{
     })  ;
 
 ruta.get('/acceso',  (req, res) => {
-  manejadorAcceso(req,res);
+  //manejadorAcceso(req,res);
+    encabezado = "Bienvenido a Accesos";
+  res.render('vistaAcceso', { encabezado });
  });
 ruta.get('/medicos',(req,res)=>{
-    encabezado="Planilla para procesar medicos"
-     manejadorMedicos(req,res,'ingresar');
+    encabezado="Planilla para procesar medicos";
+    // manejadorMedicos(req,res,'ingresar');
+    res.render('vistaMedicos',{encabezado});
     });
 ruta.get('/medicamentos',(req,res)=>{
   encabezado="Planilla para procesar Medicamentos";
-  manejadorMedicamentos(req,res,'ingresar');
+  //manejadorMedicamentos(req,res,'ingresar');
+  res.render('vistaMedicamentos', { encabezado });
 })  
 ruta.get('/prestaciones',(req,res)=>{
   encabezado='Vienvenido a Prestaciones';
-  manejadorPrestaciones(req,res,'ingresar');
+  //manejadorPrestaciones(req,res,'ingresar');
+  res.render('vistaPrestaciones',{encabezado});
 }) 
 ruta.get('/profeciones',verificarToken,async(req,res)=>{
     manejadorMedicos(req,res,"profecion");
