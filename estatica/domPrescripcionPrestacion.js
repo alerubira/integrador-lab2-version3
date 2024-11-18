@@ -105,19 +105,39 @@ prestacionesPrescripcion.push(prestacion);
 prestacion={};
 let divAux=document.createElement('div');
 divAux.classList.add('divAuxiliar');
+let divAux1=document.createElement('div');
+divAux1.classList.add('divAuxiliar1');
 let p=document.createElement('h6');
 
 p.textContent=`PRESTACION : ${nombrePrestacion.value}---Lado: ${lado.nombre}`;
-divAux.appendChild(p);
+divAux1.appendChild(p);
 let p1=document.createElement('h6'); 
 p1.textContent=`INDICACION : ${indicacion.value}`
-divAux.appendChild(p1);
+divAux1.appendChild(p1);
 let p2=document.createElement('h6');
 p2.textContent=`JUSTIFICACION : ${justificacion.value}`;
-divAux.appendChild(p2);
+divAux1.appendChild(p2);
 let p3=document.createElement('h6');
 p3.textContent=`observacion : ${observacion.value}`;
-divAux.appendChild(p3);
+divAux1.appendChild(p3);
+let divAux2=document.createElement('div');
+  divAux2.classList.add('divAuxiliar2');
+  // Crear el input de tipo hidden 
+  let hiddenInput = document.createElement('input'); 
+  hiddenInput.type = 'hidden'; 
+  hiddenInput.value = prestacion.idPrestacion;
+ // Crear el botón 
+ let button = document.createElement('button');
+ button.classList.add('boton');
+  button.textContent = 'Borrar';
+  //solucionar undefine en el value de hiden
+    // Agregar un evento al botón para capturar el nombre del medicamento 
+    button.addEventListener('click', () => { alert(`id Prestacion Capturado: ${hiddenInput.value}`); });
+     // Agregar el botón al contenedor divAux
+     divAux2.appendChild(hiddenInput);
+     divAux2.appendChild(button);
+divAux.appendChild(divAux1);
+divAux.appendChild(divAux2);     
 divMedicamentoPrestacion.appendChild(divAux);
 limpiarCampos(limpiarPr);
 

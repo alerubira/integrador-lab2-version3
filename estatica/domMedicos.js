@@ -198,11 +198,10 @@ formularioProfecionalCrear.addEventListener('submit',async function(event) {
           ,claveProvisoria:claveValue,palabraClave:palabraClaveValue,nivelAutorizacion:nivelValue
         };
       let aux=await  fechProtegidoPost('/verificarREFEPS_Argentino',profecionalCreado);
-       console.log(aux);
+     
      if(aux===true){
-          fechProtegidoPost('/crearMedico',profecionalCreado);
+         let aux=await fechProtegidoPost('/crearMedico',profecionalCreado);
+         if(!aux.error){fOcultar()}
       }else if(aux===false){alerta(pagina,"El Id REFEPS no corresponde a un Medico Habilitado por la Argentina")}
-       
-       
-     }
+        }
 });

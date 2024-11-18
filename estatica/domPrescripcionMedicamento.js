@@ -27,10 +27,9 @@ async function capturarMedicamento(event){
   if(!validar(!medicamento.idAdministracion,pagina,'La Administracion es Obligatoria')){bandera=false};
   
   if(!validar(!inputNombreMedicamento.value,pagina,'El Nombre del Medicamento es Obligatorio')){bandera=false};
-  console.log(medicamentosPrescripcion);
-  console.log(medicamento.idNGP);
+  
   let a=await medicamentosPrescripcion.find(m=>m.idNGP===medicamento.idNGP);
-  console.log(a);
+  
   if(!validar(a,pagina,"el Medicamento ya se encuentra en la Prescripcion,no se puede recetar el mismo Medicamento")){bandera=false}
   
   if(bandera){
@@ -39,18 +38,36 @@ async function capturarMedicamento(event){
   medicamento.nombre=inputNombreMedicamento.value;
   medicamento.nombreComercial=marca.value;
   medicamentosPrescripcion.push(medicamento);
-  
   console.log(medicamentosPrescripcion);
   let divAux=document.createElement('div');
   divAux.classList.add('divAuxiliar');
+  let divAux1=document.createElement('div');
+  divAux1.classList.add('divAuxiliar1');
   let p=document.createElement('h6');
   
   p.textContent=`MEDICAMENTO : ${medicamento.nombre}---ADMINISTRACION: ${administracion.nombre}`;
-  divAux.appendChild(p);
+  
+  divAux1.appendChild(p);
   let p1=document.createElement('h6'); 
   p1.textContent=`MARCA COMERCIAL : ${medicamento.nombreComercial}`
-  divAux.appendChild(p1);
- 
+  divAux1.appendChild(p1);
+  let divAux2=document.createElement('div');
+  divAux2.classList.add('divAuxiliar2');
+ // Crear el botón 
+ let button = document.createElement('button');
+ button.classList.add('boton');
+  button.textContent = 'Borrar';
+  // Crear el input de tipo hidden 
+  let hiddenInput = document.createElement('input'); 
+  hiddenInput.type = 'hidden'; 
+  hiddenInput.value = medicamento.idNGP;
+    // Agregar un evento al botón para capturar el nombre del medicamento 
+    button.addEventListener('click', () => { alert(`id Medicamento Capturado: ${hiddenInput.value}`); });
+     // Agregar el botón al contenedor divAux
+     divAux2.appendChild(hiddenInput);
+     divAux2.appendChild(button);
+     divAux.appendChild(divAux1)
+      divAux.appendChild(divAux2);
   
   divMedicamentoPrestacion.appendChild(divAux);
   limpiarCampos(limpiarM);
