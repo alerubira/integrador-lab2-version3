@@ -103,7 +103,7 @@ h5 {
 }
 #diagnostico {
   width: 100%; /* Ocupa el 100% del ancho de su contenedor */
-  height: 40%; /* Ocupa el % del alto de su contenedor */
+  height: 20%; /* Ocupa el % del alto de su contenedor */
   resize: none; /* Evita que el usuario cambie el tamaño manualmente */
   box-sizing: border-box; /* Incluye padding y borde en el ancho y alto */
 }

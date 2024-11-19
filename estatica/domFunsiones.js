@@ -11,25 +11,13 @@ let pagina;
 let cla=/^(?=(?:.*[A-Z]){1,})(?=(?:.*[a-zA-Z]){3,})(?=(?:.*\d){3,}).*$/;
 limpiarCampos(limpiar);
 function eliminarObjetoPorId(arreglo, id, propiedad) {
-   console.log(`Arreglo: ${JSON.stringify(arreglo)}`);
-    console.log(`ID: ${id}`); console.log(`Propiedad: ${propiedad}`);
-    // Comprobar que el arreglo es un array y que la propiedad es una cadena 
-    if (!Array.isArray(arreglo)) { console.error('Error: El primer argumento no es un arreglo.'); return; }
-     if (typeof propiedad !== 'string') { console.error('Error: La propiedad no es una cadena de texto.'); 
-      return; }
-     // Encontrar el índice del objeto con el ID proporcionado 
-    const indice = arreglo.findIndex(objeto => { 
-      console.log(`Comparando ${objeto[propiedad]} con ${id}`); 
-      return objeto[propiedad] === id; }); 
-      console.log(`indice :${indice}`);
+   const indice = arreglo.findIndex(objeto => objeto[propiedad] === Number(id));
       // Si se encuentra el objeto, eliminarlo del arreglo
-       if (indice !== -1) { arreglo.splice(indice, 1); 
-        // Eliminar un elemento en el índice encontrado 
-        console.log(`Objeto con ID ${id} eliminado.`); } 
-        else { 
+       if (indice !== -1) {
+         arreglo.splice(indice, 1); 
+         } else { 
           console.log(`Objeto con ID ${id} no encontrado.`); 
         } 
-    console.log(`Arreglo después de la eliminación: ${JSON.stringify(arreglo)}`); 
   }
  function fOcultar(){
             
