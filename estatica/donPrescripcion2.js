@@ -27,7 +27,7 @@ async function mostrarPrescripciones(arrayPrescripciones){
     let idPresPres=[];
     for(let pre of arrayPrescripciones){ 
         let divPre=document.createElement('div');
-        divPre.classList.add('divAuxiliar');
+        divPre.classList.add('divAuxiliar6');
         let h5=document.createElement('h5');
         let fechaP=convertirFechaISOaFechaLocal(pre.fecha_prescripcion,true);
         let fechaVP=convertirFechaISOaFechaLocal(pre.vigencia_prescripcion,true);

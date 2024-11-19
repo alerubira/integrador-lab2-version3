@@ -62,7 +62,12 @@ async function capturarMedicamento(event){
   hiddenInput.type = 'hidden'; 
   hiddenInput.value = medicamento.idNGP;
     // Agregar un evento al botón para capturar el nombre del medicamento 
-    button.addEventListener('click', () => { alert(`id Medicamento Capturado: ${hiddenInput.value}`); });
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+       //alert(`id Medicamento Capturado: ${hiddenInput.value}`);
+       eliminarHijos(divAux);
+       eliminarObjetoPorId(medicamentosPrescripcion,hiddenInput.value,'idNGP');   
+       });
      // Agregar el botón al contenedor divAux
      divAux2.appendChild(hiddenInput);
      divAux2.appendChild(button);

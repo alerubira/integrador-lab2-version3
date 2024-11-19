@@ -94,6 +94,7 @@ if(!validar(!nombrePrestacion.value,pagina,'El Nombre de la Prestacion es Obliga
 if(!validar(observacion.value.length>48,pagina,'La observacion no debe superar los 40 caracteres')){bandera=false}
 console.log(prestacionesPrescripcion);
 console.log(prestacion.idPrestacion);
+let idPres=prestacion.idPrestacion;
 let a=await prestacionesPrescripcion.find(p=>p.idPrestacion===prestacion.idPrestacion);
 console.log(a);
 if(!validar(a,pagina,"La Practica ya se encuentra en la Prescripcion,no se puede recetar la misma Practica")){bandera=false}
@@ -125,14 +126,20 @@ let divAux2=document.createElement('div');
   // Crear el input de tipo hidden 
   let hiddenInput = document.createElement('input'); 
   hiddenInput.type = 'hidden'; 
-  hiddenInput.value = prestacion.idPrestacion;
+  hiddenInput.value = idPres;
  // Crear el botón 
  let button = document.createElement('button');
  button.classList.add('boton');
   button.textContent = 'Borrar';
   //solucionar undefine en el value de hiden
-    // Agregar un evento al botón para capturar el nombre del medicamento 
-    button.addEventListener('click', () => { alert(`id Prestacion Capturado: ${hiddenInput.value}`); });
+    // Agregar un evento al botón para capturar el nombre de la Prstacion
+    console.log(prestacionesPrescripcion);
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+     // alert(`id Prestacion Capturado: ${hiddenInput.value}`);
+     eliminarHijos(divAux); 
+     eliminarObjetoPorId(prestacionesPrescripcion,hiddenInput.value,'idPrestacion');  
+    });
      // Agregar el botón al contenedor divAux
      divAux2.appendChild(hiddenInput);
      divAux2.appendChild(button);
