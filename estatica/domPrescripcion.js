@@ -22,6 +22,8 @@ let divFinal=document.getElementById('divFinal');
 let fechaActual=fechaActualInput.value;
 let idProfecional=document.getElementById('id_profecional');
 let fechaVInput=document.getElementById('fechaV');
+let divMedPres=document.getElementById('divMedPres');
+let divMedPres1=document.getElementById('divMedPres1');
 let obraSocialPlan;//para la prescripcion
 let obrass;
 let sexo;
@@ -51,10 +53,14 @@ function convertirFechaISOaFechaLocal(fechaISO,date) {
   
 selectTipo.addEventListener("change", function() {
         fOcultar();
+        limpiarCampos(limpiarM);
+        limpiarCampos(limpiarPr);
          if(selectTipo.value==="prestacion"){
             divPrestacion.style.display="block";
+            divMedPres1.style.display="block";
          }else if(selectTipo.value==="medicamento"){
             divMedicamento.style.display="block";
+            divMedPres.style.display="block";
          }
     });
 // Bloquear todos los elementos dentro del div #divPaciente

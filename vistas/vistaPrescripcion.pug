@@ -70,14 +70,14 @@ block content
                                         option(value="prestacion") Prestacion
                                         option(value="medicamento") Medicamento
                             #divMedicamento.ocultar
-                                
-                                label(for="nombre_medicamento") Nombre del Medicamento :
-                                br
-                                input.inputTotal.limpiarM(type="text", id="nombre_medicamento", name="nombre_medicamento",placeholder="Escriba para buscar...")
-                                ul#listaMedicamentos
-                                script. 
-                                    const medAprobados=!{JSON.stringify(medAprobados)};
-                                br
+                                #divMedPres.ocultar
+                                        label(for="nombre_medicamento") Nombre del Medicamento :
+                                        br
+                                        input.inputTotal.limpiarM(type="text", id="nombre_medicamento", name="nombre_medicamento",placeholder="Escriba para buscar...")
+                                        ul#listaMedicamentos
+                                        script. 
+                                            const medAprobados=!{JSON.stringify(medAprobados)};
+                                        br
                                 label(for="administracion_medicamento") Administracion :
                                 input.limpiarM(type="text", id="administracion_medicamento", name="administracion_medicamento",list="administracion")
                                 datalist#administracion 
@@ -91,14 +91,15 @@ block content
                                 button.boton(type="button",onclick="capturarMedicamento(event)") Agregar Medicamento 
                                     
                             #divPrestacion.ocultar
-                                label(for="nombre_prestacion") Prestación:
-                                br
-                                input.inputTotal.limpiarPr(type="text", id="nombre_prestacion", name="nombre_prestacion", placeholder="Escribe para buscar...")
-                                ul#listaPrestaciones
-                                script.
-                                    const presAprobadas = !{JSON.stringify(presAprobadas)};
+                                #divMedPres1.ocultar
+                                        label(for="nombre_prestacion") Prestación:
+                                        br
+                                        input.inputTotal.limpiarPr(type="text", id="nombre_prestacion", name="nombre_prestacion", placeholder="Escribe para buscar...")
+                                        ul#listaPrestaciones
+                                        script.
+                                            const presAprobadas = !{JSON.stringify(presAprobadas)};
 
-                                br
+                                        br
                                 label(for="lado_prestacion") Lado(opcional) :
                                 input.limpiarPr(type="text", id="lado_prestacion", name="lado_prestacion",list="lado")
                                 datalist#lado

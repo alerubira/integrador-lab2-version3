@@ -27,5 +27,5 @@ async function generarPdf(req,res){
             if (!res.headersSent) { res.status(500).json({ error: 'Error al generar el PDF' });
          } } finally {
              if (browser) { await browser.close(); } }
-}
+         }
 export {generarPdf}

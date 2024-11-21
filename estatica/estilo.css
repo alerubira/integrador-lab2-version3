@@ -56,6 +56,7 @@ h5 {
      /* background-color:antiquewhite;*/
       width: 85%;
       margin: 1%;
+      height: auto; /* Ajusta según el tamaño de la ventana */
       /*z-index: 1000;*/ 
       /*box-shadow: 0 0 0 10px rgb(0, 255, 191);*/ 
 }
@@ -80,6 +81,7 @@ h5 {
 #divReceta{
     border-radius: 10px; /* Establece los bordes redondeados */
     border: 2px solid black; /* Establece el borde de color negro */
+    height: auto; /* Ocupa el % del alto de su contenedor ,automatico al contenido*/
 }
 .divPr{
   border:1px solid #FF69B4;
@@ -96,16 +98,23 @@ h5 {
 #divDiagnostico {
   /*border-radius: 10px; /* Establece los bordes redondeados */
   /*border: 2px solid black; /* Establece el borde de color negro */
-  height: 30%; /* Ajusta el alto del contenedor */
+  /*height: 30%; /* Ajusta el alto del contenedor */
   width: 95%; /* Establece el ancho del contenedor */
   padding: 10px; /* Añade un espacio interno para el contenido */
-  box-sizing: border-box; /* Asegura que el padding y borde no excedan el tamaño */
+  height: auto; /* Ocupa el % del alto de su contenedor ,automatico al contenido*/
+  resize: none; /* Evita que el usuario cambie el tamaño manualmente */
+  box-sizing: border-box; /* Incluye padding y borde en el ancho y alto */
+ /* overflow: visible; /* Permite que el contenido desborde si es necesario */
+ overflow: hidden; /* Asegura que el contenido adicional se oculte */ 
+ max-height: none; /* Asegura que no haya límite en la altura máxima */
+
 }
 #diagnostico {
   width: 100%; /* Ocupa el 100% del ancho de su contenedor */
-  height: 20%; /* Ocupa el % del alto de su contenedor */
+  height: 30; /* Ocupa el % del alto de su contenedor ,automatico al contenido*/
   resize: none; /* Evita que el usuario cambie el tamaño manualmente */
   box-sizing: border-box; /* Incluye padding y borde en el ancho y alto */
+ 
 }
 
   form label {
@@ -198,15 +207,28 @@ border: 1px solid black;
   }
   ul {
     position: relative; /* Posiciona los <li> en relación al <ul> */
-    height: 200px; /* Ajusta según el tamaño de la ventana */
+    height: auto; /* Ajusta según el tamaño de la ventana */
     overflow: hidden; /* Oculta los elementos que sobrepasan el contenedor */
+    padding: 0; /* Elimina cualquier padding predeterminado */ 
+    margin: 0; /* Elimina cualquier margen predeterminado */
+    /*z-index: 9999; /* Asegura que el <ul> esté en una capa base */
   }
   
   li {
-    position: absolute; /* Para posicionar los <li> de manera absoluta */
+    position: relative; /* Para posicionar los <li> de manera relativa */
     left: 0;
     width: 100%; /* Que ocupen todo el ancho disponible */
     text-align: left; /* Alinea el texto a la izquierda */
+    list-style-type: none; /* Elimina los puntos de la lista */
+    margin: 0; /* Elimina el margen entre los <li> */ 
+    padding: 0; /* Elimina el padding entre los <li> */
+   /* margin-bottom: -1px; /* Añade un margen negativo para eliminar el espacio */
+    /*z-index: 9999; /* Asegura que los <li> estén por encima de otros elementos */
+  }
+  #divMedPres,#divMedPres1{
+    position: relative;
+    height: auto; /* Ajusta según el tamaño de la ventana */
+    background-color: #f7af43; 
   }
   
   
