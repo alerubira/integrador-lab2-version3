@@ -101,16 +101,22 @@ formLogin.addEventListener('submit',async function(event) {
                         // Almacenar el token en localStorage
                         localStorage.setItem('token', data.token);
                         localStorage.setItem('tipoAutorizacion', data.tipoAutorizacion);
-                        
+                        localStorage.setItem('idSolicitante',data.idSolicitante);
                             // Redirigir o realizar acciones basadas en el tipo de autorización
                             if (data.tipoAutorizacion === 3) {
-                              
-                                const token = data.token;
+                                  let token = data.token;
                                // window.location.href = `/acceso?token=${token}`;
-                                 window.location.href = '/acceso';
+                               let toke={};
+                              toke.tipoAutorizacion=data.tipoAutorizacion;
+                              toke.idSolicitante=data.idSolicitante;
+                              
+                              let tokeJ=JSON.stringify(toke);
+                              let cadena=encodeURIComponent(tokeJ);
+                            
+                                 window.location.href = `/acceso?datos=${cadena}`;
                                 }
                             if(data.tipoAutorizacion===2){
-                              const token=data.token;
+                              let token=data.token;
                               let toke={};
                               toke.tipoAutorizacion=data.tipoAutorizacion;
                               toke.idSolicitante=data.idSolicitante;

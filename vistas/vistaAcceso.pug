@@ -3,7 +3,9 @@ block script1
        script(src="domAcceso1.js", defer)      
 block content                    
 
-                   
+            #divProfecionalAcceso 
+                     h3 PROFECIONAL
+                            label=`${profecional.nombre}  ${profecional.apellido}`       
             button.boton(type="button", onclick="redireccionarMedicamentos()") Acceder a Medicamentos 
             button.boton(type="button", onclick="redireccionarMedicos()") Acceder a Profesionales
             button.boton(type="button",onclick="redireccionarPrestaciones()") Acceder a Prestaciones

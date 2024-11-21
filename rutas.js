@@ -26,16 +26,18 @@ ruta.post('/modificarLogin',(req,res)=>{
 ruta.post('/recuperarLogin',(req,res)=>{
     manejadorLogin(req,res,'recuperarLogin');
     })  ;
-
+//
 ruta.get('/acceso',  (req, res) => {
   //manejadorAcceso(req,res);
-    encabezado = "Bienvenido a Accesos";
-  res.render('vistaAcceso', { encabezado });
+    //encabezado = "Bienvenido a Accesos";
+  //res.render('vistaAcceso', { encabezado });
+  manejadorAcceso(req,res);
  });
 ruta.get('/medicos',(req,res)=>{
-    encabezado="Planilla para procesar medicos";
+    //encabezado="Planilla para procesar medicos";
     // manejadorMedicos(req,res,'ingresar');
-    res.render('vistaMedicos',{encabezado});
+    //res.render('vistaMedicos',{encabezado});
+    manejadorMedicos(req,res,'ingresar')
     });
 ruta.get('/medicamentos',(req,res)=>{
   encabezado="Planilla para procesar Medicamentos";

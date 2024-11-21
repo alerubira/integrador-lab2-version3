@@ -12,7 +12,8 @@ let aux;
 let objet;
  async function manejadorAccesoPrescripcion(req,res){
     try {
-      //const toke=req.query;
+      //const toke=req.query;//
+     // console.log(req.query.datos);
       const datosEncoded = req.query.datos; 
       const datosDecoded = decodeURIComponent(datosEncoded);
        const toke = JSON.parse(datosDecoded);
