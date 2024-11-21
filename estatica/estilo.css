@@ -208,7 +208,7 @@ border: 1px solid black;
   ul {
     position: relative; /* Posiciona los <li> en relación al <ul> */
     height: auto; /* Ajusta según el tamaño de la ventana */
-    overflow: hidden; /* Oculta los elementos que sobrepasan el contenedor */
+    overflow: auto; /* Asegura que el contenido no se desborde */
     padding: 0; /* Elimina cualquier padding predeterminado */ 
     margin: 0; /* Elimina cualquier margen predeterminado */
     /*z-index: 9999; /* Asegura que el <ul> esté en una capa base */
@@ -229,6 +229,7 @@ border: 1px solid black;
     position: relative;
     height: auto; /* Ajusta según el tamaño de la ventana */
     background-color: #f7af43; 
+    overflow: auto; /* Permite que el contenido desborde si es necesario */
   }
   
   

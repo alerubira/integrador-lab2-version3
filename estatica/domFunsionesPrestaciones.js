@@ -108,17 +108,17 @@ function cambiarEstado(){
         }
 async function agregarPractica(){
 let aPracticaValue=inputAPractica.value;
-let a=validar(aPracticaValue.length<1||aPracticaValue.length>28,pagina,'La practica es obligatoria y no debe superar los 28 caracteres');
+let a=validar(aPracticaValue.length<1||aPracticaValue.length>98,pagina,'La practica es obligatoria y no debe superar los 98 caracteres');
 if(a){
      let b={};
       b.nombrePractica=aPracticaValue;
-     fechProtegidoPost('/agregarPractica',b);//hacer endpoint
+     fechProtegidoPost('/agregarPractica',b);
 }
 inputAPractica.value="";
 } 
 async function agregarProcedimiento(){
      let aProcedimientoValue=inputAProcedimiento.value;
-     let a=validar(aProcedimientoValue.length<1||aProcedimientoValue.length>28,pagina,'El Procedimiento es obligatoria y no debe superar los 28 caracteres');
+     let a=validar(aProcedimientoValue.length<1||aProcedimientoValue.length>198,pagina,'El Procedimiento es obligatoria y no debe superar los 198 caracteres');
      if(a){
           let b={};
           b.nombreProcedimiento=aProcedimientoValue;
@@ -129,11 +129,11 @@ async function agregarProcedimiento(){
 
 async function agregarExamen(){
      let aExamenValue=inputAExamen.value;
-     let a=validar(aExamenValue.length<1||aExamenValue.length>28,pagina,'El Examen es obligatoria y no debe superar los 28 caracteres');
+     let a=validar(aExamenValue.length<1||aExamenValue.length>198,pagina,'El Examen es obligatoria y no debe superar los 198 caracteres');
      if(a){
           let b={};
           b.nombreExamen=aExamenValue;
-          fechProtegidoPost('/agregarExamen',b);//hacer endpoint
+          fechProtegidoPost('/agregarExamen',b);
      }
      inputAExamen.value="";
      } 

@@ -115,13 +115,13 @@ inputNombreMedicamento.addEventListener('input', function() {
   
       lista.appendChild(li);
     });
-    const listItems = document.querySelectorAll('li');
+    /*const listItems = document.querySelectorAll('li');
     let currentTop = 0; // Posición inicial para el primer <li>
-    const spacing = 5; // Espaciado entre los <li>
+    const spacing = 0; // Espaciado entre los <li>
   
     listItems.forEach((li) => {
       const liHeight = li.offsetHeight; // Calcula la altura del <li>
       li.style.top = `${currentTop}px`; // Posiciona el <li> usando top
       currentTop += liHeight + spacing; // Aumenta el valor de top para el siguiente <li>
-    });
+    });*/
   });
