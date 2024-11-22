@@ -12,7 +12,7 @@
          //window.location.href = `/medicos?token=${token}`;
          let toke={};
          toke.tipoAutorizacion=parseInt(tipoAutorizacion);
-         toke.idSolicitante=idSolicitante;
+         toke.idSolicitante=parseInt(idSolicitante);
          let tokeJ=JSON.stringify(toke);
          let cadena=encodeURIComponent(tokeJ);
          window.location.href = `/medicos?datos=${cadena}`;
@@ -21,31 +21,36 @@
   }
   
 function redireccionarMedicamentos(){
-  console.log('medicamntos en construccion');
-  const token = localStorage.getItem('token');
-  const tipoAutorizacion=localStorage.getItem('tipoAutorizacion');
-  //console.log(token);
+    const token = localStorage.getItem('token');
+    const tipoAutorizacion=localStorage.getItem('tipoAutorizacion');
+    const idSolicitante=localStorage.getItem('idSolicitante');
   if (tipoAutorizacion === '3') {
-   console.log('dentro del if');
-      //const token = data.token;
-       //window.location.href = `/medicamentos?token=${token}`;
-       window.location.href = '/medicamentos'
+   
+     let toke={};
+         toke.tipoAutorizacion=parseInt(tipoAutorizacion);
+         toke.idSolicitante=parseInt(idSolicitante);
+         let tokeJ=JSON.stringify(toke);
+         let cadena=encodeURIComponent(tokeJ);
+         window.location.href = `/medicamentos?datos=${cadena}`;
      
       }
 
 }
 function redireccionarPrestaciones(){
-  console.log('derireccionar prestaciones');
-  // console.log(localStorage);
-   const token = localStorage.getItem('token');
-   const tipoAutorizacion=localStorage.getItem('tipoAutorizacion');
-   //console.log(token);
-   if (tipoAutorizacion === '3') {
-    console.log('dentro del if');
-       //const token = data.token;
-        //window.location.href = `/prestaciones?token=${token}`;
-      window.location.href = '/prestaciones';
-       }
+     const token = localStorage.getItem('token');
+    const tipoAutorizacion=localStorage.getItem('tipoAutorizacion');
+    const idSolicitante=localStorage.getItem('idSolicitante');
+  if (tipoAutorizacion === '3') {
+   
+     let toke={};
+         toke.tipoAutorizacion=parseInt(tipoAutorizacion);
+         toke.idSolicitante=parseInt(idSolicitante);
+         let tokeJ=JSON.stringify(toke);
+         let cadena=encodeURIComponent(tokeJ);
+         window.location.href = `/prestaciones?datos=${cadena}`;
+     
+      }
+
  }
 
   

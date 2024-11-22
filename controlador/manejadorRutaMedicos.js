@@ -23,7 +23,7 @@ async function manejadorMedicos(req,res,objeto){
                 const datosEncoded = req.query.datos; 
                 const datosDecoded = decodeURIComponent(datosEncoded);
                  const toke = JSON.parse(datosDecoded);
-                 console.log(toke);
+                 
                  if(!toke){return retornarError(res,"Datos de acceso Invalido")}
                  if(toke.tipoAutorizacion!==3){return retornarError(res,"El Profecional no tiene el nivel de Autorizacion")}
                  if (toke.tipoAutorizacion === 3) {

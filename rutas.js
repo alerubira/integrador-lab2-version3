@@ -40,14 +40,16 @@ ruta.get('/medicos',(req,res)=>{
     manejadorMedicos(req,res,'ingresar')
     });
 ruta.get('/medicamentos',(req,res)=>{
-  encabezado="Planilla para procesar Medicamentos";
+  //encabezado="Planilla para procesar Medicamentos";
   //manejadorMedicamentos(req,res,'ingresar');
-  res.render('vistaMedicamentos', { encabezado });
+  //res.render('vistaMedicamentos', { encabezado });
+  manejadorMedicamentos(req,res,'ingresar');
 })  
 ruta.get('/prestaciones',(req,res)=>{
-  encabezado='Vienvenido a Prestaciones';
+ // encabezado='Vienvenido a Prestaciones';
   //manejadorPrestaciones(req,res,'ingresar');
-  res.render('vistaPrestaciones',{encabezado});
+  //res.render('vistaPrestaciones',{encabezado});
+  manejadorPrestaciones(req,res,'ingresar');
 }) 
 ruta.get('/profeciones',verificarToken,async(req,res)=>{
     manejadorMedicos(req,res,"profecion");

@@ -10,12 +10,12 @@ import { retornarError } from "./funsionesControlador.js";
 let errLogin;
 let objetAux={};
 let objet={};
-
+let aux;
 async function manejadorLogin(req,res,objeto){
   try {
     let boolean;
     let login;
-    let aux;
+   
     let body=req.body;
   
     let usCl;
@@ -97,9 +97,11 @@ async function manejadorLogin(req,res,objeto){
           if(boolean) {
            
            let b=await crearHash(objet.clave3);
+           let c=await crearHash(objet.palabraClave2)
             //generar un objeto Login 
-             l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,b,login[0].tipo_autorizacion,login[0].instancia+1,objet.palabraClave2);
+             l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,b,login[0].tipo_autorizacion,login[0].instancia+1,c);
             //res.send(l);
+            console.log(l);
             let result=await modificarLogin(l);
             if(result instanceof Error){return retornarError(res,`Error al modificar el Login:${result}`)}
             if(result.affectedRows===1){
@@ -124,7 +126,8 @@ async function manejadorLogin(req,res,objeto){
        }else{
         return retornarError(res,"El Usuario no se encuentra Registrado");
        }
-         if(l.palabraClave===body.palabraClave){
+        aux=await verificarHash(body.palabraClave,l.palabraClave)
+         if(aux){
           let c=await crearHash(body.clave6);
           let l1=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,c,login[0].tipo_autorizacion,login[0].instancia+1,login[0].palabra_clave);
           let result1=await modificarLogin(l1);

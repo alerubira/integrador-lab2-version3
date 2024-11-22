@@ -6,6 +6,8 @@ import { verificar } from "./verificaryup.js";
 //import { Medico } from "../modelo/clasesEntidad.js";
 import {  existeBd,existeNombreBd ,existeConjuntoBD} from "../modelo/conexxionBD.js";
 import { retornarError } from "./funsionesControlador.js";
+import { buscarMID } from "../modelo/medicoData.js";
+import { Medico } from "../modelo/clasesEntidad.js";
 let estadoSuces;
 let mensajeExito;
 let objet;
@@ -20,25 +22,23 @@ async function manejadorMedicamentos(req,res,objeto){
 
         case 'ingresar':
           
-        const token = req.query.token;
-        if (!token) {
-            return res.status(403).json({ message: 'Token no proporcionado' });
-        }
-       
-        verifyToken(token, (err, decoded) => {
-            if (err) {
-                return res.status(403).json({ message: 'Token no válido' });
-            }
-       
-            if (decoded.tipoAutorizacion === 3) {
-               //let  encabezado = "Bienvenido a Accesos";
-            
-                //res.render('medicos',{encabezado,mensajeExito,estadoSuces});
-                res.render('vistaMedicamentos', { encabezado });
-            } else {
-                res.status(403).json({ message: 'Acceso denegado' });
-            }
-        });
+        const datosEncoded = req.query.datos; 
+        const datosDecoded = decodeURIComponent(datosEncoded);
+         const toke = JSON.parse(datosDecoded);
+        
+         if(!toke){return retornarError(res,"Datos de acceso Invalido")}
+         if(toke.tipoAutorizacion!==3){return retornarError(res,"El Profecional no tiene el nivel de Autorizacion")}
+         if (toke.tipoAutorizacion === 3) {
+            let  encabezado = "Planilla para Procesar Medicamentos";
+            let p1=await buscarMID(toke.idSolicitante);
+           if(p1 instanceof Error){return retornarError(res,`Error al buscar el Profecional:${p}`)}
+           let p=p1[0][0]
+           if(p.estado_medico!==1){return retornarError(res,"El Profecional Esta dado de baja")}
+          let profecional=new Medico(p.id_medico,null,p.nombre,p.apellido,p.dni_persona,p.domicilio,null,p.nombre_profecion,null,p.nombre_especialidad,p.matricula_profecional,null,p.estado_medico);
+          res.render('vistaMedicamentos', { encabezado ,profecional});
+         }
+   
+    
           
           break;
      case 'nombresGenericos':

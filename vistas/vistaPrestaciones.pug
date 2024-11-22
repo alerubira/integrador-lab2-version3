@@ -3,7 +3,10 @@ block script1
     script(src="domPrestaciones.js", defer)
 block script2
     script(src='domFunsionesPrestaciones.js',defer)           
-block content   
+block content  
+            #divProfecionalAcceso 
+                     h3 PROFECIONAL
+                            label=`${profecional.nombre}  ${profecional.apellido}` 
             select(id="crudPrestaciones", name="crudPrestaciones")
                         option(value="") Elija una opcion
                         option(value="crearPrestacion") Inscribir Prestacion
