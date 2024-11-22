@@ -93,7 +93,9 @@ formularioPrescripcion.addEventListener('submit',async  function(event) {
         
         if(aux.success){
             divFinal.style.display='block';
-            
+        
+            prestacionesPrescripcion=[];
+            medicamentosPrescripcion=[];
         }
     }
    
