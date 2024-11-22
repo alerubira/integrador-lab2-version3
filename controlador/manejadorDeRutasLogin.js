@@ -101,7 +101,7 @@ async function manejadorLogin(req,res,objeto){
             //generar un objeto Login 
              l=new Login(login[0].id_login,login[0].id_medico,login[0].usuario_login,b,login[0].tipo_autorizacion,login[0].instancia+1,c);
             //res.send(l);
-            console.log(l);
+            
             let result=await modificarLogin(l);
             if(result instanceof Error){return retornarError(res,`Error al modificar el Login:${result}`)}
             if(result.affectedRows===1){
