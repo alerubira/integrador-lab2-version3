@@ -28,7 +28,7 @@ let connection;
                 }
 
            await connection.commit();
-           return { success: true ,message:'La prescripcion fue creada con exito'};
+           return { success: true ,message:'La prescripcion fue creada con exito',prescripcionNumero:id_prescripcion};
         
             } catch (error) {
             if (connection) {

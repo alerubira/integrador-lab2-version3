@@ -108,7 +108,7 @@ let objet;
      case 'generarPrescripcion':
         
          objet=req.body;
-         console.log(objet);
+         //console.log(objet);
          if(objet.medicamentos.length<1&&objet.prestaciones.length<1){return retornarError(res,'La prescripcion debe tener al menos una prestacion o un medicamento')}
          aux=await verificar(objet,'prescripcion');
          if(aux.errors){return retornarError(res,`Erro al verifiar la tipologia de la prescripcion:${aux.message}`)}

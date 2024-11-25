@@ -24,6 +24,7 @@ let idProfecional=document.getElementById('id_profecional');
 let fechaVInput=document.getElementById('fechaV');
 let divMedPres=document.getElementById('divMedPres');
 let divMedPres1=document.getElementById('divMedPres1');
+let divPrescripcionNumero=document.getElementById('divPrescripcionNumero');
 let obraSocialPlan;//para la prescripcion
 let obrass;
 let sexo;
@@ -90,12 +91,14 @@ formularioPrescripcion.addEventListener('submit',async  function(event) {
     if(!validar(prescripcion.prestaciones.length<1&&prescripcion.medicamentos.length<1,pagina,'La Prescripcion debe tene al menos un medicamento o una prestacion')){bandera=false}
     if(bandera){
         aux=await fechProtegidoPost('/generarPrescripcion',prescripcion);
-        
+        console.log(aux);
         if(aux.success){
             divFinal.style.display='block';
-        
-            prestacionesPrescripcion=[];
+             prestacionesPrescripcion=[];
             medicamentosPrescripcion=[];
+            let h5=document.createElement('h5');
+            h5.textContent=`Prescripcion Electronica numero : ${aux.prescripcionNumero}`;  
+            divPrescripcionNumero.appendChild(h5);
         }
     }
    

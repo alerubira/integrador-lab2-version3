@@ -114,6 +114,7 @@ function realizarNuevaPrescripcion(){
     limpiarCampos(limpiarP);
     fOcultar();
     eliminarHijos(divMedicamentoPrestacion);
+    eliminarHijos(divPrescripcionNumero);
     obraSocialSelec.value='j';
     planSelec.value='h';
     inputSexoP.placeholder="";
