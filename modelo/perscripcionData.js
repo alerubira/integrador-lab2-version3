@@ -16,8 +16,8 @@ let connection;
                 let id_prescripcion = prescripcionResult.insertId;
             for(let med of prescripcion.medicamentos){
             const [medicamentoPResult] = await connection.execute(
-                'INSERT INTO `medicamento_prescripcion`(`id_n_g_p`, `nombre_comercial`, `id_administracion_medicamento`,id_prescripcion) VALUES (?,?,?,?)',
-                [med.idNGP, med.nombreComercial,med.idAdministracion,id_prescripcion]
+                'INSERT INTO `medicamento_prescripcion`(`id_n_g_p`, `nombre_comercial`, `id_administracion_medicamento`,`id_duracion_administracion`,`id_prescripcion`) VALUES (?,?,?,?,?)',
+                [med.idNGP, med.nombreComercial,med.idAdministracion,med.idDuracionAdministracion ,id_prescripcion]
             );
             }
             for(let pre of prescripcion.prestaciones){
@@ -83,6 +83,12 @@ let connection;
                 )
                 
                 medicamento.administracion=administracionResult[0];
+                const[duracionResult]=await connection.execute(
+                    'SELECT nombre_duracion_administracion FROM `duracion_administracion` WHERE id_duracion_administracion=?',
+                    [m.id_duracion_administracion],
+                )
+                
+                medicamento.duracionAdministracion=duracionResult[0];
                 const [medicamentoResult]=await connection.execute(
                     'call traerMedicamentoPorId(?)',
                     [m.id_n_g_p],

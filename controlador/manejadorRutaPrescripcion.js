@@ -139,6 +139,9 @@ let objet;
             aux=await existeBd(med.idAdministracion,'administracion_medicamento','id_administracion_medicamento');
             if(aux instanceof Error){return retornarError(res,`Error al verificar si existe La Administracion del Medicamento:${aux}`)}
             if(!aux){return retornarError(res,'La Administracion del Medicamento dentro de la Prescripcion  no existe')}
+            aux=await existeBd(med.idDuracionAdministracion,'duracion_administracion','id_duracion_administracion');
+            if(aux instanceof Error){return retornarError(res,`Error al verificar si existe La Duracion de la Administracion:${aux}`)}
+            if(!aux){return retornarError(res,'La Duracion de la Administracion dentro de la Prescripcion  no existe')}
             aux=await traerPorId(med.idNGP,`nombre_generico_presentacion`,`activo_n_g_p`,`id_n_g_p`);
             if(aux instanceof Error){return retornarError(res,`Error al buscar el estado del Medicamento:${aux}`)}
             if(aux.activo_n_g_p!==1){return retornarError(res,'El Medicamento dentro de la Prescripcion esta Inhabilitado')}
@@ -170,6 +173,7 @@ let objet;
         if(aux instanceof Error){return retornarError(res,`Error al verificar si existe el Paciente:${aux}`)}
         if(!aux){return retornarError(res,'El Paciente  no existe')}
         aux=await prescripcionDataTraer(objet);
+        
         if(aux instanceof Error){return retornarError(res,`Error al tarer Prescripciones:${aux}`)}
         return res.send(aux); 
          break 

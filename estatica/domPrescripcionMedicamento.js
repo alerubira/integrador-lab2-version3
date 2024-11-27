@@ -29,7 +29,7 @@ function capturarDuracion(){
       idDuracionAdministracion = opcion.getAttribute('data-id');
     }
   });
-console.log(idDuracionAdministracion);
+
   if (idDuracionAdministracion) {
       duracionAdministracion.nombre=inputDuracion.value;
       medicamento.idDuracionAdministracion=parseInt(idDuracionAdministracion);
@@ -46,7 +46,7 @@ async function capturarMedicamento(event){
   bandera=true;
   if(!validar(!medicamento.idNGP,pagina,'NO HAY Medicamento seleccionado ')){bandera=false};
   if(!validar(!medicamento.idAdministracion,pagina,'La Administracion es Obligatoria')){bandera=false};
-  
+  if(!validar(!medicamento.idDuracionAdministracion,pagina,'La Duracion de la Administracion es Obligatoria')){bandera=false};
   if(!validar(!inputNombreMedicamento.value,pagina,'El Nombre del Medicamento es Obligatorio')){bandera=false};
   
   let a=await medicamentosPrescripcion.find(m=>m.idNGP===medicamento.idNGP);

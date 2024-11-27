@@ -203,7 +203,10 @@ const medicamentosY=yup.object().shape({
     .typeError('El Medicamento debe ser un numero'),
     idAdministracion:yup.number()
     .required('El Medicamento deve contener una Administracion')
-    .typeError('La administarcion deve ser un numero'),
+    .typeError('La administarcion debe ser un numero'),
+    idDuracionAdministracion:yup.number()
+    .required('El Medicamento deve contener una Duracion de la Adminstarcion')
+    .typeError('La Duracion debe ser un numero'),
     nombreComercial:yup.string()
     .nullable(true)
     .max(298, 'El nombre comercial del Medicamento no debe superar los 298 caracteres'),

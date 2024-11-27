@@ -39,7 +39,7 @@ async function mostrarPrescripciones(arrayPrescripciones){
         for(let med of pre.medicamentos){
         let divMed=document.createElement('div');
         let h6_1=document.createElement('h6');
-        h6_1.textContent=`Medicamento:${med.nombre.nombre_generico},${med.nombre.nombre_forma},${med.nombre.nombre_presentacion}//Nombre Comercial :${med.nombre_comercial} //Administarcion :${med.administracion.nombre_administracion_medicamento}`;
+        h6_1.textContent=`Medicamento:${med.nombre.nombre_generico},${med.nombre.nombre_forma},${med.nombre.nombre_presentacion}//Nombre Comercial :${med.nombre_comercial} //Administarcion :${med.administracion.nombre_administracion_medicamento}//Duracion :${med.duracionAdministracion.nombre_duracion_administracion}`;
         divMed.appendChild(h6_1);
         divPre.appendChild(divMed);
         }
