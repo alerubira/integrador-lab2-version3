@@ -85,6 +85,13 @@ block content
                                       each administracion in adMedicamentos
                                         option(value=administracion.nombre_administracion_medicamento data-id=administracion.id_administracion_medicamento) 
                                 br
+                                label(for="duracion_administracion") Duracion de la Administracion :
+                                input.limpiarM(type="text", id="duracion_administracion", name="duracion_administracion",list="duracion")
+                                datalist#duracion 
+                                      each duracion in duMedicamentos
+                                        option(value=duracion.nombre_duracion_administarcion data-id=duracion.id_duracion_administracion) 
+                                br
+
                                 label(for="marcaMedicamento") Marca del medicamento(opcional)
                                 input.limpiarM(type="text",id="marcaMedicamento",name="marcaMedicamento")
                                 br

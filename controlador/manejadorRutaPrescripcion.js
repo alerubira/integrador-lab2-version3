@@ -46,13 +46,16 @@ let objet;
             let presAprobadas=await prestaciones.filter(pre=>pre.estado_prestacion===1);
             let adMedicamentos=await medicamentoDatatodos('administraciones');
             if(adMedicamentos instanceof Error){return retornarError(res,`Error al buscar Administraciones de Medicamento:${adMedicamentos}`)}
+            let duMedicamentos=await medicamentoDatatodos('duraciones');
+            if(duMedicamentos instanceof Error){return retornarError(res,`Error al buscar las duraciones :${duMedicamentos}`)}
+
             let medicamentos=await medicamentoDatatodos('medicamentos');
             if(medicamentos instanceof Error){return retornarError(res,`Error al buscar Medicamentos:${medicamentos}`)}
             
             let mNGA=await medicamentos[0].filter(m=>m.estado_nombre_generico===1);
             let medAprobados=await mNGA.filter(me=>me.activo_n_g_p===1);
-            
-             res.render('vistaPrescripcion', { encabezado ,profecional,lados,presAprobadas,adMedicamentos,medAprobados});
+        
+             res.render('vistaPrescripcion', { encabezado ,profecional,lados,presAprobadas,adMedicamentos,medAprobados,duMedicamentos});
               
            } 
       // });

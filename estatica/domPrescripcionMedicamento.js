@@ -9,7 +9,7 @@ function capturarAdministracion(){
         idAdministracion = opcion.getAttribute('data-id');
       }
     });
-  console.log(idAdministracion);
+
     if (idAdministracion) {
         administracion.nombre=inputAdministracion.value;
         medicamento.idAdministracion=parseInt(idAdministracion);
@@ -18,10 +18,31 @@ function capturarAdministracion(){
  
   
 }
+function capturarDuracion(){
+  let opciones = document.querySelectorAll('#duracion  option'); 
+  let idDuracionAdministracion = null;
+
+  // Buscar el id_administracion correspondiente al nombre_administracion_medicamento seleccionado
+  opciones.forEach(opcion => {
+  
+    if (opcion.value === inputDuracion.value) {
+      idDuracionAdministracion = opcion.getAttribute('data-id');
+    }
+  });
+console.log(idDuracionAdministracion);
+  if (idDuracionAdministracion) {
+      duracionAdministracion.nombre=inputDuracion.value;
+      medicamento.idDuracionAdministracion=parseInt(idDuracionAdministracion);
+    
+  }
+
+
+}
 async function capturarMedicamento(event){
   event.preventDefault(); // Prevenir el envío del formulario
     medicamento.nombre="";
       capturarAdministracion();
+      capturarDuracion();
   bandera=true;
   if(!validar(!medicamento.idNGP,pagina,'NO HAY Medicamento seleccionado ')){bandera=false};
   if(!validar(!medicamento.idAdministracion,pagina,'La Administracion es Obligatoria')){bandera=false};
@@ -38,14 +59,14 @@ async function capturarMedicamento(event){
   medicamento.nombre=inputNombreMedicamento.value;
   medicamento.nombreComercial=marca.value;
   medicamentosPrescripcion.push(medicamento);
-  console.log(medicamentosPrescripcion);
+ // console.log(medicamentosPrescripcion);
   let divAux=document.createElement('div');
   divAux.classList.add('divAuxiliar');
   let divAux1=document.createElement('div');
   divAux1.classList.add('divAuxiliar1');
   let p=document.createElement('h6');
   
-  p.textContent=`MEDICAMENTO : ${medicamento.nombre}---ADMINISTRACION: ${administracion.nombre}`;
+  p.textContent=`MEDICAMENTO : ${medicamento.nombre}---ADMINISTRACION: ${administracion.nombre}---DURACION: ${duracionAdministracion.nombre}`;
   
   divAux1.appendChild(p);
   let p1=document.createElement('h6'); 

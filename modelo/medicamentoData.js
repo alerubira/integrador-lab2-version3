@@ -77,10 +77,16 @@ try{
     case 'administraciones':
         query='SELECT * FROM `administracion_medicamento` WHERE 1';
         return await consulta1(query);
-        break;    
+        break; 
+    case 'duraciones':
+        query='SELECT * FROM `duracion_administracion` WHERE 1';
+        return await consulta1(query);
+        break;       
         default:
             return retornarErrorSinRes(`Seleccion:${traer}, en MedicamentosDataTodos,NO VALIDA`)
     }
+    
+
 }catch(error){
     console.error(`Error al buscar  ${traer} `, error);
     return error;

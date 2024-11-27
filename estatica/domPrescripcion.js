@@ -15,6 +15,7 @@ let divMedicamentoPrestacion=document.getElementById('divMedicamentoPrestacion')
 let marca=document.getElementById('marcaMedicamento')
 const selectElement = document.getElementById('tipo');
 let inputAdministracion = document.getElementById('administracion_medicamento');
+let inputDuracion=document.getElementById('duracion_administracion');
 let formularioPrescripcion=document.getElementById('formularioPrescripcion');
 let fechaActualInput = document.getElementById('fechaActual');
 let divPrescripcionesA=document.getElementById('divPrescripcionesA');
@@ -32,6 +33,7 @@ let prescripcion={};
 let medicamento={};
 let medicamentosPrescripcion=[];//para la prescripcion
 let administracion={};
+let duracionAdministracion={};
 let administraciones;
 let medicamentoCompleto={};//para guardar en medicamentos
 pagina="Prescripcion";
