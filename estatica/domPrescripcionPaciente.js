@@ -149,7 +149,7 @@ function controlar(input,cartel){
     }
 }
 async function registrarPaciente(){
-    
+    bandera=true;
     //hacerel paciente con los datos necesarios para la base de datos
     let inputDni=document.getElementById('dniP');
     let inputNombre=document.getElementById('nombreP');
@@ -168,6 +168,8 @@ async function registrarPaciente(){
     controlar(sexo,'el sexo es obligatorio y debe elegirse con el seleccionador');
     paciente.sexo=sexo.id_sexo;
   //  console.log(`Paciente antes de ir al fech ${paciente}`);
+  
+  
    let pacienteCreado=await fechProtegidoPost('/generarPaciente',paciente);
     //console.log(pacienteCreado.datos.success);
    if(pacienteCreado.datos.success){
@@ -177,7 +179,7 @@ paciente.idPaciente=pacienteCreado.datos.idPaciente;
     fOcultar();
     eliminarHijos(divPacientes);
    }
-  
+
     //console.log(`paciente en la funsion registrarPaciente ${paciente.nombre}`);
     //hacer el endpoin para cargar el pacienta
     //ejecutar el fech
