@@ -91,6 +91,7 @@ formLogin.addEventListener('submit',async function(event) {
         
           const data = await response.json();
         
+        
           if (response.ok) {
                         if (data.codigoPersonalizado === 801) {
                           
@@ -130,6 +131,7 @@ formLogin.addEventListener('submit',async function(event) {
             alerta(pagina,`Error al verificar el Login:${data.message}`);
           }
     }
+  
 });
 // Función para cargar el contenido de la página de acceso
 /*function cargarContenidoAcceso() {

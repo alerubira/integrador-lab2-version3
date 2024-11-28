@@ -35,9 +35,7 @@ function eliminarObjetoPorId(arreglo, id, propiedad) {
     elemento.style.display = 'block';
  }       
 function limpiarCampos(list){
-    //console.log(list);
-   // list1.textContent="";
-    //list1.value=null;
+   
     for (let li of list){
         li.textContent="";
         li.value=null;
@@ -52,9 +50,8 @@ function eliminarHijos(div) {
 function alerta(pagina,mensage){
     // Limpiar cualquier contenido anterior antes de añadir nuevos elementos
     divAlerta.innerHTML = '';
-    //console.log(pagina);
     p1=document.createElement('p');
-    p1.textContent=`ALERTA La pagina ${pagina} dice`;
+    p1.textContent=`ALERTA La pagina ${pagina} dice :`;
     divAlerta.appendChild(p1);
     p=document.createElement('p');
     p.textContent=`${mensage}`;
@@ -65,9 +62,8 @@ function alerta(pagina,mensage){
 function cartelExito(pagina,mensage){
     // Limpiar cualquier contenido anterior antes de añadir nuevos elementos
     divExito.innerHTML = '';
-    //console.log(pagina);
     p1=document.createElement('p');
-    p1.textContent=`Exito La pagina ${pagina} dice`;
+    p1.textContent=`Exito La pagina ${pagina} dice :`;
     divExito.appendChild(p1);
     p=document.createElement('p');
     p.textContent=`${mensage}`;
@@ -138,9 +134,9 @@ function llenarDl(dl,array,atributo){
         }  
 // Función para verificar si la palabra está en el arreglo de objetos
 function contienePalabra(array,propiedad,palabra) {
-    console.log(array);
-    console.log(propiedad);
-    console.log(palabra);
+   // console.log(array);
+    //console.log(propiedad);
+    //console.log(palabra);
     return array.some(objeto => objeto.propiedad === palabra);
   }
  
@@ -169,11 +165,11 @@ async function fechProtegidoPost(endpoin,objeto){
      
       if (response.ok) {
         const responseBody = await response.json();
-        console.log(responseBody);
+       // console.log(responseBody);
         if(responseBody===false){return responseBody}
         if(responseBody===true){return responseBody}
        if(responseBody.message) {cartelExito(pagina,`La tarea fue realizada con exito: ${responseBody.message}`);}
-        console.log(responseBody);
+       // console.log(responseBody);
         
        return responseBody;
       } else {

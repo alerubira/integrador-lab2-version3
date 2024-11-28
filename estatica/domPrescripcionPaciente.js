@@ -167,11 +167,11 @@ async function registrarPaciente(){
     //paciente.idPlanObraSocial=obraSocialPlan.id_plan;
     controlar(sexo,'el sexo es obligatorio y debe elegirse con el seleccionador');
     paciente.sexo=sexo.id_sexo;
-    console.log(`Paciente antes de ir al fech ${paciente}`);
+  //  console.log(`Paciente antes de ir al fech ${paciente}`);
    let pacienteCreado=await fechProtegidoPost('/generarPaciente',paciente);
-    console.log(pacienteCreado.datos.success);
+    //console.log(pacienteCreado.datos.success);
    if(pacienteCreado.datos.success){
-console.log(pacienteCreado.datos.idPaciente);
+//console.log(pacienteCreado.datos.idPaciente);
 paciente.idPaciente=pacienteCreado.datos.idPaciente;
     bloquearDiv(divPacientes);
     fOcultar();

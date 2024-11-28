@@ -93,7 +93,7 @@ formularioPrescripcion.addEventListener('submit',async  function(event) {
     if(!validar(prescripcion.prestaciones.length<1&&prescripcion.medicamentos.length<1,pagina,'La Prescripcion debe tene al menos un medicamento o una prestacion')){bandera=false}
     if(bandera){
         aux=await fechProtegidoPost('/generarPrescripcion',prescripcion);
-        console.log(aux);
+        //console.log(aux);
         if(aux.success){
             divFinal.style.display='block';
              prestacionesPrescripcion=[];
