@@ -33,13 +33,19 @@ block content
                         #divPaciente 
                             h3 PACIENTE 
                             label(for="dniP") DNI :
-                            input.limpiarP(type="text", id="dniP", name="dniP",placeholder="Ingrese DNI",required)
+                            input.limpiarP(type="text", id="dniP", name="dniP",placeholder="Ingrese DNI ",required)
+                            button.boton(type="button",onclick="modificarDni(event)") Modificar 
+                            br
+                            input.limpiarP.ocultar(type="text", id="dniNuevo", name="dniNuevo",placeholder="Ingrese DNI Nuevo",required)
+                            button#btnDniN.boton.ocultar(type="button",onclick="modificarDniS(event)") Modificar 
                             br
                             label(for="nombreP") Nombre :
                             input.limpiarP(type="text", id="nombreP", name="nombreP",required)
+                            button.boton(type="button",onclick="modificarNombre(event)") Modificar   
                             br
                             label(for="apellidoP") Apellido :
                             input.limpiarP(type="text" ,id="apellidoP", name="apellidoP",required)
+                            button.boton(type="button",onclick="modificarApellido(event)") Modificar   
                             br
                             label(for="sexoP") Sexo :
                             input.limpiarP(type="text", id="sexoP", name="sexoP",required)

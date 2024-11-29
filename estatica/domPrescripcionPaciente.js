@@ -181,9 +181,58 @@ async function registrarPaciente(){
        }
     
     }
-    
+    }
+let inputDniNuevo=document.getElementById('dniNuevo');
+ let btnDniN=document.getElementById('btnDniN');
+function modificarDni(event){
+    event.preventDefault()
+   console.log(paciente.idPersona);
    
-} 
+    inputDniNuevo.style.display='block';
+   
+    btnDniN.style.display='block'
+        
+        }
+function modificarDniS(event){
+    console.log(paciente.idPersona);
+    event.preventDefault()
+         let nuevoDniValue=inputDniNuevo.value;
+        let dniValido=  validar(nuevoDniValue.length<1||nuevoDniValue.length>8,pagina,'El Dni es obligatorio y no debe exeder los 8 caracteres',event);
+        if(dniValido){
+        let mdni={};
+        mdni.idPersona=paciente.idPersona;
+        mdni.dniNuevo=nuevoDniValue;
+        fechProtegidoPost('/cambiarDni',mdni);
+        inputDniNuevo.style.display='none';
+        btnDniN.style.display='none'
+        }  
+        }        
+
+function modificarNombre(event){
+    event.preventDefault();
+    let a= document.getElementById('nombreP');
+        let nuevoNombreValue=a.value;
+        let nombreValido=  validar(nuevoNombreValue.length<1||nuevoNombreValue.length>30,pagina,'El Nombre es obligatorio y no debe exeder los 25 caracteres',event);
+        if(nombreValido){
+        let mn={};
+        if(validar(!paciente.idPaciente,pagina,'Debe seleccionar un Paciente para modificar su Nombre')){
+            mn.idPersona=paciente.idPersona;
+            mn.nombreNuevo=nuevoNombreValue;
+            fechProtegidoPost('/cambiarNombre',mn);
+        }
+       
+        }   
+        }
+function modificarApellido(){
+        let nuevoApellidoValue=inputNuevoApellido.value;
+        let apellidoValido=  validar(nuevoApellidoValue.length<1||nuevoApellidoValue.length>30,pagina,'El Apellido es obligatorio y no debe exeder los 25 caracteres',event);
+        if(apellidoValido){
+        let ma={};
+        ma.idPersona=medico.idPersona;
+        ma.apellidoNuevo=nuevoApellidoValue;
+        fechProtegidoPost('/cambiarApellido',ma)
+        }   
+        }     
 function sugerirPacientes(aux) {
     fOcultar();
     // Lógica para sugerir pacientes usando la información recibida en aux
@@ -220,7 +269,7 @@ function sugerirPacientes(aux) {
        buton.className='boton';
        buton.addEventListener('click', (event) => {
         event.preventDefault(); // Evitar el envío del formulario
-        asignarPaciente(paciente.dni_persona);
+        asignarPaciente(paciente.dni_persona,paciente.id_persona);
     });
        div.appendChild(buton);
        
@@ -232,7 +281,7 @@ function sugerirPacientes(aux) {
     }
        
 }
-async function asignarPaciente(dniPaciente){
+async function asignarPaciente(dniPaciente,idPersona){
     
     let pacienteM= pacientes.find(persona => persona.dni_persona === dniPaciente);
     if(pacienteM){
@@ -247,6 +296,7 @@ async function asignarPaciente(dniPaciente){
         p.id_paciente=pacienteM.id_paciente;
         paciente.dni=pacienteM.dni_persona;
         paciente.idPaciente=pacienteM.id_paciente;//para la prescripcion
+        paciente.idPersona=idPersona;//para las modificacionesS
        let o=await fechProtegidoPost('/obraSocialPaciente',p);
       // console.log(o);
        obras=o[0];

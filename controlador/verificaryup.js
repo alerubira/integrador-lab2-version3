@@ -5,6 +5,24 @@ domicilioProfecional:yup.string()
      .required('El domocilio es obligatorio')
      .max(30,'El domocilio no debe superar los 30 caracteres')
 })
+const dniY=yup.object().shape({
+    dni: yup.string()
+        .matches(/^\d{7,8}$/, 'El DNI debe ser un número de 7 u 8 caracteres')
+        .required('El DNI es obligatorio'),
+})
+const nombreY=yup.object().shape({
+
+    nombre: yup.string()
+        .matches(/^[a-zA-Z]+$/, 'El nombre solo debe contener letras')
+        .max(30, 'El nombre debe tener como máximo 30 caracteres')
+        .required('El nombre es obligatorio'),
+})
+const apellidoY=yup.object().shape({
+    apellido: yup.string()
+        .matches(/^[a-zA-Z]+$/, 'El apellido solo debe contener letras')
+        .max(30, 'El apellido debe tener como máximo 30 caracteres')
+        .required('El apellido es obligatorio'),
+})               
 const pacienteY=yup.object().shape({
 
 nombre: yup.string()
@@ -303,6 +321,18 @@ async function verificar(objeto,nombre){
                 aux=verificarY(objeto,observacionY);
                 return aux;
                 break;
+            case 'dni':
+                aux=verificarY(objeto,dniY);
+                return aux;
+                break;
+            case 'nombre':
+                aux=verificarY(objeto,nombreY);
+                return aux;
+                break;     
+            case 'apellido':
+                aux=verificarY(objeto,apellidoY);
+                return aux;
+                break;           
              default:
                 return retornarErrorSinRes('Seleccion no valida en verificar para yup');
        }

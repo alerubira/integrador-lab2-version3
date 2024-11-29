@@ -41,7 +41,7 @@ function cambiarEstado(){
      let mdni={};
      mdni.idPersona=medico.idPersona;
      mdni.dniNuevo=nuevoDniValue;
-     fechProtegidoPost('/cambiarDni',mdni);//hacer endpoin sirve para modificar en prescripcion tambien
+     fechProtegidoPost('/cambiarDni',mdni);
      }   
      }
 function modificarNombre(){
@@ -51,17 +51,17 @@ function modificarNombre(){
      let mn={};
      mn.idPersona=medico.idPersona;
      mn.nombreNuevo=nuevoNombreValue;
-     fechProtegidoPost('/cambiarNombre',mn);//hacer endpoin, sirve para modificar en prescripcion tambien
+     fechProtegidoPost('/cambiarNombre',mn);
      }   
      }
-function modificarApellido(){//modificar
-     let nuevoApellidoValue=inputNuevoDomicilio.value;
+function modificarApellido(){
+     let nuevoApellidoValue=inputNuevoApellido.value;
      let apellidoValido=  validar(nuevoApellidoValue.length<1||nuevoApellidoValue.length>30,pagina,'El Apellido es obligatorio y no debe exeder los 25 caracteres',event);
      if(apellidoValido){
      let ma={};
      ma.idPersona=medico.idPersona;
-     ma.nuevoApellido=nuevoApellidoValue;
-     fechProtegidoPost('/cambiarApellido',ma);//hacer endpoin, sirve para modificar en prescripcion tambien
+     ma.apellidoNuevo=nuevoApellidoValue;
+     fechProtegidoPost('/cambiarApellido',ma)
      }   
      }     
     async function seleccionarMedico(event){
