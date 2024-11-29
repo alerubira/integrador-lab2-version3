@@ -123,8 +123,9 @@ block content
                                 br
                                 button.boton(type="button",onclick="agregarPrestacionCompleta(event)") Agregar Prestacion       
                             #divRecetado  
-                        label(for="fechaV") Fecha de Vencimiento :
-                        input.limpiarP(type="date", id="fechaV", name="fechaV",required) 
+                        label(for="fechaV") Fecha de Vencimiento opcional:
+                        input.limpiarP(type="date", id="fechaV", name="fechaV")
+                        label#lblMensaje.limpiarP(for="mensaje") 
                         br     
                         input.boton(type="submit", value="Generar Prescripcion Electronica")
             #divFinal.ocultar

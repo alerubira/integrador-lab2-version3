@@ -80,7 +80,15 @@ ruta.post('/cambiarEspecialidad',verificarToken,async(req,res)=>{
 ruta.post('/cambiarDireccion',verificarToken,async(req,res)=>{
 manejadorMedicos(req,res,'cambiarDireccion');
 });
-
+ruta.post('/cambiarDni',verificarToken,async(req,res)=>{
+  manejadorMedicos(req,res,'cambiarDni');
+  });
+ruta.post('/cambiarNombre',verificarToken,async(req,res)=>{
+  manejadorMedicos(req,res,'cambiarNombre');
+  });  
+ruta.post('/cambiarApellido',verificarToken,async(req,res)=>{
+  manejadorMedicos(req,res,'cambiarApellido');
+  });
 ruta.get('/practica',verificarToken,async(req,res)=>{
   manejadorPrestaciones(req,res,"practica");
 })

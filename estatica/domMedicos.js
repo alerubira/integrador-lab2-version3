@@ -22,10 +22,16 @@ let divBuscarMedico=document.getElementById('divBuscarMedico');
 let divModificarMedico=document.getElementById('divModificarMedico');
 let cuerpo=document.getElementById('cuerpo');
 let divNuevoDomicilio=document.getElementById('divNuevoDomicilio');
+let divNuevoDni=document.getElementById('divNuevoDni');
+let divNuevoNombre=document.getElementById('divNuevoNombre');
+let divNuevoApellido=document.getElementById('divNuevoApellido');
 let divNuevaEspecialidad=document.getElementById('divNuevaEspecialidad');
 let especialidadNuevas=document.getElementById('especialidadNuevas');
 let inputNuevaEspecialidad=document.getElementById('nuevaEspecialidad');
 let inputNuevoDomicilio=document.getElementById('nuevoDomicilio');
+let inputNuevoDni=document.getElementById('nuevoDni');
+let inputNuevoNombre=document.getElementById('nuevoNombre');
+let inputNuevoApellido=document.getElementById('nuevoApellido');
 let botonEstado=document.getElementById('botonEstado');
 let cuerpo2=document.getElementById('cuerpo2');
 let divAProfecion=document.getElementById('divAgregarProfecion');
@@ -133,7 +139,16 @@ document.getElementById('modificarMedico').addEventListener('change',async funct
                especialidades=await traerEspecialidades();
                llenarDl(especialidadNuevas,especialidades.data,'nombre_especialidad');
                mostrar(divNuevaEspecialidad);
-               break; 
+               break;
+          case 'dniMedico':
+               mostrar(divNuevoDni);
+               break;
+          case 'nombreMedico':
+               mostrar(divNuevoNombre);
+               break;
+          case 'apellidoMedico':
+               mostrar(divNuevoApellido);
+               break;                
                default:
                     console.log('Selección no válida en modificarMedico');
                     alerta(pagina,('Seleccion no valida en modificarMedico'));         

@@ -166,7 +166,7 @@ const usuarioClaveY= yup.object().shape({
     idProfecional:yup.number()
     .required('La Prescripcion deve contener un Profecional'),
     fechaA:yup.date()
-    .required('La fecha actual en la Prescripcion es obligatoria')
+    .required('La fecha de vencimiento en la Prescripcion es obligatoria')
     .typeError('La fecha actual en la Prescripcion debe ser válida'),
     idPaciente:yup.number()
     .required('La prescripcion deve contener un paciente'),
@@ -176,7 +176,8 @@ const usuarioClaveY= yup.object().shape({
     .required('La Prescripcion deve tener un diagnostico')
     .max(298,'El Diagnostico no deve superar los 298 caracteres'),
     fechaVC:yup.date()
-    .required('La fecha de vencimiento en la Prescripcion es obligatoria')
+    //.nullable(true)
+    .notRequired()
     .typeError('La fecha de vencimiento en la Prescripcion debe ser válida'),
  })
  

@@ -83,13 +83,18 @@ formularioPrescripcion.addEventListener('submit',async  function(event) {
     prescripcion.diagnostico=diagnostico.value;
     prescripcion.medicamentos=medicamentosPrescripcion;
     prescripcion.prestaciones=prestacionesPrescripcion;
-    prescripcion.fechaVC=fechaVInput.value;
+    if(!fechaVInput.value){
+        prescripcion.fechaVC=null
+       let lblMensaje=document.getElementById('lblMensaje');
+       lblMensaje.textContent="No Contiene";
+
+    }else{ prescripcion.fechaVC=fechaVInput.value;}
     if(!validar(!prescripcion.idProfecional,pagina,'La prescripcion necesita un profecional')){bandera=false}
     if(!validar(!prescripcion.fechaA,pagina,'La prescripcion nesecita la fecha actual')){bandera=false}
     if(!validar(!prescripcion.idPaciente,pagina,'La Prescripcion deve tener un Paciente')){bandera=false}
     if(!validar(!prescripcion.idPlanObraSocial,pagina,'La Prescripcion deve tener una obra social con su plan')){bandera=false}
     if(!validar(!prescripcion.diagnostico,pagina,'La Prescripcion deve tener un diagnostico')){bandera=false}
-    if(!validar(!prescripcion.fechaVC,pagina,'La Prescripcion deve tener una fecha de vencimiento')){bandera=false}
+   // if(!validar(!prescripcion.fechaVC,pagina,'La Prescripcion deve tener una fecha de vencimiento')){bandera=false}
     if(!validar(prescripcion.prestaciones.length<1&&prescripcion.medicamentos.length<1,pagina,'La Prescripcion debe tene al menos un medicamento o una prestacion')){bandera=false}
     if(bandera){
         aux=await fechProtegidoPost('/generarPrescripcion',prescripcion);

@@ -30,7 +30,13 @@ async function mostrarPrescripciones(arrayPrescripciones){
         divPre.classList.add('divAuxiliar6');
         let h5=document.createElement('h5');
         let fechaP=convertirFechaISOaFechaLocal(pre.fecha_prescripcion,true);
-        let fechaVP=convertirFechaISOaFechaLocal(pre.vigencia_prescripcion,true);
+        let fechaVP;
+        if(!pre.vigencia_prescripcion){
+            fechaVP="No Contiene";
+        }else{
+            fechaVP=convertirFechaISOaFechaLocal(pre.vigencia_prescripcion,true);
+        }
+         
         h5.textContent=`Prescripcion numero : ${pre.id_prescripcion}// Fecha :${fechaP}// fecha de vencimiento :${fechaVP}`
         divPre.appendChild(h5);
         let h5_0=document.createElement('h5');
@@ -122,7 +128,7 @@ function realizarNuevaPrescripcion(){
 async function imprimirPrescripcion() {
     const token = localStorage.getItem('token');
 // Ocultar los botones temporalmente 
-const buttons = document.querySelectorAll('button,.boton,#tipo'); 
+const buttons = document.querySelectorAll('button,.boton,#tipo,#divLateral'); 
 buttons.forEach(button => button.style.display = 'none');
     // Capturar el HTML completo junto con los estilos
     let htmlContent = `

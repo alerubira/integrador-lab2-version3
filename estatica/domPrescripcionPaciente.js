@@ -2,7 +2,7 @@ let sexos;
 document.getElementById('dniP').addEventListener('input', async function() {
     eliminarHijos(divPacientes);
     let inputDniP = this.value;
-    validar(inputDniP.length>8,pagina,'El dni no deve superar los 8 caracteres');
+    validar(inputDniP.length>8,pagina,'El dni no debe superar los 8 caracteres');
     if (inputDniP.length === 7||inputDniP.length===8) {
         try {
             
@@ -145,45 +145,44 @@ alert('La opcion de sexo ingresada no es valida');
 
 function controlar(input,cartel){
     if(!input||input===undefined){
-        alert(cartel);
+        alerta(pagina,cartel);
+        bandera=false;
     }
 }
 async function registrarPaciente(){
     bandera=true;
     //hacerel paciente con los datos necesarios para la base de datos
     let inputDni=document.getElementById('dniP');
+    controlar(inputDni.value,'El DNI es Obligatorio')
     let inputNombre=document.getElementById('nombreP');
-    controlar(inputNombre.value,'El nombre es obligatorio');
+    if(bandera){controlar(inputNombre.value,'El nombre es obligatorio');}
     let inputApellido=document.getElementById('apellidoP');
-    controlar(inputApellido.value,'El apellido es obligatorio');
+    if(bandera){controlar(inputApellido.value,'El apellido es obligatorio');}
     let inputFechaN=document.getElementById('fechaNP');
-    controlar(inputFechaN.value,'Lafecha de nacimiento es obligatoria');
-    paciente.nombre=inputNombre.value;
-    paciente.apellido=inputApellido.value;
-    paciente.dni=inputDni.value;
-    paciente.estado=true;
-    paciente.fechaNacimiento=inputFechaN.value;
-    controlar(obraSocialPlan,'La obra social y el plan son obligatorios');
-    //paciente.idPlanObraSocial=obraSocialPlan.id_plan;
-    controlar(sexo,'el sexo es obligatorio y debe elegirse con el seleccionador');
-    paciente.sexo=sexo.id_sexo;
-  //  console.log(`Paciente antes de ir al fech ${paciente}`);
-  
-  
-   let pacienteCreado=await fechProtegidoPost('/generarPaciente',paciente);
-    //console.log(pacienteCreado.datos.success);
-   if(pacienteCreado.datos.success){
-//console.log(pacienteCreado.datos.idPaciente);
-paciente.idPaciente=pacienteCreado.datos.idPaciente;
-    bloquearDiv(divPacientes);
-    fOcultar();
-    eliminarHijos(divPacientes);
-   }
-
-    //console.log(`paciente en la funsion registrarPaciente ${paciente.nombre}`);
-    //hacer el endpoin para cargar el pacienta
-    //ejecutar el fech
-    //hacer la queri a la base de datos
+   if(bandera){ controlar(inputFechaN.value,'Lafecha de nacimiento es obligatoria'); }
+    if(bandera){controlar(obraSocialPlan,'La obra social y el plan son obligatorios');}
+    if(bandera){controlar(sexo,'el sexo es obligatorio y debe elegirse con el seleccionador');}
+    if(bandera){
+        paciente.nombre=inputNombre.value;
+        paciente.apellido=inputApellido.value;
+        paciente.dni=inputDni.value;
+        paciente.estado=true;
+        paciente.fechaNacimiento=inputFechaN.value;
+        paciente.sexo=sexo.id_sexo;
+        //  console.log(`Paciente antes de ir al fech ${paciente}`);
+        let pacienteCreado=await fechProtegidoPost('/generarPaciente',paciente);
+        //console.log(pacienteCreado.datos.success);
+        if(pacienteCreado.datos.success){
+        //console.log(pacienteCreado.datos.idPaciente);
+        paciente.idPaciente=pacienteCreado.datos.idPaciente;
+        bloquearDiv(divPacientes);
+        fOcultar();
+        eliminarHijos(divPacientes);
+       }
+    
+    }
+    
+   
 } 
 function sugerirPacientes(aux) {
     fOcultar();

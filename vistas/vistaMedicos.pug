@@ -112,11 +112,29 @@ block content
                             option(value="estadoMedico") Modificar Estdo Medico
                             option(value="direccionMedico") Modificar direccion Medico 
                             option(value='especialidadMedico') Modificar la Especialidad
+                            option(value="dniMedico") Modificar DNI 
+                            option(value="nombreMedico") Modificar el Nombre 
+                            option(value="apellidoMedico") Modificar el Apellido
                 #divNuevoDomicilio.ocultar2            
                         label(for="nuevoDomicilio") Nuevo Domicilio 
                         input.limpiar(type="text",id="nuevoDomicilio",name="nuevoDomicilio",placeHolder="Nuevo Domicilio") 
                         br
                         button.boton(type="button",onclick='modificarDireccion()') Modificar
+                #divNuevoDni.ocultar2            
+                        label(for="nuevoDni") Nuevo Domicilio 
+                        input.limpiar(type="number",id="nuevoDni",name="nuevoDni",placeHolder="Nuevo DNi") 
+                        br
+                        button.boton(type="button",onclick='modificarDni()') Modificar  
+                #divNuevoNombre.ocultar2            
+                        label(for="nuevoNombre") Nuevo Domicilio 
+                        input.limpiar(type="text",id="nuevoNombre",name="nuevoNombre",placeHolder="Nuevo Nombre") 
+                        br
+                        button.boton(type="button",onclick='modificarNombre()') Modificar
+                #divNuevoApellido.ocultar2            
+                        label(for="nuevoApellido") Nuevo Domicilio 
+                        input.limpiar(type="text",id="nuevoApellido",name="nuevoApellido",placeHolder="Nuevo Apellido") 
+                        br
+                        button.boton(type="button",onclick='modificarApellido()') Modificar                      
                 #divNuevaEspecialidad.ocultar2 
                         label(for="nuevaEspecialidad") Nueva Especialida 
                         input.limpiar(type="text",id="nuevaEspecialidad",name="nuevaEspecialidad",placeHolder="Nueva Especialidad",list="especialidadNuevas")
