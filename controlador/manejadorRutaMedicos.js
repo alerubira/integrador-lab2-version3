@@ -6,6 +6,7 @@ import { Medico } from "../modelo/clasesEntidad.js";
 import {  existeBd,existeNombreBd } from "../modelo/conexxionBD.js";
 import { retornarError } from "./funsionesControlador.js";
 import { buscarMID } from "../modelo/medicoData.js";
+import { modificarPacienteData } from "../modelo/pacienteData.js";
 let estadoSuces;
 let mensajeExito;
 let objet;
@@ -160,13 +161,28 @@ async function manejadorMedicos(req,res,objeto){
         e1=await existeBd(objet.idPersona,'persona','id_persona');
         if(e1 instanceof Error){return retornarError(res,`Error al verificar si existe la Persona,${e}`)}
         if(e1){
-                aux=await medicoDataModificar('apellido',objet.idPersona,objet.apellidoNuevo);//hacer el modificar
+                aux=await medicoDataModificar('apellido',objet.idPersona,objet.apellidoNuevo);
                 if(aux instanceof Error){return retornarError(res,`Error al modificar el Apellido,${aux}`)}
                 return res.send({ message: "El apellido fue modificado con exito", datos: aux }); 
             }else{
                 return retornarError(res,'La Persona no existe en la base de datos');
             }
-                break;                            
+                break; 
+        case 'cambiarFechaN':
+            objet=req.body;
+            let fechaN={fechaN:objet.fechaNueva};
+            aux=await verificar(fechaN,'fechaN');
+            if(aux.errors){return retornarError(res,`Error al verificar la tipologia de la fecha,${aux.message}`)}
+            e1=await existeBd(objet.idPersona,'persona','id_persona');
+            if(e1 instanceof Error){return retornarError(res,`Error al verificar si existe la Persona,${e}`)}
+            if(e1){
+                    aux=await modificarPacienteData('fechaN',objet.idPersona,objet.fechaNueva);
+                    if(aux instanceof Error){return retornarError(res,`Error al modificar la fecha,${aux}`)}
+                    return res.send({ message: "La fecha de Nacimiento fue modificado con exito", datos: aux }); 
+                }else{
+                    return retornarError(res,'La Persona no existe en la base de datos');
+                }
+                    break;                                    
         case 'agregarProfecion':
             objet=req.body;
             aux=await verificar(objet,'nombreProfecion');

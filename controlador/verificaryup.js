@@ -22,7 +22,13 @@ const apellidoY=yup.object().shape({
         .matches(/^[a-zA-Z]+$/, 'El apellido solo debe contener letras')
         .max(30, 'El apellido debe tener como máximo 30 caracteres')
         .required('El apellido es obligatorio'),
-})               
+}) 
+const fechaNY=yup.object().shape({
+    fechaN: yup.date()
+    .required('La fecha de nacimiento es obligatoria')
+    .typeError('La fecha de nacimiento debe ser válida'),
+}) 
+
 const pacienteY=yup.object().shape({
 
 nombre: yup.string()
@@ -332,7 +338,11 @@ async function verificar(objeto,nombre){
             case 'apellido':
                 aux=verificarY(objeto,apellidoY);
                 return aux;
-                break;           
+                break; 
+            case 'fechaN':
+                aux=verificarY(objeto,fechaNY);
+                return aux;
+                break;               
              default:
                 return retornarErrorSinRes('Seleccion no valida en verificar para yup');
        }

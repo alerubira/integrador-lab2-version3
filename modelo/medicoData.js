@@ -32,7 +32,8 @@ async function medicoDataModificar(modificar,id,modificante){
         case 'apellido':
             query='UPDATE `persona` SET `apellido`=? WHERE id_persona=?';
         return await(consulta1(query,modificante,id));
-        break;            
+        break;  
+        
         default:
             return retornarErrorSinRes('seleccion no valida en MedicoDataModificar');    
     }

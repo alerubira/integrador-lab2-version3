@@ -35,9 +35,7 @@ block content
                             label(for="dniP") DNI :
                             input.limpiarP(type="text", id="dniP", name="dniP",placeholder="Ingrese DNI ",required)
                             button.boton(type="button",onclick="modificarDni(event)") Modificar 
-                            br
-                            input.limpiarP.ocultar(type="text", id="dniNuevo", name="dniNuevo",placeholder="Ingrese DNI Nuevo",required)
-                            button#btnDniN.boton.ocultar(type="button",onclick="modificarDniS(event)") Modificar 
+                          
                             br
                             label(for="nombreP") Nombre :
                             input.limpiarP(type="text", id="nombreP", name="nombreP",required)
@@ -61,6 +59,7 @@ block content
                             br
                             label(for="fechaNP") Fecha de nacimiento :
                             input.limpiarP(type="date", id="fechaNP", name="fechaNP",required)
+                            button.boton(type="button",onclick="modificarFechaN(event)") Modificar
                             br
                            
                             #divPacientes

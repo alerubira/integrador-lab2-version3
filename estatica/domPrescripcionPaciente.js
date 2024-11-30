@@ -182,31 +182,22 @@ async function registrarPaciente(){
     
     }
     }
-let inputDniNuevo=document.getElementById('dniNuevo');
- let btnDniN=document.getElementById('btnDniN');
+
 function modificarDni(event){
     event.preventDefault()
-   console.log(paciente.idPersona);
-   
-    inputDniNuevo.style.display='block';
-   
-    btnDniN.style.display='block'
-        
-        }
-function modificarDniS(event){
-    console.log(paciente.idPersona);
-    event.preventDefault()
-         let nuevoDniValue=inputDniNuevo.value;
-        let dniValido=  validar(nuevoDniValue.length<1||nuevoDniValue.length>8,pagina,'El Dni es obligatorio y no debe exeder los 8 caracteres',event);
-        if(dniValido){
-        let mdni={};
+    let d=document.getElementById('dniP');
+    let nuevoDniValue=d.value;
+    let dniValido=  validar(nuevoDniValue.length<1||nuevoDniValue.length>8,pagina,'El Dni es obligatorio y no debe exeder los 8 caracteres',event);
+    if(dniValido){
+    let mdni={};
+    if(validar(!paciente.idPaciente,pagina,'Debe seleccionar un Paciente para modificar su DNI')){
         mdni.idPersona=paciente.idPersona;
         mdni.dniNuevo=nuevoDniValue;
         fechProtegidoPost('/cambiarDni',mdni);
-        inputDniNuevo.style.display='none';
-        btnDniN.style.display='none'
-        }  
-        }        
+    }
+    }  
+        }
+     
 
 function modificarNombre(event){
     event.preventDefault();
@@ -223,18 +214,38 @@ function modificarNombre(event){
        
         }   
         }
-function modificarApellido(){
-        let nuevoApellidoValue=inputNuevoApellido.value;
+function modificarApellido(event){
+        event.preventDefault();
+        let a= document.getElementById('apellidoP');
+        let nuevoApellidoValue=a.value;
         let apellidoValido=  validar(nuevoApellidoValue.length<1||nuevoApellidoValue.length>30,pagina,'El Apellido es obligatorio y no debe exeder los 25 caracteres',event);
         if(apellidoValido){
         let ma={};
-        ma.idPersona=medico.idPersona;
-        ma.apellidoNuevo=nuevoApellidoValue;
-        fechProtegidoPost('/cambiarApellido',ma)
+        if(validar(!paciente.idPersona,pagina,'Debe seleccionar un Paciente para modificar su Apellido')){
+             ma.idPersona=paciente.idPersona;
+             ma.apellidoNuevo=nuevoApellidoValue;
+            fechProtegidoPost('/cambiarApellido',ma)
+        }
+       
         }   
-        }     
+        }  
+function modificarFechaN(event){
+    event.preventDefault();
+    let f= document.getElementById('fechaNP');
+        let nuevaFechaValue=f.value;
+        
+        let ma={};
+        if(validar(!paciente.idPersona,pagina,'Debe seleccionar un Paciente para modificar su Fecha de Nacimiento')){
+             ma.idPersona=paciente.idPersona;
+             ma.fechaNueva=nuevaFechaValue;
+            fechProtegidoPost('/cambiarFechaN',ma)
+        }
+       
+        
+}           
 function sugerirPacientes(aux) {
     fOcultar();
+    eliminarHijos(divPacientes);
     // Lógica para sugerir pacientes usando la información recibida en aux
     //console.log('Sugerir pacientes con los datos:', aux);
     for(let paciente of aux){

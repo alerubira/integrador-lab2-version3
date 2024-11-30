@@ -8,6 +8,21 @@ query='CALL obtenerPacientesPorDNI(?)';
 aux= await consulta1(query,dni);
 return aux[0];
 }
+async function modificarPacienteData(modificar,id,modificante){
+    try{
+        switch(modificar){
+            case 'fechaN':
+                query='UPDATE `paciente` SET `fecha_nacimiento`=? WHERE id_persona=?';
+                return await(consulta1(query,modificante,id));
+                 break;
+                 default:
+                    return retornarErrorSinRes(`Seleccion:${tarea}, en modificarPacienteData,NO VALIDA`);   
+    }   
+    }catch(error){
+     console.error(`Error al realizar la modificacion de  ${modificar} `, error);
+     return retornarErrorSinRes(`Error en modificarPacientesData:${error}`);
+    }
+}
 async function pacienteTarea(tarea,objeto){
     try{
      switch(tarea){
@@ -84,4 +99,4 @@ async function generarPaciente(paciente) {
 }
 
 
-export{buscarPacienteDni,pacienteTarea,generarPaciente}
+export{buscarPacienteDni,pacienteTarea,generarPaciente,modificarPacienteData}
