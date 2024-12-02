@@ -67,6 +67,7 @@ app.use('/cambiarDni',ruta);
 app.use('/cambiarNombre',ruta);
 app.use('/cambiarApellido',ruta);
 app.use('/cambiarFechaN',ruta);
+app.use('/agregarOSP',ruta);
 app.use('/practica',ruta);
 app.use('/prestaciones',ruta);
 app.use('/examen',ruta);

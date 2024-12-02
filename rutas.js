@@ -91,6 +91,9 @@ ruta.post('/cambiarApellido',verificarToken,async(req,res)=>{
   });
 ruta.post('/cambiarFechaN',verificarToken,async(req,res)=>{
   manejadorMedicos(req,res,'cambiarFechaN');
+})
+ruta.post('/agregarOSP',verificarToken,async(req,res)=>{
+  manejadorMedicos(req,res,'agregarOSP');
 })  
 ruta.get('/practica',verificarToken,async(req,res)=>{
   manejadorPrestaciones(req,res,"practica");

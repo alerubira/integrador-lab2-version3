@@ -182,7 +182,17 @@ async function manejadorMedicos(req,res,objeto){
                 }else{
                     return retornarError(res,'La Persona no existe en la base de datos');
                 }
-                    break;                                    
+                    break;  
+        case 'agregarOSP':
+            objet=req.body;
+            aux=existeBd(objet.idPaciente,'paciente','id_paciente');
+            if(aux instanceof Error){return retornarError(res,`Error al buscar el Paciente :${aux}`)}
+            if(!aux){return retornarError(res,'El Paciente no existe')}
+            aux=existeBd(objet.idPlan,'plan_obra_social','id_plan');
+            if(aux instanceof Error){return retornarError(res,`Error al buscar el Plan :${aux}`)}
+            if(!aux){return retornarError(res,'El Plan no existe')}
+            //hacer up date
+            break;                                              
         case 'agregarProfecion':
             objet=req.body;
             aux=await verificar(objet,'nombreProfecion');

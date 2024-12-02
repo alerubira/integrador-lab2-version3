@@ -32,6 +32,7 @@ block content
                             
                         #divPaciente 
                             h3 PACIENTE 
+                            
                             label(for="dniP") DNI :
                             input.limpiarP(type="text", id="dniP", name="dniP",placeholder="Ingrese DNI ",required)
                             button.boton(type="button",onclick="modificarDni(event)") Modificar 
@@ -52,10 +53,12 @@ block content
                             label(for="obraSP") Obra Social :
                             select(id="obraSP", name="ObraSP")
                                         option(value="j") Obra Social
+                            button.boton(type="button",onclick="mostrarObras(event)") Mostrar           
                             br
                             label(for="plan") Plan :
                             select(id="plan", name="plan")
                                         option(value="h") Plan Obra Social
+                            button.boton(type="button",onclick="agregarObraSocialPlan(event)") Agregar             
                             br
                             label(for="fechaNP") Fecha de nacimiento :
                             input.limpiarP(type="date", id="fechaNP", name="fechaNP",required)

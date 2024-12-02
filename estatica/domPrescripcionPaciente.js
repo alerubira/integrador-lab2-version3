@@ -240,9 +240,28 @@ function modificarFechaN(event){
              ma.fechaNueva=nuevaFechaValue;
             fechProtegidoPost('/cambiarFechaN',ma)
         }
-       
-        
-}           
+       }
+function mostrarObras(event){
+    event.preventDefault();
+    traerObras();
+}       
+function agregarObraSocialPlan(event){
+event.preventDefault();
+if(bandera){controlar(obraSocialPlan,'La obra social y el plan son obligatorios');}
+let ospValido=validar(!obraSocialPlan,pagina,"Debe seleccionar una Obra Social y su Plan");
+if(ospValido){
+    let pOSP={};
+    if(validar(!paciente.idPaciente,pagina,'Debe seleccionar un Paciente para Agregar una Obra Social y su plan')){
+            pOSP.idPaciente=paciente.idPaciente;
+            pOSP.idPlan=obraSocialPlan.id_plan;
+            //console.log(pOSP);
+        fechProtegidoPost('/agregarOSP',pOSP);
+    }
+}
+    
+    
+    }       
+
 function sugerirPacientes(aux) {
     fOcultar();
     eliminarHijos(divPacientes);
