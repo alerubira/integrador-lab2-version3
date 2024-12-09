@@ -153,11 +153,11 @@ async function crearMedico(Medico) {
         );
 
         const id_medico = medicoResult.insertId;
-        let claveH = await crearHash(Medico.claveProvisoria);
-        let claveP= await crearHash(Medico.palabraClave);
+        //let claveH = await crearHash(Medico.claveProvisoria);
+        //let claveP= await crearHash(Medico.palabraClave);
         const [loginResult] = await connection.execute(
-            'INSERT INTO `login`(`id_medico`, `usuario_login`, `clave_login`, `tipo_autorizacion`, `instancia`,`palabra_clave`) VALUES (?,?,?,?,?,?)',
-            [id_medico, Medico.usuarioProvisorio, claveH, Medico.nivelAutorizacion, 1,claveP]
+            //'INSERT INTO `login`(`id_medico`, `usuario_login`, `clave_login`, `tipo_autorizacion`, `instancia`,`palabra_clave`) VALUES (?,?,?,?,?,?)',
+            //[id_medico, Medico.usuarioProvisorio, claveH, Medico.nivelAutorizacion, 1,claveP]
         );
 
         await connection.commit();
